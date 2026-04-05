@@ -517,6 +517,7 @@ body {
   <select id="author-filter"><option value="">All authors</option></select>
   <select id="type-filter"><option value="">All types</option></select>
   <select id="reporter-filter"><option value="">All reporters</option></select>
+  <input type="text" id="citation-filter" placeholder="Citation..." style="width:130px" title="Filter by citation (e.g. A.L.R., L.R.A.)">
   <div class="sep"></div>
   <label><input type="checkbox" id="has-notes"> Notes</label>
   <label><input type="checkbox" id="bad-author"> Bad author</label>
@@ -579,6 +580,11 @@ body {
       <tr><td>n</td><td>Add/edit note on flagged opinion</td></tr>
       <tr><td>1&ndash;5</td><td>Set flag category (1=review 2=bad-author 3=wrong-date 4=duplicate 5=other)</td></tr>
       <tr><td>x</td><td>Remove flag from selected opinion</td></tr>
+    </table>
+    <h3>Author Review</h3>
+    <table>
+      <tr><td>!</td><td>Confirm unrecognized author as valid (clears all with that name)</td></tr>
+      <tr><td>p</td><td>Mark as per curiam (clears author, sets per_curiam flag)</td></tr>
     </table>
     <h3>Editing</h3>
     <table>
@@ -700,14 +706,18 @@ const table = new Tabulator("#opinion-table", {
     },
     {
       title: "ND Cite", field: "cite_nd", width: 120,
-      sorter: "string", headerSort: false,
+      sorter: "string", headerSort: true,
     },
     {
       title: "N.D.", field: "cite_nd_old", width: 110,
-      sorter: "string", headerSort: false,
+      sorter: "string", headerSort: true,
     },
     {
       title: "N.W.", field: "cite_nw", width: 120,
+      sorter: "string", headerSort: true,
+    },
+    {
+      title: "Other Cites", field: "cite_other", visible: false, minWidth: 140,
       sorter: "string", headerSort: false,
     },
     {
@@ -809,6 +819,8 @@ function getFilterParams() {
   if (ctype) p.case_type = ctype;
   const reporter = document.getElementById("reporter-filter").value;
   if (reporter) p.source_reporter = reporter;
+  const cite = document.getElementById("citation-filter").value.trim();
+  if (cite) p.citation = cite;
   if (document.getElementById("has-notes").checked) p.has_notes = true;
   if (document.getElementById("bad-author").checked) p.bad_author = true;
   if (document.getElementById("no-author").checked) p.no_author = true;
@@ -822,6 +834,16 @@ let searchTimer = null;
 document.getElementById("search").addEventListener("input", () => {
   clearTimeout(searchTimer);
   searchTimer = setTimeout(() => table.setData(), 300);
+});
+let citeTimer = null;
+document.getElementById("citation-filter").addEventListener("input", () => {
+  clearTimeout(citeTimer);
+  citeTimer = setTimeout(() => {
+    const val = document.getElementById("citation-filter").value.trim();
+    const col = table.getColumn("cite_other");
+    if (col) { val ? col.show() : col.hide(); }
+    table.setData();
+  }, 300);
 });
 for (const id of ["date-from", "date-to", "author-filter", "type-filter",
                    "reporter-filter", "has-notes", "bad-author", "no-author", "has-dupes"]) {
@@ -1037,7 +1059,7 @@ function renderOpinion(op) {
   const authorDisplay = op.author
     ? (op.author_recognized
       ? escHtml(op.author)
-      : `<span class="author-bad">${escHtml(op.author)}</span>`)
+      : `<span class="author-bad">${escHtml(op.author)}</span> <button class="flag-btn" id="confirm-author-btn" title="! to confirm">confirm</button>`)
     : "<em>none</em>";
 
   // Strip YAML frontmatter from text
@@ -1085,6 +1107,9 @@ function renderOpinion(op) {
 
   const noteDisplay = document.getElementById("flag-note-display");
   if (noteDisplay) noteDisplay.addEventListener("click", () => startNoteEdit());
+
+  const confirmBtn = document.getElementById("confirm-author-btn");
+  if (confirmBtn) confirmBtn.addEventListener("click", () => confirmAuthor(op.author));
 }
 
 // ── Flag operations ──
@@ -1163,6 +1188,46 @@ function startNoteEdit() {
   input.addEventListener("blur", save);
 }
 
+// ── Mark per curiam ──
+async function markPerCuriam(id) {
+  // Clear author and set per_curiam = 1
+  const r1 = await fetch(`/api/opinions/${id}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ field: "per_curiam", value: "1" }),
+  });
+  const r2 = await fetch(`/api/opinions/${id}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ field: "author", value: "" }),
+  });
+  if (r1.ok && r2.ok) {
+    showMode("marked per curiam");
+    table.setData();
+    loadOpinion(id);
+  } else {
+    showMode("error marking per curiam");
+  }
+}
+
+// ── Confirm author ──
+async function confirmAuthor(name) {
+  const resp = await fetch("/api/confirmed-authors", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name }),
+  });
+  if (resp.ok) {
+    const result = await resp.json();
+    showMode(`confirmed "${name}" (${result.opinions_cleared} opinions)`);
+    // Reload to clear orange indicators
+    table.setData();
+    if (currentOpinionId) loadOpinion(currentOpinionId);
+  } else {
+    showMode("confirm failed");
+  }
+}
+
 // ══════════════════════════════════════════════════════════════════
 // ── Keyboard navigation ──
 // ══════════════════════════════════════════════════════════════════
@@ -1182,6 +1247,7 @@ function showMode(text) {
   el._timer = setTimeout(() => { el.style.opacity = "0"; }, 1500);
 }
 
+// Use capture phase so we get keys before Tabulator intercepts them
 document.addEventListener("keydown", (e) => {
   const helpOverlay = document.getElementById("help-overlay");
 
@@ -1214,6 +1280,15 @@ document.addEventListener("keydown", (e) => {
 
   // Everything below only when no input is focused
   if (isInputFocused()) return;
+
+  // Stop all handled keys from leaking to Tabulator
+  const handledKeys = new Set([
+    "j","k","l","h","g","G","r","f","n","x","p","m","e","!","/",
+    "Enter","1","2","3","4","5",
+  ]);
+  if (handledKeys.has(e.key) || (e.ctrlKey && (e.key === "d" || e.key === "u"))) {
+    e.stopPropagation();
+  }
 
   const rows = table.getRows();
   const maxIdx = rows.length - 1;
@@ -1357,6 +1432,26 @@ document.addEventListener("keydown", (e) => {
       break;
     }
 
+    // Mark per curiam
+    case "p":
+      e.preventDefault();
+      if (currentOpinionId && currentOpinionData) {
+        markPerCuriam(currentOpinionId);
+      }
+      break;
+
+    // Confirm author
+    case "!":
+      e.preventDefault();
+      if (currentOpinionData && currentOpinionData.author && !currentOpinionData.author_recognized) {
+        confirmAuthor(currentOpinionData.author);
+      } else if (currentOpinionData && currentOpinionData.author_recognized) {
+        showMode("author already recognized");
+      } else {
+        showMode("no author to confirm");
+      }
+      break;
+
     // Merge
     case "m":
       e.preventDefault();
@@ -1375,7 +1470,7 @@ document.addEventListener("keydown", (e) => {
       }
       break;
   }
-});
+}, true);  // capture phase — fires before Tabulator's key handlers
 
 // ── Inline editing ──
 function startEdit(el) {

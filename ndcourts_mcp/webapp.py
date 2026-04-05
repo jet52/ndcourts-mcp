@@ -18,13 +18,30 @@ STATIC_DIR = Path(__file__).parent / "static"
 # Known surrogates / special author values that aren't "bad"
 SURROGATE_AUTHORS = {"Per Curiam", "per curiam", "Per curiam"}
 
+# Locally confirmed authors (supplements KNOWN_LAST_NAMES)
+CONFIRMED_AUTHORS_PATH = Path(__file__).parent.parent / "confirmed-authors.json"
+
+
+def _load_confirmed_authors() -> set[str]:
+    if CONFIRMED_AUTHORS_PATH.exists():
+        return set(json.loads(CONFIRMED_AUTHORS_PATH.read_text()))
+    return set()
+
+
+def _save_confirmed_authors(names: set[str]) -> None:
+    CONFIRMED_AUTHORS_PATH.write_text(json.dumps(sorted(names), indent=2) + "\n")
+
+
+_confirmed_authors: set[str] = _load_confirmed_authors()
+
 
 def _is_recognized_author(author: str | None) -> bool:
     if not author:
         return True
     if author in SURROGATE_AUTHORS:
         return True
-    return author.strip().lower() in KNOWN_LAST_NAMES
+    lower = author.strip().lower()
+    return lower in KNOWN_LAST_NAMES or lower in _confirmed_authors
 
 
 @contextmanager
@@ -114,10 +131,12 @@ def list_opinions(
     bad_author: bool | None = None,
     no_author: bool | None = None,
     has_dupes: bool | None = None,
+    citation: str | None = None,
 ):
     # Whitelist sortable columns
     allowed_sort = {
         "date_filed", "case_name", "author", "primary_citation",
+        "cite_nd", "cite_nd_old", "cite_nw",
         "case_type", "docket_number", "source_reporter", "per_curiam",
         "unanimous", "id",
     }
@@ -131,7 +150,7 @@ def list_opinions(
             return _search_opinions(
                 conn, search, page, size, sort, sort_dir,
                 date_from, date_to, author, case_type,
-                source_reporter, has_notes, bad_author, no_author, has_dupes,
+                source_reporter, has_notes, bad_author, no_author, has_dupes, citation,
             )
 
         where_clauses: list[str] = []
@@ -155,7 +174,7 @@ def list_opinions(
         if has_notes:
             where_clauses.append("o.notes IS NOT NULL AND o.notes != ''")
         if bad_author:
-            known = KNOWN_LAST_NAMES | {a.lower() for a in SURROGATE_AUTHORS}
+            known = KNOWN_LAST_NAMES | {a.lower() for a in SURROGATE_AUTHORS} | _confirmed_authors
             placeholders = ",".join("?" for _ in known)
             where_clauses.append(
                 f"o.author IS NOT NULL AND o.author != '' "
@@ -171,12 +190,17 @@ def list_opinions(
                 "EXISTS (SELECT 1 FROM opinions o2 WHERE o2.case_name = o.case_name "
                 "AND o2.date_filed = o.date_filed AND o2.id != o.id)"
             )
+        if citation:
+            where_clauses.append(
+                "EXISTS (SELECT 1 FROM citations ct WHERE ct.opinion_id = o.id AND ct.citation LIKE ?)"
+            )
+            params.append(f"%{citation}%")
 
         where_sql = (" WHERE " + " AND ".join(where_clauses)) if where_clauses else ""
 
-        # Sort mapping
-        if sort == "primary_citation":
-            order_col = "primary_citation"
+        # Sort mapping — subquery aliases don't need table prefix
+        if sort in ("primary_citation", "cite_nd", "cite_nd_old", "cite_nw"):
+            order_col = sort
         else:
             order_col = f"o.{sort}"
 
@@ -195,7 +219,8 @@ def list_opinions(
                    COALESCE(
                      (SELECT c.citation FROM citations c WHERE c.opinion_id = o.id AND c.reporter = 'NW2d' LIMIT 1),
                      (SELECT c.citation FROM citations c WHERE c.opinion_id = o.id AND c.reporter = 'NW' AND c.citation LIKE '%N.W.%' LIMIT 1)
-                   ) as cite_nw
+                   ) as cite_nw,
+                   (SELECT GROUP_CONCAT(c.citation, '; ') FROM citations c WHERE c.opinion_id = o.id AND c.citation NOT LIKE '%N.W.%' AND c.citation NOT LIKE '%ND %' AND c.citation NOT LIKE '%N.D. %') as cite_other
             FROM opinions o
             {where_sql}
             ORDER BY {order_col} {sort_dir}
@@ -215,7 +240,7 @@ def list_opinions(
 def _search_opinions(
     conn, search, page, size, sort, sort_dir,
     date_from, date_to, author, case_type,
-    source_reporter, has_notes, bad_author, no_author, has_dupes,
+    source_reporter, has_notes, bad_author, no_author, has_dupes, citation,
 ):
     where_clauses: list[str] = []
     params: list = [search]
@@ -254,6 +279,11 @@ def _search_opinions(
             "EXISTS (SELECT 1 FROM opinions o2 WHERE o2.case_name = o.case_name "
             "AND o2.date_filed = o.date_filed AND o2.id != o.id)"
         )
+    if citation:
+        where_clauses.append(
+            "EXISTS (SELECT 1 FROM citations ct WHERE ct.opinion_id = o.id AND ct.citation LIKE ?)"
+        )
+        params.append(f"%{citation}%")
 
     extra_where = (" AND " + " AND ".join(where_clauses)) if where_clauses else ""
 
@@ -269,8 +299,8 @@ def _search_opinions(
     # Use rank for FTS sort, otherwise user-specified
     if sort == "date_filed":
         order_clause = f"o.date_filed {sort_dir}"
-    elif sort == "primary_citation":
-        order_clause = f"primary_citation {sort_dir}"
+    elif sort in ("primary_citation", "cite_nd", "cite_nd_old", "cite_nw"):
+        order_clause = f"{sort} {sort_dir}"
     else:
         order_clause = "rank"
 
@@ -285,6 +315,7 @@ def _search_opinions(
                  (SELECT c.citation FROM citations c WHERE c.opinion_id = o.id AND c.reporter = 'NW2d' LIMIT 1),
                  (SELECT c.citation FROM citations c WHERE c.opinion_id = o.id AND c.reporter = 'NW' AND c.citation LIKE '%N.W.%' LIMIT 1)
                ) as cite_nw,
+               (SELECT GROUP_CONCAT(c.citation, '; ') FROM citations c WHERE c.opinion_id = o.id AND c.citation NOT LIKE '%N.W.%' AND c.citation NOT LIKE '%ND %' AND c.citation NOT LIKE '%N.D. %') as cite_other,
                snippet(opinions_fts, 1, '«', '»', '…', 30) as snippet
         FROM opinions_fts
         JOIN opinions o ON o.id = opinions_fts.rowid
@@ -358,7 +389,7 @@ def get_opinion(opinion_id: int):
 
 # ── PATCH /api/opinions/{id} ──────────────────────────────────────
 
-EDITABLE_FIELDS = {"author", "case_name", "date_filed", "case_type", "judges", "docket_number", "notes"}
+EDITABLE_FIELDS = {"author", "case_name", "date_filed", "case_type", "judges", "docket_number", "notes", "per_curiam"}
 
 
 @app.patch("/api/opinions/{opinion_id}")
@@ -817,6 +848,52 @@ async def merge_opinions(survivor_id: int, request: Request):
         "loser_id": loser_id,
         "fields_updated": list(updates.keys()),
     }
+
+
+# ── Confirmed authors ─────────────────────────────────────────────
+
+@app.get("/api/confirmed-authors")
+def get_confirmed_authors():
+    return sorted(_confirmed_authors)
+
+
+@app.post("/api/confirmed-authors")
+async def confirm_author(request: Request):
+    body = await request.json()
+    name = body.get("name", "").strip()
+    if not name:
+        raise HTTPException(400, "name required")
+
+    lower = name.lower()
+    _confirmed_authors.add(lower)
+    _save_confirmed_authors(_confirmed_authors)
+
+    # Invalidate facets cache so author counts refresh
+    global _facets_cache
+    _facets_cache = None
+
+    # Count how many opinions this clears
+    with _db() as conn:
+        count = conn.execute(
+            "SELECT COUNT(*) as n FROM opinions WHERE LOWER(TRIM(author)) = ?",
+            (lower,),
+        ).fetchone()["n"]
+
+    return {"status": "confirmed", "name": name, "opinions_cleared": count}
+
+
+@app.delete("/api/confirmed-authors/{name}")
+def unconfirm_author(name: str):
+    lower = name.strip().lower()
+    if lower not in _confirmed_authors:
+        raise HTTPException(404, "Author not in confirmed list")
+    _confirmed_authors.discard(lower)
+    _save_confirmed_authors(_confirmed_authors)
+
+    global _facets_cache
+    _facets_cache = None
+
+    return {"status": "removed", "name": name}
 
 
 # ── Review flags (file-backed, for Claude Code to consume) ────────
