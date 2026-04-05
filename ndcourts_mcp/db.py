@@ -47,6 +47,19 @@ def create_schema(conn: sqlite3.Connection) -> None:
             is_primary INTEGER DEFAULT 0
         );
 
+        CREATE TABLE IF NOT EXISTS changelog (
+            id INTEGER PRIMARY KEY,
+            timestamp TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%S', 'now')),
+            batch TEXT NOT NULL,
+            opinion_id INTEGER NOT NULL REFERENCES opinions(id),
+            field TEXT NOT NULL,
+            old_value TEXT,
+            new_value TEXT
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_changelog_batch ON changelog(batch);
+        CREATE INDEX IF NOT EXISTS idx_changelog_opinion_id ON changelog(opinion_id);
+
         CREATE INDEX IF NOT EXISTS idx_citations_citation ON citations(citation);
         CREATE INDEX IF NOT EXISTS idx_citations_opinion_id ON citations(opinion_id);
         CREATE INDEX IF NOT EXISTS idx_opinions_date ON opinions(date_filed);
