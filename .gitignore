@@ -9,3 +9,4 @@ ndcourts_mcp.egg-info/
 node_modules/
 package-lock.json
 input-data/
+.remember/
