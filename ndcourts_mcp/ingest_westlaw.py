@@ -410,6 +410,23 @@ def process_batch(
             continue
 
         stats["matched"] += 1
+        opinion_id = db_opinion["id"]
+
+        # Record Westlaw as a source for this opinion
+        if apply:
+            archive_path = _archive_single_doc(doc_path, parsed, volume)
+            existing = conn.execute(
+                "SELECT id FROM opinion_sources WHERE opinion_id = ? AND source_reporter = 'westlaw'",
+                (opinion_id,),
+            ).fetchone()
+            if not existing:
+                conn.execute(
+                    """INSERT INTO opinion_sources
+                       (opinion_id, source_reporter, source_path, text_length, is_primary, added_at)
+                       VALUES (?, 'westlaw', ?, ?, 0, strftime('%Y-%m-%dT%H:%M:%S', 'now'))""",
+                    (opinion_id, str(archive_path), len(parsed.get("text", ""))),
+                )
+
         diffs = _compare_fields(parsed, db_opinion)
 
         if not diffs:
@@ -506,6 +523,39 @@ def process_batch(
 
 
 REFS_DIR = Path.home() / "refs" / "opin" / "N.D."
+WESTLAW_REFS_DIR = Path.home() / "refs" / "opin" / "westlaw"
+
+
+def _cite_to_filename(citation: str) -> str:
+    """Convert a citation like '20 N.D. 261' to '20_ND_261'."""
+    return re.sub(r'[.\s]+', '_', citation).replace('__', '_').strip('_')
+
+
+def _archive_single_doc(doc_path: Path, parsed: dict, volume: int | None) -> Path:
+    """Archive a single .doc file. Returns the archive path.
+
+    Volume downloads go to ~/refs/opin/N.D./{vol}/{page}-{Name}.doc.
+    Individual downloads go to ~/refs/opin/westlaw/{cite_slug}.doc.
+    """
+    if volume is not None:
+        # Volume-based: will be handled by _archive_westlaw_docs batch copy
+        return doc_path
+
+    # Individual case: archive by citation
+    dest_dir = WESTLAW_REFS_DIR
+    dest_dir.mkdir(parents=True, exist_ok=True)
+
+    cite = parsed.get("primary_citation", "")
+    if cite:
+        slug = _cite_to_filename(cite)
+    else:
+        slug = doc_path.stem.replace(' ', '_')
+
+    dest_path = dest_dir / f"{slug}.doc"
+    if not dest_path.exists():
+        shutil.copy2(doc_path, dest_path)
+
+    return dest_path
 
 
 def _archive_westlaw_docs(batch_dir: Path, volume: int) -> None:
