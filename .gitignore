@@ -4,6 +4,8 @@ __pycache__/
 .DS_Store
 *.db
 *.db-journal
+*.db-shm
+*.db-wal
 .claude/
 ndcourts_mcp.egg-info/
 node_modules/
