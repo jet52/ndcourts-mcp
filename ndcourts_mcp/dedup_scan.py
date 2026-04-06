@@ -84,20 +84,52 @@ def _minhash_similarity(sig_a: list[int], sig_b: list[int]) -> float:
 
 # ── Strategy 1: Shared citations ─────────────────────────────────────
 
-def _find_citation_dupes(conn: sqlite3.Connection) -> list[tuple[int, int, float]]:
-    """Find opinion pairs sharing the same citation string."""
+def _find_citation_dupes(conn: sqlite3.Connection) -> list[tuple[int, int, float, float]]:
+    """Find opinion pairs sharing citation strings, confirmed by text similarity.
+
+    Pairs sharing 2+ citations are high confidence without text check.
+    Pairs sharing only 1 citation must also have text similarity > 0.4
+    to filter out citation collisions (different cases on the same
+    reporter page).
+    """
     rows = conn.execute("""
-        SELECT c1.opinion_id as id_a, c2.opinion_id as id_b, c1.citation
+        SELECT c1.opinion_id as id_a, c2.opinion_id as id_b,
+               COUNT(*) as shared_count
         FROM citations c1
         JOIN citations c2 ON c1.citation = c2.citation AND c1.opinion_id < c2.opinion_id
+        GROUP BY c1.opinion_id, c2.opinion_id
     """).fetchall()
 
-    pairs = {}
+    results = []
     for r in rows:
-        key = (r["id_a"], r["id_b"])
-        if key not in pairs:
-            pairs[key] = 0.95  # high confidence for citation match
-    return [(a, b, conf) for (a, b), conf in pairs.items()]
+        id_a, id_b, shared = r["id_a"], r["id_b"], r["shared_count"]
+
+        # Always check text similarity — even with 2+ shared citations,
+        # different cases (e.g., consolidated cases decided in one opinion)
+        # can share all citations without being true duplicates
+        texts = conn.execute(
+            "SELECT id, case_name, text_content FROM opinions WHERE id IN (?, ?)",
+            (id_a, id_b),
+        ).fetchall()
+        if len(texts) != 2:
+            continue
+
+        sim = _text_similarity(texts[0]["text_content"], texts[1]["text_content"])
+        names_match = texts[0]["case_name"].lower() == texts[1]["case_name"].lower()
+
+        if names_match:
+            # Same name — lower bar for text similarity
+            if sim > 0.3:
+                confidence = min(0.95, 0.5 + sim * 0.5)
+                results.append((id_a, id_b, confidence, sim))
+        else:
+            # Different names — require high text similarity to confirm
+            # they're truly the same opinion, not related cases sharing cites
+            if sim > 0.7:
+                confidence = min(0.9, 0.4 + sim * 0.5)
+                results.append((id_a, id_b, confidence, sim))
+
+    return results
 
 
 # ── Strategy 2: Same name + date + text similarity ───────────────────
@@ -209,13 +241,13 @@ def run_scan(
     if strategy in ("all", "citation"):
         print("Strategy 1: Shared citations...", flush=True)
         cite_dupes = _find_citation_dupes(conn)
-        for id_a, id_b, confidence in cite_dupes:
+        for id_a, id_b, confidence, sim in cite_dupes:
             if (id_a, id_b) not in existing:
                 conn.execute(
                     """INSERT OR IGNORE INTO duplicate_candidates
-                       (opinion_a, opinion_b, strategy, confidence)
-                       VALUES (?, ?, 'citation', ?)""",
-                    (id_a, id_b, confidence),
+                       (opinion_a, opinion_b, strategy, confidence, text_similarity)
+                       VALUES (?, ?, 'citation', ?, ?)""",
+                    (id_a, id_b, confidence, sim),
                 )
                 existing.add((id_a, id_b))
                 inserted += 1
