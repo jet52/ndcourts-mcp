@@ -122,6 +122,21 @@ def create_schema(conn: sqlite3.Connection) -> None:
             scanned_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%S', 'now'))
         );
 
+        -- Westlaw volume processing progress
+        CREATE TABLE IF NOT EXISTS westlaw_progress (
+            id INTEGER PRIMARY KEY,
+            volume INTEGER NOT NULL,
+            reporter TEXT NOT NULL DEFAULT 'N.D.',
+            opinions_total INTEGER,
+            opinions_matched INTEGER,
+            opinions_not_found INTEGER,
+            corrections_applied INTEGER,
+            downloaded_at TEXT,
+            processed_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%S', 'now')),
+            source_path TEXT,
+            notes TEXT
+        );
+
         -- Checkpoint tracking for citation extraction
         CREATE TABLE IF NOT EXISTS cite_extract_progress (
             opinion_id INTEGER PRIMARY KEY REFERENCES opinions(id),

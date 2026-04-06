@@ -5,11 +5,14 @@ author, judges) and opinion text, then matches against existing database records
 and reports differences.
 
 Usage:
-    python -m ndcourts_mcp.ingest_westlaw input-data/batch1/  [--apply] [--db PATH]
+    python -m ndcourts_mcp.ingest_westlaw process input-data/vol8/ --volume 8 --apply
+    python -m ndcourts_mcp.ingest_westlaw status
+    python -m ndcourts_mcp.ingest_westlaw export 11 12
 """
 
 import argparse
 import re
+import shutil
 import subprocess
 from datetime import datetime
 from pathlib import Path
@@ -357,16 +360,20 @@ def _compare_fields(westlaw: dict, db: dict) -> list[tuple[str, str, str]]:
 
 def process_batch(
     batch_dir: Path, db_path: Path, apply: bool = False, batch_name: str = "westlaw-batch",
-    case_name_mode: str = "ask",
+    case_name_mode: str = "ask", volume: int | None = None,
 ):
     doc_files = sorted(batch_dir.glob("*.doc"))
     if not doc_files:
         print(f"No .doc files found in {batch_dir}")
         return
 
+    if volume is not None:
+        print(f"{BOLD}Processing N.D. Reports vol {volume}{RESET}")
+
     conn = get_connection(db_path)
 
     stats = {"matched": 0, "not_found": 0, "diffs": 0, "corrections": 0, "errors": 0}
+    not_found_log: list[str] = []
 
     for doc_path in doc_files:
         print(f"\n{BOLD}{doc_path.name}{RESET}")
@@ -397,6 +404,9 @@ def process_batch(
         if not db_opinion:
             print(f"  {YELLOW}NOT FOUND in database{RESET}")
             stats["not_found"] += 1
+            cite = parsed.get("primary_citation", "?")
+            name = parsed.get("case_name", "?")
+            not_found_log.append(f"{cite}\t{name}\t{doc_path.name}")
             continue
 
         stats["matched"] += 1
@@ -456,7 +466,9 @@ def process_batch(
 
     conn.close()
 
+    total_files = len(doc_files)
     print(f"\n{BOLD}Summary:{RESET}")
+    print(f"  Files: {total_files}")
     print(f"  Matched: {stats['matched']}")
     print(f"  Not found: {stats['not_found']}")
     print(f"  With differences: {stats['diffs']}")
@@ -464,23 +476,183 @@ def process_batch(
         print(f"  Corrections applied: {stats['corrections']}")
     print(f"  Errors: {stats['errors']}")
 
+    # Log unmatched opinions for investigation
+    if not_found_log:
+        log_path = batch_dir / "unmatched.txt"
+        with open(log_path, "w") as f:
+            for entry in not_found_log:
+                f.write(f"{entry}\n")
+        print(f"  Unmatched log: {log_path}")
+
+    # Record progress and archive files if volume specified
+    if volume is not None and apply:
+        progress_conn = get_connection(db_path)
+        progress_conn.execute(
+            """INSERT INTO westlaw_progress
+               (volume, opinions_total, opinions_matched, opinions_not_found,
+                corrections_applied, source_path)
+               VALUES (?, ?, ?, ?, ?, ?)""",
+            (volume, total_files, stats["matched"], stats["not_found"],
+             stats["corrections"], str(batch_dir)),
+        )
+        progress_conn.commit()
+        progress_conn.close()
+        print(f"  Recorded progress for vol {volume}")
+
+        # Archive .doc files to ~/refs/opin/N.D./{volume}/
+        _archive_westlaw_docs(batch_dir, volume)
+
+    return stats
+
+
+REFS_DIR = Path.home() / "refs" / "opin" / "N.D."
+
+
+def _archive_westlaw_docs(batch_dir: Path, volume: int) -> None:
+    """Copy .doc files to ~/refs/opin/N.D./{volume}/ with standardized names.
+
+    Renames from Westlaw format "NNN - Case Name.doc" to "{page:04d}-{Case-Name}.doc"
+    using the N.D. page number extracted from the opinion text.
+    """
+    dest = REFS_DIR / str(volume)
+    dest.mkdir(parents=True, exist_ok=True)
+
+    doc_files = sorted(batch_dir.glob("*.doc"))
+    archived = 0
+    for f in doc_files:
+        # Extract page number from opinion text
+        try:
+            text = _doc_to_text(f)
+        except Exception:
+            shutil.copy2(f, dest / f.name)
+            archived += 1
+            continue
+
+        m = re.search(rf'{volume}\s+N\.D\.\s+(\d+)', text)
+        if m:
+            page = int(m.group(1))
+        else:
+            # Fallback: keep original name
+            shutil.copy2(f, dest / f.name)
+            archived += 1
+            continue
+
+        # Build case name from filename
+        name_m = re.match(r'\d+\s*-\s*(.+)\.doc$', f.name)
+        case_name = name_m.group(1).strip().replace(' ', '-') if name_m else f.stem.replace(' ', '-')
+
+        new_name = f"{page:04d}-{case_name}.doc"
+        dest_path = dest / new_name
+        if not dest_path.exists():
+            shutil.copy2(f, dest_path)
+        archived += 1
+
+    print(f"  Archived {archived} files to {dest}")
+
+
+def show_status(db_path: Path = DEFAULT_DB_PATH) -> None:
+    """Show Westlaw download progress and suggest next volume."""
+    conn = get_connection(db_path)
+    rows = conn.execute(
+        "SELECT * FROM westlaw_progress ORDER BY volume"
+    ).fetchall()
+    conn.close()
+
+    if not rows:
+        print("No Westlaw volumes processed yet.")
+        return
+
+    print(f"{BOLD}Westlaw N.D. Reports Progress{RESET}\n")
+    print(f"  {'Vol':>4}  {'Total':>5}  {'Match':>5}  {'NotFnd':>6}  {'Fixed':>5}  {'Date':>10}  Notes")
+    print(f"  {'─'*4}  {'─'*5}  {'─'*5}  {'─'*6}  {'─'*5}  {'─'*10}  {'─'*20}")
+    for r in rows:
+        notes = (r["notes"] or "")[:30]
+        print(
+            f"  {r['volume']:>4}  {r['opinions_total'] or '?':>5}  "
+            f"{r['opinions_matched'] or '?':>5}  {r['opinions_not_found'] or '?':>6}  "
+            f"{r['corrections_applied'] or 0:>5}  {r['processed_at'][:10]:>10}  {notes}"
+        )
+
+    last_vol = max(r["volume"] for r in rows)
+    print(f"\n  {CYAN}Next volume to process: {last_vol + 1}{RESET}")
+
+
+def export_citations(
+    db_path: Path, volume_from: int, volume_to: int, reporter: str = "N.D.",
+) -> None:
+    """Export N.D. citations for a volume range (for Westlaw Quick Check lookup)."""
+    conn = get_connection(db_path)
+    # Map reporter text to citation pattern
+    if reporter == "N.D.":
+        pattern = "% N.D. %"
+        reporter_code = "NDold"
+    else:
+        print(f"Unsupported reporter: {reporter}")
+        return
+
+    rows = conn.execute("""
+        SELECT c.citation FROM citations c
+        WHERE c.reporter = ?
+          AND CAST(SUBSTR(c.citation, 1, INSTR(c.citation, ' ') - 1) AS INTEGER) BETWEEN ? AND ?
+        ORDER BY CAST(SUBSTR(c.citation, 1, INSTR(c.citation, ' ') - 1) AS INTEGER),
+                 CAST(SUBSTR(c.citation, INSTR(c.citation, '. ') + 2) AS INTEGER)
+    """, (reporter_code, volume_from, volume_to)).fetchall()
+    conn.close()
+
+    print(f"# {len(rows)} citations from {volume_from}–{volume_to} {reporter}")
+    for r in rows:
+        print(r["citation"])
+
 
 def main():
     parser = argparse.ArgumentParser(description="Ingest Westlaw .doc files")
-    parser.add_argument("batch_dir", type=Path, help="Directory of .doc files")
-    parser.add_argument("--apply", action="store_true", help="Apply corrections to database")
-    parser.add_argument("--batch", default="westlaw-batch", help="Changelog batch name")
-    parser.add_argument("--db", type=Path, default=DEFAULT_DB_PATH)
-    parser.add_argument(
+    sub = parser.add_subparsers(dest="command")
+
+    # Default: process batch
+    proc = sub.add_parser("process", help="Process a batch of .doc files")
+    proc.add_argument("batch_dir", type=Path, help="Directory of .doc files")
+    proc.add_argument("--apply", action="store_true", help="Apply corrections to database")
+    proc.add_argument("--batch", default="westlaw-batch", help="Changelog batch name")
+    proc.add_argument("--volume", type=int, default=None, help="N.D. Reports volume number")
+    proc.add_argument("--db", type=Path, default=DEFAULT_DB_PATH)
+    proc.add_argument(
         "--case-names", choices=["ask", "skip", "westlaw", "db"],
         default="ask", help="How to handle case name diffs (default: ask interactively)",
     )
+
+    # Status
+    status = sub.add_parser("status", help="Show Westlaw download progress")
+    status.add_argument("--db", type=Path, default=DEFAULT_DB_PATH)
+
+    # Export citations
+    export = sub.add_parser("export", help="Export citations for Westlaw Quick Check")
+    export.add_argument("volume_from", type=int, help="Start volume")
+    export.add_argument("volume_to", type=int, help="End volume")
+    export.add_argument("--reporter", default="N.D.", help="Reporter (default: N.D.)")
+    export.add_argument("--db", type=Path, default=DEFAULT_DB_PATH)
+
     args = parser.parse_args()
 
-    process_batch(
-        args.batch_dir, args.db, apply=args.apply, batch_name=args.batch,
-        case_name_mode=args.case_names,
-    )
+    if args.command == "status":
+        show_status(args.db)
+    elif args.command == "export":
+        export_citations(args.db, args.volume_from, args.volume_to, args.reporter)
+    elif args.command == "process" or args.command is None:
+        # Backward compat: if no subcommand, treat positional as batch_dir
+        if args.command is None:
+            # Re-parse with old-style args
+            parser2 = argparse.ArgumentParser()
+            parser2.add_argument("batch_dir", type=Path)
+            parser2.add_argument("--apply", action="store_true")
+            parser2.add_argument("--batch", default="westlaw-batch")
+            parser2.add_argument("--volume", type=int, default=None)
+            parser2.add_argument("--db", type=Path, default=DEFAULT_DB_PATH)
+            parser2.add_argument("--case-names", choices=["ask", "skip", "westlaw", "db"], default="ask")
+            args = parser2.parse_args()
+        process_batch(
+            args.batch_dir, args.db, apply=args.apply, batch_name=args.batch,
+            case_name_mode=args.case_names, volume=args.volume,
+        )
 
 
 if __name__ == "__main__":
