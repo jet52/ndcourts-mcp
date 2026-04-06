@@ -168,15 +168,21 @@ def process_all(
         if dry_run:
             print(f"  WOULD REPLACE: {old_len} → {new_len} chars")
         else:
+            old_reporter = row["source_reporter"]
             conn.execute(
-                "UPDATE opinions SET text_content = ? WHERE id = ?",
+                "UPDATE opinions SET text_content = ?, source_reporter = 'westlaw' WHERE id = ?",
                 (new_text, oid),
             )
             conn.execute(
                 "INSERT INTO changelog (batch, opinion_id, field, old_value, new_value) "
                 "VALUES (?, ?, 'text_content', ?, ?)",
-                (batch_name, oid, f"[{old_len} chars from {row['source_reporter']}]",
+                (batch_name, oid, f"[{old_len} chars from {old_reporter}]",
                  f"[{new_len} chars from westlaw]"),
+            )
+            conn.execute(
+                "INSERT INTO changelog (batch, opinion_id, field, old_value, new_value) "
+                "VALUES (?, ?, 'source_reporter', ?, 'westlaw')",
+                (batch_name, oid, old_reporter),
             )
             print(f"  REPLACED: {old_len} → {new_len} chars")
 
