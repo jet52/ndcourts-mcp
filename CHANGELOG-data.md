@@ -379,3 +379,25 @@ Volumes 32–44 N.D. Reports (867 opinions, 1915–1920). Applied 2026-04-17 and
 | 44 | 62 | 38 | 2 | 40 |
 
 All files matched DB records. Author-correction counts climb sharply from vol 37 onward as the Birdzell/Bronson/Christianson era of OCR misreads becomes denser.
+
+## Batches: backfill-sources-insert (5,548 rows) + backfill-sources-promote (5,260 rows)
+
+Applied 2026-04-18. Script: `python -m ndcourts_mcp.backfill_sources --apply [--promote]`.
+
+Closes the source-attachment gap that accumulated because ingest's dedup merge added citations but never recorded the secondary source file in `opinion_sources`. Audit (`audit_sources`) showed 5,260 ndcourts.gov markdown files and 288 archive.ndcourts.gov HTML files existed on disk but were not linked.
+
+**Insert phase** (5,548 `opinion_sources` INSERTs):
+
+| Reporter | Rows | Era |
+|----------|------|-----|
+| ND | 5,260 | 1997–2026 |
+| archive | 288 | 1997–2019 |
+
+**Promote phase** (5,260 opinions flipped to ND-primary):
+
+For 1997+ opinions whose primary was NW2d (5,258) or westlaw (2) but now have a linked ND source, set `opinion_sources.is_primary=1` on the ND row and update `opinions.source_reporter` to 'ND'. ndcourts.gov is authoritative for 1997+. Did NOT alter `opinions.source_path` or `text_content` — those may still point at the old source file and will be aligned in a follow-up pass (TODO-validation §4 Phase 3).
+
+**Known limitations:**
+- 122 post-1997 opinions remain NW2d-primary. None carry an ND citation, so they have no ndcourts.gov counterpart to promote to. Likely memorandum opinions or orders without a neutral cite.
+- 2 opinions (IDs 20383, 20384) list an ND citation but the markdown file is missing from disk. Tracked in TODO-validation §7.
+- Root-cause fix in `ingest.py` merge logic still pending — future ingests will reopen the gap until the merge path is updated to insert the secondary `opinion_sources` row (TODO-validation §4).
