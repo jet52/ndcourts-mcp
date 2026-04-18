@@ -170,8 +170,17 @@ def process_all(
         else:
             old_reporter = row["source_reporter"]
             conn.execute(
-                "UPDATE opinions SET text_content = ?, source_reporter = 'westlaw' WHERE id = ?",
-                (new_text, oid),
+                "UPDATE opinions SET text_content = ?, source_reporter = 'westlaw', source_path = ? WHERE id = ?",
+                (new_text, str(source_path), oid),
+            )
+            conn.execute(
+                "UPDATE opinion_sources SET is_primary = 0 WHERE opinion_id = ?",
+                (oid,),
+            )
+            conn.execute(
+                "UPDATE opinion_sources SET is_primary = 1 "
+                "WHERE opinion_id = ? AND source_reporter = 'westlaw'",
+                (oid,),
             )
             conn.execute(
                 "INSERT INTO changelog (batch, opinion_id, field, old_value, new_value) "
