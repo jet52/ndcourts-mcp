@@ -520,11 +520,30 @@ Bug fix vs. 2026-04-21 run: query now filters out `o.source_reporter='westlaw'` 
 | NW   | 2,144 |
 | NW2d | 589 |
 
-Residuals (137 opinions with a westlaw .doc still not migrated):
-- 110 — parser couldn't extract opinion text from the .doc (`SKIP: could not parse opinion text from Westlaw doc`)
-- 27 — Westlaw text suspiciously short vs. existing DB text (`REJECT: < 30%` rule)
+Initial residuals: 137. After parser fixes (next entry) the count dropped to 29; the 137 ⇒ 29 reduction is logged in the pass2/pass3 batches below.
 
-These are candidates for a manual triage pass — separate batch, do not auto-apply. After this batch, 5,598 opinions are westlaw-primary (out of 5,735 with a westlaw source linked).
+## Batches: westlaw-text-merge-2026-04-27-pass2 (216 rows) + pass3 (10 rows)
+
+Triage of the 137 residuals from the pass1 run revealed three parser limitations in `_parse_westlaw_doc`:
+
+1. **108 of 110 SKIPs were a single root cause:** post-classic Westlaw exports lack the bare "Opinion" header line. The body begins after `Attorneys and Law Firms` + the attorney list + an author line (e.g., `ERICKSTAD, Judge.`). Parser extended to detect this format and use the author line as `body_start`. Pass2 unlocked 103 merges.
+2. **Star-pagination prefix and `PER CURIAM` and `District Judge` markers:** edge cases where the author detection regex didn't fire (`*962 GOSS, J.`, `PER CURIAM.`, `COLE, District Judge.`). Regex extended to strip leading `*\d+\s+` and to accept those marker variants.
+3. **"All Citations" search window was 20 lines from EOF**, but docs with long Footnotes sections push the marker further back (e.g., State v. Thompson at line 135 of 157). Search now scans the entire doc from the end. Pass3 unlocked 5 more merges (3 stragglers from #2 plus 2 that needed the wider footer search).
+
+After three passes, **2,841 opinions migrated to Westlaw text in this session** (2,733 + 103 + 5).
+
+The errors-report tool added in the same commit (`merge_westlaw_text --errors-report PATH`) categorizes residuals into actionable buckets and writes a markdown triage doc. Current residuals (29):
+
+| Category | Count | Action |
+|---|---:|---|
+| Westlaw text suspiciously short (< 30% of DB) | 27 | case-by-case; see report |
+| Missing opinion header AND no Attorneys section | 2 | likely irretrievable from this Westlaw export |
+
+Of the 27 length-rejects, manual inspection of the report suggests two sub-patterns:
+- ~4 are wrong pairings: the Westlaw .doc filename does not match the DB case name (e.g., DB "Burger v. Sinclair" linked to a "Seckerson v. Sinclair" .doc — same NW page citation, different case). These should have the `opinion_sources` row deleted.
+- The rest are real differences: NW2d-era opinions where Westlaw exports only the opinion body while the DB stores body + CL-OCR headnotes (e.g., Stormon v. Weiss has a 200K .doc but only 10 body lines).
+
+After this session, **5,701 opinions are westlaw-primary** (up from 2,865 at session start) of 5,735 with a westlaw source linked. Triage report committed at `triage/westlaw-merge-residuals-2026-04-27.md`.
 
 ## Batches: backfill-sources-insert (5,548 rows) + backfill-sources-promote (5,260 rows)
 
