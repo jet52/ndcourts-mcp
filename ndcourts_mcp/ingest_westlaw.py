@@ -74,9 +74,11 @@ def _parse_westlaw_doc(text: str) -> dict | None:
     else:
         return None
 
-    # Find "All Citations" at end
+    # Find "All Citations" footer. Scan from the end; opinions with footnotes
+    # or end-of-document boilerplate can push the marker far past the last 20
+    # lines (e.g., State v. Thompson, 24 N.D. 273 — line 135 of 157).
     all_cites_idx = None
-    for j in range(len(lines) - 1, max(len(lines) - 20, 0), -1):
+    for j in range(len(lines) - 1, -1, -1):
         if lines[j].strip() == "All Citations":
             all_cites_idx = j
             break
@@ -119,35 +121,51 @@ def _parse_westlaw_doc(text: str) -> dict | None:
             result["date_filed"] = d
             break
 
-    # Find author — "LASTNAME, J." or "LASTNAME, C. J." in Opinion section
+    # Locate the start of the opinion body. Two Westlaw export formats:
+    # (a) Classic: a bare "Opinion" header line precedes the author line.
+    # (b) Modern: no header — body begins at the author line that follows
+    #     the "Attorneys and Law Firms" section.
+    author_pat = re.compile(
+        r"^([A-Z][A-Z'\-]+(?:\s+[A-Z][A-Z'\-]+)?)\s*,\s*"
+        r"(?:C\.\s*J|J|Judge|Justice|District\s+Judge|Special\s+Judge"
+        r"|Chief\s+Justice|Acting\s+C\.\s*J)\."
+    )
+    per_curiam_pat = re.compile(r"^PER\s+CURIAM\.?\s*$")
+    # Strip leading "*123 " star-pagination so e.g. "*962 GOSS, J." matches.
+    star_strip = re.compile(r"^\*\d+\s+")
+
+    def _is_body_start(line: str) -> bool:
+        s = star_strip.sub("", line.strip())
+        return bool(author_pat.match(s) or per_curiam_pat.match(s))
+
     opinion_start = None
+    body_start = None
     for i, line in enumerate(lines):
         if line.strip() == "Opinion":
             opinion_start = i
+            body_start = i + 1
             break
 
-    if opinion_start:
-        for i in range(opinion_start, min(opinion_start + 5, len(lines))):
-            line = lines[i].strip()
-            m = re.match(
-                r"^([A-Z][A-Z']+(?:\s[A-Z]+)?),\s*(?:C\.\s*J|J)\.",
-                line,
-            )
-            if m:
-                name = m.group(1)
-                result["author"] = name.title()
+    if opinion_start is None:
+        for i, line in enumerate(lines):
+            if line.strip() == "Attorneys and Law Firms":
+                for j in range(i + 1, min(i + 30, len(lines))):
+                    if _is_body_start(lines[j]):
+                        opinion_start = j
+                        body_start = j  # author line is part of body
+                        break
                 break
 
-    # Find judges from "All concur" or specific concurrence/dissent lines
-    # Also look for Synopsis section for judge info
-    for i, line in enumerate(lines):
-        if "Judge." in line and "District" in line:
-            # "Appeal from District Court, X County; JUDGE NAME, Judge."
-            pass  # Could extract trial judge if needed
+    if opinion_start is not None:
+        for i in range(opinion_start, min(opinion_start + 5, len(lines))):
+            s = star_strip.sub("", lines[i].strip())
+            m = author_pat.match(s)
+            if m:
+                result["author"] = m.group(1).title()
+                break
 
-    # Extract opinion text (from "Opinion" header to "All Citations")
-    if opinion_start and all_cites_idx:
-        opinion_lines = lines[opinion_start + 1 : all_cites_idx]
+    if body_start is not None and all_cites_idx:
+        opinion_lines = lines[body_start:all_cites_idx]
         result["opinion_text"] = "\n".join(opinion_lines).strip()
 
     return result

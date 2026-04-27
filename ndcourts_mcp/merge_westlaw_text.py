@@ -215,6 +215,193 @@ def process_all(
         print(f"\nRun quality_scan --rescan to update scores.")
 
 
+def errors_report(db_path: Path, output: Path) -> None:
+    """Generate a markdown triage report of all opinions where the merge
+    would currently fail. Sub-classifies the failure modes so a human can
+    decide whether to (a) fix the parser, (b) delete the bad westlaw link,
+    or (c) accept the current state."""
+    conn = get_connection(db_path)
+
+    rows = conn.execute("""
+        SELECT os.opinion_id, os.source_path,
+               o.case_name, o.date_filed, o.source_reporter, o.text_content,
+               qs.overall_score
+        FROM opinion_sources os
+        JOIN opinions o ON o.id = os.opinion_id
+        LEFT JOIN quality_scores qs ON qs.opinion_id = o.id
+        WHERE os.source_reporter = 'westlaw'
+          AND o.source_reporter NOT IN ('ND', 'westlaw')
+        ORDER BY qs.overall_score ASC
+    """).fetchall()
+
+    cite_lookup = {}
+    for opinion_id in {r["opinion_id"] for r in rows}:
+        cites = conn.execute(
+            "SELECT citation FROM citations WHERE opinion_id = ? ORDER BY is_primary DESC, id",
+            (opinion_id,),
+        ).fetchall()
+        cite_lookup[opinion_id] = [c["citation"] for c in cites]
+
+    conn.close()
+
+    categories: dict[str, list[dict]] = {
+        "missing-opinion-header (modern Westlaw format)": [],
+        "missing-opinion-header (no Attorneys section either)": [],
+        "missing-all-citations-footer": [],
+        "empty-opinion-body": [],
+        "parse-returned-none": [],
+        "westlaw-text-too-short": [],
+        "file-missing": [],
+        "other-error": [],
+    }
+
+    for r in rows:
+        sp = Path(r["source_path"])
+        entry = {
+            "opinion_id": r["opinion_id"],
+            "case_name": r["case_name"],
+            "date_filed": r["date_filed"],
+            "source_reporter": r["source_reporter"],
+            "quality_score": r["overall_score"],
+            "citations": cite_lookup.get(r["opinion_id"], []),
+            "source_path": str(sp),
+            "db_text_len": len(r["text_content"] or ""),
+        }
+
+        if not sp.exists():
+            categories["file-missing"].append(entry)
+            continue
+
+        try:
+            raw = _doc_to_text(sp)
+        except Exception as e:
+            entry["error"] = str(e)
+            categories["other-error"].append(entry)
+            continue
+
+        entry["doc_len"] = len(raw)
+
+        try:
+            parsed = _parse_westlaw_doc(raw)
+        except Exception as e:
+            entry["error"] = str(e)
+            categories["other-error"].append(entry)
+            continue
+
+        if parsed is None:
+            categories["parse-returned-none"].append(entry)
+            continue
+
+        opinion_text = parsed.get("opinion_text") or ""
+        if opinion_text:
+            # Replace would have succeeded but length-rejected
+            wl_len = len(opinion_text)
+            entry["wl_text_len"] = wl_len
+            entry["wl_pct_of_db"] = round(100 * wl_len / max(entry["db_text_len"], 1), 1)
+            entry["wl_head"] = opinion_text[:400]
+            entry["db_head"] = (r["text_content"] or "")[:400]
+            categories["westlaw-text-too-short"].append(entry)
+            continue
+
+        # opinion_text is empty — diagnose why
+        has_opinion_header = "\nOpinion\n" in raw or raw.startswith("Opinion\n")
+        has_attorneys = "Attorneys and Law Firms" in raw
+        has_all_cites = "All Citations" in raw[-2000:]
+
+        if has_opinion_header and has_all_cites:
+            categories["empty-opinion-body"].append(entry)
+        elif not has_opinion_header and has_attorneys:
+            # Find the author line after "Attorneys and Law Firms" for the report
+            author_line = _find_modern_author_line(raw)
+            entry["modern_author_line"] = author_line
+            categories["missing-opinion-header (modern Westlaw format)"].append(entry)
+        elif not has_opinion_header and not has_attorneys:
+            categories["missing-opinion-header (no Attorneys section either)"].append(entry)
+        elif not has_all_cites:
+            categories["missing-all-citations-footer"].append(entry)
+        else:
+            categories["other-error"].append(entry)
+
+    output.parent.mkdir(parents=True, exist_ok=True)
+    with output.open("w") as f:
+        f.write(_render_report(categories))
+
+    print(f"Report written to {output}")
+    print()
+    print("Summary:")
+    total = sum(len(v) for v in categories.values())
+    for name, items in categories.items():
+        if items:
+            print(f"  {len(items):>4}  {name}")
+    print(f"  {total:>4}  TOTAL")
+
+
+def _find_modern_author_line(raw: str) -> str | None:
+    """For modern Westlaw exports without an 'Opinion' header, find the
+    author/judge line that begins the opinion (e.g., 'ERICKSTAD, Judge.')."""
+    lines = raw.splitlines()
+    for i, line in enumerate(lines):
+        if line.strip() == "Attorneys and Law Firms":
+            for j in range(i + 1, min(i + 30, len(lines))):
+                cand = lines[j].strip()
+                if re.match(r"^[A-Z][A-Z'\-]+(?:\s+[A-Z][A-Z'\-]+)?,\s*(?:C\.\s*J|J|Judge|Justice|Chief\s+Justice)\.", cand):
+                    return cand
+    return None
+
+
+def _render_report(categories: dict[str, list[dict]]) -> str:
+    out = ["# Westlaw merge residuals — triage report", ""]
+    out.append("Generated by `python -m ndcourts_mcp.merge_westlaw_text --errors-report`.")
+    out.append("Each entry below is an opinion that has a `westlaw` row in `opinion_sources` but failed to merge into `text_content`.")
+    out.append("")
+    out.append("## Summary")
+    out.append("")
+    out.append("| Category | Count |")
+    out.append("|---|---:|")
+    total = 0
+    for name, items in categories.items():
+        if items:
+            out.append(f"| {name} | {len(items)} |")
+            total += len(items)
+    out.append(f"| **Total** | **{total}** |")
+    out.append("")
+
+    for name, items in categories.items():
+        if not items:
+            continue
+        out.append(f"## {name} ({len(items)})")
+        out.append("")
+        for e in items:
+            cite = e["citations"][0] if e["citations"] else "(no citation)"
+            score = f"{e['quality_score']:.0f}" if e.get("quality_score") is not None else "?"
+            out.append(f"### {e['case_name']} — {cite} ({e['date_filed']})")
+            out.append("")
+            out.append(f"- opinion_id: {e['opinion_id']}, source_reporter: `{e['source_reporter']}`, quality_score: {score}")
+            out.append(f"- westlaw doc: `{e['source_path']}`")
+            if "doc_len" in e:
+                out.append(f"- doc length: {e['doc_len']:,} chars; DB text length: {e['db_text_len']:,} chars")
+            else:
+                out.append(f"- DB text length: {e['db_text_len']:,} chars")
+            if "modern_author_line" in e and e["modern_author_line"]:
+                out.append(f"- detected author line (modern format): `{e['modern_author_line']}`")
+            if "wl_pct_of_db" in e:
+                out.append(f"- westlaw text length: {e['wl_text_len']:,} chars ({e['wl_pct_of_db']}% of DB)")
+                out.append("")
+                out.append("DB head:")
+                out.append("```")
+                out.append(e["db_head"])
+                out.append("```")
+                out.append("")
+                out.append("Westlaw head:")
+                out.append("```")
+                out.append(e["wl_head"])
+                out.append("```")
+            if "error" in e:
+                out.append(f"- error: `{e['error']}`")
+            out.append("")
+    return "\n".join(out) + "\n"
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Replace opinion text with clean Westlaw text"
@@ -226,7 +413,12 @@ def main() -> None:
                         help="Actually replace text")
     parser.add_argument("--batch", default="westlaw-text-merge",
                         help="Changelog batch name")
+    parser.add_argument("--errors-report", type=Path, metavar="PATH",
+                        help="Write a markdown triage report of opinions where the merge would fail, then exit")
     args = parser.parse_args()
+    if args.errors_report:
+        errors_report(args.db, args.errors_report)
+        return
     process_all(args.db, dry_run=not args.apply, batch_name=args.batch)
 
 
