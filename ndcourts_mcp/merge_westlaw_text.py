@@ -85,7 +85,9 @@ def process_all(
     """Replace text for opinions with Westlaw sources."""
     conn = get_connection(db_path)
 
-    # Find opinions with westlaw source that are NOT ndcourts.gov-sourced
+    # Find opinions with a westlaw .doc archived where text_content has not yet
+    # been replaced. Skip 'ND' (ndcourts.gov is authoritative for 1997+) and
+    # 'westlaw' (already merged — re-running would create no-op changelog rows).
     rows = conn.execute("""
         SELECT os.opinion_id, os.source_path,
                o.case_name, o.date_filed, o.source_reporter, o.text_content,
@@ -94,7 +96,7 @@ def process_all(
         JOIN opinions o ON o.id = os.opinion_id
         LEFT JOIN quality_scores qs ON qs.opinion_id = o.id
         WHERE os.source_reporter = 'westlaw'
-          AND o.source_reporter != 'ND'
+          AND o.source_reporter NOT IN ('ND', 'westlaw')
         ORDER BY qs.overall_score ASC
     """).fetchall()
 

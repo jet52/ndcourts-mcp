@@ -526,21 +526,33 @@ REFS_BASE = Path.home() / "refs" / "nd" / "opin"
 
 
 def _archive_single_doc(doc_path: Path, parsed: dict, volume: int | None) -> Path:
-    """Archive a single .doc file to ~/refs/nd/opin/{reporter}/{vol}/{page}-{Name}.doc.
+    """Return the archive destination for a Westlaw .doc.
 
-    Determines the reporter directory (N.D., NW2d, NW) and volume/page from
-    the opinion's citations. Volume downloads are handled by the batch
-    archiver (_archive_westlaw_docs) instead.
+    For ad-hoc ingest (volume is None), reads the citations to determine the
+    target reporter directory (N.D., NW2d, NW) and copies the file in place.
+    For volume-based ingest, only predicts the path that `_archive_westlaw_docs`
+    will produce after the per-file loop completes — the file is copied by the
+    batch archiver, not here. Both paths must stay in lockstep.
     """
-    if volume is not None:
-        # Volume-based: batch archiver handles these
-        return doc_path
-
-    all_cites = parsed.get("all_citations", [])
+    all_cites = parsed.get("all_citations", []) or []
     if parsed.get("primary_citation"):
         all_cites = [parsed["primary_citation"]] + all_cites
 
-    # Find a citation we can parse into volume/page for filing
+    # Build case name slug from Westlaw filename — same logic as _archive_westlaw_docs
+    name_m = re.match(r"\d+\s*-\s*(.+)\.doc$", doc_path.name)
+    case_slug = name_m.group(1).strip().replace(" ", "-") if name_m else doc_path.stem.replace(" ", "-")
+
+    if volume is not None:
+        dest_dir = REFS_BASE / "N.D." / str(volume)
+        for cite in all_cites:
+            m = re.match(rf"{volume}\s+N\.D\.\s+(\d+)", cite)
+            if m:
+                page = int(m.group(1))
+                return dest_dir / f"{page:04d}-{case_slug}.doc"
+        # Fallback matches _archive_westlaw_docs: keep original filename
+        return dest_dir / doc_path.name
+
+    # Ad-hoc mode: derive reporter+volume+page from citations and copy now.
     dest_dir = None
     page = None
     for cite in all_cites:
@@ -561,19 +573,12 @@ def _archive_single_doc(doc_path: Path, parsed: dict, volume: int | None) -> Pat
             break
 
     if dest_dir is None or page is None:
-        # Can't determine volume/page — keep in batch dir
         return doc_path
 
     dest_dir.mkdir(parents=True, exist_ok=True)
-
-    # Build case name slug from Westlaw filename
-    name_m = re.match(r"\d+\s*-\s*(.+)\.doc$", doc_path.name)
-    case_slug = name_m.group(1).strip().replace(" ", "-") if name_m else doc_path.stem.replace(" ", "-")
-
     dest_path = dest_dir / f"{page:04d}-{case_slug}.doc"
     if not dest_path.exists():
         shutil.copy2(doc_path, dest_path)
-
     return dest_path
 
 
