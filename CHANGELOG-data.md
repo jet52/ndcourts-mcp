@@ -709,6 +709,27 @@ Companion fix to the long-standing §5 bug. `--skip-analysis` mode was treating 
 
 In practice this bug only fired once in this session (against the conflated ND 73 JSON record above, where `markdown_path` pointed to ND 62's existing file — so the "file exists" guard wouldn't have caught it anyway). But it closes a real silent-skip path going forward.
 
+## Batch: fix-type-y-archive-pairings-2026-05-04 (6 rows)
+
+Applied 2026-05-04. Surfaced by the deep-triage of the §3 multi-source diff audit (see `triage/archive-83-deep-triage-2026-05-04.md`). Three Type Y archive cross-pollutions where the original `fix_archive_pairings` title-check passed (the archive's neutral cite was on the linked opinion's row) but only because that neutral cite was itself a stray contaminant — the archive HTML was actually for a same-day same-case-name follow-on opinion.
+
+| Action | Source row | Target row | Archive | Stray cite removed |
+|---|---|---|---|---|
+| move | 13202 (2000 ND 138, *Disciplinary Board v. Keller* lead) | 13203 (2000 ND 141, *Disciplinary Board v. Keller* follow-on) | `archive/2000/20000189.htm` | `2000 ND 141` from 13202 |
+| swap | 15805 (2012 ND 31, *Johnson v. Johnson*) | 15807 (2012 ND 27, *Johnson v. NDWSI*) | `archive/2012/20110159.htm` ↔ `archive/2012/20110213.htm` | `2012 ND 27` from 15805, `2012 ND 31` from 15807 |
+
+Applied via `python -m ndcourts_mcp.fix_type_y_archive_pairings --apply`. 6 changelog rows: 3 archive linkage moves + 3 stray citation removals.
+
+Post-fix verification:
+- `13202`: cites `['2000 ND 138', '613 N.W.2d 510']`, no archive (correct — the lead's archive was missing all along, the move surfaced that).
+- `13203`: cites `['2000 ND 141', '613 N.W.2d 511']`, archive `archive/2000/20000189.htm` (correctly linked now).
+- `15805`: cites `['2012 ND 31', '812 N.W.2d 455']`, archive `archive/2012/20110213.htm` (matches the file's title).
+- `15807`: cites `['2012 ND 27', '812 N.W.2d 467']`, archive `archive/2012/20110159.htm` (matches the file's title).
+- Invariants dashboard: 13 ok / 2 baseline / 0 regressed (unchanged).
+- Multi-source diff audit `<0.20` band: 93 → 90.
+
+Two remaining Type Y candidates from the deep triage (`16488` Kleinsmith/Kitchen and `16829` Feldmann) are NOT in this batch. The Kleinsmith case has the additional complication that the linked archive HTML's title says "Reciprocal Discipline of *Kitchen*" while both DB rows are recorded as "Kleinsmith" — needs to determine whether the case_name is mis-recorded in the DB or whether Kitchen is a third opinion not in the DB at all. The Feldmann case (oid 16829) has its `source_path` itself pointing at the wrong markdown file (`2017ND255.md` instead of `2017ND1.md`), so `text_content` is also contaminated — needs a full row repair, separate from this batch. Both captured under TODO §3.
+
 ## Batch: fix-archive-pairings-2026-05-04 (37 rows)
 
 Applied 2026-05-04. Surfaced by the multi-source diff audit (TODO §3) and reconciled by `ndcourts_mcp.fix_archive_pairings`, which indexes every archive HTML's `<title>` and compares the file's title-cite against the linked opinion's citations.
