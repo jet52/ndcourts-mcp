@@ -709,6 +709,22 @@ Companion fix to the long-standing §5 bug. `--skip-analysis` mode was treating 
 
 In practice this bug only fired once in this session (against the conflated ND 73 JSON record above, where `markdown_path` pointed to ND 62's existing file — so the "file exists" guard wouldn't have caught it anyway). But it closes a real silent-skip path going forward.
 
+## Batch: fix-archive-pairings-2026-05-04 (37 rows)
+
+Applied 2026-05-04. Surfaced by the multi-source diff audit (TODO §3) and reconciled by `ndcourts_mcp.fix_archive_pairings`, which indexes every archive HTML's `<title>` and compares the file's title-cite against the linked opinion's citations.
+
+The script walked all 5,600 `opinion_sources WHERE source_reporter='archive'` rows. 5,566 were correctly linked. 34 were wrong:
+
+| Action | Count | Description |
+|---|---|---|
+| detach | 27 | Linked file's title cites a different opinion that already has its own correct archive linkage. Just delete the wrong row. |
+| swap | 3 | Linked file's title cites opinion C (which already has an archive), AND a different archive file in the index matches the original opinion W. Re-point the file to C; insert a new linkage for W → swap_path. Both opinions end up correctly linked. |
+| move | 4 | Linked file's title cites C, C has no archive yet. Move the row from W to C. W loses its archive (no replacement available in the index). |
+
+Common root cause: the archive scraper used a docket-number-based key that collided across cases sharing case names (e.g., serial *Estate of Feldmann* opinions at adjacent docket numbers). The fix is reversible — every change logged in the `changelog` table under `batch='fix-archive-pairings-2026-05-04'`.
+
+Multi-source diff audit re-run after applying: <0.20 archive pairs dropped 111 → 93. The remaining 93 are archive HTMLs with correct titles but body text that disagrees with the primary source — likely truncated/stub HTML or primary-text issues, captured separately in TODO §3.
+
 ## Batch: align-source-path-2026-05-04 (3 rows)
 
 Applied 2026-05-04. Surfaced by the new `ndcourts_mcp.invariants` dashboard, which flagged three opinions whose `opinions.source_path` pointed at a staging path (`input-data/vol52/...`) that no longer exists on disk while the corresponding primary `opinion_sources.source_path` correctly pointed at the canonical N.D./52/... archive path. Stale leftovers from the original vol52 Westlaw ingest that earlier `align_primary_source` runs missed.
