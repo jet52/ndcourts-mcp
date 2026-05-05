@@ -46,7 +46,13 @@ N.D. Reports stopped at vol 79 (1953). Between 1953 and 1996, CourtListener NW2d
 Three sources exist: ndcourts.gov markdown, CourtListener NW2d, archive.ndcourts.gov HTML. All three carry ¶ markers (except CL). Current `opinion_sources` coverage: 1990s 29%, 2000s 90%, 2010s 85%.
 
 - [ ] Close the 666-opinion gap in archive.ndcourts.gov coverage for 1997–2019. Rerun `scrape_archive --all --ingest` against the list of opinions currently missing an `archive` row in `opinion_sources`.
-- [ ] Multi-source diff audit: for opinions with 2+ sources, flag pairs where text differs by >N% or paragraph numbering disagrees. Route to Dup Queue / reader pane for human review.
+- [x] Multi-source diff audit: for opinions with 2+ sources, flag pairs where text differs by >N%. **Done 2026-05-04** via `python -m ndcourts_mcp.multisource_diff` (4-word shingle Jaccard, 18 sec on 12,139 multi-source opinions / 16,597 pairs). Report at `triage/multisource-diff-2026-05-04.md`. Distribution: 5,406 near-identical (≥0.95), 4,033 minor-differences (0.85–0.95, mostly OCR), 5,644 moderate (0.70–0.85, mostly westlaw+NW OCR-era noise), 1,177 substantial (0.50–0.70), 225 major (0.20–0.50), and **111 almost-certainly-bug (<0.20)**. Surfaced the major remaining work below.
+
+- [ ] **Re-link wrong-paired archive sources** surfaced by the diff audit. 65 ND+archive and 36 NW2d+archive pairs at <0.20 similarity have archive HTML files whose titles cite a different opinion than the DB row they're linked to (e.g., `889 N.W.2d 399 "Estate of Feldmann"` linked to archive HTML titled `Estate of Feldmann, 2017 ND 255, 903 N.W.2d 280` — same case name, adjacent opinions, wrong file pair). Distribution by decade: 15 in 1990s, 21 in 2000s, 29 in 2010s. Likely the archive scraper used a docket-number-based key that collided across cases. Sweep: parse the `<title>` of each archive HTML and reconcile against the DB row's citation; for mismatches, find the correct archive file or detach the pairing.
+
+- [ ] **Investigate the 10 westlaw+NW pairs at <0.20** (King v. Stark County 271 N.W. 771 et al.). Likely wrong-paired Westlaw .docs in the same vein as the §1 9-pairings cluster but in NW (1st series) volumes. Run the same fix-westlaw-pairings approach for NW.
+
+- [ ] **Triage the 919 westlaw+NW pairs in 0.50–0.70** for genuinely-different vs. OCR-noise. Sample-based review (e.g., random 50) to estimate how many are real disagreements vs. just early-1900s NW OCR drift. If yield is too low, accept the band as noise and tighten the audit's reporting threshold to <0.50 for that source-pair.
 
 ## 4 · 2020+ source-attachment fix (**the matching rework you flagged**)
 
