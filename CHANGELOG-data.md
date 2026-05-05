@@ -708,3 +708,17 @@ Root cause in the scraper not yet diagnosed — see TODO-validation.md §5 follo
 Companion fix to the long-standing §5 bug. `--skip-analysis` mode was treating `existing_data.get('markdown_path')` as proof the markdown file existed, without verifying. Updated to also call `os.path.exists()` against the resolved path; if the file is missing, fall through to regenerate. Mirrors the check the non-`skip_analysis` branch already does on lines 766–781.
 
 In practice this bug only fired once in this session (against the conflated ND 73 JSON record above, where `markdown_path` pointed to ND 62's existing file — so the "file exists" guard wouldn't have caught it anyway). But it closes a real silent-skip path going forward.
+
+## Batch: align-source-path-2026-05-04 (3 rows)
+
+Applied 2026-05-04. Surfaced by the new `ndcourts_mcp.invariants` dashboard, which flagged three opinions whose `opinions.source_path` pointed at a staging path (`input-data/vol52/...`) that no longer exists on disk while the corresponding primary `opinion_sources.source_path` correctly pointed at the canonical N.D./52/... archive path. Stale leftovers from the original vol52 Westlaw ingest that earlier `align_primary_source` runs missed.
+
+| OID | Old `source_path` | New `source_path` |
+|---|---|---|
+| 3181 | `input-data/vol52/001 - Rogers Lumber Co v Schatzel.doc` | `/Users/jerod/refs/nd/opin/N.D./52/0844-Rogers-Lumber-Co-v-Schatzel.doc` |
+| 3085 | `input-data/vol52/006 - Olsness v Baird.doc` | `/Users/jerod/refs/nd/opin/N.D./52/0064-Olsness-v-Baird.doc` |
+| 3096 | `input-data/vol52/007 - State v First State Bank of Jud.doc` | `/Users/jerod/refs/nd/opin/N.D./52/0083-State-v-First-State-Bank-of-Jud.doc` |
+
+Applied via `python -m ndcourts_mcp.align_primary_source --apply --batch align-source-path-2026-05-04` (3 source_path rewrites, 0 primary-flag flips, the existing `opinion_sources` rows already had the right paths and primary flags). Post-run dashboard: 13 ok, 2 at known baseline (258 §6 dup pairs, 85 §4 short orders), 0 regressions.
+
+The dashboard catching this kind of drift is exactly the regression-detector role it's meant to play. Drop the `source_path_matches_primary` baseline back to 0 in `invariants.py` so any future drift fails loudly.
