@@ -2,6 +2,16 @@
 
 Changes applied to the opinions database after import from CourtListener and ndcourts.gov sources. All corrections are recorded in the `changelog` SQLite table and can be reverted with `python -m ndcourts_mcp.cleanup revert <batch>`.
 
+## Batch `strip-westlaw-synopsis-2026-05-13` (5,733 rows)
+
+Removed the Westlaw editorial "Synopsis" stub and any "The Supreme Court, J., held that..." holding summary from `text_content` of all westlaw-sourced opinions. Court-authored narrative within Synopsis sections (the court's published statement of facts in older bound entries) is preserved.
+
+- **Tool**: `python -m ndcourts_mcp.strip_westlaw_synopsis --apply`
+- **Coverage**: 5,738 westlaw-sourced rows with a `Synopsis` header → 5,320 had only the editorial stub (full section dropped); 413 had court narrative after the stub (stub stripped, narrative preserved); 5 had only court-authored cross-reference content (left unchanged).
+- **Why**: aligns the redistributed `text_content` with the project's scope of court-authored opinions and court-authored syllabi only. See [`NOTICE.md`](NOTICE.md). Westlaw's case-report content (court of origin, attorneys, disposition) is factual and not copyrightable per *Matthew Bender & Co. v. West Publishing*, 158 F.3d 674 (2d Cir. 1998), but it is also not the court's own work and falls outside the project's redistribution scope.
+- **Forward-compat**: `ingest_westlaw._parse_westlaw_doc` now calls the stripper on every newly-ingested `.doc`, so future ingests cannot reintroduce the editorial content.
+- **Safety**: pre-batch DB snapshot at `opinions.db.bak-pre-strip-synopsis-2026-05-13`. Revert with `python -m ndcourts_mcp.cleanup revert strip-westlaw-synopsis-2026-05-13`.
+
 ## Batch 00: Metadata merge (not in changelog — additive only)
 
 - **Source**: `~/refs/nd/opin/*_opinions.json` (scraped from ndcourts.gov)

@@ -13,3 +13,36 @@ package-lock.json
 input-data/
 .remember/
 *.docx
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.nvim/
+
+# Python tooling caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.coverage
+htmlcov/
+
+# Build artifacts
+dist/
+build/
+
+# OS noise
+Thumbs.db
+desktop.ini
+
+# Local environment / secrets
+.env
+.envrc
+
+# Project-scoped MCP config (per-user absolute paths)
+.mcp.json
+
+# Jupyter
+.ipynb_checkpoints/

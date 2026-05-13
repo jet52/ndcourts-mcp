@@ -19,9 +19,13 @@ from pathlib import Path
 from .db import DEFAULT_DB_PATH, get_connection, log_provenance
 from .ingest_westlaw import _doc_to_text, _parse_westlaw_doc
 
-# Headnote leak detection
-_HEADNOTE_STARTS = re.compile(
-    r"^(Syllabus|Synopsis|West Headnotes|Attorneys and Law Firms)",
+# Westlaw editorial preamble detection. "Syllabus by the Court", "Synopsis"
+# (which often contains the court's published statement of facts in older
+# opinions), and "Attorneys and Law Firms" are all court-published or
+# court-adjacent content intentionally included by the full-bound-text
+# extractor. Only "West Headnotes" is unambiguously Westlaw editorial.
+_EDITORIAL_STARTS = re.compile(
+    r"^(West Headnotes)\b",
     re.IGNORECASE,
 )
 _BRACKETED_NUMS = re.compile(r"\[\d+\]")
@@ -44,10 +48,12 @@ def _validate_westlaw_text(wl_text: str, db_text_body: str, case_name: str) -> l
     """Validate Westlaw text before replacement. Returns list of warnings (empty = OK)."""
     warnings = []
 
-    # Headnote leak check
+    # Reject if the text starts with Westlaw editorial sections that the
+    # parser failed to strip. Court-published "Syllabus by the Court" and
+    # "Attorneys and Law Firms" are allowed as starting markers.
     first_200 = wl_text[:200]
-    if _HEADNOTE_STARTS.search(first_200):
-        warnings.append("REJECT: Westlaw text starts with headnote/syllabus content")
+    if _EDITORIAL_STARTS.search(first_200):
+        warnings.append("REJECT: Westlaw text starts with editorial section")
         return warnings
 
     if len(_BRACKETED_NUMS.findall(wl_text[:500])) >= 3:
@@ -81,14 +87,31 @@ def process_all(
     db_path: Path = DEFAULT_DB_PATH,
     dry_run: bool = True,
     batch_name: str = "westlaw-text-merge",
+    include_westlaw: bool = False,
+    only_ids: list[int] | None = None,
 ) -> None:
-    """Replace text for opinions with Westlaw sources."""
+    """Replace text for opinions with Westlaw sources.
+
+    When include_westlaw is True, rows already at source_reporter='westlaw'
+    are also considered. Use this after parser changes to re-extract — the
+    merge writes a changelog row only when the new text differs in length
+    from the current DB body.
+    """
     conn = get_connection(db_path)
 
     # Find opinions with a westlaw .doc archived where text_content has not yet
     # been replaced. Skip 'ND' (ndcourts.gov is authoritative for 1997+) and
-    # 'westlaw' (already merged — re-running would create no-op changelog rows).
-    rows = conn.execute("""
+    # by default 'westlaw' (already merged — re-running would create no-op
+    # changelog rows). Pass --include-westlaw to override after parser fixes.
+    skip_filter = "AND o.source_reporter NOT IN ('ND')" if include_westlaw \
+        else "AND o.source_reporter NOT IN ('ND', 'westlaw')"
+    id_filter = ""
+    params: tuple = ()
+    if only_ids:
+        placeholders = ",".join("?" * len(only_ids))
+        id_filter = f"AND o.id IN ({placeholders})"
+        params = tuple(only_ids)
+    rows = conn.execute(f"""
         SELECT os.opinion_id, os.source_path,
                o.case_name, o.date_filed, o.source_reporter, o.text_content,
                qs.overall_score
@@ -96,9 +119,10 @@ def process_all(
         JOIN opinions o ON o.id = os.opinion_id
         LEFT JOIN quality_scores qs ON qs.opinion_id = o.id
         WHERE os.source_reporter = 'westlaw'
-          AND o.source_reporter NOT IN ('ND', 'westlaw')
+          {skip_filter}
+          {id_filter}
         ORDER BY qs.overall_score ASC
-    """).fetchall()
+    """, params).fetchall()
 
     if not rows:
         print("No eligible opinions with Westlaw sources found.")
@@ -126,7 +150,8 @@ def process_all(
         date = row["date_filed"]
         score = row["overall_score"]
 
-        print(f"{case_name} ({date}) [score={score:.0f}]")
+        score_str = f"{score:.0f}" if score is not None else "?"
+        print(f"{case_name} ({date}) [score={score_str}]")
 
         # Load and parse Westlaw doc
         if not source_path.exists():
@@ -142,12 +167,17 @@ def process_all(
             errors += 1
             continue
 
-        if not parsed or not parsed.get("opinion_text"):
+        # Prefer full bound entry (syllabus + attorneys + opinion + in-pub
+        # rehearing) over body-only extraction. The bound entry is the
+        # authoritative published form; the body-only extraction loses the
+        # court's own syllabus and any pre-opinion published content.
+        wl_text = parsed.get("full_bound_text") if parsed else None
+        if not wl_text:
+            wl_text = parsed.get("opinion_text") if parsed else None
+        if not wl_text:
             print(f"  SKIP: could not parse opinion text from Westlaw doc")
             errors += 1
             continue
-
-        wl_text = parsed["opinion_text"]
 
         # Split existing text into frontmatter + body
         frontmatter, db_body = _extract_frontmatter(row["text_content"])
@@ -166,6 +196,12 @@ def process_all(
 
         old_len = len(row["text_content"])
         new_len = len(new_text)
+
+        # Idempotency: skip if text is unchanged (re-runs after parser tweaks
+        # should be no-ops where the parser output didn't move).
+        if new_text == row["text_content"]:
+            print(f"  SKIP: text unchanged ({old_len} chars)")
+            continue
 
         if dry_run:
             print(f"  WOULD REPLACE: {old_len} → {new_len} chars")
@@ -415,11 +451,17 @@ def main() -> None:
                         help="Changelog batch name")
     parser.add_argument("--errors-report", type=Path, metavar="PATH",
                         help="Write a markdown triage report of opinions where the merge would fail, then exit")
+    parser.add_argument("--include-westlaw", action="store_true",
+                        help="Also re-process rows already at source_reporter='westlaw'. Use after parser fixes.")
+    parser.add_argument("--ids", type=str, default=None,
+                        help="Comma-separated list of opinion IDs to limit processing to.")
     args = parser.parse_args()
     if args.errors_report:
         errors_report(args.db, args.errors_report)
         return
-    process_all(args.db, dry_run=not args.apply, batch_name=args.batch)
+    only_ids = [int(x) for x in args.ids.split(",")] if args.ids else None
+    process_all(args.db, dry_run=not args.apply, batch_name=args.batch,
+                include_westlaw=args.include_westlaw, only_ids=only_ids)
 
 
 if __name__ == "__main__":

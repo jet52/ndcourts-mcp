@@ -168,7 +168,86 @@ def _parse_westlaw_doc(text: str) -> dict | None:
         opinion_lines = lines[body_start:all_cites_idx]
         result["opinion_text"] = "\n".join(opinion_lines).strip()
 
+    if all_cites_idx:
+        bound_text = _extract_full_bound_text(lines, all_cites_idx)
+        # Strip the Westlaw editorial Synopsis stub (court of origin, party
+        # description, disposition) while preserving any court-authored
+        # narrative that follows. See strip_westlaw_synopsis for rationale.
+        from .strip_westlaw_synopsis import strip_synopsis_editorial
+        bound_text, _, _ = strip_synopsis_editorial(bound_text)
+        result["full_bound_text"] = bound_text
+
     return result
+
+
+# Section headers used to delimit the bound publication entry. Order matters:
+# we prefer to start at the earliest court-published section we can find.
+#
+# Our redistribution scope is the court's own published opinion text and the
+# court-authored "Syllabus by the Court". To stay within that scope:
+#  - "West Headnotes" is unambiguously Westlaw editorial and is dropped here.
+#  - "Synopsis" is also a Westlaw-named editorial section, but in older bound
+#    publications it sometimes contains the court's published narrative
+#    statement of facts after a brief editorial stub. We retain the section
+#    during extraction so the post-processor (`strip_westlaw_synopsis`) can
+#    surgically remove the editorial stub and any Westlaw holding summary
+#    while preserving any court-authored narrative that follows.
+_SECTION_PRESERVE = ("Syllabus by the Court", "Syllabus", "Synopsis",
+                     "Attorneys and Law Firms")
+_SECTION_DROP = ("West Headnotes",)
+# Headers that always belong inside the opinion body
+_INLINE_HEADERS = ("Opinion", "On Petition for Rehearing", "On Reargument",
+                   "On Petition for Modification", "On Rehearing")
+_ALL_HEADERS = _SECTION_PRESERVE + _SECTION_DROP + _INLINE_HEADERS
+
+
+def _is_section_header(line: str, headers: tuple[str, ...]) -> bool:
+    s = line.strip().rstrip(".")
+    return s in headers
+
+
+def _extract_full_bound_text(lines: list[str], all_cites_idx: int) -> str:
+    """Extract the published bound entry as it appeared in the reporter:
+    Syllabus by the Court (when present) + Attorneys and Law Firms +
+    Opinion (with author headers) + any in-publication rehearing material.
+
+    Drops the West Headnotes editorial section. Drops pre-syllabus
+    boilerplate (court name, citation header, parties, date). The Synopsis
+    section is retained at this stage so the post-processor
+    `strip_westlaw_synopsis.strip_synopsis_editorial` can surgically remove
+    the Westlaw editorial stub while preserving any court-authored narrative.
+    """
+    # Determine the start: prefer Syllabus by the Court, then Syllabus,
+    # then Attorneys and Law Firms (skipping Synopsis and West Headnotes).
+    start = None
+    for i, line in enumerate(lines[:all_cites_idx]):
+        if _is_section_header(line, _SECTION_PRESERVE):
+            start = i
+            break
+
+    if start is None:
+        # No syllabus or attorneys section — fall back to the legacy body
+        # extraction logic upstream by returning an empty string. The caller
+        # uses opinion_text in that case.
+        return ""
+
+    # Walk lines from start to all_cites_idx, dropping any DROP section
+    # (header line and content until the next major header).
+    out = []
+    i = start
+    while i < all_cites_idx:
+        line = lines[i]
+        if _is_section_header(line, _SECTION_DROP):
+            # Skip until the next major header
+            j = i + 1
+            while j < all_cites_idx and not _is_section_header(lines[j], _ALL_HEADERS):
+                j += 1
+            i = j
+            continue
+        out.append(line)
+        i += 1
+
+    return "\n".join(out).strip()
 
 
 def _find_db_opinion(conn, citations: list[str]) -> dict | None:

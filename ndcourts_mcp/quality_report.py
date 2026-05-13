@@ -1,7 +1,9 @@
 """Generate a Word document listing the lowest-quality opinions for Westlaw lookup.
 
-Produces a .docx with Bluebook-formatted citations and problem descriptions,
-suitable for bulk downloading replacement text from Westlaw.
+Produces a .docx with Bluebook-formatted citations and problem descriptions so a
+user with authorized Westlaw access can manually look up each opinion's bound
+text and use it to validate or correct the corpus. Output is a printable
+checklist; this tool does not access Westlaw directly.
 
 Usage:
     python -m ndcourts_mcp.quality_report [--db PATH] [--count N] [--output PATH]
