@@ -27,11 +27,18 @@ DEFAULT_BATCH = "align-primary-source"
 
 def align(conn: sqlite3.Connection, batch: str, apply: bool) -> dict:
     cur = conn.cursor()
+    # LEFT JOIN (not INNER): an opinion whose opinion_sources rows are ALL
+    # is_primary=0 (e.g. after a delete-then-insert swap) has no primary row
+    # at all. An inner join silently drops exactly those rows — the ones that
+    # most need realigning. s.id IS NULL flags them so the loop can promote a
+    # primary by source_reporter.
     cur.execute("""
-        SELECT o.id, o.source_reporter, o.source_path, s.source_path AS primary_path
+        SELECT o.id, o.source_reporter, o.source_path,
+               s.id AS primary_sid, s.source_path AS primary_path
         FROM opinions o
-        JOIN opinion_sources s ON s.opinion_id = o.id AND s.is_primary = 1
-        WHERE o.source_path != s.source_path
+        LEFT JOIN opinion_sources s ON s.opinion_id = o.id AND s.is_primary = 1
+        WHERE s.id IS NULL
+           OR o.source_path != s.source_path
            OR o.source_reporter != s.source_reporter
     """)
     mismatches = cur.fetchall()
@@ -40,6 +47,8 @@ def align(conn: sqlite3.Connection, batch: str, apply: bool) -> dict:
         "scanned": 0,
         "source_path_updated": 0,
         "primary_flag_flipped": 0,
+        "no_primary_resolved": 0,
+        "no_primary_unresolved": 0,
     }
 
     cur.execute("SELECT COUNT(*) FROM opinions")
@@ -49,6 +58,7 @@ def align(conn: sqlite3.Connection, batch: str, apply: bool) -> dict:
         oid = row["id"]
         target_reporter = row["source_reporter"]
         current_path = row["source_path"]
+        had_no_primary = row["primary_sid"] is None
 
         # Find the opinion_sources row matching the authoritative source_reporter
         target_row = conn.execute(
@@ -57,7 +67,17 @@ def align(conn: sqlite3.Connection, batch: str, apply: bool) -> dict:
             (oid, target_reporter),
         ).fetchone()
         if not target_row:
+            if had_no_primary:
+                stats["no_primary_unresolved"] += 1
+                print(
+                    f"  [no-primary, UNRESOLVED] opinion {oid}: no primary row "
+                    f"and no opinion_sources row matches source_reporter "
+                    f"'{target_reporter}' — needs manual attention"
+                )
             continue
+
+        if had_no_primary:
+            stats["no_primary_resolved"] += 1
 
         new_path = target_row["source_path"]
 
@@ -110,6 +130,8 @@ def main() -> None:
         print(f"Opinions scanned:          {stats['scanned']}")
         print(f"source_path rewrites:      {stats['source_path_updated']}")
         print(f"primary-flag flips:        {stats['primary_flag_flipped']}")
+        print(f"no-primary resolved:       {stats['no_primary_resolved']}")
+        print(f"no-primary UNRESOLVED:     {stats['no_primary_unresolved']}")
     finally:
         conn.close()
 

@@ -2,6 +2,18 @@
 
 Changes applied to the opinions database after import from CourtListener and ndcourts.gov sources. All corrections are recorded in the `changelog` SQLite table and can be reverted with `python -m ndcourts_mcp.cleanup revert <batch>`.
 
+## Batch `court-archive-promote-2026-05-15` (15,910 rows)
+
+Promoted `text_content` to the court-sourced archive.ndcourts.gov NW-cite text for opinions whose primary was CourtListener OCR (NW2d/NW), closing most of the 1953–1996 single-source gap with a court-authoritative source.
+
+- **Tool**: `python -m ndcourts_mcp.ingest_nwcite --apply`
+- **Source**: `archive.ndcourts.gov/opinions/cite/NWcite.htm` → `~/refs/nd/opin/court-archive/<vol>/<id>.htm` (787 N.W.2d vols indexed; gap-era vols 139–560 mirrored, 5,344 opinion pages).
+- **Policy** (approved 2026-05-15): gate is the length ratio = court_body / db_body (frontmatter stripped); jaccard is informational. ratio ∈ [0.95, 1.60] → auto-promote (body swapped, YAML frontmatter preserved verbatim, primary repointed); [0.80,0.95)∪(1.60,2.50] → review band (flagged); <0.80 or >2.50 → manual outlier (flagged); non-CL primary (ndcourts.gov/westlaw, 1997+) → cross-check only, never demoted.
+- **Result**: 3,710 promoted (recovers official "Syllabus by the Court" pre-~1978 and caption/procedural front-matter throughout, strips CL OCR artifacts); 1,049 flagged for review (1,018 manual-outlier, 11 review-band, 10 shared-cite-ambiguous Type-Y, 10 non-CL-divergent); 31 non-CL cross-checked; 292 unmatched gap candidates deferred (`triage/court-archive-gap-candidates-2026-05-15.md`).
+- **Changelog rows**: 15,910 = 3,710 × (text_content + source_reporter + source_path) + 4,780 court-archive source attachments. All authority-stamped `court-archive (archive.ndcourts.gov NW-cite)`.
+- **Why**: the court archive is court-authoritative and was never shorter than the CL OCR it replaces in a 1965–1998 sample — a corpus upgrade toward the authoritative-text bar, not merely a cross-check.
+- **Safety**: pre-batch DB snapshot at `opinions.db.bak-pre-court-archive-promote-20260515_115623`. Revert with `python -m ndcourts_mcp.cleanup revert court-archive-promote-2026-05-15` then `python -m ndcourts_mcp.align_primary_source --apply` (re-syncs `opinion_sources.is_primary`). Invariants: 13 ok, 2 known, 0 regressed.
+
 ## Batch `strip-westlaw-synopsis-2026-05-13` (5,733 rows)
 
 Removed the Westlaw editorial "Synopsis" stub and any "The Supreme Court, J., held that..." holding summary from `text_content` of all westlaw-sourced opinions. Court-authored narrative within Synopsis sections (the court's published statement of facts in older bound entries) is preserved.

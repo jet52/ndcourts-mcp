@@ -139,17 +139,54 @@ def index_archives(refs_dir: Path) -> tuple[dict[str, str], dict[str, ArchiveTit
     return cite_to_path, path_to_title
 
 
-def _title_cite_matches_opinion(
+_NEUTRAL_RE = re.compile(r"\s*(\d{4})\s+N\.?\s*D\.?\s+0*(\d+)\s*$")
+
+
+def _canon_neutral(cite: str | None) -> str | None:
+    """Canonicalize an ND neutral cite for equality comparison.
+
+    `2010 ND 9`, `2010 ND 09`, and `2010 N.D. 3` are the same citation but
+    differ as strings (zero-padding, "N.D." vs "ND"). _norm_cite only
+    collapses whitespace, so without this a tightened neutral-cite check
+    floods on format-only "mismatches". Returns None for non-neutral cites
+    (e.g. N.W. parallels), which are compared via _norm_cite instead.
+    """
+    if not cite:
+        return None
+    m = _NEUTRAL_RE.match(cite)
+    return f"{m.group(1)} ND {int(m.group(2))}" if m else None
+
+
+def _title_cite_status(
     title_neutral: str | None,
     title_parallel: str | None,
     db_citations: list[str],
-) -> bool:
+) -> str:
+    """Tri-state match of an archive file's title cite against a DB row.
+
+    Returns:
+      "match"    — strong agreement: the title's neutral cite matches a DB
+                   cite, OR the title has only a parallel cite and it matches.
+      "mismatch" — the title HAS a neutral cite and it does NOT match any DB
+                   cite. This is treated as a mismatch even when the parallel
+                   cite matches, because CourtListener has cross-contaminated
+                   parallel cites across unrelated opinions (e.g. WSI v.
+                   Questar oid 17030: title neutral 2017 ND 216 disagrees with
+                   the row's 2017 ND 241, but the shared parallel 901 N.W.2d
+                   727 would otherwise mask the wrong linkage).
+      "weak"     — the title has ONLY a parallel cite (no neutral) and it
+                   matches. Parallel-only agreement is contamination-prone, so
+                   it is not auto-blessed as "ok" nor auto-fixed; it is routed
+                   to a human-verify bucket.
+    """
+    if title_neutral:
+        tn = _canon_neutral(title_neutral)
+        db_neutrals = {_canon_neutral(c) for c in db_citations} - {None}
+        return "match" if tn and tn in db_neutrals else "mismatch"
     cites = {_norm_cite(c) for c in db_citations}
-    if title_neutral and _norm_cite(title_neutral) in cites:
-        return True
     if title_parallel and _norm_cite(title_parallel) in cites:
-        return True
-    return False
+        return "weak"
+    return "mismatch"
 
 
 def classify(
@@ -203,10 +240,22 @@ def classify(
             link.note = "title has no parseable citation"
             linkages.append(link)
             continue
-        if _title_cite_matches_opinion(
+        status = _title_cite_status(
             title.neutral_cite, title.parallel_cite, link.db_citations
-        ):
+        )
+        if status == "match":
             link.classification = "ok"
+            linkages.append(link)
+            continue
+        if status == "weak":
+            # Parallel-only agreement, no neutral cite to corroborate.
+            # Not auto-fixed (apply_fixes has no branch for "verify") and
+            # not auto-blessed — surfaced for human review.
+            link.classification = "verify"
+            link.note = (
+                "parallel-cite-only match; no neutral cite in title to "
+                "corroborate — verify manually before trusting linkage"
+            )
             linkages.append(link)
             continue
 
@@ -223,6 +272,34 @@ def classify(
                 target_id = row[0]
                 break
         link.target_opinion_id = target_id
+
+        # dup-suspect guard: the tightened neutral check correctly rejects
+        # these as not-"ok", but swap/detach is the WRONG remedy when the
+        # source row and the title's target are actually the SAME opinion
+        # ingested from two sources and never deduplicated (one row carries
+        # only the N.W. parallel, the other only the neutral). Signal: the
+        # archive file's own title asserts BOTH cites — its parallel matches
+        # a source-row cite AND its neutral resolves to the target — and the
+        # two opinions share a filing date. Route to §6 dup-queue review,
+        # never auto-mutate (apply_fixes has no branch for this label).
+        if target_id is not None and target_id != oid and title.parallel_cite:
+            src_cites = {_norm_cite(c) for c in link.db_citations}
+            if _norm_cite(title.parallel_cite) in src_cites:
+                pair = conn.execute(
+                    "SELECT (SELECT date_filed FROM opinions WHERE id=?) AS src_d, "
+                    "       (SELECT date_filed FROM opinions WHERE id=?) AS tgt_d",
+                    (oid, target_id),
+                ).fetchone()
+                if pair and pair["src_d"] and pair["src_d"] == pair["tgt_d"]:
+                    link.classification = "dup-suspect"
+                    link.note = (
+                        f"source opinion {oid} and title target {target_id} "
+                        f"appear to be the same case ingested from two "
+                        f"sources (undeduplicated parallel/neutral split); "
+                        f"§6 dup-queue, do not swap/detach"
+                    )
+                    linkages.append(link)
+                    continue
 
         if target_id is None:
             link.classification = "detach"
@@ -364,7 +441,7 @@ def write_report(linkages: list[Linkage], counts: dict[str, int], out_path: Path
     lines.append(f"# Archive linkage audit ({'applied' if applied else 'dry-run'})")
     lines.append("")
     lines.append("## Summary")
-    for k in ("ok", "move", "swap", "detach", "unparseable"):
+    for k in ("ok", "move", "swap", "detach", "verify", "dup-suspect", "unparseable"):
         lines.append(f"- {k:<12} {len(by_class[k])}")
     if counts:
         lines.append("")
@@ -372,7 +449,7 @@ def write_report(linkages: list[Linkage], counts: dict[str, int], out_path: Path
         for k, n in counts.items():
             lines.append(f"- {k:<24} {n}")
 
-    for label in ("move", "swap", "detach", "unparseable"):
+    for label in ("move", "swap", "detach", "verify", "unparseable"):
         rows = by_class[label]
         if not rows:
             continue
@@ -419,7 +496,7 @@ def main():
     for l in linkages:
         by_class[l.classification] += 1
     print(f"  {len(linkages)} linkages")
-    for k in ("ok", "move", "swap", "detach", "unparseable"):
+    for k in ("ok", "move", "swap", "detach", "verify", "dup-suspect", "unparseable"):
         print(f"    {k:<12} {by_class[k]}")
 
     counts: dict[str, int] = {}

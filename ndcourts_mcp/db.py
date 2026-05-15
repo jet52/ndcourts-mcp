@@ -31,6 +31,31 @@ def log_provenance(
     conn.commit()
 
 
+def log_change(
+    conn: sqlite3.Connection,
+    batch: str,
+    opinion_id: int,
+    field: str,
+    old_value: str | None,
+    new_value: str | None,
+    authority: str | None = None,
+) -> None:
+    """Record a field correction in changelog with CL-diff provenance.
+
+    Convenience for callers that know the authority that justified the
+    change. cl_cluster_id is left NULL so the changelog_stamp_cluster
+    trigger captures opinions.cluster_id at insert time. Raw
+    `INSERT INTO changelog` in existing scripts remains valid — the
+    trigger stamps those too; this helper just lets new code attach the
+    authority string for the future CL-diff export."""
+    conn.execute(
+        """INSERT INTO changelog
+              (batch, opinion_id, field, old_value, new_value, authority)
+           VALUES (?, ?, ?, ?, ?, ?)""",
+        (batch, opinion_id, field, old_value, new_value, authority),
+    )
+
+
 def create_schema(conn: sqlite3.Connection) -> None:
     conn.executescript("""
         CREATE TABLE IF NOT EXISTS opinions (
@@ -71,8 +96,31 @@ def create_schema(conn: sqlite3.Connection) -> None:
             opinion_id INTEGER NOT NULL REFERENCES opinions(id),
             field TEXT NOT NULL,
             old_value TEXT,
-            new_value TEXT
+            new_value TEXT,
+            -- CL-diff provenance. cl_cluster_id is the CourtListener cluster
+            -- id captured AT CORRECTION TIME (opinions.cluster_id mutates on
+            -- re-ingest/dedup, so a later join would be unreliable). The
+            -- trigger below stamps it automatically so the dozen+ existing
+            -- fix_* scripts need no retrofit. authority is the source that
+            -- justified the change (e.g. 'westlaw-bound 23 N.D. 45'),
+            -- populated by callers that know it (nullable).
+            cl_cluster_id INTEGER,
+            authority TEXT
         );
+
+        -- Auto-stamp cl_cluster_id from opinions at insert time unless the
+        -- caller already supplied it. Backstop that makes every changelog
+        -- row CL-diff-ready regardless of which script wrote it.
+        CREATE TRIGGER IF NOT EXISTS changelog_stamp_cluster
+        AFTER INSERT ON changelog
+        WHEN NEW.cl_cluster_id IS NULL
+        BEGIN
+            UPDATE changelog
+            SET cl_cluster_id = (
+                SELECT cluster_id FROM opinions WHERE id = NEW.opinion_id
+            )
+            WHERE id = NEW.id;
+        END;
 
         CREATE TABLE IF NOT EXISTS opinion_sources (
             id INTEGER PRIMARY KEY,
