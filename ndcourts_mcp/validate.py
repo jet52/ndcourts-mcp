@@ -57,6 +57,12 @@ class Batch:
     # SQL boolean over `validation_status v` (optionally joined to
     # `opinions o`) selecting the opinions this batch is responsible for.
     scope_sql: str
+    # Changelog/CHANGELOG-data.md batch labels are dated and may recur
+    # (re-runs), e.g. `court-archive-promote-2026-05-15`. This is the
+    # label PREFIX the logical batch's corrections carry, so the
+    # corrections-logged and doc-parity checks read the right rows
+    # instead of the (un-dated) registry key.
+    changelog_prefix: str
 
 
 # Registry of the near-term grind batches. scope_sql defines WHICH opinions
@@ -74,6 +80,7 @@ BATCHES: dict[str, Batch] = {
                 WHERE source_reporter = 'westlaw'
             )
         """,
+        changelog_prefix="type-y-sweep",
     ),
     "court-archive-1966-1996": Batch(
         name="court-archive-1966-1996",
@@ -81,6 +88,7 @@ BATCHES: dict[str, Batch] = {
                     "court-sourced archive.ndcourts.gov NW-cite index "
                     "(N.W.2d vols 139+).",
         scope_sql="v.era_tier = 'gap_1953_1996'",
+        changelog_prefix="court-archive-promote-",
     ),
     "pre1953-westlaw-quickcheck": Batch(
         name="pre1953-westlaw-quickcheck",
@@ -93,6 +101,7 @@ BATCHES: dict[str, Batch] = {
                 WHERE source_reporter = 'westlaw'
             )
         """,
+        changelog_prefix="pre1953-westlaw-quickcheck",
     ),
 }
 
@@ -111,17 +120,21 @@ def _invariants_status() -> tuple[bool, str]:
     return clean, summary
 
 
-def _doc_batch_count(batch: str) -> int | None:
-    r"""Stated row count from the `## Batch \`name\`` header in CHANGELOG-
-    data.md, or None if the batch has no section."""
+def _doc_batch_count(prefix: str) -> int | None:
+    r"""Summed row count across every `## Batch \`<prefix>...\` (N rows)`
+    header in CHANGELOG-data.md, or None if no section matches the
+    prefix. Summed because a logical batch's label is dated and may
+    recur across re-runs."""
     if not CHANGELOG_DOC.exists():
         return None
     text = CHANGELOG_DOC.read_text(encoding="utf-8")
-    m = re.search(
-        rf"^##\s+Batch\s+`{re.escape(batch)}`\s*\((\d[\d,]*)\s+rows?\)",
+    matches = re.findall(
+        rf"^##\s+Batch\s+`{re.escape(prefix)}[^`]*`\s*\((\d[\d,]*)\s+rows?\)",
         text, re.MULTILINE,
     )
-    return int(m.group(1).replace(",", "")) if m else None
+    if not matches:
+        return None
+    return sum(int(m.replace(",", "")) for m in matches)
 
 
 def gate(conn, batch_name: str) -> bool:
@@ -156,24 +169,25 @@ def gate(conn, batch_name: str) -> bool:
 
     # 2. corrections logged (informational — zero is valid)
     cl_rows = conn.execute(
-        "SELECT COUNT(*) FROM changelog WHERE batch = ?", (batch_name,)
+        "SELECT COUNT(*) FROM changelog WHERE batch LIKE ?",
+        (batch.changelog_prefix + "%",),
     ).fetchone()[0]
     checks.append((True, f"corrections logged: {cl_rows} changelog rows "
-                          f"under '{batch_name}' (0 is valid if nothing "
-                          f"needed fixing)"))
+                          f"under '{batch.changelog_prefix}*' (0 is valid "
+                          f"if nothing needed fixing)"))
 
     # 3. invariants clean
     inv_clean, inv_summary = _invariants_status()
     checks.append((inv_clean, inv_summary))
 
     # 4. changelog / CHANGELOG-data.md parity
-    doc_count = _doc_batch_count(batch_name)
+    doc_count = _doc_batch_count(batch.changelog_prefix)
     if cl_rows == 0:
         parity_ok, parity_msg = True, "doc parity: n/a (no changelog rows)"
     elif doc_count is None:
         parity_ok, parity_msg = False, (
             f"doc parity: changelog has {cl_rows} rows but CHANGELOG-data.md "
-            f"has no `## Batch \\`{batch_name}\\`` section")
+            f"has no `## Batch \\`{batch.changelog_prefix}*\\`` section")
     else:
         parity_ok = doc_count == cl_rows
         parity_msg = (f"doc parity: CHANGELOG-data.md says {doc_count} rows, "
