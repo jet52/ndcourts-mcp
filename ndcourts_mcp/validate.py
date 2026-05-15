@@ -88,7 +88,9 @@ BATCHES: dict[str, Batch] = {
                     "court-sourced archive.ndcourts.gov NW-cite index "
                     "(N.W.2d vols 139+).",
         scope_sql="v.era_tier = 'gap_1953_1996'",
-        changelog_prefix="court-archive-promote-",
+        # Spans both court-archive-promote-* and
+        # court-archive-containment-rescue-* changelog labels.
+        changelog_prefix="court-archive-",
     ),
     "pre1953-westlaw-quickcheck": Batch(
         name="pre1953-westlaw-quickcheck",

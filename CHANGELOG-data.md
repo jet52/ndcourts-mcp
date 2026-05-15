@@ -2,6 +2,17 @@
 
 Changes applied to the opinions database after import from CourtListener and ndcourts.gov sources. All corrections are recorded in the `changelog` SQLite table and can be reverted with `python -m ndcourts_mcp.cleanup revert <batch>`.
 
+## Batch `court-archive-containment-rescue-2026-05-15` (3,009 rows)
+
+Containment-rule rescue of the 1,018 `manual_outlier` opinions the `court-archive-promote-2026-05-15` ratio gate flagged rather than auto-promoting. Triage showed these were not "court worse" but **CourtListener self-duplicated `text_content`** (the opinion duplicated within the row), with the court-archive text as the single clean canonical copy.
+
+- **Tool**: `python -m ndcourts_mcp.ingest_nwcite --rescue-flagged --apply`
+- **Rule** (approved 2026-05-15, extends the promotion policy): promote when court-text shingle-containment in the DB body ≥ 0.85 AND the DB shows the caption-duplication signature (first-8-words recur ≥ 2×, unique-extra fraction < 0.55). Containment ≥ 0.85 guarantees the court text is neither truncated nor a distinct second opinion, so the DB "extra" is duplicated content and the swap loses nothing unique.
+- **Result**: 1,003 promoted (CL self-duplication corrected, court-authoritative text + syllabus recovered); 7 kept flagged as `court-source-truncated` (court page itself incomplete, DB is the full opinion — court-archive re-scrape item); 8 left flagged (clean-contained without the duplication signature / 2 divergent — manual).
+- **Changelog rows**: 3,009 = 1,003 × (text_content + source_reporter + source_path), authority-stamped `court-archive (archive.ndcourts.gov NW-cite)`.
+- **Finding**: ~1,003 gap-era CL opinions had self-duplicated body text — a concrete upstream CourtListener data defect, recorded for the deferred CL-feedback objective. Triage: `triage/court-archive-flagged-triage-2026-05-15.md`.
+- **Safety**: pre-batch snapshot `opinions.db.bak-pre-containment-rescue-20260515_155121`. Revert with `python -m ndcourts_mcp.cleanup revert court-archive-containment-rescue-2026-05-15` then `python -m ndcourts_mcp.align_primary_source --apply`. Invariants: 13 ok, 2 known, 0 regressed.
+
 ## Batch `court-archive-promote-2026-05-15` (15,910 rows)
 
 Promoted `text_content` to the court-sourced archive.ndcourts.gov NW-cite text for opinions whose primary was CourtListener OCR (NW2d/NW), closing most of the 1953–1996 single-source gap with a court-authoritative source.

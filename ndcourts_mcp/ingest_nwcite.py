@@ -383,16 +383,142 @@ def run(conn, apply: bool) -> dict:
     return stats
 
 
+RESCUE_BATCH = f"court-archive-containment-rescue-{date.today().isoformat()}"
+PRIOR_PROMOTE_BATCH = "court-archive-promote-2026-05-15"
+CONTAIN_MIN = 0.85
+# Court text ending in a signoff/disposition — used to identify the
+# genuinely court-truncated cases (court NOT contained AND ends abruptly).
+_ENDS_CLEAN = re.compile(
+    r"(concur|dissent|J\.|JJ\.|C\.\s?J\.|Surrogate Judge|"
+    r"affirmed\.|reversed\.|remanded\.)\s*\W*$", re.I)
+
+
+def rescue_flagged(conn, apply: bool) -> dict:
+    """Containment-rule rescue of the prior batch's manual_outlier flags
+    (approved 2026-05-15). Promote a flagged low-ratio CL-primary opinion
+    when the court text's shingle-containment in the DB body >= 0.85 AND
+    the DB shows the caption-duplication signature (first-8-words recur
+    >= 2x, unique-extra fraction < 0.55): containment guarantees the
+    court text is neither truncated nor a distinct second opinion, so
+    the DB 'extra' is duplicated content and swapping loses nothing
+    unique. Genuinely court-truncated cases keep their flag with a
+    sharpened note."""
+    srcmap: dict[str, list[str]] = {}
+    for mf in COURT_ARCHIVE_DIR.glob("*/_manifest.json"):
+        for e in json.loads(mf.read_text(encoding="utf-8"))["entries"]:
+            if e.get("status") in ("fetched", "cached"):
+                srcmap.setdefault(e["nw_cite"], []).append(e["source_path"])
+
+    oids = [r[0] for r in conn.execute(
+        "SELECT opinion_id FROM validation_status WHERE batch=? "
+        "AND crosscheck_state='flagged' AND note LIKE '%OUTSIDE bounds%'",
+        (PRIOR_PROMOTE_BATCH,),
+    )]
+    st = {"candidates": len(oids), "promoted": 0, "truncated": 0, "left": 0}
+
+    for oid in oids:
+        o = conn.execute(
+            "SELECT source_reporter, source_path, text_content "
+            "FROM opinions WHERE id=?", (oid,)
+        ).fetchone()
+        if o["source_reporter"] not in CL_ORIGIN:
+            st["left"] += 1
+            continue
+        fm, body = _split_frontmatter(o["text_content"])
+        nw = [r[0] for r in conn.execute(
+            "SELECT citation FROM citations WHERE opinion_id=? "
+            "AND citation LIKE '% N.W.%'", (oid,))]
+        if not nw or nw[0] not in srcmap:
+            st["left"] += 1
+            continue
+        src_path = srcmap[nw[0]][0]
+        ca = _court_html_to_text(
+            (REFS_ROOT / src_path).read_text(encoding="utf-8",
+                                             errors="replace"))
+        cs = shingles(normalize_words(ca))
+        ds = shingles(normalize_words(body))
+        contain = len(cs & ds) / max(1, len(cs))
+        nb = normalize_words(body)
+        head = " ".join(nb[:8])
+        reps = sum(1 for i in range(len(nb) - 7)
+                   if " ".join(nb[i:i + 8]) == head)
+        extra = len(ds - cs) / max(1, len(ds))
+
+        if contain >= CONTAIN_MIN and reps >= 2 and extra < 0.55:
+            st["promoted"] += 1
+            note = (f"promoted via containment rule "
+                    f"(contain={contain:.2f}, db caption x{reps}, "
+                    f"unique-extra={extra:.2f}); CL self-duplication")
+            if apply:
+                new_text = (fm.rstrip() + "\n\n" + ca) if fm else ca
+                log_change(conn, RESCUE_BATCH, oid, "text_content",
+                           o["text_content"], f"court-archive:{src_path}",
+                           authority=AUTHORITY)
+                log_change(conn, RESCUE_BATCH, oid, "source_reporter",
+                           o["source_reporter"], "court-archive",
+                           authority=AUTHORITY)
+                log_change(conn, RESCUE_BATCH, oid, "source_path",
+                           o["source_path"], src_path, authority=AUTHORITY)
+                conn.execute(
+                    "UPDATE opinions SET text_content=?, "
+                    "source_reporter='court-archive', source_path=? "
+                    "WHERE id=?", (new_text, src_path, oid))
+                conn.execute("UPDATE opinion_sources SET is_primary=0 "
+                             "WHERE opinion_id=?", (oid,))
+                conn.execute(
+                    "UPDATE opinion_sources SET is_primary=1 WHERE "
+                    "opinion_id=? AND source_reporter='court-archive' "
+                    "AND source_path=?", (oid, src_path))
+                _set_status(conn, oid, "corrected", note)
+        elif contain < CONTAIN_MIN and not _ENDS_CLEAN.search(ca[-120:]):
+            st["truncated"] += 1
+            if apply:
+                _set_status(conn, oid, "flagged",
+                            f"court-source-truncated (contain={contain:.2f}, "
+                            f"court ends abruptly); DB is the full opinion — "
+                            f"do not promote; court-archive re-scrape item")
+        else:
+            st["left"] += 1
+
+    if apply:
+        log_provenance(
+            conn, operation="ingest_nwcite-containment-rescue",
+            command="python -m ndcourts_mcp.ingest_nwcite --rescue-flagged "
+                    "--apply",
+            rows_affected=st["promoted"],
+            notes=(f"batch {RESCUE_BATCH}; containment-rule promotion of "
+                   f"prior-batch manual_outlier flags: "
+                   f"promoted={st['promoted']} truncated={st['truncated']} "
+                   f"left={st['left']} of {st['candidates']}; revert via "
+                   f"`cleanup revert {RESCUE_BATCH}` then "
+                   f"`align_primary_source --apply`"),
+        )
+        conn.commit()
+    return st
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--db", type=Path, default=DEFAULT_DB_PATH)
     ap.add_argument("--apply", action="store_true",
                     help="Attach sources + write validation_status "
                          "(default: dry-run report only)")
+    ap.add_argument("--rescue-flagged", action="store_true",
+                    help="Run the containment-rule rescue over the prior "
+                         "batch's manual_outlier flags instead of the "
+                         "manifest walk")
     args = ap.parse_args()
 
     conn = get_connection(args.db)
     try:
+        if args.rescue_flagged:
+            st = rescue_flagged(conn, apply=args.apply)
+            mode = "APPLIED" if args.apply else "DRY RUN"
+            print(f"=== containment rescue: {mode} "
+                  f"(batch {RESCUE_BATCH}) ===")
+            for k, v in st.items():
+                print(f"  {k:<12} {v}")
+            return
         stats = run(conn, apply=args.apply)
     finally:
         conn.close()
