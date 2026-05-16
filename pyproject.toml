@@ -1,6 +1,6 @@
 [project]
 name = "ndcourts-mcp"
-version = "0.1.0"
+version = "0.2.0"
 description = "MCP server for North Dakota Supreme Court opinions (1889–present)"
 requires-python = ">=3.12"
 dependencies = [

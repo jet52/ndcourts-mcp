@@ -132,3 +132,20 @@ sqlite3 opinions.db "SELECT COUNT(*) FROM opinions; SELECT COUNT(*) FROM provena
 | `dedup_scan.py` | Duplicate detection |
 | `audit.py` | Missing opinion audit |
 | `quality_report.py` | Generate .docx for Westlaw lookup |
+
+## Releasing
+
+`scripts/make_release.sh` packages `opinions.db` as the GitHub release
+asset. It gates on (1) `invariants` clean, (2) a redistribution-scope
+scan (0 Westlaw editorial markers — West Headnotes / Procedural Posture
+/ Thomson Reuters / KeyCite / End of Document), and (3) a clean git
+tree, then writes `opinions.db.zip` + `opinions.db.zip.sha256`.
+
+```sh
+scripts/make_release.sh            # build + verify locally only
+scripts/make_release.sh --publish  # also `gh release create vX.Y.Z`
+```
+
+The tag is the `pyproject.toml` version (`vX.Y.Z`). Bump the version
+before publishing. Verify a downloaded asset with
+`shasum -a 256 -c opinions.db.zip.sha256`.
