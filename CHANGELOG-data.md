@@ -2,6 +2,19 @@
 
 Changes applied to the opinions database after import from CourtListener and ndcourts.gov sources. All corrections are recorded in the `changelog` SQLite table and can be reverted with `python -m ndcourts_mcp.cleanup revert <batch>`.
 
+## Batch `westlaw-receive-2026-05-15` (940 rows)
+
+Ingested the manual Westlaw Find & Print returns for the gap-era worklist (batches 1–4 + the non-unique resolution passes; ~425 docs). Westlaw bound is the highest authority for the 1953–1996 era.
+
+- **Tool**: `python -m ndcourts_mcp.receive_westlaw --apply`
+- **Source**: `~/refs/nd/opin/westlaw-incoming/2026-05-15/` (8 Westlaw Precision zips/doc); each `.doc` archived to `~/refs/nd/opin/N.W.2d/{vol}/{page:04d}-{slug}.doc` (parallel to bound `N.D./`).
+- **Resolution**: cite match; non-unique shared-reporter-page cites disambiguated by cleaned caption + filing date. Two-phase (classify all docs read-only against the original DB, then apply) so a shared-page Type-Y pair yields two independent creates rather than a sibling overwriting a just-created row.
+- **Safety gate**: a MATCH whose Westlaw text shares < 0.20 shingle-Jaccard with the resolved DB row is flagged, never promoted (catches wrong shared-page resolutions — e.g. Court of Appeals *Reimers Seed Co.* / *City of Bismarck v. Berger* docs that resolved onto unrelated disciplinary opinions).
+- **Result**: 276 promoted to Westlaw-authoritative text; 56 created (Type-Y companions / missing — incl. memorandum disciplinary & judicial-vacancy orders via a `(Mem)`-format parser fallback); 4 flagged low-similarity; 89 ambiguous (multi-party estate/guardianship/juvenile captions on same-date shared pages) reported for manual review; 0 parse errors. Corpus 20,476 → 20,532.
+- **Changelog rows**: 940 = 276 × (text_content + source_reporter + source_path) + 56 × (opinions.insert + citation), authority-stamped `Westlaw bound (Find&Print, <cite>)`.
+- **Process note**: the first apply attempt was discarded — an in-run ordering bug let early creates expose rows to later shared-page docs (10 created rows corrupted by sibling promotes). Snapshot-restored, fixed to two-phase, re-applied; verified apply == dry-run and created (56) == single_source_accepted (56). Known minor nit: 2 promoted opinions lacked a `validation_status` row so their status wasn't updated (text/source/changelog applied correctly).
+- **Safety**: pre-batch snapshot `opinions.db.bak-pre-westlaw-receive-20260515_202453`. Revert with `python -m ndcourts_mcp.cleanup revert westlaw-receive-2026-05-15` then `python -m ndcourts_mcp.align_primary_source --apply` (created rows need manual DELETE). Invariants: 13 ok, 2 known, 0 regressed.
+
 ## Batch `court-archive-gap-create-2026-05-15` (114 rows)
 
 Created 57 opinions that exist in the court-sourced NW-cite archive but were entirely absent from the corpus (the §2 gap candidates), after triage narrowed 292 raw candidates to the genuinely-addable set.

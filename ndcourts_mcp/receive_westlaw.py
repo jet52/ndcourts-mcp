@@ -1,0 +1,467 @@
+"""Receive/ingest the Westlaw Find & Print returns for the gap-era pull.
+
+Closes the manual-Westlaw loop. The worklist (westlaw_worklist) lists
+1953-~1965 opinions that have only CL OCR; the user pulls them from
+Westlaw (zip of individual .doc files per ~100-cite batch) and drops
+the unzipped .doc files into an incoming dir. This tool:
+
+  * textutil -> _parse_westlaw_doc (Westlaw editorial Synopsis already
+    stripped inside the parser — mandatory; do not bypass).
+  * Resolve the target opinion. The gap era is riddled with shared
+    reporter pages (two opinions begin on one N.W.2d page), so the
+    N.W. cite ALONE is not a key:
+      - candidates = DB opinions carrying any parsed citation.
+      - exactly one      -> match.
+      - several          -> disambiguate by party name (_case_names_
+                            match) + filing date; unique winner -> match,
+                            else AMBIGUOUS (reported, skipped).
+      - none             -> a returned opinion absent from the corpus
+                            (Type-Y companion / genuinely missing) ->
+                            CREATE a new row.
+  * Matched: promote the Westlaw bound text to the authoritative
+    primary (Westlaw bound > CL OCR for this era), preserving any
+    existing YAML frontmatter; flip opinion_sources primary; set
+    validation_status terminal; stamp westlaw_requests.received_at/path.
+  * Created: new opinion (court = ND Court of Appeals if the text says
+    so, else ND Supreme Court), citations, court source, validation
+    status, all logged.
+  * Archive every .doc to ~/refs/nd/opin/N.W.2d/{vol}/{page:04d}-
+    {slug}.doc — parallel to the bound N.D./{vol}/{page}-{slug}.doc.
+
+Reversible/audited: pre-batch snapshot, changelog (authority-stamped),
+provenance, CHANGELOG-data.md, invariants. Dry-run default.
+
+Usage:
+  python -m ndcourts_mcp.receive_westlaw                 # dry-run report
+  python -m ndcourts_mcp.receive_westlaw --apply
+  python -m ndcourts_mcp.receive_westlaw --incoming PATH --apply
+"""
+
+from __future__ import annotations
+
+import argparse
+import re
+import shutil
+import zipfile
+from datetime import date
+from pathlib import Path
+
+from .db import DEFAULT_DB_PATH, get_connection, log_change, log_provenance
+from .ingest_westlaw import (
+    _case_names_match,
+    _doc_to_text,
+    _parse_date,
+    _parse_westlaw_doc,
+)
+from .ingest_nwcite import _split_frontmatter
+from .multisource_diff import jaccard, normalize_words, shingles
+from .validation_status import _era_tier
+
+BATCH = f"westlaw-receive-{date.today().isoformat()}"
+INCOMING_DEFAULT = Path.home() / "refs" / "nd" / "opin" / "westlaw-incoming"
+NW2D_ARCHIVE = Path.home() / "refs" / "nd" / "opin" / "N.W.2d"
+REFS_ROOT = Path.home() / "refs" / "nd" / "opin"
+_NW_CITE = re.compile(r"\b(\d+)\s+N\.\s?W\.\s?(?:2d|3d)?\s+(\d+)\b")
+
+# A genuine same-opinion promote, even with heavy NW2d-era OCR drift,
+# shared 0.50-0.93 shingle-Jaccard in the dry-run; 0.00 means the
+# Westlaw text is a different document than the resolved DB row (a
+# wrong shared-page resolution). Below this floor we do NOT overwrite —
+# we flag for manual review. Set well under the legit 0.50 floor and
+# well over 0.00 so it isolates the wrong-resolution cases only.
+JACCARD_FLOOR = 0.20
+
+_DOCKET_TAIL = re.compile(
+    r"\s*(?:Civ(?:il)?\.?|Crim(?:inal)?\.?)?\s*Nos?\.?\s*[\w-]+\.?\s*\|?\s*$",
+    re.IGNORECASE)
+_ROLE = re.compile(
+    r",?\s*(?:Plaintiffs?|Defendants?|Petitioners?|Respondents?|"
+    r"Appellants?|Appellees?|Movants?|Intervenors?|and|the)\b.*$",
+    re.IGNORECASE)
+_LEAD_PREFIX = re.compile(
+    r"^\s*(?:In re|In the Matter of|In the Interest of|"
+    r"Matter of|Application of|Estate of)\b[:.]?\s*", re.IGNORECASE)
+
+
+def _caption_key(name: str) -> str:
+    """Reduce a messy Westlaw caption to a 'lead1 v. lead2' key the DB
+    case name can match. Westlaw gives the full multi-party block plus a
+    'Civ. No. 930122. |' docket tail; DB names are short. Strip the tail,
+    the role words, the In-re prefix, and take the lead party each side."""
+    if not name:
+        return ""
+    s = name.replace("|", " ").strip()
+    s = _DOCKET_TAIL.sub("", s)
+    parts = re.split(r"\s+v\.?\s+", s, maxsplit=1, flags=re.IGNORECASE)
+    out = []
+    for side in parts:
+        side = _LEAD_PREFIX.sub("", side)
+        side = side.split(",")[0]          # lead party only
+        side = _ROLE.sub("", side).strip(" .")
+        out.append(side)
+    return " v. ".join(p for p in out if p)
+
+
+def _parse(text: str) -> dict | None:
+    """_parse_westlaw_doc, with a memorandum fallback. '(Mem)' orders
+    carry the cite/caption/date and an 'All Citations' footer but no
+    Opinion/Attorneys header, so the base parser extracts no body. When
+    that happens, take the body as everything between the filing date
+    and 'All Citations'."""
+    p = _parse_westlaw_doc(text) or {}
+    if p.get("full_bound_text") or p.get("opinion_text"):
+        return p
+
+    lines = text.splitlines()
+    cite = None
+    for ln in lines:
+        s = ln.strip()
+        if re.match(r"\d+\s+N\.\s?W\.", s):
+            cite = s
+            break
+    if not cite:
+        return p or None
+    all_idx = None
+    for j in range(len(lines) - 1, -1, -1):
+        if lines[j].strip() == "All Citations":
+            all_idx = j
+            break
+    date_idx = date_val = None
+    for i, ln in enumerate(lines[:40]):
+        d = _parse_date(ln.strip().rstrip("."))
+        if d:
+            date_idx, date_val = i, d
+            break
+    if all_idx is None or date_idx is None:
+        return p or None
+    body = "\n".join(lines[date_idx + 1:all_idx]).strip()
+    if not body:
+        return p or None
+    # caption = the lines between the "Supreme Court..."/cite header and
+    # the docket/date block.
+    cap = []
+    for ln in lines[:date_idx]:
+        s = ln.strip()
+        if (not s or s == cite or s.startswith("Supreme Court")
+                or s.startswith("Court of Appeals")
+                or re.match(r"Nos?\.", s) or s == "|"):
+            continue
+        cap.append(s)
+    merged = dict(p)
+    merged.setdefault("primary_citation", cite)
+    merged.setdefault("all_citations",
+                       [c.strip() for c in
+                        (lines[all_idx + 1].split(",") if all_idx + 1
+                         < len(lines) else []) if c.strip()])
+    merged["case_name"] = p.get("case_name") or " ".join(cap)
+    merged["date_filed"] = p.get("date_filed") or date_val
+    merged["full_bound_text"] = body
+    return merged
+
+
+def _authority(cite: str) -> str:
+    return f"Westlaw bound (Find&Print, {cite})"
+
+
+def _slug(name: str) -> str:
+    s = re.sub(r"[.,;:'\"]", "", name)
+    s = re.sub(r"[^A-Za-z0-9]+", "-", s).strip("-")
+    return s[:90] or "Unknown"
+
+
+def _archive_doc(doc_path: Path, primary_cite: str, case_name: str) -> str:
+    """Copy the .doc to N.W.2d/{vol}/{page:04d}-{slug}.doc, parallel to
+    the bound N.D./{vol}/{page}-{slug}.doc layout. Returns refs-relative
+    path, or '' if the cite has no parseable N.W. vol/page."""
+    m = _NW_CITE.search(primary_cite or "")
+    if not m:
+        return ""
+    vol, page = m.group(1), int(m.group(2))
+    dest_dir = NW2D_ARCHIVE / vol
+    dest_dir.mkdir(parents=True, exist_ok=True)
+    dest = dest_dir / f"{page:04d}-{_slug(case_name)}.doc"
+    shutil.copy2(doc_path, dest)
+    return str(dest.relative_to(REFS_ROOT))
+
+
+def _candidates(conn, citations: list[str]) -> list[dict]:
+    seen, out = set(), []
+    for cite in citations:
+        c = re.sub(r"\s+", " ", cite.strip())
+        for r in conn.execute(
+            "SELECT o.* FROM opinions o JOIN citations ci "
+            "ON ci.opinion_id=o.id WHERE ci.citation=?", (c,)
+        ):
+            if r["id"] not in seen:
+                seen.add(r["id"])
+                out.append(dict(r))
+    return out
+
+
+def _resolve(conn, parsed: dict) -> tuple[str, dict | None]:
+    """Return (kind, opinion). kind ∈ match | create | ambiguous."""
+    cites = list(parsed.get("all_citations", []))
+    if parsed.get("primary_citation"):
+        cites.insert(0, parsed["primary_citation"])
+    cands = _candidates(conn, cites)
+    if len(cands) == 1:
+        return "match", cands[0]
+    if not cands:
+        return "create", None
+    # Non-unique reporter page: disambiguate by party name + date.
+    # Compare on the cleaned caption key (raw Westlaw caption carries the
+    # full multi-party block + docket tail and never matches the short
+    # DB name).
+    wl_key = _caption_key(parsed.get("case_name", ""))
+    wl_date = parsed.get("date_filed")
+    by_name = [c for c in cands
+               if wl_key and _case_names_match(wl_key, c["case_name"])]
+    if len(by_name) == 1:
+        return "match", by_name[0]
+    pool = by_name or cands
+    by_both = [c for c in pool if wl_date and c["date_filed"] == wl_date]
+    if len(by_both) == 1:
+        return "match", by_both[0]
+    return "ambiguous", None
+
+
+def _promote(conn, oid: int, parsed: dict, archive_path: str,
+             apply: bool) -> str:
+    row = conn.execute(
+        "SELECT source_reporter, source_path, text_content "
+        "FROM opinions WHERE id=?", (oid,)
+    ).fetchone()
+    fm, body = _split_frontmatter(row["text_content"])
+    wl_text = parsed.get("full_bound_text") or parsed.get("opinion_text") or ""
+    sim = jaccard(shingles(normalize_words(body)),
+                  shingles(normalize_words(wl_text)))
+    cite = parsed.get("primary_citation", "")
+    auth = _authority(cite)
+
+    # Safety gate: at jaccard < floor the Westlaw text is a different
+    # document than the resolved DB row (a wrong shared-page resolution,
+    # or a DB stub we can't verify against). Do NOT overwrite — flag for
+    # manual review, leave the row and westlaw_requests untouched.
+    if sim < JACCARD_FLOOR:
+        if apply:
+            conn.execute(
+                "UPDATE validation_status SET crosscheck_state='flagged', "
+                "authority_source=?, batch=?, "
+                "validated_at=strftime('%Y-%m-%dT%H:%M:%S','now'), note=? "
+                "WHERE opinion_id=?",
+                (auth, BATCH,
+                 f"Westlaw MATCH but jaccard={sim:.3f} < {JACCARD_FLOOR} "
+                 f"vs DB text — likely wrong shared-page resolution or DB "
+                 f"stub; manual disambiguation before any promote", oid))
+            conn.execute(
+                "INSERT OR REPLACE INTO review_flags (opinion_id, note) "
+                "VALUES (?, ?)",
+                (oid, f"[{BATCH}] low-similarity westlaw match "
+                 f"(jaccard={sim:.3f}); doc at {archive_path}"))
+        return f"LOW_SIM (jaccard={sim:.2f}) — flagged, NOT promoted"
+
+    new_text = (fm.rstrip() + "\n\n" + wl_text) if fm else wl_text
+    if apply:
+        log_change(conn, BATCH, oid, "text_content", row["text_content"],
+                   f"westlaw:{archive_path}", authority=auth)
+        log_change(conn, BATCH, oid, "source_reporter",
+                   row["source_reporter"], "westlaw", authority=auth)
+        log_change(conn, BATCH, oid, "source_path", row["source_path"],
+                   archive_path, authority=auth)
+        conn.execute(
+            "UPDATE opinions SET text_content=?, source_reporter='westlaw', "
+            "source_path=? WHERE id=?", (new_text, archive_path, oid))
+        existing = conn.execute(
+            "SELECT id FROM opinion_sources WHERE opinion_id=? "
+            "AND source_reporter='westlaw'", (oid,)).fetchone()
+        if existing:
+            conn.execute("UPDATE opinion_sources SET source_path=?, "
+                         "text_length=? WHERE id=?",
+                         (archive_path, len(wl_text), existing["id"]))
+        else:
+            conn.execute(
+                "INSERT INTO opinion_sources (opinion_id, source_reporter, "
+                "source_path, text_length, is_primary, added_at) VALUES "
+                "(?, 'westlaw', ?, ?, 0, "
+                "strftime('%Y-%m-%dT%H:%M:%S','now'))",
+                (oid, archive_path, len(wl_text)))
+        conn.execute("UPDATE opinion_sources SET is_primary=0 "
+                     "WHERE opinion_id=?", (oid,))
+        conn.execute("UPDATE opinion_sources SET is_primary=1 WHERE "
+                     "opinion_id=? AND source_reporter='westlaw' "
+                     "AND source_path=?", (oid, archive_path))
+        conn.execute(
+            "UPDATE validation_status SET crosscheck_state='corrected', "
+            "authority_source=?, batch=?, "
+            "validated_at=strftime('%Y-%m-%dT%H:%M:%S','now'), note=? "
+            "WHERE opinion_id=?",
+            (auth, BATCH,
+             f"Westlaw bound promoted to primary (jaccard vs prior "
+             f"text={sim:.3f})", oid))
+        conn.execute("DELETE FROM review_flags WHERE opinion_id=?", (oid,))
+        conn.execute(
+            "UPDATE westlaw_requests SET received_at="
+            "strftime('%Y-%m-%dT%H:%M:%S','now'), received_path=? "
+            "WHERE opinion_id=?", (archive_path, oid))
+    return f"promoted (jaccard={sim:.2f})"
+
+
+def _create(conn, parsed: dict, archive_path: str, apply: bool) -> str:
+    wl_text = parsed.get("full_bound_text") or parsed.get("opinion_text") or ""
+    date_filed = parsed.get("date_filed")
+    raw_name = parsed.get("case_name") or "Unknown"
+    # Strip the docket/pipe tail but keep the descriptive "In the Matter
+    # of …" wording (more useful than a reduced key for these orders).
+    case_name = _DOCKET_TAIL.sub("", raw_name).replace("|", " ").strip() \
+        or raw_name
+    if not date_filed or not wl_text:
+        return "skipped (no date/text)"
+    is_coa = "COURT OF APPEALS" in wl_text[:160].upper()
+    court = ("North Dakota Court of Appeals" if is_coa
+             else "North Dakota Supreme Court")
+    cites = list(parsed.get("all_citations", []))
+    if parsed.get("primary_citation"):
+        cites.insert(0, parsed["primary_citation"])
+    cites = list(dict.fromkeys(c.strip() for c in cites if c.strip()))
+    auth = _authority(parsed.get("primary_citation", ""))
+    if not apply:
+        return f"would create ({court})"
+    fm = (f'---\ntitle: "{case_name}"\ncourt: "{court}"\n'
+          f'date_filed: {date_filed}\ncitations:\n'
+          + "".join(f' - "{c}"\n' for c in cites) + "---\n\n")
+    cur = conn.execute(
+        "INSERT INTO opinions (case_name, date_filed, court, author, "
+        "per_curiam, source_reporter, source_path, text_content) VALUES "
+        "(?, ?, ?, ?, 0, 'westlaw', ?, ?)",
+        (case_name, date_filed, court, parsed.get("author"),
+         archive_path, fm + wl_text))
+    oid = cur.lastrowid
+    log_change(conn, BATCH, oid, "opinions.insert", None,
+               f'{court} | {cites[0] if cites else "?"} | {date_filed} | '
+               f'westlaw {archive_path}', authority=auth)
+    for i, c in enumerate(cites):
+        conn.execute("INSERT INTO citations (opinion_id, citation, "
+                     "is_primary) VALUES (?, ?, ?)",
+                     (oid, c, 1 if i == 0 else 0))
+        log_change(conn, BATCH, oid, "citation", None, c, authority=auth)
+    conn.execute(
+        "INSERT INTO opinion_sources (opinion_id, source_reporter, "
+        "source_path, text_length, is_primary, added_at) VALUES "
+        "(?, 'westlaw', ?, ?, 1, strftime('%Y-%m-%dT%H:%M:%S','now'))",
+        (oid, archive_path, len(wl_text)))
+    conn.execute(
+        "INSERT INTO validation_status (opinion_id, era_tier, "
+        "crosscheck_state, authority_source, sources_seen, batch, "
+        "validated_at, note) VALUES (?, ?, 'single_source_accepted', ?, "
+        "'[\"westlaw\"]', ?, strftime('%Y-%m-%dT%H:%M:%S','now'), ?)",
+        (oid, _era_tier(date_filed), auth, BATCH,
+         "created from Westlaw bound (Type-Y companion / gap missing)"))
+    return f"created oid={oid} ({court})"
+
+
+def _iter_docs(incoming: Path):
+    for z in sorted(incoming.rglob("*.zip")):
+        with zipfile.ZipFile(z) as zf:
+            zf.extractall(z.with_suffix(""))
+    yield from sorted(incoming.rglob("*.doc"))
+
+
+def run(conn, incoming: Path, apply: bool) -> dict:
+    st = {"docs": 0, "promoted": 0, "low_sim": 0, "created": 0,
+          "ambiguous": 0, "skipped": 0, "parse_error": 0}
+    report: list[str] = []
+
+    # PHASE 1 — classify every doc read-only against the ORIGINAL DB.
+    # Resolution must not see rows created earlier in this same run: a
+    # shared-page Type-Y pair where neither side is in the DB must yield
+    # two independent CREATEs, not one CREATE then a sibling promoting
+    # onto it. _resolve only reads, so doing all resolution before any
+    # write makes the batch order-independent (== the dry-run truth).
+    decisions = []  # (doc, parsed, kind, op)
+    for doc in _iter_docs(incoming):
+        st["docs"] += 1
+        try:
+            parsed = _parse(_doc_to_text(doc))
+        except Exception as e:  # noqa: BLE001
+            parsed = None
+            report.append(f"PARSE_ERROR\t{doc.name}\t\t{e}")
+        if not parsed:
+            st["parse_error"] += 1
+            continue
+        kind, op = _resolve(conn, parsed)
+        decisions.append((doc, parsed, kind, op))
+
+    # PHASE 2 — apply writes from the frozen classification.
+    for doc, parsed, kind, op in decisions:
+        cite = parsed.get("primary_citation", "")
+        name = parsed.get("case_name", "?")
+        archive_path = _archive_doc(doc, cite, name) if apply else \
+            f"N.W.2d/(dry)/{doc.name}"
+        if kind == "match":
+            msg = _promote(conn, op["id"], parsed, archive_path, apply)
+            if msg.startswith("LOW_SIM"):
+                st["low_sim"] += 1
+                report.append(f"LOW_SIM\t{cite}\t{name}\toid={op['id']}\t{msg}")
+            else:
+                st["promoted"] += 1
+                report.append(
+                    f"MATCH\t{cite}\t{name}\toid={op['id']}\t{msg}")
+        elif kind == "create":
+            r = _create(conn, parsed, archive_path, apply)
+            if r.startswith("skipped"):
+                st["skipped"] += 1
+            else:
+                st["created"] += 1
+            report.append(f"CREATE\t{cite}\t{name}\t{r}")
+        else:
+            st["ambiguous"] += 1
+            report.append(f"AMBIGUOUS\t{cite}\t{name}\t"
+                          f"(cite non-unique; name+date did not resolve)")
+
+    rpt = Path("triage") / f"{BATCH}.tsv"
+    rpt.parent.mkdir(parents=True, exist_ok=True)
+    rpt.write_text("kind\tcite\tcase\tdetail\n" + "\n".join(report),
+                   encoding="utf-8")
+    if apply:
+        log_provenance(
+            conn, operation="receive_westlaw",
+            command="python -m ndcourts_mcp.receive_westlaw --apply",
+            source_paths=str(incoming),
+            rows_affected=st["promoted"] + st["created"],
+            notes=(f"batch {BATCH}; promoted={st['promoted']} "
+                   f"created={st['created']} ambiguous={st['ambiguous']} "
+                   f"parse_error={st['parse_error']} of {st['docs']} docs; "
+                   f"revert via `cleanup revert {BATCH}` then "
+                   f"`align_primary_source --apply` (creations need manual "
+                   f"DELETE)"),
+        )
+        conn.commit()
+    return st, rpt
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    ap.add_argument("--db", type=Path, default=DEFAULT_DB_PATH)
+    ap.add_argument("--incoming", type=Path, default=INCOMING_DEFAULT)
+    ap.add_argument("--apply", action="store_true",
+                    help="Write changes (default: dry-run report only)")
+    args = ap.parse_args()
+
+    if not args.incoming.exists():
+        raise SystemExit(f"incoming dir not found: {args.incoming}\n"
+                         f"Create it and drop the unzipped Westlaw .doc "
+                         f"files (or the .zip) there.")
+    conn = get_connection(args.db)
+    try:
+        st, rpt = run(conn, args.incoming, apply=args.apply)
+    finally:
+        conn.close()
+    mode = "APPLIED" if args.apply else "DRY RUN"
+    print(f"=== receive_westlaw: {mode} (batch {BATCH}) ===")
+    for k, v in st.items():
+        print(f"  {k:<14} {v}")
+    print(f"  report -> {rpt}")
+
+
+if __name__ == "__main__":
+    main()

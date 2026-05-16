@@ -145,6 +145,43 @@ def status(conn) -> None:
     print(f"  remaining to list:             {remaining}")
 
 
+def export_citations(conn, doc_batch: str | None, per_block: int,
+                     out_path: Path) -> tuple[int, int, Path]:
+    """Write a paste-ready citations-only .txt from the RECORDED listing
+    in westlaw_requests (source of truth — stays in sync with what was
+    listed; never re-selects the pool). Per Westlaw: no case names,
+    citations semicolon-separated, batched at the per-request cap."""
+    _ensure_table(conn)
+    if doc_batch is None:
+        row = conn.execute(
+            "SELECT doc_batch FROM westlaw_requests "
+            "ORDER BY listed_at DESC LIMIT 1").fetchone()
+        if not row:
+            raise SystemExit("westlaw_requests is empty — generate a "
+                             "worklist with --apply first.")
+        doc_batch = row[0]
+    cites = [r[0] for r in conn.execute(
+        "SELECT nw_cite FROM westlaw_requests WHERE doc_batch=? "
+        "ORDER BY listed_at, opinion_id", (doc_batch,))]
+    n_blocks = (len(cites) + per_block - 1) // per_block
+    lines = [
+        f"Westlaw Find & Print — batch {doc_batch}",
+        f"{len(cites)} citations in {n_blocks} block(s) of <= {per_block}.",
+        "Paste ONE block per Find & Print request (citations only, "
+        "semicolon-separated, no case names — per Westlaw's instruction).",
+        "",
+    ]
+    for i in range(0, len(cites), per_block):
+        block = cites[i:i + per_block]
+        lines.append(f"===== Block {i // per_block + 1} of {n_blocks} "
+                     f"({len(block)} citations) =====")
+        lines.append("; ".join(block))
+        lines.append("")
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text("\n".join(lines), encoding="utf-8")
+    return len(cites), n_blocks, out_path
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--db", type=Path, default=DEFAULT_DB_PATH)
@@ -155,12 +192,26 @@ def main() -> None:
                     help="Record opinions as listed + write the .docx "
                          "(default: preview only, records nothing)")
     ap.add_argument("--status", action="store_true")
+    ap.add_argument("--export-citations", action="store_true",
+                    help="Write a paste-ready semicolon-separated "
+                         "citations-only .txt from the recorded listing")
+    ap.add_argument("--batch", help="doc_batch to export "
+                    "(default: most recent)")
     args = ap.parse_args()
 
     conn = get_connection(args.db)
     try:
         if args.status:
             status(conn)
+            return
+        if args.export_citations:
+            today = date.today().isoformat()
+            out = args.out or (WORKLIST_DIR
+                               / f"westlaw-{args.batch or today}-cites.txt")
+            n, nb, p = export_citations(
+                conn, args.batch, args.per_section, out)
+            print(f"Wrote {n} citations in {nb} block(s) of "
+                  f"<= {args.per_section} -> {p}")
             return
         _ensure_table(conn)
         rows = _pool(conn, args.limit)
