@@ -1068,3 +1068,15 @@ Applied 2026-05-17. Root-cause fix for the disciplinary ORDER-format parser gap 
 **Data effect:** `receive_westlaw` re-run dry-run `low_sim` 2 → **0**; both `481 N.W.2d 225` *Disc. Bd. v. Johnson* (oid 11076) and `505 N.W.2d 749` *Disc. Bd. v. Schmidt* (oid 11479) now MATCH and were promoted to Westlaw bound text (`source_reporter='westlaw'`, `crosscheck_state='corrected'`). Johnson thereby upgrades from the earlier bookkeeping-only confirmation (`s6-481-johnson-resolve-2026-05-17`) to the actual bound text; Schmidt's prior LOW_SIM flag is resolved. Changelog rows under batch `westlaw-receive-2026-05-17`; promotes are changelog-revertible. Corpus unchanged (20231). Invariants **13 ok / 2 baseline / 0 regressed**, align 0 rewrites/flips.
 
 Forward-looking: future disciplinary-order Find&Print returns now promote normally instead of LOW_SIM-flagging. `505 N.W.2d 749` is no longer a separate open item.
+
+## Batch: fix-cite-discrepancy-2026-05-17 (30 rows)
+
+Applied 2026-05-17. Surfaced by the corpus-wide Type Y sweep (`sweep_type_y`, batch `triage/type-y-sweep-2026-05-17.tsv`): 37 cases where a westlaw-`.doc`-paired opinion's DB N.W. parallel cite disagreed with the Westlaw bound "All Citations" footer at jaccard=1.00 (literally the same opinion). Not Type Y — citation-accuracy bugs (OCR/CL-metadata wrong digits). All 37 pre-1953.
+
+Adjudication (read-only, `_classify`-style): authority = Westlaw "All Citations" footer, corroborated by (a) the doc's N.D. cite matching the DB row's N.D. cite for all 37 (correct opinion pairing), (b) jaccard=1.00 same text, (c) era-plausibility on the volume-error cases (e.g. oid 5092/5093 DB `338 N.W.` for a 1912 opinion is structurally impossible — `138 N.W.` is correct). Safety gate: skip if the corrected cite already belongs to a *different* opinion (collision ⇒ not a simple typo).
+
+**30 SAFE — corrected** (`UPDATE citations`, changelog-revertible, no row/text deletes): oids 2, 33, 136, 151, 159, 166, 167, 181, 247, 443, 618, 713, 841, 1677, 2374, 2663, 2671, 2740, 3482, 5092, 5093, 5222, 5858, 5941, 5972, 6024, 9825, 11208, 11213, 11406. Each: the wrong N.W. parallel cite string replaced with the Westlaw footer cite (is_primary/reporter preserved). Examples: `100 N.W. 108`→`708` (oid 2, 1↔7), `338 N.W. 7`→`138` (5092, leading digit), `54 N.W. 195`→`154` (5222, dropped "1"), `40 N.W.2d 102`→`49` (9825). Invariants 13 ok / 2 baseline / **0 regressed**.
+
+**7 FLAGGED — not auto-applied** (corrected cite already on another, usually adjacent, oid → likely shared-page/companion, lead+rehearing, or CL double-ingest, not a typo): oids 6023 (→5982), 107 (→68), 190 (→189), 2167 (→2169/2170/2171), 2795 (→2826), and the 2 `DB_NO_NW` 4008 (→4009) / 4062 (→4063). Captured in `triage/cite-discrepancy-flagged-2026-05-17.md` for per-item review (§6-flavored).
+
+Known cosmetic lag: the wrong cite may still appear in the opinion's `text_content` YAML frontmatter (display-only; the authoritative `citations` table — what lookup/FTS use — is now correct). Frontmatter re-render is a separate cleanup, not a correctness issue.
