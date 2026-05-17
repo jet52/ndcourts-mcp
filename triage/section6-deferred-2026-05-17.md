@@ -11,18 +11,18 @@ that the pairwise keep policy can't safely resolve mechanically.
 All oids verified present post-merge (corpus 20242). Jaccard = 4-word
 shingle Jaccard of body text (frontmatter stripped).
 
-## Borderline trio — same caption, same date, sub-threshold jaccard
+## Borderline trio — RESOLVED 2026-05-17 (batch section6-handadj-trio-2026-05-17)
 
-Identical case_name + identical date_filed but low text overlap. Each is
-either (a) a true dup where one row is an OCR stub, or (b) a lead opinion +
-rehearing/disposition published at the same page, or (c) two distinct
-dispositions. Must read both texts to classify; do NOT merge blind.
+All three read in full → **all true duplicates** (verbatim judicial text;
+low jaccard was the attorney/caption header block on one row + short
+opinions). Merged; all 3 survivors then auto-promoted to Westlaw bound
+text via receive re-run. Corpus 20242→20239. See CHANGELOG-data.md.
 
-| cite | rows (both NW2d, cb1) | j | lean |
-|---|---|---|---|
-| 344 N.W.2d 489 | 9058 / 9059 *Anderson v. State* (1984-02-23) | 0.70 | probably true dup w/ OCR drift; closest to mergeable |
-| 489 N.W.2d 885 | 11200 / 11201 *Dibble v. Backes* (1992-10-01) | 0.54 | Backes DUI-license companion; dup-with-stub vs lead+rehearing — read |
-| 539 N.W.2d 869 | 12027 / 12028 *City of Dickinson v. Powell* (1995-11-30) | 0.39 | low overlap despite identical caption — likely two distinct dispositions, lean NOT a simple dup |
+| cite | kept | dropped | j | outcome |
+|---|---|---|---|---|
+| 344 N.W.2d 489 *Anderson v. State* | 9059 | 9058 | 0.70 | merged — true dup (PER CURIAM, Civ. 10509) |
+| 489 N.W.2d 885 *Dibble v. Backes* | 11201 | 11200 | 0.54 | merged — true dup (Levine, Civ. 920066) |
+| 539 N.W.2d 869 *City of Dickinson v. Powell* | 12028 | 12027 | 0.39 | merged — true dup (consolidated 7-def. double-jeopardy; the "lean distinct" call was wrong — jaccard misled by the long multi-party caption) |
 
 ## Multi-row clusters — >2 rows share the cite
 

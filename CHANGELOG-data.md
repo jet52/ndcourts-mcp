@@ -1000,3 +1000,19 @@ Changelog: 31 rows (14 `merge.absorbed` audit rows attributed to survivors, 12 `
 **Reversibility: NOT changelog-revertible.** `merge_pair` does `DELETE FROM opinions` for each drop row; recovery is snapshot-only from `opinions.db.bak-pre-s6-handadj-2026-05-17`.
 
 Payoff: a `receive_westlaw` re-run then auto-promoted 7 of the merged survivors to Westlaw bound text (385, 337, 496, 528, 506, 519, 517 N.W.2d cites) — previously permanently blocked by the dup pair. `481 N.W.2d 225` correctly held LOW_SIM (the Johnson doc genuinely doesn't match the survivor text, j≈0.004). 6 merged cites have no doc in the 2026-05-17 incoming and will fill on a future pull.
+
+## Batch: section6-handadj-trio-2026-05-17 (7 rows, 3 row deletions)
+
+Applied 2026-05-17. The "borderline trio" deferred from `section6-handadj-2026-05-17` (`triage/section6-deferred-2026-05-17.md`): same caption + same date but sub-threshold jaccard, undecidable from jaccard alone. Resolved by reading both full texts of each pair — **all three are true duplicates** (verbatim-identical judicial text; the low jaccard was an artifact of one row carrying the attorney/caption header block the other lacks, plus short opinions):
+
+| cite | keep | drop (deleted) | j | classification basis |
+|---|---|---|---|---|
+| 344 N.W.2d 489 | 9059 | 9058 | 0.70 | identical PER CURIAM body, same docket Civ. 10509, panel, "appeal dismissed / Striegel v. Dakota Hills" |
+| 489 N.W.2d 885 | 11201 | 11200 | 0.54 | identical Levine opinion, same docket Civ. 920066, "affirm per Rule 35.1(a)(7) / Kummer v. Backes" |
+| 539 N.W.2d 869 | 12028 | 12027 | 0.39 | same 7-defendant consolidated double-jeopardy opinion, dockets Cr. 950236-950242, Sandstrom, "reverse and remand / State v. Zimmerman" |
+
+Note: `539 N.W.2d 869` had been *leaned "distinct"* in the deferral doc on the jaccard signal alone; reading the text corrected that to a clear dup (the long repetitive multi-party caption inflated one side's word count). Vindicates the "read both texts, don't guess from jaccard" rule.
+
+Keep policy: all three pairs are cb1/cb1 ties with neither row `source_reporter='westlaw'` → tie-break on longer `text_content` (keep the fuller row that carries the attorney block). `canonical_name = _canonical_name(keep)` — all three already clean party captions, unchanged. Changelog: 7 rows (3 `merge.absorbed`, 3 `judges`, 1 `author`). Corpus 20242 → **20239**.
+
+Verification: `align_primary_source --apply` (3 source_path rewrites, 0 after receive re-run), invariants **13 ok / 2 baseline / 0 regressed**, **0 orphan refs**. **NOT changelog-revertible** — snapshot `opinions.db.bak-pre-s6-trio-2026-05-17` is the only recovery path. Payoff: the `receive_westlaw` re-run auto-promoted **all 3 survivors** (9059, 11201, 12028) to Westlaw bound text — the trio's `§6`-blocked status is fully cleared.
