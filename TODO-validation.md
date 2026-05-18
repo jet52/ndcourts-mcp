@@ -164,6 +164,12 @@ An opinion is considered validated when:
 - `overall_score >= 0.5`, AND
 - Parallel citations are populated from metadata, not just the ingest source.
 
+**PDF era (1997+ ndcourts.gov) — ratified policy 2026-05-18.** The court PDF is the authoritative copy; the linked markdown is the analyzer-extracted text of that same PDF (one chain, NOT an independent second source — see SCHEMA/memory provenance). Policy:
+- **Use a second source whenever available**, including proactively downloading a Westlaw copy to obtain one.
+- **A Westlaw copy is MANDATORY for any PDF-era opinion whose text required OCR to extract** (scanned/imaged PDF, no embedded text layer). For cleanly-extracted embedded-text PDFs a single court-PDF-derived source is acceptable as authoritative.
+- "Required OCR" signal (resolved 2026-05-18): authoritative detector is **court-PDF structure** — a scanned/OCR-required PDF carries ~one full-page raster image per page; born-digital carries ~none (`triage/classify_pdf_extraction.py`). The `quality_scores.ocr_artifacts` proxy and `case_cache.db` were rejected (proxy under-detects silent-clean OCR; cache empty). Scope: 7,424 PDF-era ND opinions → 7,187 born-digital (single court source OK), 68 scanned, **41 scanned-without-2nd-source** → mandatory-Westlaw worklist (`triage/westlaw-pdf-ocr-worklist-2026-05-18.md`).
+- Status: 31 of the 41 ingested as authoritative Westlaw bound text (batch `westlaw-receive-2026-05-18`); 10 residue (8 ambiguous N.W.2d-non-unique, 1 low-sim *Neset* 1998 ND 206, 1 skipped memo) await a neutral-cite-keyed pass. Lukenbill (2024 ND 212) hand-resolved as a substituted-opinion case (batch `lukenbill-19966-2026-05-18`).
+
 Progress metric to track: `% of opinions meeting all four criteria`, by decade, in `get_database_stats`.
 
 ## 10 · Planned enhancement — synthetic medium-neutral cite as universal unique ID
