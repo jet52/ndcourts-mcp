@@ -53,6 +53,7 @@ from .ingest_westlaw import (
     _parse_date,
     _parse_westlaw_doc,
 )
+from .ingest import _classify_reporter, recompute_primary
 from .ingest_nwcite import _split_frontmatter
 from .multisource_diff import jaccard, normalize_words, shingles
 from .validation_status import _era_tier
@@ -382,11 +383,12 @@ def _create(conn, parsed: dict, archive_path: str, apply: bool) -> str:
     log_change(conn, BATCH, oid, "opinions.insert", None,
                f'{court} | {cites[0] if cites else "?"} | {date_filed} | '
                f'westlaw {archive_path}', authority=auth)
-    for i, c in enumerate(cites):
+    for c in cites:
         conn.execute("INSERT INTO citations (opinion_id, citation, "
-                     "is_primary) VALUES (?, ?, ?)",
-                     (oid, c, 1 if i == 0 else 0))
+                     "reporter, is_primary) VALUES (?, ?, ?, 0)",
+                     (oid, c, _classify_reporter(c)))
         log_change(conn, BATCH, oid, "citation", None, c, authority=auth)
+    recompute_primary(conn, oid)
     conn.execute(
         "INSERT INTO opinion_sources (opinion_id, source_reporter, "
         "source_path, text_length, is_primary, added_at) VALUES "

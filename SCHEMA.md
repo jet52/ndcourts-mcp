@@ -1,7 +1,9 @@
 # SCHEMA.md — data contracts
 
-> **STATUS: partial.** This file currently documents only the two contracts
-> ratified 2026-05-17 (`citations.reporter` taxonomy and `citations.is_primary`).
+> **STATUS: partial.** The two contracts below (`citations.reporter` taxonomy
+> and `citations.is_primary`) were ratified **and applied** 2026-05-17
+> (batches `reporter-taxonomy-2026-05-17`, `is-primary-recompute-2026-05-17`;
+> see CHANGELOG-data.md). All three enforcing invariants are green at 0.
 > The full per-table/per-column data dictionary is TODO-validation.md §11,
 > sequenced after the data-correctness items so it documents settled contracts.
 
@@ -29,14 +31,28 @@ Closed enumeration. Each citation row's `reporter` is exactly one of:
 | `ND` | `<v> N.D. <p>` | **official, precedential** | official North Dakota Reports state reporter, vols 1–79 (~1890–1953). *Was mislabeled `NDold`.* |
 | `NW` | `<v> N.W. <p>` | regional, precedential **parallel** | North Western Reporter, 1st series |
 | `NW2d` | `<v> N.W.2d <p>` | regional, precedential **parallel** | North Western Reporter, 2d series |
+| `NW3d` | `<v> N.W.3d <p>` | regional, precedential **parallel** | North Western Reporter, 3d series (live continuation, ~2023+). *Added 2026-05-17; absent from initial draft enum.* |
 | `ALR` | `<v> A.L.R. <p>` | **secondary, non-precedential** | American Law Reports annotation reprint. *Currently misfiled under `NW2d`/`NW`.* |
 | `LRA` | `<v> L.R.A. <p>` | **secondary, non-precedential** | Lawyers' Reports Annotated (A.L.R. predecessor). *Misfiled.* |
 | `US` / `SCT` / `LED` | `<v> U.S./S.Ct./L.Ed. <p>` | **foreign, non-precedential** | U.S. Supreme Court reporters; appear only as rare cross-refs; never primary |
 
-`reporter` is NOT NULL and must be one of the above (currently 79 NULL +
-~590 secondary/foreign cites misfiled as `NW2d` — both driven to 0 by the
-correction pass). The classifier (`ingest._classify_reporter`) and all
-citation-INSERT paths must emit only these values.
+`reporter` must be one of the above and is enforced non-NULL by the
+`reporter_in_taxonomy` invariant (no DB-level NOT NULL constraint added —
+avoids a risky ALTER). The classifier (`ingest._classify_reporter`) and all
+citation-INSERT paths emit only these values; INSERT paths no longer fall
+back to `source_reporter` (a different axis).
+
+**Applied 2026-05-17** (`reporter-taxonomy-2026-05-17`): the prior 79 NULL
+were resolved by reclassification; the misfiled secondary cites became
+`ALR` (300) / `LRA` (69). A *third*, unanticipated residue surfaced —
+**461 rows** whose citation string is a foreign/specialty reporter outside
+this entire universe (South Western, Am. St. Rep., A.F.T.R., Oil & Gas
+Rep., L.R.R.M.): mis-scraped cross-references that belong in
+`text_citations`, not `citations`. Per the ratifying user's decision these
+**461 were deleted** (0 were any opinion's sole cite — no orphaning;
+snapshot- and changelog-audited). Result: 0 NULL, 0 out-of-taxonomy. No
+`US`/`SCT`/`LED` citation rows exist — those reporters appear only inside
+opinion text, never as a parallel-cite row.
 
 ## Contract 2 — `citations.is_primary` (ratified 2026-05-17)
 
@@ -48,8 +64,11 @@ officially cited. **Exactly one** citation row per opinion has `is_primary=1`
 
 1. `ND-neutral` (medium-neutral) — native 1997+, or §10 synthetic once assigned
 2. `ND` (official North Dakota Reports) — pre-1997 opinions, vols 1–79
-3. `NW2d` (regional) — gap-era 1953–1996 and any opinion lacking 1–2
-4. `NW` (regional) — earliest era / fallback
+3. `NW3d` (regional) — newest regional series
+4. `NW2d` (regional) — gap-era 1953–1996 and any opinion lacking higher rungs
+5. `NW` (regional) — earliest era / fallback
+
+Ties within a rung break to the lowest citation id (deterministic).
 
 `ALR`, `LRA`, `US`, `SCT`, `LED` are **never** `is_primary`.
 
@@ -64,27 +83,36 @@ bound N.D. Reports official before; N.W./N.W.2d the regional parallel).
 ## Invariants enforcing these
 
 - `citation_row_unique_per_opinion` — no `(opinion_id, citation)` dup rows (added 2026-05-17).
-- `citation_single_primary_per_opinion` — **TODO**: exactly one `is_primary=1` per opinion (currently 817 violations; becomes baseline→0 after the correction pass).
-- `reporter_in_taxonomy` — **TODO**: every `citations.reporter` ∈ the Contract-1 enum (currently 79 NULL + ~590 misfiled).
-- `secondary_never_primary` — **TODO**: no `is_primary=1` row with reporter ∈ {ALR,LRA,US,SCT,LED}.
+- `citation_single_primary_per_opinion` — exactly one `is_primary=1` per opinion. **Enforced, 0** (was 817; fixed by `is-primary-recompute-2026-05-17`).
+- `reporter_in_taxonomy` — every `citations.reporter` ∈ the Contract-1 enum (NULL fails). **Enforced, 0** (was 79 NULL + ~590 misfiled + 461 foreign; fixed/deleted by `reporter-taxonomy-2026-05-17`).
+- `secondary_never_primary` — no `is_primary=1` row with reporter ∈ {ALR,LRA,US,SCT,LED}. **Enforced, 0**.
 
-## Implementation plan (NOT yet applied)
+All three read the enum/secondary set from `ingest` (single source of truth).
+Dashboard 2026-05-17 post-apply: **18 ok, 2 known baseline, 0 regressed**.
 
-1. **Classifier** (`ingest._classify_reporter`): rewrite to the Contract-1
-   enum incl. A.L.R./L.R.A./U.S./S.Ct./L.Ed. detection; rename `NDold`→`ND`,
-   `ND`(neutral)→`ND-neutral`.
-2. **Consumers** keying on old strings — update in lockstep: `audit.py`
-   (3), `quality_scan.py:228`, `webapp.py` (cite-selection, ~6),
-   `ingest_westlaw.py:780`, plus citation-INSERT paths
-   (`ingest_nwcite`, `insert_supplemental_opinions`, `receive_westlaw`,
-   `scrape_archive`). Leave all `source_reporter` code untouched.
-3. **Data migration** (changelog-tracked batch): `UPDATE citations SET
-   reporter` to the new taxonomy; reclassify the ~590 misfiled
-   secondary/foreign rows; resolve 79 NULL.
-4. **is_primary recompute** (changelog-tracked): apply the ladder to every
-   opinion — fixes the 817 multi-primary AND the systemic "regional is
-   primary instead of official" (≈5k post-1997 opinions whose primary
-   flips N.W.2d→neutral; pre-1997 official-N.D.-Reports promoted over
-   N.W. where present). Large but changelog-revertible.
-5. **Invariants**: add the three TODO checks above; drive to 0.
-6. Snapshot before 3–4; `align_primary_source`/invariants/0-orphan after.
+## Implementation plan — APPLIED 2026-05-17
+
+All six steps executed; see CHANGELOG-data.md for batch detail.
+
+1. **Classifier** — `ingest._classify_reporter` rewritten to the enum
+   (adds A.L.R./L.R.A./U.S./S.Ct./L.Ed. + `NW3d`; `NDold`→`ND`,
+   `ND`→`ND-neutral`; dropped the `source_reporter` fallback). Added
+   `PRIMARY_LADDER`/`SECONDARY_REPORTERS`/`REPORTER_TAXONOMY` and
+   `recompute_primary(conn, oid)` as the single source of truth. ✅
+2. **Consumers** updated in lockstep: `audit`, `audit_sources`,
+   `backfill_sources` (path test only — `:139`/`:173` source_reporter
+   untouched), `quality_scan:228`, `webapp`, `ingest_westlaw:780`, and the
+   four citation-INSERT paths (now classify + `recompute_primary`). All
+   `source_reporter` logic left untouched; `align_primary_source` dry-run
+   after = 0 changes, confirming axis independence. ✅
+3. **Data migration** `reporter-taxonomy-2026-05-17`: 14,568 reclassified,
+   461 foreign cross-refs deleted (user-ratified), 79 NULL resolved →
+   0 NULL / 0 out-of-taxonomy. ✅
+4. **is_primary recompute** `is-primary-recompute-2026-05-17`: 24,183
+   flips / 11,978 opinions → 0 multi-, 0 zero-, 0 secondary-primary. ✅
+5. **Invariants**: the three checks added and green at 0. ✅
+6. Snapshot `opinions.db.bak-pre-reporter-contract-2026-05-17` taken
+   before 3–4; invariants 18/2/0, orphan checks ok, align clean. ✅
+
+Migration tools retained for revert/audit: `migrate_reporter_taxonomy.py`,
+`recompute_is_primary.py`.

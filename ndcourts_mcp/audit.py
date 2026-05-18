@@ -27,7 +27,7 @@ MISSING_FILE = PROJECT_DIR / "MISSING_OPINIONS.md"
 def _nd_citation_gaps(conn: sqlite3.Connection) -> list[dict]:
     """Find gaps in the ND neutral citation sequence for each year."""
     rows = conn.execute(
-        "SELECT citation FROM citations WHERE reporter = 'ND'"
+        "SELECT citation FROM citations WHERE reporter = 'ND-neutral'"
     ).fetchall()
 
     by_year: dict[int, list[int]] = defaultdict(list)
@@ -71,7 +71,7 @@ def _phantom_citations(conn: sqlite3.Connection) -> list[dict]:
     # Classify: within expected range or above max for that year
     max_by_year: dict[int, int] = {}
     for r in conn.execute(
-        "SELECT citation FROM citations WHERE reporter = 'ND'"
+        "SELECT citation FROM citations WHERE reporter = 'ND-neutral'"
     ).fetchall():
         m = re.match(r"(\d{4}) ND (\d+)", r["citation"])
         if m:
@@ -104,15 +104,15 @@ def _duplicate_reporter_citations(conn: sqlite3.Connection) -> dict[str, list[di
     """
     # Reporter-specific citation patterns (to distinguish real cites from cross-refs)
     reporter_patterns = {
-        "ND": r"\d{4} ND \d+",
-        "NDold": r"\d+ N\.D\. \d+",
+        "ND-neutral": r"\d{4} ND \d+",
+        "ND": r"\d+ N\.D\. \d+",
         "NW2d": r"\d+ N\.W\.2d \d+",
         "NW": r"\d+ N\.W\. \d+",
     }
 
     results: dict[str, list[dict]] = {}
 
-    for reporter in ("ND", "NDold", "NW2d", "NW"):
+    for reporter in ("ND-neutral", "ND", "NW2d", "NW"):
         rows = conn.execute("""
             SELECT o.id, o.case_name, o.date_filed,
                    GROUP_CONCAT(c.citation, '; ') as cites,

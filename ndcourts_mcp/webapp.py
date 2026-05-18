@@ -263,8 +263,8 @@ def list_opinions(
                    o.docket_number, o.source_reporter, o.per_curiam, o.unanimous,
                    o.notes,
                    (SELECT c.citation FROM citations c WHERE c.opinion_id = o.id AND c.is_primary = 1 LIMIT 1) as primary_citation,
-                   (SELECT c.citation FROM citations c WHERE c.opinion_id = o.id AND c.reporter = 'ND' LIMIT 1) as cite_nd,
-                   (SELECT c.citation FROM citations c WHERE c.opinion_id = o.id AND c.reporter = 'NDold' LIMIT 1) as cite_nd_old,
+                   (SELECT c.citation FROM citations c WHERE c.opinion_id = o.id AND c.reporter = 'ND-neutral' LIMIT 1) as cite_nd,
+                   (SELECT c.citation FROM citations c WHERE c.opinion_id = o.id AND c.reporter = 'ND' LIMIT 1) as cite_nd_old,
                    COALESCE(
                      (SELECT c.citation FROM citations c WHERE c.opinion_id = o.id AND c.reporter = 'NW2d' LIMIT 1),
                      (SELECT c.citation FROM citations c WHERE c.opinion_id = o.id AND c.reporter = 'NW' AND c.citation LIKE '%N.W.%' LIMIT 1)
@@ -385,8 +385,8 @@ def _search_opinions(
                o.docket_number, o.source_reporter, o.per_curiam, o.unanimous,
                o.notes,
                (SELECT c.citation FROM citations c WHERE c.opinion_id = o.id AND c.is_primary = 1 LIMIT 1) as primary_citation,
-               (SELECT c.citation FROM citations c WHERE c.opinion_id = o.id AND c.reporter = 'ND' LIMIT 1) as cite_nd,
-               (SELECT c.citation FROM citations c WHERE c.opinion_id = o.id AND c.reporter = 'NDold' LIMIT 1) as cite_nd_old,
+               (SELECT c.citation FROM citations c WHERE c.opinion_id = o.id AND c.reporter = 'ND-neutral' LIMIT 1) as cite_nd,
+               (SELECT c.citation FROM citations c WHERE c.opinion_id = o.id AND c.reporter = 'ND' LIMIT 1) as cite_nd_old,
                COALESCE(
                  (SELECT c.citation FROM citations c WHERE c.opinion_id = o.id AND c.reporter = 'NW2d' LIMIT 1),
                  (SELECT c.citation FROM citations c WHERE c.opinion_id = o.id AND c.reporter = 'NW' AND c.citation LIKE '%N.W.%' LIMIT 1)
@@ -450,7 +450,7 @@ def get_opinion(opinion_id: int):
 
         citing = conn.execute(
             """SELECT o.id, o.case_name, o.date_filed, o.author, o.per_curiam,
-                      (SELECT c.citation FROM citations c WHERE c.opinion_id = o.id AND c.reporter = 'ND' LIMIT 1) as cite_nd
+                      (SELECT c.citation FROM citations c WHERE c.opinion_id = o.id AND c.reporter = 'ND-neutral' LIMIT 1) as cite_nd
                FROM cited_by cb
                JOIN opinions o ON o.id = cb.citing_opinion_id
                WHERE cb.cited_opinion_id = ?

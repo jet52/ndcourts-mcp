@@ -225,7 +225,7 @@ def process_all(
     dupe_rows = conn.execute("""
         SELECT c.opinion_id, COUNT(*) as n
         FROM citations c
-        WHERE c.reporter IN ('ND', 'NDold')
+        WHERE c.reporter IN ('ND-neutral', 'ND')
         GROUP BY c.opinion_id, c.reporter
         HAVING n > 1
     """).fetchall()

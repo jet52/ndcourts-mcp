@@ -20,6 +20,7 @@ from pathlib import Path
 import httpx
 
 from .db import DEFAULT_DB_PATH, create_schema, get_connection, log_provenance
+from .ingest import _classify_reporter, recompute_primary
 
 BASE_URL = "https://archive.ndcourts.gov"
 ARCHIVE_DIR = Path.home() / "refs" / "nd" / "opin" / "archive"
@@ -314,18 +315,19 @@ def ingest_opinions(conn: sqlite3.Connection, opinions: list[dict]) -> dict:
             )
             new_id = cursor.lastrowid
 
-            # Add citations
+            # Add citations. reporter follows Contract 1; is_primary follows
+            # the Contract-2 ladder via recompute_primary (not source order).
             conn.execute(
-                "INSERT INTO citations (opinion_id, citation, reporter, is_primary) VALUES (?, ?, 'ND', 1)",
-                (new_id, nd_cite),
+                "INSERT INTO citations (opinion_id, citation, reporter, is_primary) VALUES (?, ?, ?, 0)",
+                (new_id, nd_cite, _classify_reporter(nd_cite)),
             )
             for c in op.get("citations", []):
                 if c != nd_cite:
-                    reporter = "NW2d" if "N.W.2d" in c else "ND"
                     conn.execute(
                         "INSERT OR IGNORE INTO citations (opinion_id, citation, reporter, is_primary) VALUES (?, ?, ?, 0)",
-                        (new_id, c, reporter),
+                        (new_id, c, _classify_reporter(c)),
                     )
+            recompute_primary(conn, new_id)
 
             # Add opinion_sources
             conn.execute(

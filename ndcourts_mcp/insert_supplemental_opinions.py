@@ -34,6 +34,7 @@ from datetime import datetime
 from pathlib import Path
 
 from .db import DEFAULT_DB_PATH, get_connection, log_provenance
+from .ingest import _classify_reporter, recompute_primary
 from .ingest_westlaw import _doc_to_text, _parse_westlaw_doc
 
 
@@ -243,11 +244,12 @@ def apply(db_path: Path, dry_run: bool) -> None:
         inserts += 1
         print(f"  INSERTED opinions.id={new_id}")
 
-        # Insert citations for the new row
-        for i, c in enumerate(s.citations):
+        # Insert citations for the new row. reporter follows Contract 1;
+        # is_primary follows the Contract-2 ladder via recompute_primary.
+        for c in s.citations:
             conn.execute(
-                "INSERT INTO citations (opinion_id, citation, is_primary) VALUES (?, ?, ?)",
-                (new_id, c, 1 if i == 0 else 0),
+                "INSERT INTO citations (opinion_id, citation, reporter, is_primary) VALUES (?, ?, ?, 0)",
+                (new_id, c, _classify_reporter(c)),
             )
             conn.execute(
                 "INSERT INTO changelog (batch, opinion_id, field, old_value, new_value) "
@@ -255,6 +257,7 @@ def apply(db_path: Path, dry_run: bool) -> None:
                 (BATCH, new_id, c),
             )
             cite_inserts += 1
+        recompute_primary(conn, new_id)
 
         # Move misattached citation from main to new (Chester case)
         if s.move_cite_from_main:

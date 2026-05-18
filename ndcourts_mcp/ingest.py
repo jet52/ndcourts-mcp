@@ -65,10 +65,34 @@ def _extract_author(judges_str: str | None, text: str) -> tuple[str | None, bool
     return None, False
 
 
+# Contract 1 (SCHEMA.md): closed citations.reporter taxonomy.
+# is_primary selection ladder (Contract 2): highest available wins.
+PRIMARY_LADDER = ["ND-neutral", "ND", "NW3d", "NW2d", "NW"]
+SECONDARY_REPORTERS = {"ALR", "LRA", "US", "SCT", "LED"}
+REPORTER_TAXONOMY = set(PRIMARY_LADDER) | SECONDARY_REPORTERS
+
+
 def _classify_reporter(citation: str) -> str | None:
-    """Return reporter key for a citation string."""
+    """Return the Contract-1 reporter key for a citation string.
+
+    ND-neutral = `YYYY ND N` medium-neutral (official since 1997).
+    ND         = `<v> N.D. <p>` official North Dakota Reports (vols 1-79).
+    NW/NW2d/NW3d = North Western Reporter regional parallel series.
+    ALR/LRA      = secondary annotation reprints (never primary).
+    US/SCT/LED   = foreign U.S. Supreme Court reporters (never primary).
+    """
     if re.search(r"\d{4}\s+ND\s+\d+", citation):
-        return "ND"
+        return "ND-neutral"
+    if "A.L.R." in citation:
+        return "ALR"
+    if "L.R.A." in citation:
+        return "LRA"
+    if re.search(r"\d+\s+U\.S\.\s+\d+", citation):
+        return "US"
+    if "S.Ct." in citation or "S. Ct." in citation:
+        return "SCT"
+    if "L.Ed." in citation or "L. Ed." in citation:
+        return "LED"
     if "N.W.2d" in citation:
         return "NW2d"
     if "N.W.3d" in citation:
@@ -76,8 +100,43 @@ def _classify_reporter(citation: str) -> str | None:
     if "N.W." in citation:
         return "NW"
     if "N.D." in citation and "N.D. LEXIS" not in citation:
-        return "NDold"
+        return "ND"
     return None
+
+
+def recompute_primary(conn, opinion_id: int) -> list[tuple[int, int, int]]:
+    """Set citations.is_primary for one opinion per the Contract-2 ladder.
+
+    Exactly one citation row gets is_primary=1: the highest rung
+    (ND-neutral > ND > NW3d > NW2d > NW) present; ties broken by lowest
+    citation id. Secondary/foreign reporters are never primary. Returns the
+    list of (citation_id, old_is_primary, new_is_primary) rows that changed
+    so callers can log them to the changelog.
+    """
+    rows = conn.execute(
+        "SELECT id, reporter, is_primary FROM citations "
+        "WHERE opinion_id = ? ORDER BY id",
+        (opinion_id,),
+    ).fetchall()
+    best_id = None
+    best_rank = None
+    for r in rows:
+        rep = r["reporter"]
+        if rep in PRIMARY_LADDER:
+            rank = PRIMARY_LADDER.index(rep)
+            if best_rank is None or rank < best_rank:
+                best_rank = rank
+                best_id = r["id"]
+    changed: list[tuple[int, int, int]] = []
+    for r in rows:
+        want = 1 if r["id"] == best_id else 0
+        if r["is_primary"] != want:
+            conn.execute(
+                "UPDATE citations SET is_primary = ? WHERE id = ?",
+                (want, r["id"]),
+            )
+            changed.append((r["id"], r["is_primary"], want))
+    return changed
 
 
 def _normalize_citation(citation: str) -> str:
@@ -321,8 +380,10 @@ def _add_citations(
         if any(skip in cite for skip in ("LEXIS", "WL ", "Westlaw")):
             continue
 
-        reporter = _classify_reporter(cite) or source_reporter
-        is_primary = 1 if reporter == source_reporter else 0
+        # citations.reporter is the citation-series axis (Contract 1); never
+        # fall back to source_reporter (text-provenance axis) — that would
+        # poison the taxonomy with values like 'westlaw'/'archive'.
+        reporter = _classify_reporter(cite)
 
         # Don't insert duplicates
         existing = conn.execute(
@@ -331,9 +392,12 @@ def _add_citations(
         ).fetchone()
         if not existing:
             conn.execute(
-                "INSERT INTO citations (opinion_id, citation, reporter, is_primary) VALUES (?, ?, ?, ?)",
-                (opinion_id, cite, reporter, is_primary),
+                "INSERT INTO citations (opinion_id, citation, reporter, is_primary) VALUES (?, ?, ?, 0)",
+                (opinion_id, cite, reporter),
             )
+
+    # is_primary follows the Contract-2 ladder, not text provenance.
+    recompute_primary(conn, opinion_id)
 
 
 def _record_source(

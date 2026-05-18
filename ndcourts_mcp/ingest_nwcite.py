@@ -47,6 +47,7 @@ from pathlib import Path
 
 from .db import DEFAULT_DB_PATH, get_connection, log_change, log_provenance
 from .multisource_diff import jaccard, normalize_words, shingles
+from .ingest import _classify_reporter, recompute_primary
 from .scrape_archive import _normalize_author, _parse_date
 from .scrape_nwcite import COURT_ARCHIVE_DIR
 from .validation_status import _era_tier
@@ -593,12 +594,14 @@ def create_gap_opinions(conn, apply: bool) -> dict:
         log_change(conn, GAP_BATCH, oid, "opinions.insert", None,
                    f'{court} | {e["nw_cite"]} | {date_filed} | '
                    f'court-archive {e["source_path"]}', authority=AUTHORITY)
-        for i, c in enumerate(cites):
+        for c in cites:
             conn.execute(
-                "INSERT INTO citations (opinion_id, citation, is_primary) "
-                "VALUES (?, ?, ?)", (oid, c, 1 if i == 0 else 0))
+                "INSERT INTO citations (opinion_id, citation, reporter, "
+                "is_primary) VALUES (?, ?, ?, 0)",
+                (oid, c, _classify_reporter(c)))
             log_change(conn, GAP_BATCH, oid, "citation", None, c,
                        authority=AUTHORITY)
+        recompute_primary(conn, oid)
         conn.execute(
             "INSERT INTO opinion_sources (opinion_id, source_reporter, "
             "source_path, text_length, is_primary, added_at) VALUES "

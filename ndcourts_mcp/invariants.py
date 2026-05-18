@@ -29,6 +29,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from .db import DEFAULT_DB_PATH
+from .ingest import REPORTER_TAXONOMY, SECONDARY_REPORTERS
 
 DEFAULT_REFS_DIR = Path.home() / "refs" / "nd" / "opin"
 
@@ -233,6 +234,46 @@ def _source_row_unique_per_opinion(conn, refs):
     return conn.execute(
         "SELECT opinion_id, source_path, COUNT(*) AS n FROM opinion_sources "
         "GROUP BY opinion_id, source_path HAVING COUNT(*) > 1 ORDER BY n DESC"
+    ).fetchall()
+
+
+# ---- citation contract invariants (SCHEMA.md) -------------------------------
+
+@_check("citation_single_primary_per_opinion",
+        "exactly one citations.is_primary=1 per opinion (Contract 2; "
+        "never zero, never >1)")
+def _citation_single_primary_per_opinion(conn, refs):
+    return conn.execute(
+        "SELECT o.id AS opinion_id, "
+        "  (SELECT COUNT(*) FROM citations c "
+        "   WHERE c.opinion_id=o.id AND c.is_primary=1) AS primary_count "
+        "FROM opinions o "
+        "WHERE (SELECT COUNT(*) FROM citations c "
+        "       WHERE c.opinion_id=o.id AND c.is_primary=1) != 1"
+    ).fetchall()
+
+
+@_check("reporter_in_taxonomy",
+        "every citations.reporter is one of the Contract-1 enum values "
+        "(no NULL, no out-of-taxonomy)")
+def _reporter_in_taxonomy(conn, refs):
+    placeholders = ",".join("?" for _ in REPORTER_TAXONOMY)
+    return conn.execute(
+        f"SELECT id, opinion_id, citation, reporter FROM citations "
+        f"WHERE reporter IS NULL OR reporter NOT IN ({placeholders})",
+        tuple(sorted(REPORTER_TAXONOMY)),
+    ).fetchall()
+
+
+@_check("secondary_never_primary",
+        "no is_primary=1 row with a secondary/foreign reporter "
+        "(ALR/LRA/US/SCT/LED)")
+def _secondary_never_primary(conn, refs):
+    placeholders = ",".join("?" for _ in SECONDARY_REPORTERS)
+    return conn.execute(
+        f"SELECT id, opinion_id, citation, reporter FROM citations "
+        f"WHERE is_primary=1 AND reporter IN ({placeholders})",
+        tuple(sorted(SECONDARY_REPORTERS)),
     ).fetchall()
 
 

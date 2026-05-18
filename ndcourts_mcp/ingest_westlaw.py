@@ -777,7 +777,7 @@ def export_citations(
     # Map reporter text to citation pattern
     if reporter == "N.D.":
         pattern = "% N.D. %"
-        reporter_code = "NDold"
+        reporter_code = "ND"
     else:
         print(f"Unsupported reporter: {reporter}")
         return

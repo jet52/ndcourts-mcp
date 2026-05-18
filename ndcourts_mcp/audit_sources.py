@@ -38,7 +38,7 @@ def _expected_paths(
     paths: dict[str, Path] = {}
 
     for reporter, citation in citations:
-        if reporter == "ND":
+        if reporter == "ND-neutral":
             # "2020 ND 8" -> ND/2020/2020ND8.md
             m = re.match(r"(\d{4})\s+ND\s+(\d+)", citation)
             if m:

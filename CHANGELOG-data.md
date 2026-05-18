@@ -2,6 +2,26 @@
 
 Changes applied to the opinions database after import from CourtListener and ndcourts.gov sources. All corrections are recorded in the `changelog` SQLite table and can be reverted with `python -m ndcourts_mcp.cleanup revert <batch>`.
 
+## Batch `reporter-taxonomy-2026-05-17` (15,029 rows)
+
+Applied SCHEMA.md Contract 1: migrated `citations.reporter` to the closed taxonomy and deleted foreign cross-refs mis-scraped into `citations`.
+
+- **Tool**: `python -m ndcourts_mcp.migrate_reporter_taxonomy --apply` (reclassifies every row from its citation *string* via the rewritten `ingest._classify_reporter`, so it is idempotent and string-driven, not old-value-driven).
+- **Result**: 14,568 reporter reclassifications + 461 row deletions. Transitions: `ND`→`ND-neutral` 7,444; `NDold`→`ND` 6,676; misfiled `A.L.R.` (from NW/NW2d) → `ALR` 300; `L.R.A.` → `LRA` 69; 79 prior-NULL resolved (→NW2d 68, →ND 6, →NW 5). Post-state distribution: NW2d 12,049 / ND-neutral 7,444 / ND 6,682 / NW 6,034 / ALR 300 / LRA 69; **0 NULL, 0 out-of-taxonomy**. No `US`/`SCT`/`LED` rows — those reporters appear only in opinion text (`text_citations`), never as a parallel cite row.
+- **461 deletions (user-ratified)**: rows whose citation string is a foreign/specialty reporter outside the entire Contract-1 universe (South Western `157 S.W. 811`, American State Reports `125 Am. St. Rep. 608`, A.F.T.R., Oil & Gas Rep., L.R.R.M.) — mis-scraped cross-references that belong in `text_citations`, not `citations`. Guard verified **0** were the sole citation of any opinion (no orphaning). Snapshot is the real revert; each delete also logged to `changelog` (`field='citations.delete'`, old_value=citation) for the audit trail.
+- **Code (lockstep, Contract-1 enum)**: rewrote `ingest._classify_reporter` (adds A.L.R./L.R.A./U.S./S.Ct./L.Ed. detection, NW3d; renames NDold→ND, ND→ND-neutral; no longer falls back to `source_reporter`); updated consumers `audit_sources`, `backfill_sources` (path test only — `:139`/`:173` source_reporter untouched), `audit`, `quality_scan:228`, `webapp` (cite-selection), `ingest_westlaw:780`, and the citation-INSERT paths (`scrape_archive`, `receive_westlaw`, `insert_supplemental_opinions`, `ingest_nwcite`) now classify + call `recompute_primary`. All `source_reporter` logic deliberately left untouched (independent axis).
+- **Safety**: pre-batch snapshot `opinions.db.bak-pre-reporter-contract-2026-05-17`. Revert via snapshot (row deletes are not changelog-replayable). Corpus citations 33,039 → 32,578.
+
+## Batch `is-primary-recompute-2026-05-17` (24,183 rows)
+
+Applied SCHEMA.md Contract 2: recomputed `citations.is_primary` for every opinion per the selection ladder.
+
+- **Tool**: `python -m ndcourts_mcp.recompute_is_primary --apply` (single transaction; `ingest.recompute_primary` per opinion).
+- **Ladder**: `ND-neutral` > `ND` > `NW3d` > `NW2d` > `NW`; ties → lowest citation id; `ALR`/`LRA`/`US`/`SCT`/`LED` never primary; exactly one `is_primary=1` per opinion.
+- **Result**: 24,183 is_primary flips across 11,978 of 20,229 opinions (fixes the prior 817 multi-primary AND the systemic "regional primary instead of official" — post-1997 N.W.2d→neutral, pre-1997 official N.D. Reports promoted over N.W.). Spot-checked: oid 9485 `1998 ND 13` (ND-neutral) primary over `375 N.W.2d 203`; oid 1 `13 N.D. 359` (ND) primary over `100 N.W. 1079` (NW). Post-state: **0 multi-primary, 0 zero-primary, 0 secondary-primary**.
+- **Invariants**: added `citation_single_primary_per_opinion`, `reporter_in_taxonomy`, `secondary_never_primary` (all OK at 0). Dashboard: **18 ok, 2 at known baseline (neutral_cite_uniqueness 258, nd_modern_paragraph_markers 85), 0 regressed**. `align_primary_source` dry-run: 0 changes (source-provenance axis undisturbed — confirms axis independence).
+- **Safety**: same snapshot `opinions.db.bak-pre-reporter-contract-2026-05-17`. Revert: `cleanup revert is-primary-recompute-2026-05-17`.
+
 ## Batch `strip-westlaw-headnotes-2026-05-15` (186 rows)
 
 Corrective scope sweep: removed Westlaw editorial (West Headnotes block, "Procedural Posture(s)" lines, Synopsis stub) that leaked into `text_content` during this session's Westlaw ingests — content the redistribution scope (`NOTICE.md`) excludes. Caught by the pre-release scope scan before any public release.
