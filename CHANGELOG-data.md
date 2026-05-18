@@ -2,6 +2,24 @@
 
 Changes applied to the opinions database after import from CourtListener and ndcourts.gov sources. All corrections are recorded in the `changelog` SQLite table and can be reverted with `python -m ndcourts_mcp.cleanup revert <batch>`.
 
+## Batch `westlaw-receive-2026-05-18` (93 rows)
+
+PDF-era second-source closure. Under the ratified PDF-era policy (TODO §9), opinions whose court PDF is a page-image scan (text required OCR) and that lack an independent second source must get a Westlaw copy. The detector (`triage/classify_pdf_extraction.py`, structural: ~1 full-page raster per page = scanned) flagged 41 such opinions (`triage/westlaw-pdf-ocr-worklist-2026-05-18.md`); user pulled them via Westlaw Find&Print.
+
+- **Tool**: `python -m ndcourts_mcp.receive_westlaw --incoming … --apply`.
+- **Result**: 41 docs → **31 promoted** (Westlaw bound text now primary, clean text replacing scanned OCR; matched to existing oids by neutral cite, jaccard 0.45–0.89), **0 created**, 8 AMBIGUOUS + 1 LOW_SIM (oid 12782 *Neset* 1998 ND 206, jaccard 0.01 — near-empty scanned-memo DB text) + 1 skipped memo, all held unwritten for a later neutral-cite-keyed pass. 93 changelog rows (31 × text_content+source_reporter+source_path), authority-stamped.
+- **Code fix (committed)**: `receive_westlaw._archive_doc` hardcoded the `N.W.2d/` archive tree; PDF-era pulls carry `N.W.3d`. Made it reporter-series-aware (`N.W.3d`/`N.W.2d`/`N.W.` by parsed series). **Process note:** the first fix had a regex-group mismap (volume read as series) that archived all 31 to bogus `N.W.2d/2d|3d/` dirs with page-collisions; caught immediately by source_path verification, reverted via snapshot `opinions.db.bak-pre-westlaw-pdfocr-2026-05-18` (atomic, nothing else since), bogus dirs purged, group mapping fixed, re-applied clean. Net DB effect = the clean re-run only.
+- **Safety**: snapshot `opinions.db.bak-pre-westlaw-pdfocr-2026-05-18`. Revert: `cleanup revert westlaw-receive-2026-05-18` then `align_primary_source --apply`. Invariants 18 ok / 2 known / 0 regressed.
+
+## Batch `lukenbill-19966-2026-05-18` (3 rows)
+
+*Northstar Center v. Lukenbill Family Partnership* (oid 19966, `2024 ND 212`) — hand-adjudicated substituted-opinion case. Westlaw returned two docs for the citation: original `14 N.W.3d 45` (filed 2024-11-21) and **substituted `17 N.W.3d 1`** (filed 2025-01-24, after rehearing denied 2025-01-22; its header states "Opinion, 14 N.W.3d 45, superseded"). Normalized-body comparison: 0.947 — same opinion with internal substantive revisions (¶15–17 note/breach reasoning; +1 ¶ at the merger-doctrine/indemnification disposition), **not** an appended rehearing opinion. Decision (user): keep only the substituted opinion as authoritative; no second row.
+
+- `date_filed` 2024-02-14 → **2024-11-21** (original announcement date; the prior value was a scraper docket-collision artifact, docket 20240034; ND practice: a substituted opinion retains the original cite/decision date).
+- `notes` set to the full supersession chain (original 14 N.W.3d 45 2024-11-21; rehearing denied 2025-01-22; substituted 2025-01-24 17 N.W.3d 1; neutral 2024 ND 212 retained throughout).
+- Added parallel citation `17 N.W.3d 1` (`NW3d`, non-primary); neutral `2024 ND 212` remains `is_primary`. Text/source promoted via the `westlaw-receive-2026-05-18` batch (jaccard 0.89).
+- **Safety**: same snapshot. Revert: `cleanup revert lukenbill-19966-2026-05-18`. Invariants 18 ok / 2 known / 0 regressed.
+
 ## Batch `reporter-taxonomy-2026-05-17` (15,029 rows)
 
 Applied SCHEMA.md Contract 1: migrated `citations.reporter` to the closed taxonomy and deleted foreign cross-refs mis-scraped into `citations`.

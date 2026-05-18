@@ -60,9 +60,17 @@ from .validation_status import _era_tier
 
 BATCH = f"westlaw-receive-{date.today().isoformat()}"
 INCOMING_DEFAULT = Path.home() / "refs" / "nd" / "opin" / "westlaw-incoming"
-NW2D_ARCHIVE = Path.home() / "refs" / "nd" / "opin" / "N.W.2d"
 REFS_ROOT = Path.home() / "refs" / "nd" / "opin"
-_NW_CITE = re.compile(r"\b(\d+)\s+N\.\s?W\.\s?(?:2d|3d)?\s+(\d+)\b")
+NW2D_ARCHIVE = REFS_ROOT / "N.W.2d"
+# Reporter-series → archive subtree. The gap-era tool only ever saw
+# N.W.2d; PDF-era pulls carry N.W.3d (and, rarely, 1st-series N.W.), so
+# route by the parsed series instead of hardcoding N.W.2d.
+_NW_ARCHIVE_DIR = {
+    "3d": REFS_ROOT / "N.W.3d",
+    "2d": REFS_ROOT / "N.W.2d",
+    "": REFS_ROOT / "N.W.",
+}
+_NW_CITE = re.compile(r"\b(\d+)\s+N\.\s?W\.\s?(2d|3d)?\s+(\d+)\b")
 
 # A genuine same-opinion promote, even with heavy NW2d-era OCR drift,
 # shared 0.50-0.93 shingle-Jaccard in the dry-run; 0.00 means the
@@ -177,8 +185,8 @@ def _archive_doc(doc_path: Path, primary_cite: str, case_name: str) -> str:
     m = _NW_CITE.search(primary_cite or "")
     if not m:
         return ""
-    vol, page = m.group(1), int(m.group(2))
-    dest_dir = NW2D_ARCHIVE / vol
+    vol, series, page = m.group(1), (m.group(2) or ""), int(m.group(3))
+    dest_dir = _NW_ARCHIVE_DIR.get(series, NW2D_ARCHIVE) / vol
     dest_dir.mkdir(parents=True, exist_ok=True)
     dest = dest_dir / f"{page:04d}-{_slug(case_name)}.doc"
     shutil.copy2(doc_path, dest)
