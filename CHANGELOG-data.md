@@ -2,6 +2,27 @@
 
 Changes applied to the opinions database after import from CourtListener and ndcourts.gov sources. All corrections are recorded in the `changelog` SQLite table and can be reverted with `python -m ndcourts_mcp.cleanup revert <batch>`.
 
+## Batches `nw-bound-image-source-2026-05-19b` (10) + `fix-henniges-johnson-5758-2026-05-19` (4)
+
+Closeout of the 3 non-unique vol-6–10 bound-page pulls + the *Henniges v. Johnson* correction (re-interpreting yesterday's "missing opinion" finding).
+
+**Non-uniques delivered + filed at NW tree, NW-image source rows registered:**
+- `NW/73/1102.pdf` → oid5486 *State v. O'Grady* (bound caption matches DB) ✓
+- `NW/84/1117.pdf` → 8 NW-image rows for the entire Emmons County cluster (oids 5747-5754 share the bound page) ✓
+- `NW/87/1135.pdf` → oid5833 *White v. Lauder* (the 1901-11-21 row; bound-validated matches DB) ✓
+
+**Correction of yesterday's CHANGELOG (commit `bbe3f72`) — "Henniges v. Johnson missing opinion" was wrong.** Investigated when Westlaw delivered the editable `.doc`: the bound `.doc` and oid5758's existing `text_content` are the **same opinion** (jaccard 0.818, identical disposition/panel). *Paschke* is the third-party good-faith purchaser referenced 12+ times in the body; *Johnson* (John Johnson, mortgagor) is the actual defendant. CL captioned the case by the wrong party. There is no missing opinion. Applied via `fix-henniges-johnson-5758-2026-05-19`:
+- **oid5758 case_name** `Henniges v. Paschke` → `Henniges v. Johnson` (bound + appellate caption)
+- **Re-attached** `NW/84/350.pdf` as oid5758's `NW-image` source (reverts the erroneous `fix-mispaired-nwimage-5758-2026-05-19` removal; the bound page IS oid5758's)
+- **Registered** the Westlaw bound text at `N.D./9/0489-Henniges-v-Johnson.doc` as oid5758's `westlaw` source (the .doc existed on disk from the original vol-79 Quick Check but was never wired to opinion_sources — likely a vol-9 ingest miss)
+- **Added** parallel citation `81 Am.St.Rep. 588` (per the bound .doc's All Citations; tagged `ALR` provisionally pending an `AmStRep` taxonomy value — see SCHEMA follow-up)
+
+**Real new corpus gap discovered (84 N.W. 1117):** the bound *MEMORANDUM DECISIONS* page contains **at least 11 distinct Emmons County tax cases** (Baker, Couch, Cranmer ×2, Davidson ×2, Ganger, Kelly, Lilly visible on page 1; Wilson/Thistlewaite/Robinson/Mellon on subsequent pages). Our corpus has the 8 Wilson–Davidson rows (oids 5747-5754) but **Baker, Cranmer (×2), Ganger are missing** — likely 4 additional Emmons County v. X opinions in vol 9 N.D. (9 N.D. ~605-617 range, all decided 1900-11-13 per curiam, all controlled by *Emmons Co. v. Thompson* at 84 N.W. 385). Logged in TODO §1; separate ingest pass needed.
+
+**Also surfaced (lower-priority §6 cleanup):** oid5834 *White v. Lauder* (1901-10-25, same cites 10 N.D. 400 / 87 N.W. 1135 as oid5833) is almost certainly a CL date-drift double-ingest of the same opinion as oid5833 (1901-11-21, the bound-validated date). §6 `merge_pair` candidate.
+
+Invariants **18 ok / 2 known / 0 regressed**. All changes changelog-revertible.
+
 ## Batches `fix-casenames-vol6-10-bound-2026-05-19` (7) + `nw-bound-image-source-2026-05-19` (18) + `fix-mispaired-nwimage-5758-2026-05-19` (1)
 
 Bound N.W. Reporter resolution for the 21 vol-6–10 mispaired items (the diverted output of the hardened `review_casenames` guard). Westlaw delivered 18 of 21 (3 non-unique cites — 73 N.W. 1102 *O'Grady*, 84 N.W. 1117 *Emmons County* cluster, 87 N.W. 1135 *White v. Lauder* — still pending after document selection). All 18 filed at `~/refs/nd/opin/NW/<vol>/<page>.pdf` and registered as non-primary `NW-image` `opinion_sources` rows.
