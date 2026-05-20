@@ -20,6 +20,40 @@ The .docs were simply never registered in `opinion_sources` for their correct pa
 
 Note: 3 of these .docs carry richer bound captions than the DB row — applied as `fix-casenames-vol16-79-orphan-enrich-2026-05-20` (see below).
 
+## Batch `fix-casenames-vol16-79-detail-2026-05-20` (702 case_names)
+
+Pattern-based bulk apply of the high-confidence sub-buckets within the 927-row `ACCEPT_WL_ADDS_DETAIL` group from the earlier autorev classification. User reviewed a stratified 48-row sample (`triage/casenames-adds-detail-sample50-2026-05-20.tsv`) and selected per-pattern policies; this batch applies them.
+
+**Sub-classification** (`triage/subclassify_adds_detail_2026-05-20.py`) split the 927 into:
+
+| sub-pattern | total | policy | applied |
+|---|---:|---|---:|
+| LOCALITY_OF | 402 | Accept all | 402 |
+| ROLE_APPOSITIVE | 175 | Accept all | 175 |
+| PAREN_PARTY | 130 | Accept all | 130 (+ 5 skipped as already-equal) |
+| MULTICASE_MISSED | 45 | Defer to TUI | 0 |
+| LONG_PLEADING | 9 | Defer to TUI | 0 |
+| DOCKET_METADATA | 17 | Defer to TUI | 0 |
+| STATE_EXPANSION | 1 | Defer to TUI | 0 |
+| OTHER | 148 | Defer to TUI | 0 |
+
+**LOCALITY_OF (402)** — bank-of-locality is the dominant pattern (`First Nat. Bank` → `First Nat. Bank of Hannaford`); ND case law has many same-named banks distinguished by city, so the bound version is more precise. Also captures school district + county additions (`School Dist. No. 50` → `School Dist. No. 50 of Barnes County`).
+
+**ROLE_APPOSITIVE (175)** — bound's role-of-defendant appositive (Atty. Gen., Sheriff, State Auditor, County Treasurer, District Judge). Common with `State ex rel.` cases where the relator's role is specified.
+
+**PAREN_PARTY (130)** — parenthetical party additions (Intervener, Garnishee, Intervenor) that bound caption preserves but CL stripped.
+
+**Tooling additions** in `triage/apply_adds_detail_2026-05-20.py`:
+- `clean_residue()` strips trailing `Cr.`/`Civ.` docket markers, `Nos. NNN, NNN` numbering, trailing pipes/commas, and a `Supreme Court of North Dakota,` prefix that the .doc parser occasionally captures from the court header line into the caption (oid 398 sample).
+- `smart_titlecase()` extends to handle apostrophe-followed-by-uppercase abbreviations: `'S→'s`, `'Rs→'rs`, `'R→'r`, `'N→'n`, `'D→'d`, `'T→'t` (covers Ass'N, Com'rs, Don'T, etc.).
+- Post-pass replaces `ex rel. Name. Atty. Gen.` → `ex rel. Name, Atty. Gen.` (period→comma between the relator name and the role appositive — Westlaw's bound caption uses comma, .doc parser sometimes emits period).
+
+**Deferred to TUI (220 total)**: 148 OTHER (mixed residue patterns) + 45 MULTICASE_MISSED (In re X's Estate / consolidated case reframings) + 17 DOCKET_METADATA (`(two cases). Nos. X, Y`) + 9 LONG_PLEADING (full pleading captions) + 1 STATE_EXPANSION. Plus the 372 main-classification DEFER_AMBIG + 12 DEFER_MULTICASE + 1 DEFER_WL_GARBAGE = **605 entries remain for `python -m ndcourts_mcp.review_casenames --volumes 16-79`**.
+
+Combined two-batch totals on the 2,054-item ambiguous-review queue: 749 case_name UPDATEs (47 autorev + 702 detail) + 694 state.json keep_db = **1,443 of 2,054 closed (70%)**.
+
+Invariants **18 ok / 2 known / 0 regressed**.
+
 ## Batch `fix-casenames-vol16-79-autorev-2026-05-20` (47 case_names + 694 state.json keep_db)
 
 Auto-classification + bulk closeout of the 2,054-item ambiguous case-name diff queue for vols 16–79 (the `review_casenames` TUI's deferred work since 2026-05-13). This is the queue separate from this morning's 107 mispaired entries — these are diffs where the `.doc` is *correctly* paired with the cite-matched row, but its caption differs from the DB's case_name in some non-equivalent way (abbreviation, party detail, OCR, etc.).
