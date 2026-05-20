@@ -2,6 +2,20 @@
 
 Changes applied to the opinions database after import from CourtListener and ndcourts.gov sources. All corrections are recorded in the `changelog` SQLite table and can be reverted with `python -m ndcourts_mcp.cleanup revert <batch>`.
 
+## Batch `fix-emmons-nw-cite-2026-05-19` (4 cite updates)
+
+Cleanup of the N.W. cites for the 5747–5751 Emmons County rows surfaced by the bound `.docs` during the 2026-05-19 vol-9 ingest. CL had assigned `84 N.W. 1117` to all 8 Emmons County 1117-cluster rows uniformly, but the bound .docs split the cluster across N.W. pages:
+
+| oid | case | N.D. page | old cite | bound cite |
+|---:|---|---|---|---|
+| 5751 | Lilly | 611 | 84 N.W. 1117 | 84 N.W. 1117 ✓ (already correct) |
+| 5750 | Mellon | 612 | 84 N.W. 1117 | **84 N.W. 1118** |
+| 5749 | Robinson | 613 | 84 N.W. 1117 | **84 N.W. 1118** |
+| 5748 | Thistlewaite | 614 | 84 N.W. 1117 | **84 N.W. 1118** |
+| 5747 | Wilson | 615 | 84 N.W. 1117 | **84 N.W. 1119** |
+
+Page-break in the bound reporter: 1117 covers N.D. pages 608–611 (Cranmer/Davidson/Baker/Couch/Davidson/Cranmer/Ganger/Kelly/Lilly), 1118 covers 612–614, 1119 starts with Wilson@615. 4 `citations.citation` UPDATEs applied (changelog-revertible). Invariants **18 ok / 2 known / 0 regressed**.
+
 ## Batch `fix-casenames-vol11-15-bound-2026-05-19` (14) + `fix-cairncross-source-2026-05-19` (1)
 
 Vol-11–15 mispaired closeout — **resolved entirely digitally**, no Westlaw page-image pull needed. The Westlaw `.docs` in `~/refs/nd/opin/N.D./<vol>/` are the bound N.D. Reports text; jaccard-comparing each `.doc` body to the cite-matched DB row's `text_content` cleanly classifies the 20 mispaired entries: 17 SAME (jac ≥ 0.55), 3 DIFF (jac < 0.20), 0 ambiguous.
