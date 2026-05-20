@@ -18,7 +18,19 @@ The .docs were simply never registered in `opinion_sources` for their correct pa
 | `N.D./32/0373-Sundahl-v-First-State-Bank-of-Edmunds.doc` | 1487 | Sundahl v. First State Bank |
 | `N.D./34/0601-Mercer-County-State-Bank-of-Manhaven-v-Hayes.doc` | 1641 | Mercer County State Bank v. Hayes |
 
-Note: 3 of these .docs carry richer bound captions than the DB row (`Fitzmaurice v. Willis, County Com'rs`; `Sundahl v. First State Bank of Edmunds`; `Mercer County State Bank of Manhaven v. Hayes`). Case-name enrichment **deferred** at user direction; conservative source-rows-only path matches the Cairncross precedent.
+Note: 3 of these .docs carry richer bound captions than the DB row — applied as `fix-casenames-vol16-79-orphan-enrich-2026-05-20` (see below).
+
+## Batch `fix-casenames-vol16-79-orphan-enrich-2026-05-20` (3)
+
+Case-name enrichments for the 3 ORPHAN-pairing opinions whose bound `.doc` captions add a role or locality qualifier the DB was missing. Pattern matches earlier accepted enrichments (`Barry v. Truax, District Court Clerk` and `State Bank of Maxbass` / `State Bank of Menagha` from vol 11–15 and vol 16–79 SAME).
+
+| oid | bound (corrected) | was |
+|---:|---|---|
+| 680 | Fitzmaurice v. Willis, County Com'rs | Fitzmaurice v. Willis |
+| 1487 | Sundahl v. First State Bank of Edmunds | Sundahl v. First State Bank |
+| 1641 | Mercer County State Bank of Manhaven v. Hayes | Mercer County State Bank v. Hayes |
+
+Invariants **18 ok / 2 known / 0 regressed**. Revertible.
 
 Tool note: the ORPHAN_SIBLING classifier in `triage/adjudicate_mispaired_2026-05-20.py` checked whether the `.doc`'s source_path was attached to *any* opinion. A stronger check would also fuzzy-match the parsed `.doc` case_name against `opinions.case_name` (or look up its primary cite) — that would have surfaced these 7 as `ALREADY_PAIRED_BY_NAME` rather than `ORPHAN_SIBLING`. Logged as a tool refinement.
 
