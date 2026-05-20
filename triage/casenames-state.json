@@ -1936,6 +1936,12 @@
       "volume": 49,
       "wl_raw": "ROQUETTE v. FARMERS\u2019 INS. CO."
     },
+    "277": {
+      "db_name": "Vallelly v. Board of Park Commissioners",
+      "ts": "2026-05-20T14:28:36+00:00",
+      "volume": 16,
+      "wl_raw": "VALLELLY et al. v. BOARD OF PARK COM\u2019RS OF PARK DISTRICT OF CITY OF GRAND FORKS et al."
+    },
     "2774": {
       "db_name": "Grandin Investment Co. v. Hartung",
       "source": "fix-casenames-vol16-79-autorev-2026-05-20",
@@ -2144,6 +2150,12 @@
       "volume": 50,
       "wl_raw": "THOMPSON YARDS, Inc., v. BUNDE et al."
     },
+    "290": {
+      "db_name": "State ex rel. North Dakota State Fair Ass'n of Fargo v. Holmes, State Auditor",
+      "ts": "2026-05-20T14:35:27+00:00",
+      "volume": 17,
+      "wl_raw": "STATE ex rel. NORTH DAKOTA STATE FAIR ASS\u2019N OF FARGO v. HOLMES, State Auditor, et al."
+    },
     "2906": {
       "db_name": "Lilly v. Haynes Co-operative Coal Mining Co.",
       "source": "fix-casenames-vol16-79-autorev-2026-05-20",
@@ -2167,6 +2179,12 @@
       "verdict": "KEEP_DB_PURE_ABBREV",
       "volume": 50,
       "wl_raw": "KUTCHERA v. MINNEAPOLIS, ST. P. & S. S. M. RY. CO."
+    },
+    "295": {
+      "db_name": "A. B. Farquhar Co. v. Higham",
+      "ts": "2026-05-20T14:28:52+00:00",
+      "volume": 16,
+      "wl_raw": "A. B. FARQUHAR CO., Limited, v. HIGHAM."
     },
     "2952": {
       "db_name": "Farmers & Merchants State Bank v. H. E. Behrens Manufacturing Co.",
@@ -2456,6 +2474,12 @@
       "volume": 52,
       "wl_raw": "ENGEN v. MEDBERRY FARMERS\u2019 EQUITY ELEVATOR CO. et al. No. 4887. |"
     },
+    "317": {
+      "db_name": "Ruettell v. Greenwich Insurance",
+      "ts": "2026-05-20T14:29:44+00:00",
+      "volume": 16,
+      "wl_raw": "RUETTELL et al. v. GREENWICH INS. CO."
+    },
     "3171": {
       "db_name": "Storing v. Mandan Special School District",
       "source": "fix-casenames-vol16-79-autorev-2026-05-20",
@@ -2551,6 +2575,12 @@
       "verdict": "KEEP_DB_PURE_ABBREV",
       "volume": 53,
       "wl_raw": "JARSKI v. FARMERS\u2019 & MERCHANTS\u2019 STATE BANK OF HANKINSON. No. 5020. |"
+    },
+    "325": {
+      "db_name": "Johnson v. County of Grand Forks",
+      "ts": "2026-05-20T14:29:40+00:00",
+      "volume": 16,
+      "wl_raw": "JOHNSON v. GRAND FORKS COUNTY et al."
     },
     "3253": {
       "db_name": "First National Bank of Harvey v. Woodworth Elevator Co.",
@@ -2792,6 +2822,12 @@
       "volume": 55,
       "wl_raw": "CROONQUIST v. WALKER et ux. No. 5309. |"
     },
+    "353": {
+      "db_name": "Zinn v. District Court",
+      "ts": "2026-05-20T14:35:32+00:00",
+      "volume": 17,
+      "wl_raw": "ZINN v. DISTRICT COURT IN AND FOR MORTON COUNTY et al."
+    },
     "3531": {
       "db_name": "Thompson Realty Co. v. Mowbray",
       "source": "fix-casenames-vol16-79-autorev-2026-05-20",
@@ -2800,6 +2836,12 @@
       "volume": 55,
       "wl_raw": "THOMPSON REALTY CO. v. MOWBRAY et ux. No. 5341. |"
     },
+    "354": {
+      "db_name": "Zinn v. District Court",
+      "ts": "2026-05-20T14:35:30+00:00",
+      "volume": 17,
+      "wl_raw": "ZINN v. DISTRICT COURT FOR BARNES COUNTY et al."
+    },
     "3542": {
       "db_name": "Rattie v. Minneapolis, St. Paul & Sault Ste. Marie Railway Co.",
       "source": "fix-casenames-vol16-79-autorev-2026-05-20",
@@ -2807,6 +2849,12 @@
       "verdict": "KEEP_DB_PURE_ABBREV",
       "volume": 55,
       "wl_raw": "RATTIE v. MINNEAPOLIS, ST. P. & S. S. M. RY. CO. No. 5357. |"
+    },
+    "356": {
+      "db_name": "State v. Nelson",
+      "ts": "2026-05-20T14:34:09+00:00",
+      "volume": 17,
+      "wl_raw": "STATE v. NELSON. Jan. 18. 1908."
     },
     "3560": {
       "db_name": "Company A, First Regiment North Dakota National Guard Training School v. State",
@@ -3072,6 +3120,12 @@
       "volume": 57,
       "wl_raw": "NORTHWEST ENGINEERING CO. v. GJELLEFALD-CHAPMAN CONST. CO. No. 5609. |"
     },
+    "377": {
+      "db_name": "State ex rel. Ladd v. District Court",
+      "ts": "2026-05-20T14:36:02+00:00",
+      "volume": 17,
+      "wl_raw": "STATE ex rel. LADD v. DISTRICT COURT IN AND FOR CASS COUNTY et al."
+    },
     "3773": {
       "db_name": "Light v. North Dakota Workmen's Compensation Bureau",
       "source": "fix-casenames-vol16-79-autorev-2026-05-20",
@@ -3263,6 +3317,12 @@
       "verdict": "KEEP_DB_PURE_ABBREV",
       "volume": 59,
       "wl_raw": "MERCHANTS\u2019 NAT. BANK OF FARGO v. MILLER et al. No. 5745. |"
+    },
+    "398": {
+      "db_name": "First Nat. Bank of Pomeroy, Iowa, v. Buttery",
+      "ts": "2026-05-20T14:36:22+00:00",
+      "volume": 17,
+      "wl_raw": "Supreme Court of North Dakota, FIRST NAT. BANK OF POMEROY, IOWA, v. BUTTERY."
     },
     "3985": {
       "db_name": "Lindsay v. Nichols & Shepard Threshing MacHine Co.",
@@ -3943,6 +4003,12 @@
       "verdict": "KEEP_DB_PURE_ABBREV",
       "volume": 18,
       "wl_raw": "MILLER v. NORTHERN PAC. RY. CO."
+    },
+    "457": {
+      "db_name": "McDonell v. Minneapolis, St. Paul & Sault Ste. Marie Railway Co.",
+      "ts": "2026-05-20T14:36:25+00:00",
+      "volume": 17,
+      "wl_raw": "McDONNELL v. MINNEAPOLIS, ST. P. & S. S. M. RY. CO."
     },
     "4588": {
       "db_name": "Bagan Ex Rel. Bagan v. Bitterman",

@@ -20,6 +20,23 @@ The .docs were simply never registered in `opinion_sources` for their correct pa
 
 Note: 3 of these .docs carry richer bound captions than the DB row — applied as `fix-casenames-vol16-79-orphan-enrich-2026-05-20` (see below).
 
+## Batch `fix-foster-county-implement-372-2026-05-20` (2 fields, 1 opinion)
+
+Reversal of a TUI keep_db decision for oid 372 after pulling the bound `.doc` for verification. User initially kept `Foster Implement Co. v. Smith` (DB) over Westlaw's `FOSTER COUNTY IMPLEMENT CO.` during the vol-17 TUI run, on the conservative judgment that "Foster County" vs "Foster" might be the substantive party-identity dispute. Bound `.doc` (`N.D./17/0178-Foster-County-Implement-Co-v-Smith.doc`) settles it:
+
+> **Caption:** `FOSTER COUNTY IMPLEMENT CO. v. SMITH.`
+> **Synopsis:** "Action by the **Foster County Implement Company** against E. Delafield Smith."
+> **Opinion (Fisk, J.):** "This is an appeal from a judgment of the district court of Foster county in plaintiff's favor."
+
+The plaintiff is *Foster County Implement Company* — a corporation operating in Foster County. CL dropped "County" from the corporate name during ingest; bound's form is authoritative. Same category as the accepted `Anderson` → `Anderson & Jorgenson` (oid 287) and `Wirtz` → `Wirtz Bros.` (oid 391): bound supplies missing party identity.
+
+Applied:
+- `case_name`: `Foster Implement Co. v. Smith` → `Foster County Implement Co. v. Smith`
+- `case_name_full`: `Foster Implement Company v. E. Delafield Smith` → `Foster County Implement Company v. E. Delafield Smith`
+- Removed oid 372 entry from `triage/casenames-state.json` `kept_db`
+
+Invariants **18 ok / 2 known / 0 regressed**.
+
 ## Batch `fix-casenames-vol16-79-detail-2026-05-20` (702 case_names)
 
 Pattern-based bulk apply of the high-confidence sub-buckets within the 927-row `ACCEPT_WL_ADDS_DETAIL` group from the earlier autorev classification. User reviewed a stratified 48-row sample (`triage/casenames-adds-detail-sample50-2026-05-20.tsv`) and selected per-pattern policies; this batch applies them.
