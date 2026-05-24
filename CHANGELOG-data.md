@@ -2,6 +2,28 @@
 
 Changes applied to the opinions database after import from CourtListener and ndcourts.gov sources. All corrections are recorded in the `changelog` SQLite table and can be reverted with `python -m ndcourts_mcp.cleanup revert <batch>`.
 
+## Batch `fix-section10-cluster-order-2026-05-24` (15 synthetic cites reordered)
+
+Replaced the **provisional oid-tiebreaker** within-cluster order with the **true N.D. on-page publication order** for the shared-page clusters whose order is authoritatively known. Tool: `triage/fix_section10_cluster_order_2026-05-24.py` (dry-run default; revertible — old cite string stored per changelog row).
+
+- **3 N.D. 538** (vol 3 bound, prior session; N.D.=N.W.): **Globe Investment Co. v. Boyum → Kellogg, Johnson & Co. v. Gilman**. Was reversed (Kellogg `1894 ND 6`); now Globe `1894 ND 6` / Kellogg `1894 ND 7`.
+- **9 N.D. 608–614 Emmons County tax-foreclosure block** (read this session from the bound vol 9 scan `~/refs/nd/opin/N.D./9/_bound-volume.pdf`, pp.608–614 = pdf pages 718–724, offset +110). Top-to-bottom on-page order transcribed: 608 Cranmer→Davidson; 609 Davidson→Baker→Couch; 610 Cranmer→Ganger→Kelly; 611 Lilly→McKenzie→McKenzie; 612 McKenzie→McLain→Mellon; 613 Mellon→Mellon→Robinson; 614 Thistlewaite→Thistlewaite. (Identical-caption duplicates — 2× McKenzie p.611, 2× Mellon p.613, 2× Thistlewaite p.614 — kept in oid order; they are indistinguishable.) 611 and 614 already matched; 13 cites reordered across pp.608–613.
+- **44 N.D. 247** (Nelson→Lammadee) was already correct — not touched.
+
+**Mechanism:** pure within-cluster permutation — each cluster keeps its exact set of `YYYY ND nnn` numbers, only the oid↔number mapping changes, so no other opinion's number shifts and per-year uniqueness holds. Numbers remain PROVISIONAL until the publish freeze. **15 changelog rows** (`field='citation_synthetic_order'`). Invariants **22 ok / 2 known / 0 regressed**; `neutral_cite_uniqueness` held 258. No new snapshot (covered by `opinions.db.bak-pre-section10-phase1a-2026-05-24` + changelog revert).
+
+## Batch `section10-phase1a-synthetic-2026-05-24` (12,604 synthetic cites — §10 Phase 1A)
+
+Back-assigned a synthetic medium-neutral citation `YYYY ND nnn` to **every pre-1997 opinion** (`date_filed < 1997-01-01`), extending the post-1997 neutral-cite format corpus-wide as a stable universal unique identifier (§10, ratified design 2026-05-19/24). Tool: `triage/section10_phase1a_2026-05-24.py` (`--measure`/`--apply`/`--revert`).
+
+- **12,604 `citations` rows inserted**, `reporter='ND-neutral-synthetic'`, **`is_primary=0` always** — a synthetic/editorial ID, never the official cite, so the existing official `ND`/regional primary is unchanged (verified: oid 5274 still primary `3 N.D. 538`). 12,604 changelog rows (`field='citation_synthetic'`, authority=`section10-phase1a-order(date,ND-page,NW-page,oid)`).
+- **Sequence per year** in sort order `(date_filed, ND-vol, ND-page, NW-vol, NW-page, oid)`; ND-cited sorts before NW2d-only on a same-date tie. 0 opinions had an unparseable primary cite (no date+oid-only placements needed).
+- **Taxonomy/contract changes (code):** `ingest.SYNTHETIC_REPORTERS = {'ND-neutral-synthetic'}` added to `REPORTER_TAXONOMY` but kept OUT of `PRIMARY_LADDER` (so `recompute_primary` never selects it); `migrate_reporter_taxonomy.py` hardened to skip synthetic rows (its `_classify_reporter` would otherwise relabel a `YYYY ND nnn` string as native `ND-neutral` and strip provenance); SCHEMA.md Contract 1 enum extended + Contract 2 rung-1/Interim text corrected (earlier draft wrongly had the synthetic becoming primary).
+- **4 new invariants** (all green at 0): `synthetic_format` (matches `^\d{4} ND \d+$`), `synthetic_uniqueness_per_year` (each `YYYY ND nnn` → one opinion), `synthetic_only_pre_1997`, `synthetic_never_primary`. Dashboard **22 ok / 2 known / 0 regressed**. `neutral_cite_uniqueness` held at **258 (Δ=+0)** — the synthetic strings (years ≤1996) introduced zero collisions and don't overlap native cites (years ≥1997).
+- **PROVISIONAL within-cluster order.** The 101 opinions in 48 genuine shared-page collision clusters (42 NW-orderable + 31 truly-tied + 28 NW2d-era member rows) were tie-broken by `oid` as a placeholder — numbers are PROVISIONAL until a publish freeze (renumber freely; ratified stability policy). Worklist: `triage/section10-cluster-worklist-2026-05-24.tsv`. **Next:** apply the on-page orders already verified last session (e.g. 3 N.D. 538 should be Globe→Kellogg, currently assigned Kellogg `1894 ND 6`/Globe `1894 ND 7`; 44 N.D. 247 Nelson→Lammadee; the 9 N.D. 608–615 Emmons block), then resolve the remaining clusters via bound-image reads.
+
+Snapshot `opinions.db.bak-pre-section10-phase1a-2026-05-24`. Revert: `python triage/section10_phase1a_2026-05-24.py --revert`.
+
 ## Batch `section6-rex-twins-2026-05-24` (18 merges)
 
 The §10 shared-page analysis surfaced 18 `X v. Y` + `Re X`/`In the Matter of …` twin pairs, each sharing the same N.D. page, N.W. page, AND docket number — one Westlaw-bound row captioned by the parties, one CL re-ingest captioned by the estate/matter. **Text-read 2026-05-24 confirmed all 18 are one opinion double-ingested** (the `Re X` full caption names the same parties + same docket as the `X v. Y` row — e.g. `Re Schenum` = "Estate of James Schenum, **D.C. Cullen v. Ida Sullivan**"; `In re Hanson` = "Application of Hanson… **Northern Pacific Ry v. McDonald**"). These are NOT like the Emmons per curiams (different defendants / separate suits) — same case. Tool: `triage/merge_rex_twins_2026-05-24.py`.

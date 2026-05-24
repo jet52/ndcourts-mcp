@@ -23,13 +23,16 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import sqlite3
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 
 from .db import DEFAULT_DB_PATH
-from .ingest import REPORTER_TAXONOMY, SECONDARY_REPORTERS
+from .ingest import REPORTER_TAXONOMY, SECONDARY_REPORTERS, SYNTHETIC_REPORTERS
+
+_SYNTH_FMT = re.compile(r"^\d{4} ND \d+$")
 
 DEFAULT_REFS_DIR = Path.home() / "refs" / "nd" / "opin"
 
@@ -274,6 +277,63 @@ def _secondary_never_primary(conn, refs):
         f"SELECT id, opinion_id, citation, reporter FROM citations "
         f"WHERE is_primary=1 AND reporter IN ({placeholders})",
         tuple(sorted(SECONDARY_REPORTERS)),
+    ).fetchall()
+
+
+# ---- §10 synthetic medium-neutral cites (ND-neutral-synthetic) --------------
+
+def _synth_placeholders():
+    return ",".join("?" for _ in SYNTHETIC_REPORTERS), tuple(sorted(SYNTHETIC_REPORTERS))
+
+
+@_check("synthetic_format",
+        "every ND-neutral-synthetic citation matches 'YYYY ND nnn'")
+def _synthetic_format(conn, refs):
+    ph, params = _synth_placeholders()
+    rows = conn.execute(
+        f"SELECT id, opinion_id, citation, reporter FROM citations "
+        f"WHERE reporter IN ({ph})",
+        params,
+    ).fetchall()
+    return [r for r in rows if not _SYNTH_FMT.match(r["citation"] or "")]
+
+
+@_check("synthetic_uniqueness_per_year",
+        "each synthetic 'YYYY ND nnn' belongs to exactly one opinion "
+        "(provisional numbers, but collision-free)")
+def _synthetic_uniqueness(conn, refs):
+    ph, params = _synth_placeholders()
+    return conn.execute(
+        f"SELECT citation, COUNT(DISTINCT opinion_id) AS n FROM citations "
+        f"WHERE reporter IN ({ph}) "
+        f"GROUP BY citation HAVING COUNT(DISTINCT opinion_id) > 1 "
+        f"ORDER BY n DESC, citation",
+        params,
+    ).fetchall()
+
+
+@_check("synthetic_only_pre_1997",
+        "no ND-neutral-synthetic row on an opinion filed >= 1997-01-01 "
+        "(native neutral cites cover 1997+)")
+def _synthetic_only_pre_1997(conn, refs):
+    ph, params = _synth_placeholders()
+    return conn.execute(
+        f"SELECT c.id, c.opinion_id, c.citation, o.date_filed FROM citations c "
+        f"JOIN opinions o ON o.id = c.opinion_id "
+        f"WHERE c.reporter IN ({ph}) AND o.date_filed >= '1997-01-01'",
+        params,
+    ).fetchall()
+
+
+@_check("synthetic_never_primary",
+        "no ND-neutral-synthetic row with is_primary=1 "
+        "(synthetic/editorial cite is never the official citation)")
+def _synthetic_never_primary(conn, refs):
+    ph, params = _synth_placeholders()
+    return conn.execute(
+        f"SELECT id, opinion_id, citation, reporter FROM citations "
+        f"WHERE is_primary=1 AND reporter IN ({ph})",
+        params,
     ).fetchall()
 
 

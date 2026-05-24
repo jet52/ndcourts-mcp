@@ -69,7 +69,14 @@ def _extract_author(judges_str: str | None, text: str) -> tuple[str | None, bool
 # is_primary selection ladder (Contract 2): highest available wins.
 PRIMARY_LADDER = ["ND-neutral", "ND", "NW3d", "NW2d", "NW"]
 SECONDARY_REPORTERS = {"ALR", "LRA", "US", "SCT", "LED"}
-REPORTER_TAXONOMY = set(PRIMARY_LADDER) | SECONDARY_REPORTERS
+# §10 back-assigned medium-neutral cites (YYYY ND nnn) for pre-1997 opinions.
+# Synthetic/editorial — a stable unique ID, NOT how the case was published, so
+# is_primary=0 ALWAYS (kept out of PRIMARY_LADDER → recompute_primary never picks
+# it; enforced by the synthetic_never_primary invariant). The reporter value is
+# set explicitly by the §10 insert path, never emitted by _classify_reporter
+# (whose string-only view cannot tell a synthetic YYYY ND nnn from a native one).
+SYNTHETIC_REPORTERS = {"ND-neutral-synthetic"}
+REPORTER_TAXONOMY = set(PRIMARY_LADDER) | SECONDARY_REPORTERS | SYNTHETIC_REPORTERS
 
 
 def _classify_reporter(citation: str) -> str | None:

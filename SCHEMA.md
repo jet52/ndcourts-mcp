@@ -43,7 +43,8 @@ Closed enumeration. Each citation row's `reporter` is exactly one of:
 
 | value | citation form | class | notes |
 |---|---|---|---|
-| `ND-neutral` | `YYYY ND N` | **official, precedential** | medium-neutral cite; native 1997+; or §10 back-assigned synthetic (flagged as synthetic per §10). *Was mislabeled `ND`.* |
+| `ND-neutral` | `YYYY ND N` | **official, precedential** | medium-neutral cite; **native 1997+ only**. *Was mislabeled `ND`.* |
+| `ND-neutral-synthetic` | `YYYY ND nnn` | **synthetic/editorial unique ID** | §10 back-assigned medium-neutral cite for pre-1997 opinions. Same string form as `ND-neutral` but a distinct value because it is *not* how the case was published — a stable universal identifier, never the official citation. **`is_primary=0` ALWAYS** (never in the ladder). *Added 2026-05-24 (§10 Phase 1A).* |
 | `ND` | `<v> N.D. <p>` | **official, precedential** | official North Dakota Reports state reporter, vols 1–79 (~1890–1953). *Was mislabeled `NDold`.* |
 | `NW` | `<v> N.W. <p>` | regional, precedential **parallel** | North Western Reporter, 1st series |
 | `NW2d` | `<v> N.W.2d <p>` | regional, precedential **parallel** | North Western Reporter, 2d series |
@@ -78,7 +79,7 @@ officially cited. **Exactly one** citation row per opinion has `is_primary=1`
 
 **Selection ladder** (highest available wins):
 
-1. `ND-neutral` (medium-neutral) — native 1997+, or §10 synthetic once assigned
+1. `ND-neutral` (medium-neutral) — native 1997+ only
 2. `ND` (official North Dakota Reports) — pre-1997 opinions, vols 1–79
 3. `NW3d` (regional) — newest regional series
 4. `NW2d` (regional) — gap-era 1953–1996 and any opinion lacking higher rungs
@@ -86,12 +87,18 @@ officially cited. **Exactly one** citation row per opinion has `is_primary=1`
 
 Ties within a rung break to the lowest citation id (deterministic).
 
-`ALR`, `LRA`, `US`, `SCT`, `LED` are **never** `is_primary`.
+`ALR`, `LRA`, `US`, `SCT`, `LED`, `ND-neutral-synthetic` are **never**
+`is_primary`.
 
-**Interim (pre-§10):** pre-1997 opinions have no neutral cite yet, so their
-primary is rung 2 (`ND` official Reports) where it exists, else the earliest
-regional (`NW2d`→`NW`). When §10 assigns synthetic neutral cites, the synthetic
-`ND-neutral` becomes primary and the prior primary demotes to parallel.
+**Pre-1997 primary (§10-aware):** pre-1997 opinions' primary is rung 2 (`ND`
+official Reports) where it exists, else the earliest regional (`NW2d`→`NW`). The
+§10 synthetic neutral cite (`ND-neutral-synthetic`, ratified 2026-05-19) does
+**not** change this: it is a synthetic/editorial unique identifier, not how the
+case was published, so it is added as a parallel row with `is_primary=0` and the
+official `ND`/regional cite **stays primary**. (This supersedes an earlier draft
+note that had the synthetic cite becoming primary — presenting a back-assigned
+`YYYY ND nnn` as the official citation would violate the accuracy/fair-notice bar
+behind the authoritative-text goal.) Enforced by `synthetic_never_primary`.
 
 Matches ND Supreme Court citation convention (neutral cite official since 1997;
 bound N.D. Reports official before; N.W./N.W.2d the regional parallel).
@@ -103,8 +110,17 @@ bound N.D. Reports official before; N.W./N.W.2d the regional parallel).
 - `reporter_in_taxonomy` — every `citations.reporter` ∈ the Contract-1 enum (NULL fails). **Enforced, 0** (was 79 NULL + ~590 misfiled + 461 foreign; fixed/deleted by `reporter-taxonomy-2026-05-17`).
 - `secondary_never_primary` — no `is_primary=1` row with reporter ∈ {ALR,LRA,US,SCT,LED}. **Enforced, 0**.
 
-All three read the enum/secondary set from `ingest` (single source of truth).
+These read the enum/secondary set from `ingest` (single source of truth).
 Dashboard 2026-05-17 post-apply: **18 ok, 2 known baseline, 0 regressed**.
+
+**§10 synthetic-cite invariants (added 2026-05-24, `ND-neutral-synthetic`):**
+- `synthetic_format` — every `ND-neutral-synthetic` citation matches `^\d{4} ND \d+$`.
+- `synthetic_uniqueness_per_year` — each synthetic `YYYY ND nnn` belongs to exactly one opinion (corpus-wide unique key). Numbers are PROVISIONAL until the publish freeze (renumber freely), but must stay collision-free.
+- `synthetic_only_pre_1997` — no `ND-neutral-synthetic` row on an opinion with `date_filed >= 1997-01-01` (native neutral cites cover 1997+).
+- `synthetic_never_primary` — no `ND-neutral-synthetic` row with `is_primary=1`.
+
+`SYNTHETIC_REPORTERS` lives in `ingest` alongside `PRIMARY_LADDER`/`SECONDARY_REPORTERS`.
+Dashboard 2026-05-24 post-Phase-1A: **22 ok, 2 known baseline, 0 regressed**.
 
 ## Implementation plan — APPLIED 2026-05-17
 

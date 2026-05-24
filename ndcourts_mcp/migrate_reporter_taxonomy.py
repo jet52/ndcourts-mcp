@@ -14,7 +14,7 @@ from collections import Counter
 from pathlib import Path
 
 from .db import DEFAULT_DB_PATH, get_connection
-from .ingest import _classify_reporter, REPORTER_TAXONOMY
+from .ingest import _classify_reporter, REPORTER_TAXONOMY, SYNTHETIC_REPORTERS
 
 BATCH = "reporter-taxonomy-2026-05-17"
 
@@ -32,6 +32,13 @@ def run(db_path: Path, apply: bool) -> None:
 
     for r in rows:
         old = r["reporter"]
+        # §10 synthetic cites share the YYYY ND nnn string with native neutral
+        # cites; _classify_reporter would mislabel them ND-neutral and strip the
+        # synthetic provenance. Leave them untouched.
+        if old in SYNTHETIC_REPORTERS:
+            old_dist[old] += 1
+            new_dist[old] += 1
+            continue
         new = _classify_reporter(r["citation"])
         old_dist[old if old is not None else "<NULL>"] += 1
         new_dist[new if new is not None else "<NULL>"] += 1
