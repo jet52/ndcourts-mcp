@@ -25,7 +25,7 @@ REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO))
 from ndcourts_mcp.db import DEFAULT_DB_PATH, get_connection, log_change  # noqa: E402
 
-BATCH = "section10-resequence-2026-05-24"
+BATCH = "section10-resequence-2026-05-24b"
 SYNTH = "ND-neutral-synthetic"
 INF = 10**9
 ND_RE = re.compile(r"^(\d+)\s+N\.D\.\s+(\d+)")
@@ -36,6 +36,7 @@ NW_RE = re.compile(r"^(\d+)\s+N\.W\.\s+(\d+)")
 # whose true order deviates from the default (date, ND-page, NW-page, oid) sort.
 # Sources: bound N.D. Reports scans, vols 3/9/44 (CHANGELOG 2026-05-24 batches).
 KNOWN_ORDER = [
+    [152, 146],              # 14 N.D. 557: Murphy (writ denied, top), Poull
     [5275, 5274],            # 3 N.D. 538: Globe, Kellogg
     [20489, 5754],           # 9 N.D. 608: Cranmer, Davidson
     [20491, 20490, 5753],    # 9 N.D. 609: Davidson, Baker, Couch

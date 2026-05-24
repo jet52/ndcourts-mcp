@@ -2,6 +2,16 @@
 
 Changes applied to the opinions database after import from CourtListener and ndcourts.gov sources. All corrections are recorded in the `changelog` SQLite table and can be reverted with `python -m ndcourts_mcp.cleanup revert <batch>`.
 
+## Batch `section10-resequence-2026-05-24b` (1 cluster reordered — vols 14 & 24)
+
+Filed two newly-downloaded bound volumes — **N.D. vol 14** (746 pp.) and **N.D. vol 24** (785 pp.) — into `~/refs/nd/opin/N.D./{14,24}/_bound-volume.pdf` and verified their §10 clusters against the scans (offsets vol 14 +22; vol 24 +29 near p.327, drifting to +31 by p.393 — plates; always re-confirm via running header).
+
+- **14 N.D. 557 — REORDERED.** Bound prints *Murphy v. District Court* (per-curiam, writ denied, top of p.557) then *State v. Poull* (the substantive opinion, p.557–565+). Provisional had Poull first (N.W. 717 < 734); N.D. order governs. Added `[152, 146]` to the resequencer's `KNOWN_ORDER` and re-ran → Murphy `1905 ND 89`, Poull `1905 ND 90` (2 cites swapped, batch suffix `b`).
+- **24 N.D. 326 — correct as-is.** *Burger v. Sinclair* (lead; caption + syllabus on p.325, opinion text p.326) → *Seckerson v. Sinclair* (companion). Provisional Burger 112 / Seckerson 113 stands. (Citation-convention note: Burger's case opens on p.325 but is cited at 326 = opinion-text page; not treated as an error.)
+- **24 N.D. 395 — correct as-is.** *McCarty v. Kepreta* (lead, 101k-char opinion, p.395–) → *McCarty v. Talley* (1.2k-char companion). Provisional Kepreta 10 / Talley 11 stands.
+
+Invariants **22 ok / 2 known / 0 regressed**; `neutral_cite_uniqueness` 258; 12,604 cites. On-disk bound N.D. volumes now: **1, 2, 3, 7, 9, 14, 19, 20, 24, 34, 44**.
+
 ## Batch `section10-resequence-2026-05-24` (23 synthetic cites renumbered)
 
 Resequenced the 1900 synthetic `YYYY ND nnn` cites after the `fix-bound-discrepancies` date corrections moved two opinions. Tool: **`triage/section10_resequence_2026-05-24.py`** — the new **canonical §10 ordering tool**: recomputes the whole pre-1997 sequence from current DB state (default sort `date_filed, ND-page, NW-page, oid`) + the verified on-page orders in `KNOWN_ORDER`, then applies only the cites that changed. Re-run it after any future pre-1997 data correction. It folds in (supersedes) the one-shot `fix_section10_cluster_order` / `fix_section10_ndverify` scripts.
