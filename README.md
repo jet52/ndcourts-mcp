@@ -305,6 +305,11 @@ the current validation roadmap.
 | `get_parallel_citations` | Return a case's full parallel-cite set (synthetic IDs bracketed separately)  |
 | `verify_quotation`    | Confirm a quoted passage is verbatim (typography-tolerant) and return the pinpoint ¶ |
 | `get_pinpoint`        | Resolve a paragraph number to its text, or a quote to the ¶ it lives in          |
+| `check_treatment`     | Citator: citing opinions with citing-sentence context + a conservative, non-authoritative treatment signal |
+| `get_cited_authorities` | Outbound authorities a case relies on (cases, statutes, rules, constitution), grouped with source links |
+| `case_summary`        | One-call bench-memo front matter: cites, panel, voting, disposition, ¶ count, syllabus points |
+| `get_subsequent_history` | Related opinions sharing the docket (rehearings, supplemental, companions)   |
+| `authoring_justice_on_issue` | A justice's authored opinions matching an issue (predictive bench-memo signal) |
 
 ---
 

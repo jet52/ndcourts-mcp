@@ -4,7 +4,7 @@ from pathlib import Path
 
 from fastmcp import FastMCP
 
-from . import proofread
+from . import memo, proofread
 from .db import DEFAULT_DB_PATH, get_connection
 
 mcp = FastMCP(
@@ -799,6 +799,394 @@ def get_pinpoint(
             if extracted is not None:
                 base["paragraph_text"], base["paragraph_truncated"] = extracted
         return base
+    finally:
+        conn.close()
+
+
+@mcp.tool()
+def check_treatment(citation: str, limit: int = 50, scan_limit: int = 300) -> dict:
+    """Citator: how later opinions have treated a case (KeyCite/Shepard's-style).
+
+    Aggregates opinions citing the target and, for each, returns the citing
+    sentence, its paragraph, and a CONSERVATIVE, NON-AUTHORITATIVE treatment
+    signal scanned from that sentence alone. Possible-negative and
+    distinguished items are surfaced first so they are never truncated away.
+
+    IMPORTANT: signals are heuristic — a citing sentence may use a treatment
+    word about a different case. This is NOT a "still good law" verdict. Always
+    read the returned sentence and the full citing opinion before relying on it.
+
+    Args:
+        citation: A citation or case name identifying the case to check.
+        limit: Max citing entries to return (default 50, max 200).
+        scan_limit: Max (most-recent) citing opinions to scan for signals
+            (default 300) — counts are reported over the scanned set.
+    """
+    limit = min(limit, 200)
+    conn = get_connection(DB_PATH)
+    try:
+        row, matched_by, candidates = _resolve_opinion(conn, citation)
+        if row is None:
+            result = {"found": False, "query": citation}
+            if candidates:
+                result["error"] = "Ambiguous — multiple opinions match."
+                result["candidates"] = candidates
+            else:
+                result["error"] = f"No opinion found for: {citation}"
+            return result
+
+        total = conn.execute(
+            "SELECT COUNT(*) AS n FROM cited_by WHERE cited_opinion_id = ?",
+            (row["id"],),
+        ).fetchone()["n"]
+
+        citing_rows = conn.execute(
+            """SELECT o.id, o.case_name, o.date_filed, o.text_content,
+                      cb.citation AS matched_citation
+               FROM cited_by cb
+               JOIN opinions o ON o.id = cb.citing_opinion_id
+               WHERE cb.cited_opinion_id = ?
+               ORDER BY o.date_filed DESC
+               LIMIT ?""",
+            (row["id"], scan_limit),
+        ).fetchall()
+
+        entries = []
+        counts = {memo.NEGATIVE: 0, memo.DISTINGUISHED: 0,
+                  memo.POSITIVE: 0, memo.NEUTRAL: 0}
+        for r in citing_rows:
+            ctx = memo.citing_context(r["text_content"], r["matched_citation"])
+            context = ctx.get("context") if ctx.get("found") else None
+            signal = memo.classify_treatment(context) if context else memo.NEUTRAL
+            counts[signal] += 1
+            entries.append({
+                "citing_case": r["case_name"],
+                "citing_citation": r["matched_citation"],
+                "date_filed": r["date_filed"],
+                "paragraph": ctx.get("paragraph"),
+                "context": context,
+                "signal": signal,
+            })
+
+        # Stable: newest-first within each signal bucket, negatives surfaced first.
+        entries.sort(key=lambda e: e["date_filed"] or "", reverse=True)
+        entries.sort(key=lambda e: memo.SIGNAL_ORDER[e["signal"]])
+
+        return {
+            "found": True,
+            "matched_by": matched_by,
+            "case_name": row["case_name"],
+            "primary_citation": proofread.primary_cite(_citation_rows(conn, row["id"])),
+            "total_citing": total,
+            "scanned": len(citing_rows),
+            "signal_counts": counts,
+            "citations": entries[:limit],
+            "returned": min(limit, len(entries)),
+            "note": (
+                "Treatment signals are heuristic and sentence-local, NOT a "
+                "still-good-law verdict. A citing sentence may use a treatment "
+                "word about a different case. Read each sentence — and the full "
+                "citing opinion — before relying on it. Possible-negative and "
+                "distinguished items are listed first."
+            ),
+        }
+    finally:
+        conn.close()
+
+
+@mcp.tool()
+def get_cited_authorities(citation: str) -> dict:
+    """Outbound authorities a case relies on, grouped by type.
+
+    Maps the authority graph around a case: cited cases (in-corpus ND opinions
+    resolved to name/date/oid; others with a source URL), statutes (N.D.C.C.),
+    court rules, constitutional provisions, and regulations — each with an
+    official-source link where available.
+
+    Args:
+        citation: A citation or case name identifying the opinion.
+    """
+    conn = get_connection(DB_PATH)
+    try:
+        row, matched_by, candidates = _resolve_opinion(conn, citation)
+        if row is None:
+            result = {"found": False, "query": citation}
+            if candidates:
+                result["error"] = "Ambiguous — multiple opinions match."
+                result["candidates"] = candidates
+            else:
+                result["error"] = f"No opinion found for: {citation}"
+            return result
+
+        tcs = conn.execute(
+            """SELECT normalized, cite_type, jurisdiction, raw_text, url
+               FROM text_citations WHERE opinion_id = ?
+               ORDER BY cite_type, jurisdiction, normalized""",
+            (row["id"],),
+        ).fetchall()
+
+        cases, other_cases, statutes, court_rules, constitution, regulations = (
+            [], [], [], [], [], []
+        )
+        for t in tcs:
+            entry = {"cite": t["normalized"], "url": t["url"]}
+            if t["cite_type"] == "case":
+                resolved = conn.execute(
+                    """SELECT o.id, o.case_name, o.date_filed
+                       FROM citations c JOIN opinions o ON o.id = c.opinion_id
+                       WHERE c.citation = ?""",
+                    (t["normalized"],),
+                ).fetchone()
+                if resolved:
+                    cases.append({
+                        "cite": t["normalized"],
+                        "case_name": resolved["case_name"],
+                        "date_filed": resolved["date_filed"],
+                        "oid": resolved["id"],
+                        "url": t["url"],
+                    })
+                else:
+                    other_cases.append({**entry, "jurisdiction": t["jurisdiction"]})
+            elif t["cite_type"] == "statute":
+                statutes.append(entry)
+            elif t["cite_type"] == "court_rule":
+                court_rules.append(entry)
+            elif t["cite_type"] == "constitution":
+                constitution.append(entry)
+            elif t["cite_type"] == "regulation":
+                regulations.append(entry)
+
+        return {
+            "found": True,
+            "matched_by": matched_by,
+            "case_name": row["case_name"],
+            "primary_citation": proofread.primary_cite(_citation_rows(conn, row["id"])),
+            "counts": {
+                "in_corpus_cases": len(cases),
+                "other_cases": len(other_cases),
+                "statutes": len(statutes),
+                "court_rules": len(court_rules),
+                "constitution": len(constitution),
+                "regulations": len(regulations),
+            },
+            "nd_cases": cases,
+            "other_cases": other_cases,
+            "statutes": statutes,
+            "court_rules": court_rules,
+            "constitution": constitution,
+            "regulations": regulations,
+        }
+    finally:
+        conn.close()
+
+
+@mcp.tool()
+def case_summary(citation: str) -> dict:
+    """One-call bench-memo front matter for a case.
+
+    Returns name, full caption, all parallel cites (Redbook-ordered; synthetic
+    [YYYY ND nnn] separate), date, author, panel, voting record, disposition,
+    paragraph count, syllabus points (pre-1953), and citation-graph counts.
+    `disposition` and `syllabus_points` are DERIVED/heuristic — verify against
+    the opinion.
+
+    Args:
+        citation: A citation or case name identifying the opinion.
+    """
+    import json as _json
+
+    conn = get_connection(DB_PATH)
+    try:
+        row, matched_by, candidates = _resolve_opinion(conn, citation)
+        if row is None:
+            result = {"found": False, "query": citation}
+            if candidates:
+                result["error"] = "Ambiguous — multiple opinions match."
+                result["candidates"] = candidates
+            else:
+                result["error"] = f"No opinion found for: {citation}"
+            return result
+
+        oid = row["id"]
+        text = row["text_content"]
+        cite_rows = _citation_rows(conn, oid)
+        ordered, synthetic = proofread.order_citations(cite_rows)
+        para_count = len(proofread.paragraph_markers(text))
+
+        cited_out = conn.execute(
+            "SELECT COUNT(*) AS n FROM cited_by WHERE citing_opinion_id = ?", (oid,)
+        ).fetchone()["n"]
+        cited_by_n = conn.execute(
+            "SELECT COUNT(*) AS n FROM cited_by WHERE cited_opinion_id = ?", (oid,)
+        ).fetchone()["n"]
+
+        return {
+            "found": True,
+            "matched_by": matched_by,
+            "case_name": row["case_name"],
+            "case_name_full": row["case_name_full"],
+            "date_filed": row["date_filed"],
+            "author": row["author"],
+            "per_curiam": bool(row["per_curiam"]),
+            "court": row["court"],
+            "docket_number": row["docket_number"],
+            "case_type": row["case_type"],
+            "cites_redbook": [
+                {"cite": r["citation"], "reporter": r["reporter"],
+                 "is_primary": bool(r["is_primary"])}
+                for r in ordered
+            ],
+            "synthetic_cites": synthetic,
+            "formatted": proofread.format_redbook(row["case_name"], ordered,
+                                                  row["date_filed"]),
+            "panel": _json.loads(row["all_justices"]) if row["all_justices"] else None,
+            "voting_record": (_json.loads(row["voting_record"])
+                              if row["voting_record"] else None),
+            "unanimous": bool(row["unanimous"]) if row["unanimous"] is not None else None,
+            "paragraph_count": para_count or None,
+            "disposition": memo.extract_disposition(text),
+            "syllabus_points": memo.extract_syllabus(text),
+            "cited_by_count": cited_by_n,
+            "cites_out_count": cited_out,
+            "text_length": len(text),
+            "absolute_url": row["absolute_url"],
+            "derived_note": (
+                "`disposition` and `syllabus_points` are heuristically extracted "
+                "from the opinion text; verify before relying on them. Panel and "
+                "voting data exist for 1997+ opinions only."
+            ),
+        }
+    finally:
+        conn.close()
+
+
+@mcp.tool()
+def get_subsequent_history(citation: str) -> dict:
+    """Related opinions sharing the case's docket (rehearings, supplemental, etc.).
+
+    Finds other opinions on the same docket number, ordered by date, with a
+    relation hint. Docket-linking also surfaces companion opinions and same-
+    docket duplicates, so this is a research aid — verify the relationship.
+
+    Args:
+        citation: A citation or case name identifying the opinion.
+    """
+    conn = get_connection(DB_PATH)
+    try:
+        row, matched_by, candidates = _resolve_opinion(conn, citation)
+        if row is None:
+            result = {"found": False, "query": citation}
+            if candidates:
+                result["error"] = "Ambiguous — multiple opinions match."
+                result["candidates"] = candidates
+            else:
+                result["error"] = f"No opinion found for: {citation}"
+            return result
+
+        docket = (row["docket_number"] or "").strip()
+        base = {
+            "found": True,
+            "matched_by": matched_by,
+            "case_name": row["case_name"],
+            "date_filed": row["date_filed"],
+            "docket_number": docket or None,
+        }
+        if not docket:
+            base["related"] = []
+            base["note"] = "No docket number recorded; cannot link related opinions."
+            return base
+
+        related_rows = conn.execute(
+            """SELECT id, case_name, date_filed FROM opinions
+               WHERE docket_number = ? AND id != ?
+               ORDER BY date_filed""",
+            (docket, row["id"]),
+        ).fetchall()
+
+        target_date = row["date_filed"] or ""
+        related = []
+        for r in related_rows:
+            d = r["date_filed"] or ""
+            if d > target_date:
+                hint = "later (rehearing / supplemental / remand?)"
+            elif d < target_date:
+                hint = "earlier (prior decision?)"
+            else:
+                hint = "same date (companion or duplicate?)"
+            related.append({
+                "oid": r["id"],
+                "case_name": r["case_name"],
+                "date_filed": r["date_filed"],
+                "citations": _get_citations(conn, r["id"]),
+                "relation_hint": hint,
+            })
+
+        base["related"] = related
+        base["note"] = (
+            "Linked by shared docket number. This also catches companion "
+            "opinions and same-docket duplicates — confirm the actual "
+            "relationship before citing as subsequent history."
+        )
+        return base
+    finally:
+        conn.close()
+
+
+@mcp.tool()
+def authoring_justice_on_issue(
+    justice: str,
+    issue: str,
+    limit: int = 15,
+) -> dict:
+    """Opinions a justice has authored on an issue (predictive bench-memo signal).
+
+    Full-text searches `issue` and filters to opinions authored by `justice`,
+    newest first, with snippets. Reflects authored majority/lead opinions
+    (the `author` field); separate writings are most fully attributed 1997+.
+
+    Args:
+        justice: Authoring justice's last name (e.g. "VandeWalle").
+        issue: Search terms for the issue (supports AND/OR/NOT, quoted phrases).
+        limit: Max results (default 15, max 50).
+    """
+    limit = min(limit, 50)
+    conn = get_connection(DB_PATH)
+    try:
+        rows = conn.execute(
+            """SELECT o.*, snippet(opinions_fts, 1, '>>>', '<<<', '...', 40) AS snippet
+               FROM opinions_fts
+               JOIN opinions o ON o.id = opinions_fts.rowid
+               WHERE opinions_fts MATCH ? AND o.author LIKE ?
+               ORDER BY rank LIMIT ?""",
+            (issue, f"%{justice}%", limit),
+        ).fetchall()
+
+        total = conn.execute(
+            """SELECT COUNT(*) AS n FROM opinions_fts
+               JOIN opinions o ON o.id = opinions_fts.rowid
+               WHERE opinions_fts MATCH ? AND o.author LIKE ?""",
+            (issue, f"%{justice}%"),
+        ).fetchone()["n"]
+
+        results = []
+        for r in rows:
+            summary = _opinion_summary(r)
+            summary["citations"] = _get_citations(conn, r["id"])
+            summary["snippet"] = r["snippet"]
+            results.append(summary)
+
+        return {
+            "justice": justice,
+            "issue": issue,
+            "total_authored_matching": total,
+            "returned": len(results),
+            "opinions": results,
+            "note": (
+                "Matches opinions where `author` contains the justice's name "
+                "(authored majority/lead opinions). Separate concurrences/"
+                "dissents are most fully attributed for 1997+."
+            ),
+        }
     finally:
         conn.close()
 
