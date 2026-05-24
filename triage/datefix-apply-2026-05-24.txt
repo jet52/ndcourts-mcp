@@ -1,0 +1,8 @@
+court-source dates parsed for 11606 opinions
+ADOPT (court date governs) ... 193
+HOLD  (court date later >31d, possible rehearing) ... 8
+  adopt by source: {'archive': 162, 'doc': 31}
+holds written -> triage/date-discrepancy-holds-2026-05-24.tsv
+
+Applied 193 date adoptions; 8 held. batch fix-date-court-filed-2026-05-24.
+NEXT: run section10_resequence_2026-05-24.py --apply

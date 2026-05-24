@@ -2,6 +2,17 @@
 
 Changes applied to the opinions database after import from CourtListener and ndcourts.gov sources. All corrections are recorded in the `changelog` SQLite table and can be reverted with `python -m ndcourts_mcp.cleanup revert <batch>`.
 
+## Batch `fix-date-court-filed-2026-05-24` (108) + `fix-date-holds-investigated-2026-05-24` (2) — court filing date governs
+
+**Policy (ratified 2026-05-24):** where CL's `date_filed` disagrees with the court's filing date — the court-archive "Filed" line (archive.ndcourts.gov) or the bound N.D. Reports/`.doc` date — the **court's date governs**. Resolver: `triage/resolve_date_discrepancies_2026-05-24.py`. Snapshot `opinions.db.bak-pre-datefix-2026-05-24`.
+
+- **108 auto-adoptions applied** (`fix-date-court-filed-2026-05-24`): all **≤31-day** gaps (the filed-vs-decided/released band), where the court source date is safely the true filing date. 37 ≤7d, 23 8–14d, 48 15–31d.
+- **2 investigated holds corrected** (`fix-date-holds-investigated-2026-05-24`): **Starke v. Starke** (20457) 1989-07-17 → **1990-07-17** (column was a year-typo — the only non-1990 opinion in the 458 N.W.2d cluster); **Larson disciplinary** (20479) 1990-06-11 → **1990-09-21** (column was a *response deadline* quoted in the order; the `.doc` order date is Sept 21, 1990).
+- **2 holds confirmed correct as-is** (column kept): Bard (10248, archive mis-parsed "1998" for a 430 N.W.2d=1988 case), Robar (8360, archive "1982" for a 301 N.W.2d=1980-81 case).
+- **6 rehearing-like holds left untouched** (court date later by 44–183d): 7396, 10655, 10797, 8677, 6948, 1014.
+
+**Self-correction (important):** the resolver's guard was initially asymmetric — it held only court-dates *later* by >31d (rehearings) but **auto-adopted large *earlier* gaps**, which silently applied **85 bad date changes** including a 90-year jump (oid 9597 1986→1896), a 13-year jump (8454 1994→1981), and an 11-opinion cluster all collapsed to 1992-05-05 (archive parse artifacts). **All 85 reverted**; the guard is now **symmetric** (hold any >31d gap, either direction) and those 85 are held for review. The 108 kept are all ≤31d. Resequence `section10-resequence-2026-05-24d` (872 provisional cites re-ordered, dominated by the Starke 1-year move). Invariants **22 ok / 2 known / 0 regressed**; `neutral_cite_uniqueness` 258. Held set (93 total) written to `triage/date-discrepancy-holds-2026-05-24.tsv` for manual review.
+
 ## Batch `fix-casename-contamination-2026-05-24c` (4 opinions, 6 field changes)
 
 **Re-adjudication of the CONFIDENTIAL + REVIEW buckets** (`scan_casename_contamination`) after the published-opinions correction (`-24b`). 4 more genuine contaminations fixed from the authoritative frontmatter caption (`case_name_full` was already correct on all four; citations untouched): **12478** "Mundal v. Meyer Flaten" → "State, County of Cass ex rel. L.F.F. v. K.D.M." (docket `1997ND134` → `Civil No. 970030`); **15353** `"sather"` (junk fragment) → "Cruff v. H.K." (docket → `No. 20090149`); **5380** "State v. Pancoast" → "State v. Kent" (body: *State v. Myron R. Kent*); **17030** "WSI v. Questar Energy Services, Inc." → "Disciplinary Board of the Supreme Court of the State of North Dakota v. Lee". Tool: `triage/fix_casename_contamination_2026-05-24c.py`. Invariants 22/2/0.
