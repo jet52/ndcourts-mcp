@@ -237,3 +237,38 @@ Progress metric to track: `% of opinions meeting all four criteria`, by decade, 
 2. **Remaining ordering work** before Phase-1A assignment: verify N.D. on-page order for the distinct bound clusters using the on-disk vols (1,3,9,19,20,34,44) — render with `mutool draw`, offsets per-volume (calibrate via running-header). Pull **vol 74** for its cluster. The **22 NW-orderable** clusters (distinct N.W. page) + **14 NW2d-era** clusters (no N.D. volume — 1953–96) still need attention.
 3. **Then Phase 1A:** assign `YYYY ND nnn` to the 12,485 unambiguous pre-1997 opinions (order by `date_filed, ND-page, NW-page`), store as `citations` rows `reporter='ND-neutral-synthetic'`, `is_primary=0`, bracketed display; insert the ordered clusters; add the 4 new invariants. Numbers are PROVISIONAL until publish (renumber freely; oid is the interim ID).
 4. **Cite-hygiene follow-up noted:** Benness oid 2172 date 1919-06-21 (DB) vs "June 27, 1919" (bound vol 44) — low priority.
+
+## 12 · Functionality enhancements — MCP tools for jetredline / jetmemo / human research
+
+New server tools to build once the corpus is validated. Grouped by the workflow each
+serves. Feasibility is rated against current data: full `text_content` with `[¶N]`
+markers (modern), "Syllabus by the Court" (pre-1953), the `citations` parallel-cite
+rows + reporter/`is_primary` taxonomy, `get_citing_opinions` relationships, and
+judge/date/docket metadata. (Brainstormed 2026-05-24; one idea — syllabus-only search —
+deliberately omitted per user.)
+
+**Highest leverage for jetredline (cite + quote proofreading):**
+- [ ] **`verify_citation`** — given a cite string or case name, confirm it exists and return the *canonical* form: exact case name, date, authoring justice, and the full parallel-cite set in Redbook order. Catches wrong volume/page, wrong year, name drift. Single biggest redline win. *High feasibility — lookup + formatting.*
+- [ ] **`verify_quotation`** — given a quoted passage attributed to a case, locate it in `text_content` and confirm it is verbatim, returning the pinpoint `¶`. Flags misquotes, dropped words, bad pin cites. *Very feasible — full text available; modern opinions give ¶-level pinpoints free.*
+- [ ] **`get_parallel_citations` / cite auto-complete** — feed any one cite, get the complete parallel set so a draft's missing neutral or N.W.2d parallel auto-fills. *Trivial over the citations table.* (Overlaps §10's parallel-cite work.)
+- [ ] **`get_pinpoint`** — given case + `¶N` return that paragraph; or given a quote return the `¶` it lives in. Supports pin-cite insertion/verification.
+
+**Highest leverage for jetmemo (authority research):**
+- [ ] **Citator / "still good law" check** — aggregate `get_citing_opinions` and scan citing sentences for treatment language (overruled, abrogated, superseded, distinguished, followed, criticized). A lightweight version returning the citing sentence + surrounding `¶` is a real KeyCite/Shepard's substitute. *Highest value, hardest — retrieval half is easy; treatment classification needs NLP on the citing sentence.* **CAUTION: a citator that misclassifies negative treatment is worse than none — a "still good law" false-negative on an abrogated case is a real harm. Keep the treatment signal conservative and ALWAYS return the underlying citing text for human verification; never surface a bare green/red flag.**
+- [ ] **`get_cited_authorities`** — inverse of citing: the outbound cites *this* opinion relies on, to map the authority graph around a case on appeal.
+- [ ] **`case_summary` bundle** — one call returns bench-memo front matter: name, all cites, date, author, panel, syllabus points, disposition, `¶` count. Saves jetmemo many round-trips.
+- [ ] **`get_subsequent_history`** — rehearings, remands, supplemental opinions. Mostly surfaces what's already modeled (the §10 supplemental-publication rows).
+- [ ] **`authoring_justice_on_issue`** — what a sitting panel member has previously written on an issue; predictive signal for a bench memo.
+
+**Human-initiated research (Westlaw/Lexis-style):**
+- [ ] **Boolean/proximity search** — Westlaw-style connectors (`/s` same sentence, `/p` same paragraph, `/N` within N words, `&`, `!`); FTS5 `NEAR` covers most. Judges/appellate lawyers think in these operators.
+- [ ] **Faceted search** — filter by date range, authoring justice, case type, disposition (affirmed/reversed/remanded), presence of dissent/concurrence.
+- [ ] **`find_opinions_construing`** — given an N.D.C.C. section or court rule, return every opinion construing it ("what cases interpret N.D.C.C. § 14-09-06.2?"). *Requires a statutory-cite extraction layer first — meaningful preprocessing, very high payoff.*
+- [ ] **`more_like_this` / related opinions** — given a case or fact pattern, return doctrinally similar opinions.
+
+**Serve both skills:**
+- [ ] **`detect_overruled_in_draft`** — run every case cited in a draft opinion/memo through the citator and flag any overruled/superseded; an automated proofreading pass. (Depends on the citator above; same caution applies.)
+- [ ] **`disposition` extraction** — affirmed/reversed/remanded/dismissed as a queryable field.
+- [ ] **Pre-1997 lookup by synthetic `[YYYY ND nnn]`** in `lookup_opinion` — already tracked under §10 (synthetic-cite resolution in `lookup_opinion`/`cited_by`); listed here for cross-reference.
+
+**Suggested build order:** cheapest-to-build, highest-certainty wins first — `verify_citation`, `verify_quotation`, `get_parallel_citations`, Boolean/proximity search (all queries/formatting over existing clean data). Then the two that most transform this from retrieval into a research substitute but need an extraction/classification layer: `find_opinions_construing` (statute index) and the citator. Prototype the citator's *retrieval* half early (reuses `get_citing_opinions`); layer treatment classification on after.
