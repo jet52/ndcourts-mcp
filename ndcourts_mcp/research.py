@@ -131,6 +131,34 @@ _SECTION_RE = re.compile(r"\b(\d+(?:\.\d+)?-\d+(?:-\d+(?:\.\d+)?)?)\b")
 _RULE_NUM_RE = re.compile(r"\b(\d+(?:\.\d+)?)\b")
 
 
+# --- case-citation extraction (for draft proofreading) ----------------------
+
+# Only the reporter forms that resolve to in-corpus ND opinions — the only
+# cites the citator can act on. Foreign cites can't be checked here anyway.
+_CASE_CITE_RES = [
+    re.compile(r"\b\d{4}\s+ND\s+\d+\b"),                       # neutral / synthetic
+    re.compile(r"\b\d+\s+N\.\s?W\.\s?(?:2d|3d)?\s+\d+\b"),     # N.W. / N.W.2d / N.W.3d
+    re.compile(r"\b\d+\s+N\.\s?D\.\s+\d+\b"),                  # official N.D. Reports
+]
+
+
+def normalize_cite_string(cite: str) -> str:
+    """Collapse whitespace and edition spacing so a draft cite matches the DB
+    form ('N.W. 2d' → 'N.W.2d', '2013  ND 169' → '2013 ND 169')."""
+    c = re.sub(r"\s+", " ", cite.strip())
+    return re.sub(r"(\.\s?[A-Z]\.)\s*(\d[a-z]+)", lambda m: m.group(0).replace(" ", ""), c)
+
+
+def extract_case_cites(text: str) -> list[str]:
+    """All distinct ND / N.W. / N.D. case-citation strings in ``text``,
+    normalized to DB form, preserving first-seen order."""
+    seen: dict[str, None] = {}
+    for pat in _CASE_CITE_RES:
+        for m in pat.finditer(text):
+            seen.setdefault(normalize_cite_string(m.group(0)), None)
+    return list(seen)
+
+
 def normalize_authority(query: str) -> dict:
     """Parse a statute/rule reference into a match spec against text_citations.
 

@@ -804,6 +804,47 @@ def get_pinpoint(
         conn.close()
 
 
+def _scan_treatment(conn, cited_oid: int, scan_limit: int):
+    """Scan opinions citing ``cited_oid`` for sentence-local treatment signals.
+
+    Shared by check_treatment and detect_overruled_in_draft. Returns
+    ``(total_citing, scanned, signal_counts, entries)`` where each entry has the
+    citing case/cite/date, paragraph, citing context, and conservative signal.
+    """
+    total = conn.execute(
+        "SELECT COUNT(*) AS n FROM cited_by WHERE cited_opinion_id = ?",
+        (cited_oid,),
+    ).fetchone()["n"]
+    citing_rows = conn.execute(
+        """SELECT o.id, o.case_name, o.date_filed, o.text_content,
+                  cb.citation AS matched_citation
+           FROM cited_by cb
+           JOIN opinions o ON o.id = cb.citing_opinion_id
+           WHERE cb.cited_opinion_id = ?
+           ORDER BY o.date_filed DESC
+           LIMIT ?""",
+        (cited_oid, scan_limit),
+    ).fetchall()
+
+    entries = []
+    counts = {memo.NEGATIVE: 0, memo.DISTINGUISHED: 0,
+              memo.POSITIVE: 0, memo.NEUTRAL: 0}
+    for r in citing_rows:
+        ctx = memo.citing_context(r["text_content"], r["matched_citation"])
+        context = ctx.get("context") if ctx.get("found") else None
+        signal = memo.classify_treatment(context) if context else memo.NEUTRAL
+        counts[signal] += 1
+        entries.append({
+            "citing_case": r["case_name"],
+            "citing_citation": r["matched_citation"],
+            "date_filed": r["date_filed"],
+            "paragraph": ctx.get("paragraph"),
+            "context": context,
+            "signal": signal,
+        })
+    return total, len(citing_rows), counts, entries
+
+
 @mcp.tool()
 def check_treatment(citation: str, limit: int = 50, scan_limit: int = 300) -> dict:
     """Citator: how later opinions have treated a case (KeyCite/Shepard's-style).
@@ -836,38 +877,7 @@ def check_treatment(citation: str, limit: int = 50, scan_limit: int = 300) -> di
                 result["error"] = f"No opinion found for: {citation}"
             return result
 
-        total = conn.execute(
-            "SELECT COUNT(*) AS n FROM cited_by WHERE cited_opinion_id = ?",
-            (row["id"],),
-        ).fetchone()["n"]
-
-        citing_rows = conn.execute(
-            """SELECT o.id, o.case_name, o.date_filed, o.text_content,
-                      cb.citation AS matched_citation
-               FROM cited_by cb
-               JOIN opinions o ON o.id = cb.citing_opinion_id
-               WHERE cb.cited_opinion_id = ?
-               ORDER BY o.date_filed DESC
-               LIMIT ?""",
-            (row["id"], scan_limit),
-        ).fetchall()
-
-        entries = []
-        counts = {memo.NEGATIVE: 0, memo.DISTINGUISHED: 0,
-                  memo.POSITIVE: 0, memo.NEUTRAL: 0}
-        for r in citing_rows:
-            ctx = memo.citing_context(r["text_content"], r["matched_citation"])
-            context = ctx.get("context") if ctx.get("found") else None
-            signal = memo.classify_treatment(context) if context else memo.NEUTRAL
-            counts[signal] += 1
-            entries.append({
-                "citing_case": r["case_name"],
-                "citing_citation": r["matched_citation"],
-                "date_filed": r["date_filed"],
-                "paragraph": ctx.get("paragraph"),
-                "context": context,
-                "signal": signal,
-            })
+        total, scanned, counts, entries = _scan_treatment(conn, row["id"], scan_limit)
 
         # Stable: newest-first within each signal bucket, negatives surfaced first.
         entries.sort(key=lambda e: e["date_filed"] or "", reverse=True)
@@ -879,7 +889,7 @@ def check_treatment(citation: str, limit: int = 50, scan_limit: int = 300) -> di
             "case_name": row["case_name"],
             "primary_citation": proofread.primary_cite(_citation_rows(conn, row["id"])),
             "total_citing": total,
-            "scanned": len(citing_rows),
+            "scanned": scanned,
             "signal_counts": counts,
             "citations": entries[:limit],
             "returned": min(limit, len(entries)),
@@ -1529,6 +1539,95 @@ def more_like_this(citation: str, limit: int = 10) -> list[dict]:
                 "score": round(score, 3),
             })
         return results
+    finally:
+        conn.close()
+
+
+@mcp.tool()
+def detect_overruled_in_draft(
+    draft_text: str,
+    scan_limit: int = 200,
+    max_cases: int = 60,
+) -> dict:
+    """Proofreading pass: flag cited cases that later opinions may have
+    overruled, superseded, abrogated, or distinguished.
+
+    Extracts every ND / N.W. / N.D. case citation in the draft, resolves each
+    to a corpus opinion, and runs it through the citator. Cases with a possible-
+    negative or distinguished signal are flagged with the citing context for
+    human verification; the rest are reported as clear.
+
+    IMPORTANT (same caution as the citator): signals are heuristic and
+    sentence-local, NOT a "still good law" verdict. ALWAYS read each flagged
+    entry — and the full citing opinion — before relying on it. Citations that
+    don't resolve to a corpus opinion (foreign/federal cases, or typos) are
+    listed under `unresolved` and were NOT checked; absence of a flag is not
+    assurance a case is good law.
+
+    Args:
+        draft_text: The text of the draft opinion or memo.
+        scan_limit: Max citing opinions to scan per cited case (default 200).
+        max_cases: Max distinct cited cases to check (default 60).
+    """
+    conn = get_connection(DB_PATH)
+    try:
+        cites = research.extract_case_cites(draft_text)
+        resolved: dict[int, str] = {}
+        unresolved: list[str] = []
+        for c in cites:
+            r = conn.execute(
+                "SELECT opinion_id FROM citations WHERE citation = ?", (c,)
+            ).fetchone()
+            if r:
+                resolved.setdefault(r["opinion_id"], c)
+            else:
+                unresolved.append(c)
+
+        oids = list(resolved)[:max_cases]
+        flagged, clear = [], []
+        for oid in oids:
+            total, scanned, counts, entries = _scan_treatment(conn, oid, scan_limit)
+            neg = [e for e in entries
+                   if e["signal"] in (memo.NEGATIVE, memo.DISTINGUISHED)]
+            crow = conn.execute(
+                "SELECT case_name FROM opinions WHERE id = ?", (oid,)
+            ).fetchone()
+            item = {
+                "case_name": crow["case_name"],
+                "cited_as": resolved[oid],
+                "primary_citation": proofread.primary_cite(_citation_rows(conn, oid)),
+                "oid": oid,
+                "total_citing": total,
+                "scanned": scanned,
+                "signal_counts": counts,
+            }
+            if neg:
+                neg.sort(key=lambda e: e["date_filed"] or "", reverse=True)
+                neg.sort(key=lambda e: memo.SIGNAL_ORDER[e["signal"]])
+                item["treatment_entries"] = neg
+                flagged.append(item)
+            else:
+                clear.append(item)
+
+        flagged.sort(key=lambda i: i["signal_counts"][memo.NEGATIVE], reverse=True)
+
+        return {
+            "cases_cited": len(resolved),
+            "checked": len(oids),
+            "flagged_count": len(flagged),
+            "flagged": flagged,
+            "clear": clear,
+            "unresolved": unresolved,
+            "truncated": len(resolved) > max_cases,
+            "note": (
+                "Heuristic proofreading aid, NOT a still-good-law verdict. "
+                "Treatment signals are sentence-local and a citing sentence may "
+                "use a treatment word about a different case — ALWAYS read each "
+                "flagged entry and the full citing opinion. `unresolved` cites "
+                "(foreign/federal or not in the corpus) were NOT checked, and an "
+                "absent flag is not assurance a case remains good law."
+            ),
+        }
     finally:
         conn.close()
 

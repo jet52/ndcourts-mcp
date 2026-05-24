@@ -314,6 +314,7 @@ the current validation roadmap.
 | `search_faceted`      | Filter by date, author, case type, disposition, dissent/concurrence, unanimity (+ optional full text) |
 | `find_opinions_construing` | Every opinion citing an N.D.C.C. section or court rule, with the official source link |
 | `more_like_this`      | Doctrinally similar opinions (hybrid co-citation + keyword ranking)             |
+| `detect_overruled_in_draft` | Scan a draft's cited cases through the citator; flag possible negative treatment (with citing context) |
 
 ---
 
