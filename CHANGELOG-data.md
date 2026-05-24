@@ -2,6 +2,24 @@
 
 Changes applied to the opinions database after import from CourtListener and ndcourts.gov sources. All corrections are recorded in the `changelog` SQLite table and can be reverted with `python -m ndcourts_mcp.cleanup revert <batch>`.
 
+## Batch `fix-casenames-latin-caps-followup-2026-05-24` (23 case_names)
+
+Resolved the held edge cases from the Latin-caps normalization, per user decisions. Tool: `triage/normalize_latin_caps_followup_2026-05-24.py`.
+- **15 parenthetical `(In re ...)` deletions** — for the modern consolidated captions, removed the redundant trailing `(In re Interest of X)` parenthetical rather than re-casing it (`Peterson v. S.B. (In re Interest of S.B.)` → `Peterson v. S.B.`). Only parentheticals containing `In re` were removed; legitimate parentheticals untouched.
+- **8 `et. al` → `et al`** (stray-period fix).
+- `Habeas Corpus` (2): user chose to keep (proper writ name) — no change.
+
+Residual scan: 0 `(In re ...)` parens, 0 `et. al`. Two pre-existing defects deliberately left for a separate pass (not Latin-caps): oid 17289 leading `.` (`.J.K.`) and 17555 capital `V.` (`… V. Bolinske`). DB snapshot `opinions.db.bak-pre-latin-followup-2026-05-24`. Invariants **18 ok / 2 known / 0 regressed**.
+
+## Batch `fix-casenames-latin-caps-2026-05-24` (513 case_names)
+
+Normalized relational Latin-phrase capitalization across all 20,170 case titles (user-directed): these phrases carry no internal capital — the only capital allowed is the very first letter of the whole title. Tool: `triage/normalize_latin_caps_2026-05-24.py`.
+- **ex rel (258):** `Ex Rel`/`EX REL`/`ex. rel` → `ex rel` (mid-title) — always an error, never deliberate styling; includes the stray-`ex.`-period fix.
+- **in re at title-start (257):** `In Re`/`In RE` → `In re` (capital I as first letter, lowercase `re`).
+- ex parte (4): all already correct (`Ex parte` at start) — no-op.
+
+**Held (not touched):** 15 modern (2018+) parenthetical court captions where `In re` begins a nested caption — `Peterson v. S.B. (In re Interest of S.B.)`. These are the Court's deliberate styling of consolidated juvenile/disciplinary appeals, so left for a separate decision rather than blindly lowercased. Residual case-sensitive scan: 0 wrong `ex rel`, exactly those 15 `In re` parentheticals remain. DB snapshot `opinions.db.bak-pre-latin-caps-2026-05-24`. Invariants **18 ok / 2 known / 0 regressed**.
+
 ## State-only: 104 EQUIV → keep_db (2026-05-24)
 
 TUI-queue hygiene (no DB change): the 104 EQUIV rows from the Phase-2 adjudication (DB and Westlaw captions party-identical after normalizing punctuation/abbreviation/apostrophe/ligature) marked `kept_db` in `triage/casenames-state.json` (verdict `KEEP_DB_EQUIV`) so they no longer surface in the per-volume TUI. Includes 25 `County of X` rows where the user chose 2026-05-24 to **keep** the DB form rather than adopt West's `X County` (the West-form preference is situational, not a blanket rule). Tool: `triage/keep_equiv_2026-05-24.py`. No case_name changed; reversible via git.
