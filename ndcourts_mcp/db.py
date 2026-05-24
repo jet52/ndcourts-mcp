@@ -78,7 +78,8 @@ def create_schema(conn: sqlite3.Connection) -> None:
             unanimous INTEGER,
             source_reporter TEXT NOT NULL,
             source_path TEXT NOT NULL,
-            text_content TEXT NOT NULL
+            text_content TEXT NOT NULL,
+            disposition TEXT
         );
 
         CREATE TABLE IF NOT EXISTS citations (

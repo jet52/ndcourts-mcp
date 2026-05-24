@@ -1,10 +1,11 @@
 """MCP server for North Dakota Supreme Court opinions."""
 
+import sqlite3
 from pathlib import Path
 
 from fastmcp import FastMCP
 
-from . import memo, proofread
+from . import memo, proofread, research
 from .db import DEFAULT_DB_PATH, get_connection
 
 mcp = FastMCP(
@@ -33,7 +34,7 @@ def _opinion_summary(row) -> dict:
         "court": row["court"],
     }
     # Include enriched fields when available
-    for field in ("case_type", "highlight", "opinion_url", "unanimous"):
+    for field in ("case_type", "highlight", "opinion_url", "unanimous", "disposition"):
         try:
             val = row[field]
             if val is not None:
@@ -1187,6 +1188,347 @@ def authoring_justice_on_issue(
                 "dissents are most fully attributed for 1997+."
             ),
         }
+    finally:
+        conn.close()
+
+
+@mcp.tool()
+def search_boolean(
+    query: str,
+    date_from: str | None = None,
+    date_to: str | None = None,
+    author: str | None = None,
+    limit: int = 20,
+) -> dict:
+    """Westlaw-style Boolean / proximity search.
+
+    Connectors: `&` (AND), `|` or `OR` (OR), `%` or `NOT` (BUT NOT), `/N`
+    (within N words), `/s` (same sentence ≈ NEAR/20), `/p` (same paragraph ≈
+    NEAR/50), `!` truncation (e.g. `negligen!` → negligen*), and "quoted
+    phrases". Because FTS5 has no sentence/paragraph unit, /s and /p are
+    token-distance approximations — the translated FTS query and any
+    approximation notes are returned for transparency.
+
+    Args:
+        query: A Westlaw-style query (e.g. `warrant /s nighttime % consent`).
+        date_from: Filter to opinions filed on/after this date (YYYY-MM-DD).
+        date_to: Filter to opinions filed on/before this date (YYYY-MM-DD).
+        author: Filter by authoring justice's last name.
+        limit: Maximum results (default 20, max 50).
+    """
+    limit = min(limit, 50)
+    fts, notes = research.translate_boolean(query)
+    if not fts:
+        return {"error": "Query is empty after translation.",
+                "translated_query": fts, "notes": notes}
+
+    conn = get_connection(DB_PATH)
+    try:
+        sql = """
+            SELECT o.*, snippet(opinions_fts, 1, '>>>', '<<<', '...', 40) AS snippet
+            FROM opinions_fts JOIN opinions o ON o.id = opinions_fts.rowid
+            WHERE opinions_fts MATCH ?
+        """
+        params: list = [fts]
+        if date_from:
+            sql += " AND o.date_filed >= ?"
+            params.append(date_from)
+        if date_to:
+            sql += " AND o.date_filed <= ?"
+            params.append(date_to)
+        if author:
+            sql += " AND o.author LIKE ?"
+            params.append(f"%{author}%")
+        sql += " ORDER BY rank LIMIT ?"
+        params.append(limit)
+
+        try:
+            rows = conn.execute(sql, params).fetchall()
+        except sqlite3.OperationalError as e:
+            return {"error": f"FTS5 rejected the translated query: {e}",
+                    "translated_query": fts, "notes": notes}
+
+        results = []
+        for row in rows:
+            r = _opinion_summary(row)
+            r["citations"] = _get_citations(conn, row["id"])
+            r["snippet"] = row["snippet"]
+            results.append(r)
+
+        return {
+            "query": query,
+            "translated_query": fts,
+            "notes": notes,
+            "count": len(results),
+            "results": results,
+        }
+    finally:
+        conn.close()
+
+
+@mcp.tool()
+def search_faceted(
+    query: str | None = None,
+    date_from: str | None = None,
+    date_to: str | None = None,
+    author: str | None = None,
+    case_type: str | None = None,
+    disposition: str | None = None,
+    has_dissent: bool | None = None,
+    has_concurrence: bool | None = None,
+    unanimous: bool | None = None,
+    limit: int = 30,
+) -> list[dict]:
+    """Faceted opinion search: filter by metadata, optionally with full text.
+
+    Any combination of facets may be supplied. With `query`, results are FTS
+    relevance-ranked; otherwise newest first. Disposition is a partial match
+    (e.g. "REVERSED" matches "REVERSED AND REMANDED"). Dissent/concurrence/
+    unanimity derive from voting data present for 1997+ opinions only.
+
+    Args:
+        query: Optional full-text query (plain FTS5 syntax).
+        date_from: Filed on/after (YYYY-MM-DD).
+        date_to: Filed on/before (YYYY-MM-DD).
+        author: Authoring justice's last name (partial).
+        case_type: Case-type classification (partial).
+        disposition: Disposition substring (e.g. "REVERSED", "AFFIRMED", "DISMISSED").
+        has_dissent: Require (or exclude) a dissenting vote.
+        has_concurrence: Require (or exclude) a concurring/separate writing.
+        unanimous: Require (or exclude) a unanimous decision.
+        limit: Maximum results (default 30, max 100).
+    """
+    limit = min(limit, 100)
+    conn = get_connection(DB_PATH)
+    try:
+        params: list = []
+        if query:
+            sql = """
+                SELECT o.*, snippet(opinions_fts, 1, '>>>', '<<<', '...', 40) AS snippet
+                FROM opinions_fts JOIN opinions o ON o.id = opinions_fts.rowid
+                WHERE opinions_fts MATCH ?
+            """
+            params.append(query)
+        else:
+            sql = "SELECT o.* FROM opinions o WHERE 1=1"
+
+        if date_from:
+            sql += " AND o.date_filed >= ?"
+            params.append(date_from)
+        if date_to:
+            sql += " AND o.date_filed <= ?"
+            params.append(date_to)
+        if author:
+            sql += " AND o.author LIKE ?"
+            params.append(f"%{author}%")
+        if case_type:
+            sql += " AND o.case_type LIKE ?"
+            params.append(f"%{case_type}%")
+        if disposition:
+            sql += " AND o.disposition LIKE ?"
+            params.append(f"%{disposition.upper()}%")
+        if has_dissent is not None:
+            sql += (" AND o.voting_record LIKE '%dissent%'" if has_dissent
+                    else " AND (o.voting_record IS NULL OR o.voting_record NOT LIKE '%dissent%')")
+        if has_concurrence is not None:
+            sql += (" AND o.voting_record LIKE '%concurring%'" if has_concurrence
+                    else " AND (o.voting_record IS NULL OR o.voting_record NOT LIKE '%concurring%')")
+        if unanimous is not None:
+            sql += " AND o.unanimous = ?"
+            params.append(1 if unanimous else 0)
+
+        sql += " ORDER BY rank LIMIT ?" if query else " ORDER BY o.date_filed DESC LIMIT ?"
+        params.append(limit)
+
+        try:
+            rows = conn.execute(sql, params).fetchall()
+        except sqlite3.OperationalError as e:
+            return [{"error": f"Query rejected: {e}"}]
+
+        results = []
+        for row in rows:
+            r = _opinion_summary(row)
+            r["citations"] = _get_citations(conn, row["id"])
+            try:
+                if row["snippet"] is not None:
+                    r["snippet"] = row["snippet"]
+            except (IndexError, KeyError):
+                pass
+            results.append(r)
+        return results
+    finally:
+        conn.close()
+
+
+@mcp.tool()
+def find_opinions_construing(authority: str, limit: int = 50) -> dict:
+    """Find opinions that cite/construe an N.D.C.C. section or court rule.
+
+    Accepts forms like "14-09-06.2", "N.D.C.C. § 14-09-06.2", "chapter 28-32",
+    "N.D.R.Crim.P. 12", or "Rule 56 NDRCivP". Returns the matched authority
+    (or authorities, if the reference is ambiguous) and the opinions citing it,
+    newest first.
+
+    Args:
+        authority: A statutory or court-rule reference.
+        limit: Max opinions per matched authority (default 50, max 200).
+    """
+    limit = min(limit, 200)
+    spec = research.normalize_authority(authority)
+    if not spec["token"]:
+        return {"error": f"Couldn't parse a statute or court-rule reference from: {authority}"}
+
+    conn = get_connection(DB_PATH)
+    try:
+        # Prefer an exact canonical match; else token-boundary matches.
+        matched: list[dict] = []
+        if spec["exact"]:
+            row = conn.execute(
+                "SELECT normalized, url FROM text_citations WHERE cite_type = ? AND normalized = ? LIMIT 1",
+                (spec["kind"], spec["exact"]),
+            ).fetchone()
+            if row:
+                matched = [{"normalized": row["normalized"], "url": row["url"]}]
+        if not matched:
+            cands = conn.execute(
+                "SELECT DISTINCT normalized, url FROM text_citations "
+                "WHERE cite_type = ? AND normalized LIKE ?",
+                (spec["kind"], f"%{spec['token']}"),
+            ).fetchall()
+            matched = [
+                {"normalized": c["normalized"], "url": c["url"]}
+                for c in cands
+                if research.authority_token_matches(c["normalized"], spec["token"])
+            ]
+
+        if not matched:
+            return {"found": False, "authority": authority,
+                    "parsed": spec,
+                    "error": f"No opinions cite {spec['exact'] or spec['token']}."}
+
+        groups = []
+        for a in matched:
+            ops = conn.execute(
+                """SELECT DISTINCT o.id, o.case_name, o.date_filed
+                   FROM text_citations tc JOIN opinions o ON o.id = tc.opinion_id
+                   WHERE tc.normalized = ?
+                   ORDER BY o.date_filed DESC LIMIT ?""",
+                (a["normalized"], limit),
+            ).fetchall()
+            total = conn.execute(
+                "SELECT COUNT(DISTINCT opinion_id) AS n FROM text_citations WHERE normalized = ?",
+                (a["normalized"],),
+            ).fetchone()["n"]
+            groups.append({
+                "authority": a["normalized"],
+                "url": a["url"],
+                "total_opinions": total,
+                "returned": len(ops),
+                "opinions": [
+                    {"oid": o["id"], "case_name": o["case_name"],
+                     "date_filed": o["date_filed"],
+                     "citations": _get_citations(conn, o["id"])}
+                    for o in ops
+                ],
+            })
+
+        result = {"found": True, "authority": authority, "parsed": spec,
+                  "matched_authorities": [g["authority"] for g in groups],
+                  "results": groups}
+        if len(groups) > 1:
+            result["note"] = (
+                "The reference matched multiple authorities (no rule-set/§ prefix "
+                "given); each is listed separately."
+            )
+        return result
+    finally:
+        conn.close()
+
+
+@mcp.tool()
+def more_like_this(citation: str, limit: int = 10) -> list[dict]:
+    """Find opinions doctrinally similar to a given case (hybrid ranking).
+
+    Blends two signals: co-citation (sharing the same cited authorities) and
+    keyword overlap (shared salient terms). Each result reports both sub-scores
+    so the ranking is explainable.
+
+    Args:
+        citation: A citation or case name identifying the seed opinion.
+        limit: Maximum related opinions (default 10, max 30).
+    """
+    limit = min(limit, 30)
+    conn = get_connection(DB_PATH)
+    try:
+        row, _matched_by, candidates = _resolve_opinion(conn, citation)
+        if row is None:
+            err = {"error": (f"No opinion found for: {citation}" if not candidates
+                             else "Ambiguous — multiple opinions match.")}
+            if candidates:
+                err["candidates"] = candidates
+            return [err]
+
+        oid = row["id"]
+
+        cocite = conn.execute(
+            """SELECT tc2.opinion_id AS oid, COUNT(*) AS shared
+               FROM text_citations tc1
+               JOIN text_citations tc2 ON tc2.normalized = tc1.normalized
+               WHERE tc1.opinion_id = ? AND tc2.opinion_id != ?
+               GROUP BY tc2.opinion_id HAVING shared >= 2
+               ORDER BY shared DESC LIMIT 60""",
+            (oid, oid),
+        ).fetchall()
+        cocite_map = {r["oid"]: r["shared"] for r in cocite}
+
+        kw_map: dict[int, float] = {}
+        terms = research.salient_terms(row["text_content"], 12)
+        if terms:
+            fts = " OR ".join(f'"{t}"' for t in terms)
+            try:
+                kw_rows = conn.execute(
+                    """SELECT opinions_fts.rowid AS oid, rank
+                       FROM opinions_fts WHERE opinions_fts MATCH ?
+                       ORDER BY rank LIMIT 80""",
+                    (fts,),
+                ).fetchall()
+                for r in kw_rows:
+                    if r["oid"] != oid:
+                        kw_map[r["oid"]] = -float(r["rank"])  # higher = better
+            except sqlite3.OperationalError:
+                pass
+
+        cands = set(cocite_map) | set(kw_map)
+        if not cands:
+            return []
+        max_shared = max(cocite_map.values()) if cocite_map else 1
+        kw_vals = list(kw_map.values())
+        kw_lo, kw_hi = (min(kw_vals), max(kw_vals)) if kw_vals else (0.0, 1.0)
+        kw_span = (kw_hi - kw_lo) or 1.0
+
+        scored = []
+        for cid in cands:
+            shared = cocite_map.get(cid, 0)
+            n_cite = shared / max_shared
+            n_kw = ((kw_map[cid] - kw_lo) / kw_span) if cid in kw_map else 0.0
+            scored.append((0.5 * n_cite + 0.5 * n_kw, shared, n_kw, cid))
+        scored.sort(reverse=True)
+
+        results = []
+        for score, shared, n_kw, cid in scored[:limit]:
+            crow = conn.execute(
+                "SELECT id, case_name, date_filed FROM opinions WHERE id = ?", (cid,)
+            ).fetchone()
+            results.append({
+                "oid": cid,
+                "case_name": crow["case_name"],
+                "date_filed": crow["date_filed"],
+                "citations": _get_citations(conn, cid),
+                "shared_authorities": shared,
+                "keyword_score": round(n_kw, 3),
+                "score": round(score, 3),
+            })
+        return results
     finally:
         conn.close()
 
