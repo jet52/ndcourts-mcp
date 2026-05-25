@@ -61,9 +61,15 @@ def main():
             return (x - dd(hi)).days
         return 0
 
+    # Exclude opinions already resolved in validation_status so a rebuild does
+    # not re-queue rows a prior Quick Check already validated/corrected. Rows
+    # still 'unvalidated' or 'flagged' (needs-decision) are kept in the worklist.
     rows = conn.execute(
-        "SELECT id, case_name, date_filed, author, per_curiam FROM opinions "
-        "WHERE date_filed>='1953-01-01' AND date_filed<'1997-01-01'").fetchall()
+        "SELECT o.id, o.case_name, o.date_filed, o.author, o.per_curiam FROM opinions o "
+        "LEFT JOIN validation_status v ON v.opinion_id=o.id "
+        "WHERE o.date_filed>='1953-01-01' AND o.date_filed<'1997-01-01' "
+        "AND COALESCE(v.crosscheck_state,'unvalidated') "
+        "NOT IN ('corrected','single_source_accepted','cross_checked')").fetchall()
 
     out = []
     for r in rows:
