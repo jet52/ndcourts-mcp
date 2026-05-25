@@ -2,6 +2,32 @@
 
 Changes applied to the opinions database after import from CourtListener and ndcourts.gov sources. All corrections are recorded in the `changelog` SQLite table and can be reverted with `python -m ndcourts_mcp.cleanup revert <batch>`.
 
+## Vol 21 §10 cluster verification + vols 50/64/74/23/32 dispositions — 2026-05-25 (NO data changes)
+
+Filed vol 21 (and vol 23, which turned out to need nothing) into the refs tree and verified vol 21's clusters at 300 dpi (offset **+22**, flat across the volume). Resequencer dry-run **0 of 12,604** drift before and after. **No DB changes.**
+
+- **21 N.D. 69** — *Willis v. Weatherwax* (699, 128 N.W. 307) above *State ex rel. Kramer v. Kiefer* (733, 129 N.W. 925); both 1910-10-21, both per curiams following different lead cases. NW order = bound order. Provisional correct. No change.
+- **21 N.D. 348** — *Lanpher-Skinner Co. v. Quam* (765, 131 N.W. 246) above *Heard v. Holbrook* (767, 131 N.W. 251); both 1911-03-28. NW order = bound order. Provisional correct. No change.
+
+**Dispositions for the not-on-disk volumes** (50/64/74 are not on archive.org; user investigating physical copies):
+
+- **Vol 50 — 50 N.D. 25 — RESOLVED without the volume.** *Lincoln Addition Improvement Co. v. Lenhart* lead (2863, 195 N.W. 14, full opinion) + same-day per curiam Mem (20390, 195 N.W. 33, "joint with Baker v. Lenhart"). Lead + dependent per curiam → **lead-first** per the 2026-05-25 ruling; the default NW-page tiebreak already orders it lead-first (14<33). Provisional 1922 ND 171 (lead) / 172 (per curiam) correct. No photo, no KNOWN_ORDER entry.
+- **Vol 64 — 64 N.D. 367 — VERIFIED + REORDERED 2026-05-25** (HeinOnline per-case scan `64_N.D._367_Caselaw_Scan.pdf`, filed `~/refs/nd/opin/N.D./64/367-hein-scan.pdf`). The bound page prints *Marian Ott v. L. R. Kelley* (4484, File 6233, 252 N.W. 271, per curiam) ABOVE *Thorvaldson-Johnson Co. v. Cochran* (4482, File 6234, 252 N.W. 268, Christianson J., continues to p.368) — i.e. N.D. order follows file number (6233<6234), the inverse of the N.W. tie (268<271). N.D. bound order governs → added `KNOWN_ORDER [4484, 4482]` and re-ran the resequencer (`section10-resequence-2026-05-25`, **2 cites**): Ott 1934 ND 6→**5**, Thorvaldson 5→**6**. Snapshot `opinions.db.bak-pre-section10-vol64-2026-05-25`. Invariants **22 ok / 2 known / 0 regressed**.
+- **Vol 74 — 74 N.D. 242 — investigate one-vs-two before ordering (pp. 241–243).** oids 7179 (*N.P. Ry. v. McDonald*; per curiam, "decision in application of Hanson, 21 N.W.2d 341, determines this case") and 7180 (*In re Adams*; Burr, J. full opinion) share docket **File 6966**, cite **21 N.W.2d 351**, and the same parties, but carry different CL cluster_ids (6852041 vs 3933583) and word-jaccard 0.635. Signature of a CL double-ingest or a lead+companion split rather than two independent cases — resolve as a §6 merge/keep-separate question; the bound page shows whether one opinion or two print there.
+- **Vols 23 & 32 — NO verification needed.** Each has exactly one shared N.D. page and it is *different-date* (23 N.D. 352: 1912-05-27 / 1912-06-14; 32 N.D. 373: 1916-01-05 / 1916-01-06). The `(date, …)` sort already orders these correctly; no on-page tie to break. Removed from the pending list.
+
+## Vols 16/17/18 §10 cluster verification — 2026-05-25 (NO data changes)
+
+Filed the three newly-obtained bound volumes (16, 17, 18) into `~/refs/nd/opin/N.D./<vol>/_bound-volume.pdf` and read every §10 shared-page cluster at 300 dpi (main session — bg agents are denied Bash+Read, can't render scans). Page offsets: vol 16 +16 near p.59, +18 by p.106 (scan accumulates ~2 unnumbered leaves); vols 17 & 18 a flat +18. Resequencer dry-run before and after = **0 of 12,604** synthetic cites drift. **No DB changes.**
+
+- **16 N.D. 59** — Kerr v. Sunstrum (274) → Kerr v. Swanson (276) → Kerr v. Herred (278, next day 1907-02-23). All dependent per curiams following *Kerr v. Anderson* (16 N.D. 36, a different page). Sunstrum/Swanson tie matches the NW-page tiebreak (614 < 615). Provisional correct. No change.
+- **16 N.D. 106** — State ex rel. Harvey v. Davies (296, 1907-04-30) above A. B. Farquhar Co. v. Higham (295, 1907-05-04). Different dates; date sort governs. No change.
+- **17 N.D. 393** — Soliah v. Cormack (415, 1908-05-28) and Erickson v. Elliott (422, 1908-06-19) share a start page but are different dates; Erickson is a short per curiam slotted above the earlier-dated Soliah (editorial). Date sort correct (68, 72). No change.
+- **17 N.D. 266** — *Skeffington v. Prante* (383, dependent per curiam) printed ABOVE *Ross v. Prante* (382, lead with full syllabus); both filed 1908-03-20, both genuinely start on p.266 (Ross continues to 267). Kept **lead-first** (Ross 1908 ND 40, Skeffington 41) per the 2026-05-25 ruling — the reporter's top-of-page placement of the short companion is a typesetting artifact, not decision sequence. (Skeffington's per curiam mis-prints Ross's cite as "17 N.D. 226"; harmless OCR/print typo, Ross is at 266.) No change.
+- **18 N.D. 76** — *State ex rel. City of Minot v. Willis* companion per curiam (20386, 118 N.W. 823) printed ABOVE the lead (458, 118 N.W. 820); both filed 1908-11-19. Lead's caption+syllabus sit at the bottom of p.76, opinion body (Fisk, J.) on p.77. Kept **lead-first** (458 → 1908 ND 105, 20386 → 106) and the lead's cite **at 18 N.D. 76** (caption-page convention; the companion's "18 N.D. 77" is an opinion-text pinpoint). No change.
+
+**Convention ruled 2026-05-25:** for a lead opinion + its same-day dependent per curiam sharing a page, order the LEAD first even where the reporter prints the short companion above it; do not add a `KNOWN_ORDER` flip (the default NW-page tiebreak already does it). Encoded in `triage/section10_resequence_2026-05-24.py`'s `KNOWN_ORDER` comment. Verified-volume list updated in TODO-validation.md §10.
+
 ## Batch `fix-date-bound-volume-2026-05-24` (2) + `section10-resequence-2026-05-24e` (3) — vols 10/27/41/47 cluster verification
 
 Verified the §10 shared-page clusters in the four newly-filed bound volumes (10, 27, 41, 47) by reading each N.D. page at 300 dpi. (A background agent was attempted but its sandbox denied Bash + Read — it couldn't render/read the scans — so this was done in the main session. Offsets: vol 10 +64, vol 27 +42, vol 41 +32, vol 47 +22.)

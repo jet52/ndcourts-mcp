@@ -25,7 +25,7 @@ REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO))
 from ndcourts_mcp.db import DEFAULT_DB_PATH, get_connection, log_change  # noqa: E402
 
-BATCH = "section10-resequence-2026-05-24e"
+BATCH = "section10-resequence-2026-05-25"
 SYNTH = "ND-neutral-synthetic"
 INF = 10**9
 ND_RE = re.compile(r"^(\d+)\s+N\.D\.\s+(\d+)")
@@ -35,6 +35,14 @@ NW_RE = re.compile(r"^(\d+)\s+N\.W\.\s+(\d+)")
 # Verified on-page publication order (oids top-to-bottom) for shared-page clusters
 # whose true order deviates from the default (date, ND-page, NW-page, oid) sort.
 # Sources: bound N.D. Reports scans, vols 3/9/44 (CHANGELOG 2026-05-24 batches).
+#
+# CONVENTION (ruled 2026-05-25): for a lead opinion and its SAME-DAY dependent
+# per curiam that share a page, order the LEAD first even when the reporter prints
+# the short companion ABOVE it (e.g. 17 N.D. 266 Skeffington/Ross; 18 N.D. 76
+# Willis). Top-of-page placement of a short companion is a typesetting/space-fill
+# artifact, not decision sequence. Do NOT add a KNOWN_ORDER flip for these — the
+# default NW-page tiebreak already puts the lead first. KNOWN_ORDER is only for
+# genuine same-day ties whose verified bound order differs from the default sort.
 KNOWN_ORDER = [
     [152, 146],              # 14 N.D. 557: Murphy (writ denied, top), Poull
     [5275, 5274],            # 3 N.D. 538: Globe, Kellogg
@@ -46,6 +54,9 @@ KNOWN_ORDER = [
     [20497, 20501, 5749],    # 9 N.D. 613: Mellon, Mellon, Robinson
     [5748, 20502],           # 9 N.D. 614: Thistlewaite, Thistlewaite
     [2169, 2167],            # 44 N.D. 250: Nelson, Olson (ND governs over NW tie)
+    [4484, 4482],            # 64 N.D. 367: Ott v. Kelley (per curiam, File 6233) above
+                             # Thorvaldson-Johnson (File 6234) — ND bound order by file
+                             # no. governs the NW tie (Ott 271 prints above Thorv. 268)
 ]
 
 
