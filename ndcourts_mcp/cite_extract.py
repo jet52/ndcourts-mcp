@@ -31,21 +31,80 @@ def _normalize_cite_key(cite: str) -> str:
     return _EDITION_RE.sub(r'\1\2', cite)
 
 
-def build_citation_lookup(conn: sqlite3.Connection) -> dict[str, int]:
-    """Build {normalized_citation_string: opinion_id} from the citations table.
+def build_citation_lookup(conn: sqlite3.Connection) -> dict[str, list[int]]:
+    """Build {normalized_citation_string: [opinion_id, ...]} from the citations table.
 
-    Multiple citation strings may map to the same opinion_id (parallel cites).
-    Stores both the raw DB form and a normalized form (edition spacing removed)
-    so that jetcite's "N.W. 2d" matches the DB's "N.W.2d".
+    A citation string may map to MORE THAN ONE opinion when distinct cases share
+    a reporter page (e.g. a short order and the next case both begin on
+    298 N.W.2d 372). The lookup therefore keeps every candidate; the caller
+    disambiguates by the citing case name (see `_resolve_cited_oid`). Stores both
+    the raw DB form and a normalized form (edition spacing removed) so jetcite's
+    "N.W. 2d" matches the DB's "N.W.2d".
     """
     rows = conn.execute("SELECT citation, opinion_id FROM citations").fetchall()
-    lookup: dict[str, int] = {}
+    lookup: dict[str, list[int]] = {}
     for row in rows:
-        cite = row["citation"]
         oid = row["opinion_id"]
-        lookup[cite] = oid
-        lookup[_normalize_cite_key(cite)] = oid
+        for key in (row["citation"], _normalize_cite_key(row["citation"])):
+            bucket = lookup.setdefault(key, [])
+            if oid not in bucket:
+                bucket.append(oid)
     return lookup
+
+
+def build_opinion_meta(conn: sqlite3.Connection) -> dict[int, tuple[str, str]]:
+    """Return {opinion_id: (case_name, date_filed)} for cited_by disambiguation."""
+    return {
+        r["id"]: (r["case_name"] or "", r["date_filed"] or "")
+        for r in conn.execute("SELECT id, case_name, date_filed FROM opinions")
+    }
+
+
+# Structural/connective tokens that don't help distinguish two case names.
+_NAME_STOP = frozenset({
+    "v", "vs", "in", "re", "matter", "of", "the", "and", "a", "an",
+    "ex", "rel", "et", "al", "no", "city", "state", "county",
+})
+
+
+def _name_tokens(name: str) -> set[str]:
+    """Distinctive lowercase word tokens of a case name (drops structural words)."""
+    if not name:
+        return set()
+    return {t for t in re.findall(r"[a-z0-9]+", name.lower())
+            if t not in _NAME_STOP and len(t) > 1}
+
+
+def _resolve_cited_oid(
+    candidates: list[int],
+    antecedent_name: str | None,
+    citer_date: str,
+    meta: dict[int, tuple[str, str]],
+) -> int | None:
+    """Pick which candidate opinion a citation refers to, or None if unresolved.
+
+    1. Drop candidates filed after the citing opinion (a case can't be cited
+       before it exists).
+    2. If one remains, return it.
+    3. Otherwise disambiguate by the antecedent (citing) case name: the candidate
+       whose case_name shares the most distinctive tokens, provided it is a unique
+       winner with at least one shared token.
+    4. Else return None (caller skips the edge — see Phase 2 fallback policy).
+    """
+    feasible = [o for o in candidates if not citer_date or meta.get(o, ("", ""))[1] <= citer_date]
+    if not feasible:
+        return None
+    if len(feasible) == 1:
+        return feasible[0]
+    at = _name_tokens(antecedent_name or "")
+    if at:
+        scored = sorted(
+            ((len(at & _name_tokens(meta.get(o, ("", ""))[0])), o) for o in feasible),
+            reverse=True,
+        )
+        if scored[0][0] >= 1 and (len(scored) == 1 or scored[0][0] > scored[1][0]):
+            return scored[0][1]
+    return None
 
 
 # ── Worker function (runs in subprocess) ───────────────────────────
@@ -92,6 +151,7 @@ def _scan_opinion(opinion_id: int) -> tuple[int, list[dict]]:
             "raw_text": cite.raw_text,
             "url": url,
             "parallel_group": parallel_groups.get(cite.normalized),
+            "antecedent_name": cite.antecedent_name,
         })
     return (opinion_id, results)
 
@@ -144,12 +204,15 @@ def _store_results(
     conn: sqlite3.Connection,
     opinion_id: int,
     cite_dicts: list[dict],
-    citation_lookup: dict[str, int],
+    citation_lookup: dict[str, list[int]],
     own_cites_map: dict[int, set[str]],
+    meta: dict[int, tuple[str, str]],
+    unresolved: list[tuple] | None = None,
 ) -> dict[str, int]:
     """Store scan results for one opinion. Returns citation type counts."""
     counts: dict[str, int] = {}
     own_normalized = own_cites_map.get(opinion_id, set())
+    citer_date = meta.get(opinion_id, ("", ""))[1]
 
     for cd in cite_dicts:
         ct = cd["cite_type"]
@@ -157,24 +220,33 @@ def _store_results(
 
         conn.execute(
             """INSERT OR IGNORE INTO text_citations
-               (opinion_id, normalized, cite_type, jurisdiction, raw_text, url, parallel_group)
-               VALUES (?, ?, ?, ?, ?, ?, ?)""",
+               (opinion_id, normalized, cite_type, jurisdiction, raw_text, url, parallel_group, antecedent_name)
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
             (opinion_id, cd["normalized"], ct, cd["jurisdiction"],
-             cd["raw_text"], cd["url"], cd["parallel_group"]),
+             cd["raw_text"], cd["url"], cd["parallel_group"], cd.get("antecedent_name")),
         )
 
         # Build cited_by for case citations
         if ct == "case":
             norm_key = _normalize_cite_key(cd["normalized"])
-            cited_opinion_id = citation_lookup.get(cd["normalized"]) or citation_lookup.get(norm_key)
-            if cited_opinion_id and cited_opinion_id != opinion_id:
-                if norm_key not in own_normalized:
-                    conn.execute(
-                        """INSERT OR IGNORE INTO cited_by
-                           (cited_opinion_id, citing_opinion_id, citation)
-                           VALUES (?, ?, ?)""",
-                        (cited_opinion_id, opinion_id, cd["normalized"]),
-                    )
+            if norm_key in own_normalized:
+                continue
+            candidates = citation_lookup.get(cd["normalized"]) or citation_lookup.get(norm_key) or []
+            candidates = [o for o in candidates if o != opinion_id]
+            if not candidates:
+                continue
+            cited_opinion_id = _resolve_cited_oid(
+                candidates, cd.get("antecedent_name"), citer_date, meta)
+            if cited_opinion_id:
+                conn.execute(
+                    """INSERT OR IGNORE INTO cited_by
+                       (cited_opinion_id, citing_opinion_id, citation)
+                       VALUES (?, ?, ?)""",
+                    (cited_opinion_id, opinion_id, cd["normalized"]),
+                )
+            elif unresolved is not None:
+                unresolved.append((opinion_id, cd["normalized"], cd.get("antecedent_name"),
+                                   "|".join(str(o) for o in candidates)))
 
     conn.execute(
         "INSERT OR IGNORE INTO cite_extract_progress (opinion_id) VALUES (?)",
@@ -183,36 +255,69 @@ def _store_results(
     return counts
 
 
-def rebuild_cited_by(conn: sqlite3.Connection, citation_lookup: dict[str, int]) -> int:
-    """Rebuild cited_by table from existing text_citations data."""
+def rebuild_cited_by(
+    conn: sqlite3.Connection,
+    citation_lookup: dict[str, list[int]],
+    triage_path: Path | None = None,
+) -> tuple[int, int]:
+    """Rebuild cited_by from text_citations, disambiguating shared-page cites.
+
+    Returns (inserted, unresolved). Collisions that cannot be attributed to a
+    single case (no antecedent name, or none matches) are skipped and, if
+    `triage_path` is given, written there for review.
+    """
     conn.execute("DELETE FROM cited_by")
 
     rows = conn.execute(
-        "SELECT tc.opinion_id, tc.normalized FROM text_citations tc WHERE tc.cite_type = 'case'"
+        "SELECT opinion_id, normalized, antecedent_name FROM text_citations WHERE cite_type = 'case'"
     ).fetchall()
 
     own_cites: dict[int, set[str]] = {}
     for r in conn.execute("SELECT opinion_id, citation FROM citations").fetchall():
         own_cites.setdefault(r["opinion_id"], set()).add(_normalize_cite_key(r["citation"]))
 
+    meta = build_opinion_meta(conn)
+
     inserted = 0
+    unresolved: list[tuple] = []
     for row in rows:
         opinion_id = row["opinion_id"]
         normalized = row["normalized"]
         norm_key = _normalize_cite_key(normalized)
-        cited_opinion_id = citation_lookup.get(normalized) or citation_lookup.get(norm_key)
-        if cited_opinion_id and cited_opinion_id != opinion_id:
-            if norm_key not in own_cites.get(opinion_id, set()):
-                conn.execute(
-                    """INSERT OR IGNORE INTO cited_by
-                       (cited_opinion_id, citing_opinion_id, citation)
-                       VALUES (?, ?, ?)""",
-                    (cited_opinion_id, opinion_id, normalized),
-                )
-                inserted += 1
+        if norm_key in own_cites.get(opinion_id, set()):
+            continue
+        candidates = citation_lookup.get(normalized) or citation_lookup.get(norm_key) or []
+        candidates = [o for o in candidates if o != opinion_id]
+        if not candidates:
+            continue
+        citer_date = meta.get(opinion_id, ("", ""))[1]
+        cited_opinion_id = _resolve_cited_oid(
+            candidates, row["antecedent_name"], citer_date, meta)
+        if cited_opinion_id:
+            conn.execute(
+                """INSERT OR IGNORE INTO cited_by
+                   (cited_opinion_id, citing_opinion_id, citation)
+                   VALUES (?, ?, ?)""",
+                (cited_opinion_id, opinion_id, normalized),
+            )
+            inserted += 1
+        elif len(candidates) > 1:
+            unresolved.append((opinion_id, normalized, row["antecedent_name"],
+                               "|".join(str(o) for o in candidates)))
 
     conn.commit()
-    return inserted
+
+    if triage_path is not None and unresolved:
+        import csv
+        with open(triage_path, "w", newline="") as f:
+            w = csv.writer(f)
+            w.writerow(["citing_opinion_id", "citation", "antecedent_name", "candidate_oids"])
+            w.writerows(unresolved)
+
+    # Report distinct edges (UNIQUE collapses a citer that reaches the same case
+    # via multiple parallel cites), not the pre-dedup insert attempts.
+    edges = conn.execute("SELECT COUNT(*) FROM cited_by").fetchone()[0]
+    return edges, len(unresolved)
 
 
 def process_all(
@@ -231,8 +336,11 @@ def process_all(
 
     if cited_by_only:
         print("Rebuilding cited_by from existing text_citations...")
-        count = rebuild_cited_by(conn, citation_lookup)
-        print(f"  {count} cross-links created")
+        triage = db_path.parent / "triage" / "cited-by-unresolved-collisions.csv"
+        triage.parent.mkdir(exist_ok=True)
+        count, unresolved = rebuild_cited_by(conn, citation_lookup, triage_path=triage)
+        print(f"  {count} cross-links created; {unresolved} shared-page collisions unresolved "
+              f"(skipped, logged to {triage})")
         conn.close()
         return
 
@@ -240,6 +348,10 @@ def process_all(
     own_cites_map: dict[int, set[str]] = {}
     for r in conn.execute("SELECT opinion_id, citation FROM citations").fetchall():
         own_cites_map.setdefault(r["opinion_id"], set()).add(_normalize_cite_key(r["citation"]))
+
+    # Opinion metadata (case_name, date_filed) for cited_by disambiguation
+    meta = build_opinion_meta(conn)
+    unresolved_links: list[tuple] = []
 
     # Get opinions to process, newest first, skipping already-processed
     opinions = conn.execute(
@@ -287,7 +399,8 @@ def process_all(
         initargs=(db_path,),
     ) as pool:
         for opinion_id, cite_dicts in pool.imap_unordered(_scan_opinion, work_ids, chunksize=4):
-            counts = _store_results(conn, opinion_id, cite_dicts, citation_lookup, own_cites_map)
+            counts = _store_results(conn, opinion_id, cite_dicts, citation_lookup,
+                                    own_cites_map, meta, unresolved_links)
             for k, v in counts.items():
                 total_counts[k] = total_counts.get(k, 0) + v
             processed += 1
@@ -323,9 +436,18 @@ def process_all(
     tc_count = conn.execute("SELECT count(*) FROM text_citations").fetchone()[0]
     cb_count = conn.execute("SELECT count(*) FROM cited_by").fetchone()[0]
     overall = time.time() - overall_start
+    if unresolved_links:
+        triage = db_path.parent / "triage" / "cited-by-unresolved-collisions.csv"
+        triage.parent.mkdir(exist_ok=True)
+        import csv
+        with open(triage, "w", newline="") as f:
+            w = csv.writer(f)
+            w.writerow(["citing_opinion_id", "citation", "antecedent_name", "candidate_oids"])
+            w.writerows(unresolved_links)
     print(
         f"\nDone in {overall/3600:.1f}h. "
-        f"{tc_count} text_citations, {cb_count} cited_by links.",
+        f"{tc_count} text_citations, {cb_count} cited_by links. "
+        f"{len(unresolved_links)} shared-page collisions unresolved (skipped).",
         flush=True,
     )
     log_provenance(conn, "cite_extract", rows_affected=processed,

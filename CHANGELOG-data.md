@@ -2,6 +2,17 @@
 
 Changes applied to the opinions database after import from CourtListener and ndcourts.gov sources. All corrections are recorded in the `changelog` SQLite table and can be reverted with `python -m ndcourts_mcp.cleanup revert <batch>`.
 
+## `cited_by` shared-page disambiguation — 2026-05-25 (graph rebuild, not a row batch)
+
+Fixed a silent misattribution in the citation graph: `cite_extract.build_citation_lookup` mapped each citation string to a *single* opinion, so when distinct cases share a reporter page (845 colliding cite strings, 1,750 opinions), every citer of that page was attributed to one arbitrary winner. Concretely, all 8 citers of `298 N.W.2d 372` had been attributed to *In re McMahon* (20482) when they actually cite *Boedecker v. St. Alexius Hospital* (8266) — which showed 0 citers.
+
+Resolution (depends on **jetcite ≥2.1.0**, which now returns `Citation.antecedent_name`, the case name preceding a cite):
+- `build_citation_lookup` is now list-valued (all candidates per cite); added `text_citations.antecedent_name` (additive column + self-healing migration in `db.py`).
+- New resolver `_resolve_cited_oid`: drops candidates filed after the citing opinion (a case can't be cited before it exists), then picks the candidate whose `case_name` shares the most distinctive tokens with the citing opinion's antecedent name; a tie or no-match is **skipped** (not guessed) and logged to `triage/cited-by-unresolved-collisions.csv`.
+- Backfilled `antecedent_name` for the colliding-cite rows (`triage/backfill_antecedent_names_2026-05-25.py`), then rebuilt: `python -m ndcourts_mcp.cite_extract --cited-by-only`. Snapshot `opinions.db.bak-pre-citedby-disambig-2026-05-25`.
+
+Result: `cited_by` 112,226 → **110,455** edges (net −1,771: colliding cites re-pointed to the correct case; 3,848 genuinely-ambiguous edges skipped). Verified: *Boedecker* 8266 now has its 8 citers, *McMahon* 20482 has 0; `100 N.W. 1084` is now distributed across Hanson/Lough/Marshall-Wells. Invariants 22 ok / 2 known / 0 regressed. The unresolved triage is dominated by **modern same-name dup clusters** (e.g., `2022 ND 123` → 18040|18052, Goetz `2023 ND 53` → 19722|20385) where two DB opinions share both the cite and the name — useful input to the §6 DEFER_MODERN dedup, not a name-extraction failure.
+
 ## Batches `fix-author-byline-` / `fix-coa-caption-court-` / `fix-percuriam-orders-2026-05-25` — §2 low-confidence Quick Check (30 opinions)
 
 Worked the §2 low-confidence picker's priority set (`triage/lowconf-1953-1996-2026-05-25.csv`). The CSV predated the 2026-05-25 Westlaw apply, so all 94 priority rows were already tagged out of `unvalidated`; recomputing the anomaly conditions against current state left **31 rows still flagged**, resolved here down to **2** (20482 pending external lookup; 9770 a confirmed false positive). Snapshot `opinions.db.bak-pre-lowconf-fixes-2026-05-25`. Invariants **22 ok / 2 known / 0 regressed**. Each correction was verified against the opinion's own stored text (byline / caption / signature block) — no heuristic bulk-apply.

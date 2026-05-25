@@ -156,6 +156,7 @@ def create_schema(conn: sqlite3.Connection) -> None:
             raw_text TEXT NOT NULL,
             url TEXT,
             parallel_group INTEGER,
+            antecedent_name TEXT,
             UNIQUE(opinion_id, normalized)
         );
 
@@ -264,3 +265,10 @@ def create_schema(conn: sqlite3.Connection) -> None:
             VALUES (new.id, new.case_name, new.text_content);
         END;
     """)
+
+    # Additive migrations for pre-existing DBs (CREATE TABLE IF NOT EXISTS above
+    # won't add columns to a table that already exists).
+    cols = {r[1] for r in conn.execute("PRAGMA table_info(text_citations)")}
+    if "antecedent_name" not in cols:
+        conn.execute("ALTER TABLE text_citations ADD COLUMN antecedent_name TEXT")
+    conn.commit()
