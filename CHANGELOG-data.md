@@ -2,6 +2,10 @@
 
 Changes applied to the opinions database after import from CourtListener and ndcourts.gov sources. All corrections are recorded in the `changelog` SQLite table and can be reverted with `python -m ndcourts_mcp.cleanup revert <batch>`.
 
+## Batch `fix-casename-rorvig-10933-2026-05-25` (1) — case-name correction
+
+oid 10933 (472 N.W.2d 914, docket 910249, 1991-08-15) case_name **"Disciplinary Board of the Supreme Court of the State v. Johnson" → "…v. Rorvig"**. CL had mislabeled it with the name of its shared-page companion *Johnson* (oid 10931, docket 910126, 1991-04-29). Authority: the Westlaw/bound caption is "Disciplinary Action Against Donald K. Rorvig," and the Rorvig `.doc` matched 10933 at jaccard 1.00 (surfaced during `westlaw-receive-2026-05-25`). Invariants 22 ok / 2 known / 0 regressed.
+
 ## Batch `westlaw-receive-2026-05-25` (180) + editorial strips — single-source 1953–1996 second sources
 
 Ingested the Westlaw Find&Print returns for the §2 single-source pull (183 cites, 3 zips). `receive_westlaw` promoted the Westlaw bound text to the authoritative second source. **177 of 183 pull-list opinions now carry a `westlaw` source** (178 auto-promoted + 2 explicit-oid; 3 of the 178 promotes, incl. *Rorvig*/10933, were non-pull-list shared-page siblings). Snapshots `opinions.db.bak-pre-westlaw-singlesource-2026-05-25`, `-pre-explicit-2026-05-25`. Invariants **22 ok / 2 known / 0 regressed**.
