@@ -64,7 +64,7 @@ irm https://astral.sh/uv/install.ps1 | iex
 git clone https://github.com/jet52/ndcourts-mcp.git
 cd ndcourts-mcp
 
-# Download the database release asset (replace v0.1.0 with the latest tag)
+# Download the database release asset (replace v0.5.0 with the latest tag)
 Invoke-WebRequest `
   -Uri "https://github.com/jet52/ndcourts-mcp/releases/latest/download/opinions.db.zip" `
   -OutFile opinions.db.zip
