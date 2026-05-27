@@ -2,6 +2,20 @@
 
 Changes applied to the opinions database after import from CourtListener and ndcourts.gov sources. All corrections are recorded in the `changelog` SQLite table and can be reverted with `python -m ndcourts_mcp.cleanup revert <batch>`.
 
+## Batch `recover-dockets-2026-05-27` — recover empty docket_number fields from published captions + normalize blank→NULL
+
+Priority TODO #1. Of 5,604 empty `docket_number` fields (694 NULL + 4,910 blank-string), the recoverable target was the modern era (1997+ opinions all carry dockets) plus the 1953–96 gap; pre-1953 is genuinely docketless. Authoritative source = the **published opinion caption** (the markdown is court-PDF derived).
+
+**Modern 1997+ — 465/465 recovered.** For each, read the `ND-neutral` markdown file (`markdown/<year>/<cite>.md`) and extracted the caption docket (`No./Nos. YYYYNNNN`), **year-validated** (8-digit `YYYY` prefix within `[filing year − 7, filing year]`; 0 mismatches). Stored bare 8-digit (matching the dominant existing form); **16 consolidated** cases comma-joined (`20160224, 20160225`). The 15 cases whose `text_content` is Westlaw-derived (no caption docket) were still recovered because the court-PDF markdown exists on disk.
+
+**Gap 1953–96 — 56/67 recovered.** Where the court-archive filename docket (files are docket-named, e.g. `court-archive/209/8888.htm`) equalled the body caption `Civil/Criminal No.` (thousands-comma tolerant — `Civil No. 10,630` == `10630`), stored the native era form `Civ. NNNN` / `Cr. NNNN`. **11 deferred** (all Westlaw-sourced, no docket-named path and no body docket — mostly "In the Matter of…District Judge / Judicial Vacancy" administrative orders that are likely genuinely docketless).
+
+**Normalization.** All remaining **4,910 blank-string** dockets → `NULL` (consistency; 694 were already NULL). Final empties = 5,083, all NULL (pre-1953 5,072 + 11 deferred gap; 1997+ now **0**).
+
+521 recoveries + 4,910 normalizations = **5,431 changelog rows**; fully revertible. Corpus unchanged (19,785); invariants **22 ok / 2 known / 0 regressed**. Snapshot `opinions.db.bak-pre-docket-recovery-2026-05-27`; tool `triage/recover_dockets_2026-05-27.py`.
+
+Note: the court's cTrack portal stores pre-1989 file numbers with a `1860` prefix (`Civ. 8888` → `18608888`); that portal-ID mapping is **not** stored here (published form retained per decision) — it belongs to the ctrack-fetch workstream (TODO #2).
+
 ## Batch `fix-docket-neutral-cite-2026-05-27` — docket-number scan; recovered real dockets stored as neutral cites
 
 Scanned all `docket_number` values by shape and era. Formatting is otherwise clean — bare-number dockets split perfectly by era (3–5 digit = pre-1997, the 6-digit `YYNNNN` 1996–99 transition, 8-digit `YYYYNNNN` = 1997+), **zero** implausible 8-digit year-prefixes, **zero** no-digit/junk dockets. The one anomaly: **156 opinions stored a neutral citation in the `docket_number` field** (`1997ND10` instead of a docket) — 121 from 1997 (the scraper used the neutral cite as a placeholder) + ~35 scattered 2015–2025.
