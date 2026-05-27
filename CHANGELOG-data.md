@@ -2,6 +2,26 @@
 
 Changes applied to the opinions database after import from CourtListener and ndcourts.gov sources. All corrections are recorded in the `changelog` SQLite table and can be reverted with `python -m ndcourts_mcp.cleanup revert <batch>`.
 
+## Batch `register-nw-images-2026-05-27` — filed acquired bound volumes + page photos; registered 8 shared/Table-page images
+
+Acquired imagery (user-supplied, `~/Downloads`) filed into the canonical source tree and, for the page photos, registered as `NW-image` cross-check sources:
+
+- **N.D. Reports bound volumes 4, 5, 6, 8** (Google Books scans) → `~/refs/nd/opin/N.D./{4,5,6,8}/_bound-volume.pdf`. Fills four gaps; imaged N.D. vol set 21 → 25. (No DB rows — no shared pages fall in these volumes.)
+- **8 N.W.2d shared/Table page photos** → `~/refs/nd/opin/NW2d/<vol>/<page>.pdf` (JPEG→PDF), each **registered as an `NW-image` source on the opinions it depicts** (16 rows; `is_primary=0`, `text_length=0`). These confirm shared-page citations that previously rested on docket-only evidence:
+
+  | page | opinions confirmed sharing it |
+  |---|---|
+  | **789 N.W.2d 731** (Affirmances-by-Summary-Opinion Table) | State v. Delaney (15515) + Hoffner v. Job Service (20504) — *resolves the missing-image flag on the prior Delaney/Hoffner verification* |
+  | 4 N.W.2d 224 | Arnold v. Cass County (9810) + McArthur v. Cass County (9811) |
+  | 35 N.W.2d 137 | Chester v. Einarson (9128) + on-rehearing (20391) |
+  | 42 N.W.2d 438 | Westerso v. City of Williston (10070) + Ophaug v. Hildre (10071) |
+  | 47 N.W.2d 527 | In re McIntyre's Estate / Weiss v. Stormon (10881, 10882) |
+  | 55 N.W.2d 576 | Barrett v. Bd. of Trustees of Teachers' Ins. & Retirement Fund (12212, 12213) |
+  | 71 N.W.2d 770 | Gunsch v. Gunsch (14446) + Scherbenske v. Maier (14447) |
+  | 73 N.W.2d 782 | Gunsch v. Bauer (14732) + Karabensh v. Grant (14733) |
+
+  `NW-image` total 48 → 64; imaged page set 40 → 48; un-imaged shared-page inventory 241 → 233 (`triage/shared-page-no-image-2026-05-27.md`). Corpus unchanged (19,785); invariants 22/2/0. Snapshot `opinions.db.bak-pre-nwimage-register-2026-05-27`.
+
 ## Batches `fix-coa-court-nocite-2026-05-27` + `merge-juvenile-nocite-dups-2026-05-27` — resolved the post-1997 no-cite tail (11 → 3)
 
 Closed out the 11-row post-1997 "no `YYYY ND n` cite" tail that prior passes had left as a low-value residual. Re-examination split it cleanly into two classes:
