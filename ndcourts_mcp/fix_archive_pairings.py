@@ -112,16 +112,22 @@ def _parse_title(text: str) -> tuple[str | None, str | None, str | None]:
     return title, neutral, parallel
 
 
-def index_archives(refs_dir: Path) -> tuple[dict[str, str], dict[str, ArchiveTitle]]:
+def index_archives(
+    refs_dir: Path, subdir: str = "archive"
+) -> tuple[dict[str, str], dict[str, ArchiveTitle]]:
     """Build (cite → archive_path) and (archive_path → ArchiveTitle).
 
     The cite index uses the neutral cite when available, falling back to
     the parallel N.W. cite. Same archive file may be reachable under both.
+
+    ``subdir`` selects which tree under ``refs_dir`` to walk: ``archive``
+    (archive.ndcourts.gov HTML, neutral-cite era) or ``court-archive``
+    (N.W.-cite-keyed archive HTML, pre-1997).
     """
     cite_to_path: dict[str, str] = {}
     path_to_title: dict[str, ArchiveTitle] = {}
 
-    archive_root = refs_dir / "archive"
+    archive_root = refs_dir / subdir
     for f in archive_root.rglob("*.htm"):
         rel = str(f.relative_to(refs_dir))
         try:
@@ -472,20 +478,215 @@ def write_report(linkages: list[Linkage], counts: dict[str, int], out_path: Path
     out_path.write_text("\n".join(lines), encoding="utf-8")
 
 
+_NW_KEY_RE = re.compile(r"\b(\d+)\s+N\.W\.(?:\s*(\d+)d)?\s+0*(\d+)\b")
+_ND_KEY_RE = re.compile(r"\b(\d{4})\s+N\.?\s*D\.?\s+0*(\d+)\b")
+
+
+def cite_key(cite: str | None) -> str | None:
+    """Normalize a citation into a comparison key.
+
+    Collapses the format differences that otherwise create false
+    mismatches: ``N.W.`` vs ``N.W.2d`` series, page zero-padding
+    (``465 N.W.2d 0480`` == ``465 N.W.2d 480``), and ``N.D.`` vs ``ND``
+    on neutral cites. Returns None if no recognizable cite is present.
+    """
+    if not cite:
+        return None
+    m = _NW_KEY_RE.search(cite)
+    if m:
+        return f"NW{m.group(2) or '1'}:{int(m.group(1))}:{int(m.group(3))}"
+    m = _ND_KEY_RE.search(cite)
+    if m:
+        return f"ND:{int(m.group(1))}:{int(m.group(2))}"
+    return None
+
+
+def title_cite_keys(title: str) -> set[str]:
+    """Every cite key appearing in an archive file's title.
+
+    Court-archive titles occasionally splice two opinions' cites into one
+    string (a scraper artifact). Capturing *all* of them lets the
+    page-cardinality check recognize when the linked opinion's own cite is
+    present even though a sibling's cite is also there.
+    """
+    keys: set[str] = set()
+    for m in _NW_KEY_RE.finditer(title):
+        keys.add(f"NW{m.group(2) or '1'}:{int(m.group(1))}:{int(m.group(3))}")
+    for m in _ND_KEY_RE.finditer(title):
+        keys.add(f"ND:{int(m.group(1))}:{int(m.group(2))}")
+    return keys
+
+
+@dataclass
+class CourtArchiveLink:
+    opinion_sources_id: int
+    opinion_id: int
+    archive_path: str
+    title: str
+    title_keys: list[str]
+    classification: str
+    other_opinions: list[int] = field(default_factory=list)
+    note: str = ""
+
+
+def classify_court_archive(
+    conn: sqlite3.Connection,
+    path_to_title: dict[str, ArchiveTitle],
+) -> list[CourtArchiveLink]:
+    """Audit ``source_reporter='court-archive'`` linkages by page cardinality.
+
+    Court-archive titles are pre-1997 and carry only an N.W. *parallel*
+    cite (no neutral), and the bound reporter routinely prints several
+    N.D.R.App.P. 35.1 summary dispositions on one shared "Table" page — so
+    the neutral-cite logic used for ``archive`` rows does not apply and a
+    bare parallel-cite match is not by itself reliable. Instead, classify
+    by how many opinions own each cite the title asserts:
+
+      ok             — the linked opinion uniquely owns a cite named in the
+                       title. The linkage is corroborated.
+      shared_page    — a title cite is owned by the linked opinion *and* at
+                       least one other (a shared Table page). The link may
+                       be right, but the page collides; verify by DOCKET in
+                       the file body (this is the Ellis/Reimers class).
+      title_elsewhere— no title cite is owned by the linked opinion, but one
+                       resolves to a *different* opinion. Either the linkage
+                       is wrong or (commonly) only the file's <title> tag is
+                       contaminated while its body is correct — verify the
+                       BODY, never the title.
+      unresolved     — file missing, title unparseable, or no title cite
+                       resolves to any opinion.
+
+    Report-only: fixes here require reading the file body (titles lie), so
+    this function never mutates.
+    """
+    key_owners: dict[str, set[int]] = defaultdict(set)
+    for r in conn.execute("SELECT opinion_id, citation FROM citations"):
+        k = cite_key(r["citation"])
+        if k:
+            key_owners[k].add(r["opinion_id"])
+
+    rows = conn.execute(
+        "SELECT id, opinion_id, source_path FROM opinion_sources "
+        "WHERE source_reporter = 'court-archive'"
+    ).fetchall()
+
+    links: list[CourtArchiveLink] = []
+    for r in rows:
+        os_id, oid, path = r["id"], r["opinion_id"], r["source_path"]
+        at = path_to_title.get(path)
+        if at is None or not at.title:
+            links.append(CourtArchiveLink(
+                os_id, oid, path, "", [], "unresolved",
+                note="archive file missing or empty",
+            ))
+            continue
+        keys = title_cite_keys(at.title)
+        if not keys:
+            links.append(CourtArchiveLink(
+                os_id, oid, path, at.title, [], "unresolved",
+                note="title has no parseable citation",
+            ))
+            continue
+
+        # Precedence: a cite the linked opinion *uniquely* owns blesses the
+        # link even if a sibling's cite is also spliced into the title.
+        unique_to_linked = [k for k in keys
+                            if key_owners.get(k) == {oid}]
+        shared_with_linked = [k for k in keys
+                              if oid in key_owners.get(k, set())
+                              and len(key_owners[k]) > 1]
+        elsewhere = sorted({
+            o for k in keys for o in key_owners.get(k, set()) if o != oid
+        })
+
+        if unique_to_linked:
+            cls, note = "ok", ""
+        elif shared_with_linked:
+            cls = "shared_page"
+            note = (f"title cite {shared_with_linked[0]} shared with "
+                    f"opinion(s) {elsewhere}; verify by docket in body")
+        elif elsewhere:
+            cls = "title_elsewhere"
+            note = (f"title cite resolves to opinion(s) {elsewhere}, not the "
+                    f"linked {oid}; verify file BODY (title may be contaminated)")
+        else:
+            cls = "unresolved"
+            note = "title cite(s) match no opinion in DB"
+        links.append(CourtArchiveLink(
+            os_id, oid, path, at.title, sorted(keys), cls,
+            other_opinions=elsewhere, note=note,
+        ))
+    return links
+
+
+def write_court_archive_report(links: list[CourtArchiveLink], out_path: Path):
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    by_class: dict[str, list[CourtArchiveLink]] = defaultdict(list)
+    for l in links:
+        by_class[l.classification].append(l)
+    lines = ["# Court-archive linkage audit (report-only)", ""]
+    lines.append("Page-cardinality rule; court-archive fixes require reading "
+                 "the file BODY (titles are unreliable) and are not automated.")
+    lines.append("")
+    lines.append("## Summary")
+    for k in ("ok", "shared_page", "title_elsewhere", "unresolved"):
+        lines.append(f"- {k:<16} {len(by_class[k])}")
+    for label in ("shared_page", "title_elsewhere", "unresolved"):
+        rows = by_class[label]
+        if not rows:
+            continue
+        lines += ["", f"## {label} ({len(rows)})",
+                  "| os.id | opinion_id | other | path | title | note |",
+                  "|------:|-----------:|-------|------|-------|------|"]
+        for r in rows:
+            other = ",".join(str(o) for o in r.other_opinions) or "—"
+            lines.append(
+                f"| {r.opinion_sources_id} | {r.opinion_id} | {other} | "
+                f"`{r.archive_path}` | {r.title[:70]} | {r.note} |"
+            )
+    out_path.write_text("\n".join(lines), encoding="utf-8")
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     p.add_argument("--db", type=Path, default=DEFAULT_DB_PATH)
     p.add_argument("--refs", type=Path, default=DEFAULT_REFS_DIR)
+    p.add_argument("--reporter", choices=("archive", "court-archive"),
+                   default="archive",
+                   help="which source tree to audit (court-archive is "
+                        "report-only)")
     p.add_argument("--apply", action="store_true",
-                   help="Apply moves/swaps/detaches (default is dry-run)")
+                   help="Apply moves/swaps/detaches (default is dry-run; "
+                        "ignored for court-archive)")
     p.add_argument("--batch", default=DEFAULT_BATCH)
-    p.add_argument("--report", type=Path,
-                   default=Path("triage") / f"{DEFAULT_BATCH}.md")
+    p.add_argument("--report", type=Path, default=None)
     args = p.parse_args()
 
     conn = sqlite3.connect(str(args.db))
     conn.row_factory = sqlite3.Row
 
+    if args.reporter == "court-archive":
+        report = args.report or (
+            Path("triage") / "court-archive-pairing-audit-2026-05-27.md")
+        print("Indexing court-archive HTMLs…")
+        _, path_to_title = index_archives(args.refs, subdir="court-archive")
+        print(f"  {len(path_to_title)} court-archive files")
+        print("Classifying court-archive linkages (page-cardinality)…")
+        links = classify_court_archive(conn, path_to_title)
+        by_class = defaultdict(int)
+        for l in links:
+            by_class[l.classification] += 1
+        print(f"  {len(links)} linkages")
+        for k in ("ok", "shared_page", "title_elsewhere", "unresolved"):
+            print(f"    {k:<16} {by_class[k]}")
+        if args.apply:
+            print("(court-archive is report-only — titles lie; fixes need a "
+                  "body read. No changes written.)")
+        write_court_archive_report(links, report)
+        print(f"\nReport: {report}")
+        return
+
+    report = args.report or (Path("triage") / f"{DEFAULT_BATCH}.md")
     print("Indexing archive HTMLs…")
     cite_to_path, path_to_title = index_archives(args.refs)
     print(f"  {len(path_to_title)} archive files, {len(cite_to_path)} unique cites")
@@ -516,8 +717,8 @@ def main():
     else:
         print("(dry-run; pass --apply to write changes)")
 
-    write_report(linkages, counts, args.report, args.apply)
-    print(f"\nReport: {args.report}")
+    write_report(linkages, counts, report, args.apply)
+    print(f"\nReport: {report}")
 
 
 if __name__ == "__main__":
