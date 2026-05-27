@@ -2,6 +2,10 @@
 
 Changes applied to the opinions database after import from CourtListener and ndcourts.gov sources. All corrections are recorded in the `changelog` SQLite table and can be reverted with `python -m ndcourts_mcp.cleanup revert <batch>`.
 
+## Batch `fix-neutral-cite-periods-2026-05-27` — citation-format scan; removed period-formatted neutral-cite duplicates
+
+Scanned all 44,090 distinct citation strings against the canonical forms (`YYYY ND n`, `v N.W.2d p`, `v N.W. p`, `v N.D. p`). The corpus is highly consistent — the **only** malformatting found was **38 neutral citations written with periods** (`2003 N.D. 144` instead of `2003 ND 144`), clustered in 2003/2006/2009/2010. Each was an exact **duplicate** — the opinion already carried the canonical `ND` form — so the 38 period-formatted dups were deleted (none was the `is_primary` citation; canonical form retained). No N.W.2d/N.W./N.D.-Reports spacing or zero-padding issues exist. (Aside: 3 `N.W.3d` cites surfaced as "unrecognized" — they are legitimate; the North Western Reporter 3d series began ~2023, worth adding to cite recognizers.) Corpus unchanged (19,785); invariants 22/2/0. Snapshot `opinions.db.bak-pre-neutralperiods-2026-05-27`.
+
 ## Batch `fix-volume-date-2026-05-27` — corrections from the new volume↔date audit
 
 Built `volume_date_check` (flags opinions whose `date_filed` is inconsistent with the date range of the reporter volume they're cited in; the reporter cite is independent of `date_filed`, so a mismatch reveals a contaminated date/cite/pairing). Initial run: 29 flags; **18 corrected, 11 quarantined** (`triage/volume-date-quarantine-2026-05-27.md`), corpus unchanged (19,785), invariants 22/2/0, cite-swap 0/0/0. Snapshot `opinions.db.bak-pre-voldate-fix-2026-05-27`.
