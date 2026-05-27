@@ -25,6 +25,16 @@ Source format handling:
     they'd need binary extraction. The 5,747 westlaw-primary pairs are
     fine since the westlaw text is in opinions.text_content.
 
+Non-diffable pairs are flagged with a ``note`` and excluded from the
+"below threshold" candidate set so they don't drown out real disagreements:
+  - ``secondary image (non-diffable)``: NW-image / .pdf page scans carry no
+    extractable text.
+  - ``short stub (non-diffable)``: either side is under ``MIN_DIFF_WORDS``
+    words — a N.D.R.App.P. 35.1 summary disposition or a shared N.W.2d
+    reporter "table" page (one line per case), which can never match the
+    other side's full text.
+  - ``secondary unreadable``: file missing or an unparseable .doc.
+
 Usage:
     python -m ndcourts_mcp.multisource_diff
         [--db PATH] [--refs PATH]
@@ -52,6 +62,14 @@ from .db import DEFAULT_DB_PATH
 
 DEFAULT_REFS_DIR = Path.home() / "refs" / "nd" / "opin"
 SHINGLE_K = 4
+# Below this word count on either side, a shingle diff is meaningless: it's a
+# summary disposition or a shared N.W.2d "table" page entry, not a wrong pairing.
+MIN_DIFF_WORDS = 100
+# Only explain *why* a poorly-matching pair is non-actionable. Above this
+# similarity the two texts agree well, so no "non-diffable" label is needed
+# (and we avoid mislabeling normal opinions that merely cite >=2 precedents).
+# True multi-opinion bundles / stubs always score far below this.
+NONDIFF_SIM_CEILING = 0.5
 
 
 @dataclass
@@ -78,6 +96,7 @@ class PairResult:
 
 _WORD_RE = re.compile(r"[^a-z0-9]+")
 _HTML_TAG_RE = re.compile(r"<[^>]+>")
+_NEUTRAL_CITE_RE = re.compile(r"\b(?:18|19|20)\d{2} ND \d+\b")
 
 
 def normalize_words(text: str) -> list[str]:
@@ -150,35 +169,46 @@ def _compare_one(args: tuple) -> PairResult | None:
     primary_words = normalize_words(op["text_content"] or "")
     primary_shingles = shingles(primary_words)
 
-    results: list[PairResult] = []
-    for sec in secondaries:
-        sec_text = load_secondary_text(
-            sec["source_reporter"], sec["source_path"], refs,
-        )
-        if sec_text is None:
-            results.append(PairResult(
-                opinion_id=oid, citation=citation,
-                case_name=op["case_name"], date_filed=op["date_filed"],
-                primary_reporter=op["source_reporter"],
-                secondary_reporter=sec["source_reporter"],
-                secondary_path=sec["source_path"],
-                similarity=-1.0,
-                primary_words=len(primary_words), secondary_words=0,
-                note="secondary unreadable",
-            ))
-            continue
-        sec_words = normalize_words(sec_text)
-        sec_shingles = shingles(sec_words)
-        sim = jaccard(primary_shingles, sec_shingles)
-        results.append(PairResult(
+    def make(sec, sim, sec_wc, note):
+        return PairResult(
             opinion_id=oid, citation=citation,
             case_name=op["case_name"], date_filed=op["date_filed"],
             primary_reporter=op["source_reporter"],
             secondary_reporter=sec["source_reporter"],
             secondary_path=sec["source_path"],
             similarity=sim,
-            primary_words=len(primary_words), secondary_words=len(sec_words),
-        ))
+            primary_words=len(primary_words), secondary_words=sec_wc,
+            note=note,
+        )
+
+    results: list[PairResult] = []
+    for sec in secondaries:
+        reporter, spath = sec["source_reporter"], sec["source_path"]
+        # Page-scan images (NW-image, any .pdf) have no extractable text.
+        if reporter == "NW-image" or spath.lower().endswith(".pdf"):
+            results.append(make(sec, -1.0, 0, "secondary image (non-diffable)"))
+            continue
+        sec_text = load_secondary_text(reporter, spath, refs)
+        if sec_text is None:
+            results.append(make(sec, -1.0, 0, "secondary unreadable"))
+            continue
+        sec_words = normalize_words(sec_text)
+        sim = jaccard(primary_shingles, shingles(sec_words))
+        note = ""
+        if sim < NONDIFF_SIM_CEILING:
+            # Explain why this poor match is non-actionable. A CL N.W.2d
+            # "table"/page file often bundles several opinions: if the secondary
+            # contains this opinion's own cite AND >=2 distinct neutral cites,
+            # it's a bundle that includes the target alongside others — not a
+            # wrong pairing, just non-diffable (the blob dwarfs one opinion).
+            # Requiring the target cite to be present means a genuinely
+            # wrong-paired secondary (target absent) still surfaces.
+            if (citation in sec_text
+                    and len(set(_NEUTRAL_CITE_RE.findall(sec_text))) >= 2):
+                note = "multi-opinion page (non-diffable)"
+            elif min(len(primary_words), len(sec_words)) < MIN_DIFF_WORDS:
+                note = "short stub (non-diffable)"
+        results.append(make(sec, sim, len(sec_words), note))
 
     # Return the worst pair for this opinion (we'll surface all of them
     # via the merged stream, but the worker returns the full list).
@@ -202,14 +232,21 @@ def collect_opinion_ids(db_path: Path, limit: int | None) -> list[int]:
 def write_markdown_report(
     results: list[PairResult], threshold: float, out_path: Path,
 ) -> None:
-    flagged = [r for r in results if 0 <= r.similarity < threshold]
-    unread = [r for r in results if r.similarity < 0]
+    flagged = [r for r in results if 0 <= r.similarity < threshold and not r.note]
+    image = [r for r in results if r.note == "secondary image (non-diffable)"]
+    stub = [r for r in results if r.note == "short stub (non-diffable)"]
+    bundle = [r for r in results if r.note == "multi-opinion page (non-diffable)"]
+    unread = [r for r in results if r.note == "secondary unreadable"]
+    diffable = len(results) - len(image) - len(unread)
     flagged.sort(key=lambda r: (r.similarity, r.opinion_id))
 
     lines: list[str] = []
     lines.append(f"# Multi-source diff audit\n")
-    lines.append(f"- Pairs compared:   **{len(results) - len(unread)}**")
-    lines.append(f"- Below threshold:  **{len(flagged)}** (threshold = {threshold})")
+    lines.append(f"- Diffable pairs compared:  **{diffable}**")
+    lines.append(f"- Below threshold (real candidates): **{len(flagged)}** (threshold = {threshold})")
+    lines.append(f"- Non-diffable — multi-opinion / table page: **{len(bundle)}**")
+    lines.append(f"- Non-diffable — short stub: **{len(stub)}**")
+    lines.append(f"- Non-diffable — image page-scan: **{len(image)}**")
     lines.append(f"- Unreadable secondary: **{len(unread)}**")
     lines.append("")
 
@@ -329,13 +366,19 @@ def main():
     elapsed = time.time() - start
     print(f"\nDone in {elapsed/60:.1f}m. {len(all_results)} pairs compared.\n")
 
-    flagged = [r for r in all_results if 0 <= r.similarity < args.threshold]
-    unread = [r for r in all_results if r.similarity < 0]
-    print(f"Below threshold ({args.threshold}): {len(flagged)}")
-    print(f"Unreadable secondary:               {len(unread)}")
+    flagged = [r for r in all_results if 0 <= r.similarity < args.threshold and not r.note]
+    image = [r for r in all_results if r.note == "secondary image (non-diffable)"]
+    stub = [r for r in all_results if r.note == "short stub (non-diffable)"]
+    bundle = [r for r in all_results if r.note == "multi-opinion page (non-diffable)"]
+    unread = [r for r in all_results if r.note == "secondary unreadable"]
+    print(f"Below threshold ({args.threshold}), real candidates: {len(flagged)}")
+    print(f"Non-diffable (multi-opinion / table page):  {len(bundle)}")
+    print(f"Non-diffable (short stub):                  {len(stub)}")
+    print(f"Non-diffable (image page-scan):             {len(image)}")
+    print(f"Unreadable secondary:                       {len(unread)}")
     print()
-    print("Similarity distribution:")
-    print(histogram(all_results))
+    print("Similarity distribution (diffable pairs):")
+    print(histogram([r for r in all_results if r.similarity >= 0]))
 
     write_markdown_report(all_results, args.threshold, args.out)
     print(f"\nReport written to {args.out}")
