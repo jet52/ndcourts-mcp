@@ -2,6 +2,14 @@
 
 Changes applied to the opinions database after import from CourtListener and ndcourts.gov sources. All corrections are recorded in the `changelog` SQLite table and can be reverted with `python -m ndcourts_mcp.cleanup revert <batch>`.
 
+## Batch `normalize-judges-ocr-2026-05-27` — normalized OCR-garbled justice names in opinions.judges
+
+The pre-1953 OCR'd N.W.-reporter opinions carry heavily garbled justice surnames in the `judges` panel field (`Biedzell`/`Bikdzell`→Birdzell, `Cheistianson`→Christianson, `Yandewalle`→VandeWalle, `Geimson`→Grimson, `Bobinson`→Robinson, …). Mapped each garble back to its canonical justice (`triage/normalize_judges_ocr_2026-05-27.py`), then per-row replaced + de-duplicated panel tokens. **569 garble tokens → 32 justices; 4,444 rows updated.** Snapshot `opinions.db.bak-pre-judges-ocr-2026-05-27`; invariants 22/2/0.
+
+Safeguards (per the surrogate-judge rule — justices appear outside their elected term, so dates aren't hard bounds): a garble maps only if it is edit-distance ≤2 from a **unique** nearest canonical justice, within that justice's corpus-derived era ±10y, and **either** the justice name is long (≥7 chars, where real-word collisions are vanishingly rare) **or** the garble carries an OCR signature (diacritic / internal caps / hyphen / no vowel). This deliberately quarantines the risky cases rather than guessing.
+
+**255 tokens quarantined for 2nd-source / human review** (`triage/judges-ocr-doubtful-2026-05-27.md`) — and this proved essential: `Walle` (×839) and `Vande` (×203) are *VandeWalle* fragments that a looser rule would have mis-mapped to "Wallin"/"Sand"; `Dist` (×147), `Place`, `First`, `Son` are abbreviations/body words, not justices; plus genuine short-name garbles (`Buree`/`Bubke`→Burke, `Bisk`→Fisk) and real distinct surnames near a justice (Pedersen, Gross, Norris, Spaulding, Knudsen, Brothers, Buhr…) that could be legitimate surrogate **district** judges. **Separately flagged:** the OCR-era `judges` field also contains random body-word contamination (e.g. oid 2084: "Being, Express, Only, Pleaded, Validity") — a deeper extraction defect left for a future pass, not addressed here.
+
 ## Batch `fix-klose-twocol-primary-2026-05-27` — two-column mis-extraction sweep (the deferred Neset follow-up)
 
 Ran the analyzer-markdown two-column mis-extraction sweep flagged in the Neset note below. Detector = mean body-line length < 18 over ≥40 lines (two-column PDF extraction shreds text into ~8-char column fragments). Across all 14,338 `markdown/` files, only **two** genuine corruptions exist, and a corpus-wide scan of every opinion's *served* `text_content` (cheap char/newline ratio) confirmed no other opinion serves scrambled text:
