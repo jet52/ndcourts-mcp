@@ -2,6 +2,12 @@
 
 Changes applied to the opinions database after import from CourtListener and ndcourts.gov sources. All corrections are recorded in the `changelog` SQLite table and can be reverted with `python -m ndcourts_mcp.cleanup revert <batch>`.
 
+## Batch `section6-nocite-high-merge-2026-05-27` — merged 74 no-cite NW2d duplicates; foreign-jurisdiction scan
+
+Merged the 74 HIGH-confidence post-1997 no-neutral-cite NW2d duplicates into their cited markdown twins (`triage/merge_nocite_high_2026-05-27.py`; keep=cited twin, drop=no-cite NW2d stub; folds the N.W.2d parallel into the survivor). Guard: drop has no ND-neutral cite, keep does, and match is exact-name (≥0.9) or same-text (jaccard≥0.6). Corpus 19,889 → **19,815**; post-1997 no-cite 106 → 32. merge_pair left the older NW2d source flagged primary on the 74 survivors (tripped `source_reporter/path_matches_primary`); fixed with `align_primary_source --apply` (74 flips, `opinions.source_reporter` is ground truth). Invariants back to 22/2/0. Snapshot `opinions.db.bak-pre-nocite-high-merge-2026-05-27`.
+
+**Foreign-jurisdiction contamination scan (2026-05-27):** two independent signals — SD-distinctive justices in `judges` (Gilbertson/Konenkamp/Zinter/Severson) and a foreign neutral self-cite in the text — plus a foreign-court-header sweep, all converge on **exactly 2** opinions mislabeled `court='North Dakota Supreme Court'`: **16005 *Young v. Oury* = 2013 SD 7** and **16006 *Thompson v. Avera Queen of Peace Hospital* = 2013 SD 8** (in via the shared 827 N.W.2d volume). No broader contamination. Deletion deferred for review.
+
 ## Post-1997 missing-neutral-cite investigation (2026-05-27) — sequence now gap-free; 2 opinions recovered; dedup + contamination surfaced
 
 Investigated the 107 post-1997 opinions lacking an `ND-neutral` cite and audited the per-year neutral sequence (which must run 1→max with no gaps). Findings + fixes:
