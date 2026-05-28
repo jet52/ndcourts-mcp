@@ -22,6 +22,21 @@ if (!url || !username || !password) {
   process.exit(2);
 }
 
+// Guard against a Claude Desktop bug: when a user_config field is marked
+// `sensitive: true`, Desktop stores the value as `__encrypted__:<ciphertext>`
+// but substitutes the encrypted form into the env var without decrypting it.
+// Our manifest avoids `sensitive: true` for that reason, but if a future
+// Desktop / manifest change re-triggers it, we surface a clear error instead
+// of silently sending a 401-bound Basic Auth header.
+if (password.startsWith("__encrypted__:") || username.startsWith("__encrypted__:")) {
+  console.error(
+    "[ndcourts-wrapper] credential is encrypted ciphertext, not the actual " +
+    "value. This is a Claude Desktop bug with sensitive user_config fields. " +
+    "Ensure the manifest does not set sensitive=true on the credential fields."
+  );
+  process.exit(3);
+}
+
 const auth = Buffer.from(`${username}:${password}`).toString("base64");
 
 // mcp-remote is bundled inside this extension at <root>/node_modules/mcp-remote.
