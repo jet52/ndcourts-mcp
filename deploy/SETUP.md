@@ -12,7 +12,8 @@ Internet ──TLS──▶ Caddy :443 ──localhost──▶ ndcourts-mcp 127
 ufw: 22/80/443 only   ·   fail2ban bans repeated 401s
 ```
 
-Files in this dir: `Caddyfile`, `ndcourts-mcp.service`, `fail2ban/`.
+Files in this dir: `bootstrap.sh`, `Caddyfile`, `ndcourts-mcp.service`,
+`fail2ban/`, `mcp-apache.conf` (for the [alternative](#alternative-alongside-an-existing-web-server)).
 
 ## 0. Assumptions
 
@@ -20,6 +21,34 @@ Files in this dir: `Caddyfile`, `ndcourts-mcp.service`, `fail2ban/`.
 - A domain name (e.g. `mcp.yourdomain.com`) with an **A record pointing at
   the VPS IP** — required for automatic Let's Encrypt TLS.
 - Replace `mcp.yourdomain.com` and `you@example.com` throughout.
+
+## Quick install (one-shot bootstrap)
+
+On a **fresh** Ubuntu droplet with no web server already on :80/:443,
+[`deploy/bootstrap.sh`](bootstrap.sh) wraps sections 1–6 into a single
+idempotent run. From a root shell:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/jet52/ndcourts-mcp/main/deploy/bootstrap.sh \
+  | MCP_DOMAIN=mcp.yourdomain.com \
+    MCP_EMAIL=you@example.com \
+    MCP_USER=teammate1 \
+    MCP_PASSWORD='change-me' \
+    bash
+```
+
+The script adds a 2 GB swapfile (helpful on 1 GB droplets), creates the
+`ndcourts` user, installs the app and database, sets up the systemd unit,
+installs Caddy with the rate-limit plugin, renders the Caddyfile from
+your env vars, opens the firewall, and installs the fail2ban jail. Safe
+to re-run after a partial failure. Skip SSH hardening (§5) is deliberate
+— do that yourself after confirming key-based login works.
+
+If you're co-existing with an existing web server, see the
+[alternative](#alternative-alongside-an-existing-web-server) at the end,
+which uses the same script with `MCP_SKIP_CADDY=1`.
+
+The sections below are the manual walk-through equivalent.
 
 ## 1. System user and layout
 
@@ -129,8 +158,9 @@ claude mcp add --transport http ndcourts https://mcp.yourdomain.com/mcp \
   --header "Authorization: Basic $(printf 'teammate1:thepassword' | base64)"
 ```
 
-Claude Desktop: add an `"type": "http"` server with a `headers` block
-carrying the same `Authorization: Basic ...` value.
+Claude Desktop and other clients: see [CLIENTS.md](CLIENTS.md) for
+per-client setup (Claude Code, Claude Desktop on macOS / Linux /
+Windows, and notes on the web/mobile clients).
 
 The endpoint is **`/mcp`** (no trailing slash — `/mcp/` 307-redirects).
 
@@ -146,6 +176,97 @@ sudo -u ndcourts bash -lc '
 '
 sudo systemctl restart ndcourts-mcp
 ```
+
+## Alternative: alongside an existing web server
+
+If the droplet already runs a website behind **nginx**, **Apache**, or
+another reverse proxy, you don't want a second TLS terminator fighting
+for :80/:443. Instead: install only the app + systemd service, leave
+your existing server in charge of TLS and auth, and add a vhost (or
+location) that proxies to `127.0.0.1:8000`.
+
+**App side** — bootstrap with `MCP_SKIP_CADDY=1`:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/jet52/ndcourts-mcp/main/deploy/bootstrap.sh \
+  | MCP_SKIP_CADDY=1 bash
+```
+
+This runs sections 1–3 only: swap, user, app, database, systemd unit.
+No Caddy, no Caddyfile, no fail2ban-for-Caddy. The service binds
+`127.0.0.1:8000` — invisible from the public internet until you
+reverse-proxy it.
+
+**Front-end side — Apache.** A drop-in vhost template lives at
+[`deploy/mcp-apache.conf`](mcp-apache.conf); its header comments cover
+the full install (enable modules, create htpasswd, render the file with
+`sed`, issue the cert with `certbot certonly --apache`). The template
+guards its `:443` block with `<IfFile>` so Apache starts cleanly before
+the cert exists. It runs as an independent vhost on a dedicated
+subdomain, so your existing site is untouched.
+
+**Front-end side — nginx.** The same idea with nginx is roughly:
+
+```nginx
+server {
+    listen 443 ssl http2;
+    server_name mcp.yourdomain.com;
+
+    ssl_certificate     /etc/letsencrypt/live/mcp.yourdomain.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/mcp.yourdomain.com/privkey.pem;
+
+    auth_basic           "ndcourts MCP";
+    auth_basic_user_file /etc/nginx/mcp.htpasswd;
+
+    location / {
+        proxy_pass       http://127.0.0.1:8000;
+        proxy_http_version 1.1;
+        proxy_buffering  off;            # don't buffer SSE
+        proxy_read_timeout 120s;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}
+```
+
+`certbot --nginx -d mcp.yourdomain.com` issues the cert.
+
+**fail2ban — Apache.** Apache's built-in `apache-auth` filter recognises
+failed Basic Auth attempts in the per-vhost error log:
+
+```ini
+# /etc/fail2ban/jail.d/apache-mcp.conf
+[apache-mcp]
+enabled  = true
+filter   = apache-auth
+port     = http,https
+logpath  = /var/log/apache2/mcp.yourdomain.com-error.log
+maxretry = 5
+findtime = 5m
+bantime  = 1h
+```
+
+**fail2ban — nginx.** Equivalent jail using `nginx-http-auth`:
+
+```ini
+# /etc/fail2ban/jail.d/nginx-mcp.conf
+[nginx-mcp]
+enabled  = true
+filter   = nginx-http-auth
+port     = http,https
+logpath  = /var/log/nginx/error.log
+maxretry = 5
+findtime = 5m
+bantime  = 1h
+```
+
+**Path-mount vs. subdomain.** A subdomain (`mcp.yourdomain.com`) is the
+clean default: independent vhost, independent cert, independent auth, no
+risk of colliding with the parent site's routing. Path-mounting (e.g.
+`yourdomain.com/mcp`) saves you a DNS record and a cert at the cost of
+splicing the proxy block into the parent vhost — workable, but watch out
+for rewrite rules that catch `/mcp` and for SSE buffering imposed by the
+parent site's config.
 
 ## Notes
 
