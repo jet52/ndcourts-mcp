@@ -417,6 +417,26 @@ The weekly pipeline regenerates `opinions.db`. Because it is served
 read-only, deploying an update is just: copy the new file to the server,
 then `systemctl restart ndcourts-mcp`.
 
+### Public VPS test (open internet)
+
+The model above is VPN-only with a bearer token. To instead expose the
+server on the public internet for a quick test — with **TLS + HTTP Basic
+Auth + rate limiting + fail2ban** — use the ready-to-run Ubuntu templates in
+[`deploy/`](deploy/):
+
+- [`deploy/SETUP.md`](deploy/SETUP.md) — step-by-step Ubuntu 22.04/24.04
+  walkthrough (system user, `uv` install, database download, systemd, Caddy
+  with the rate-limit plugin, `ufw`, SSH hardening, fail2ban, client config).
+- [`deploy/Caddyfile`](deploy/Caddyfile) — auto-HTTPS, per-IP `rate_limit`,
+  `basic_auth`, and `flush_interval -1` so MCP's SSE streaming isn't buffered.
+- [`deploy/ndcourts-mcp.service`](deploy/ndcourts-mcp.service) — hardened
+  systemd unit bound to localhost.
+- [`deploy/fail2ban/`](deploy/fail2ban/) — filter + jail that ban IPs on
+  repeated `401`s.
+
+The data is public (CC0), so this auth is access control and abuse
+prevention, not secrecy.
+
 ---
 
 ## Working on the data
