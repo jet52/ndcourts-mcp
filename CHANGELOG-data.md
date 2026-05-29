@@ -2,6 +2,10 @@
 
 Changes applied to the opinions database after import from CourtListener and ndcourts.gov sources. All corrections are recorded in the `changelog` SQLite table and can be reverted with `python -m ndcourts_mcp.cleanup revert <batch>`.
 
+## Batch `backfill-dockets-2026nd101-107-2026-05-29` — docket_number for the 7 newly-scraped opinions
+
+The 2026-05-29 weekly catch-up ingested **2026 ND 101–107** (Baker, Busche, Porteus, Craig, Shively, Reller, Rademacher) from freshly scraped court PDFs — recovered after fixing the scraper's Cloudflare block (curl_cffi Chrome TLS impersonation; see `scraper/nd_http.py`). These ingested with `docket_number` NULL because `merge_nd_metadata` sources dockets from CourtListener cluster JSON, which CL hasn't created yet for opinions this new — even though the scraped `2026_opinions.json` carries the docket from the published listing. **Backfilled 7** dockets from that listing JSON (8-digit `YYYYNNNN` form, matching the 1997+ convention): 101→20250258, 102→20250409, 103→20250450, 104→20260038, 105→20250374, 106→20250419, 107→20250304. Authority = ndcourts.gov opinion listing. Corpus 19,792; invariants 22/2/0. Tool `triage/backfill_dockets_2026nd101-107_2026-05-29.py`; revertible.
+
 ## Batch `recover-dockets-2026-05-27` — recover empty docket_number fields from published captions + normalize blank→NULL
 
 Priority TODO #1. Of 5,604 empty `docket_number` fields (694 NULL + 4,910 blank-string), the recoverable target was the modern era (1997+ opinions all carry dockets) plus the 1953–96 gap; pre-1953 is genuinely docketless. Authoritative source = the **published opinion caption** (the markdown is court-PDF derived).
