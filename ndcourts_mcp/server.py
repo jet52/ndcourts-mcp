@@ -938,9 +938,16 @@ def get_cited_authorities(citation: str) -> dict:
             (row["id"],),
         ).fetchall()
 
-        cases, other_cases, statutes, court_rules, constitution, regulations = (
-            [], [], [], [], [], []
+        other_cases, statutes, court_rules, constitution, regulations = (
+            [], [], [], [], []
         )
+        # Resolved in-corpus cases are deduped by opinion id: a case cited by
+        # both its neutral and N.W. parallel is ONE authority, not two. The
+        # canonical `cite` prefers the neutral form; the rest go in
+        # `parallel_cites`. The subject opinion's own id is excluded (a case is
+        # not an authority it cites).
+        cases_by_oid: dict[int, dict] = {}
+        cases_order: list[dict] = []
         for t in tcs:
             entry = {"cite": t["normalized"], "url": t["url"]}
             if t["cite_type"] == "case":
@@ -951,13 +958,22 @@ def get_cited_authorities(citation: str) -> dict:
                     (t["normalized"],),
                 ).fetchone()
                 if resolved:
-                    cases.append({
-                        "cite": t["normalized"],
-                        "case_name": resolved["case_name"],
-                        "date_filed": resolved["date_filed"],
-                        "oid": resolved["id"],
-                        "url": t["url"],
-                    })
+                    roid = resolved["id"]
+                    if roid == row["id"]:
+                        continue
+                    d = cases_by_oid.get(roid)
+                    if d is None:
+                        d = {
+                            "case_name": resolved["case_name"],
+                            "date_filed": resolved["date_filed"],
+                            "oid": roid,
+                            "url": t["url"],
+                            "_cites": [],
+                        }
+                        cases_by_oid[roid] = d
+                        cases_order.append(d)
+                    if t["normalized"] not in d["_cites"]:
+                        d["_cites"].append(t["normalized"])
                 else:
                     other_cases.append({**entry, "jurisdiction": t["jurisdiction"]})
             elif t["cite_type"] == "statute":
@@ -968,6 +984,20 @@ def get_cited_authorities(citation: str) -> dict:
                 constitution.append(entry)
             elif t["cite_type"] == "regulation":
                 regulations.append(entry)
+
+        # Finalize deduped cases: canonical cite (neutral preferred) + parallels.
+        def _is_neutral(cite: str) -> bool:
+            parts = cite.split()
+            return len(parts) >= 3 and parts[1] == "ND" and parts[0].isdigit()
+
+        cases = []
+        for d in cases_order:
+            cites = d.pop("_cites")
+            neutral = [x for x in cites if _is_neutral(x)]
+            canonical = neutral[0] if neutral else cites[0]
+            d["cite"] = canonical
+            d["parallel_cites"] = [x for x in cites if x != canonical]
+            cases.append(d)
 
         return {
             "found": True,
