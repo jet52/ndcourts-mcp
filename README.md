@@ -6,7 +6,7 @@ Appeals decisions). Built on SQLite with FTS5 full-text search and
 served via [FastMCP](https://github.com/jlowin/fastmcp). Includes a web
 opinion browser with multi-source diff/merge tools.
 
-The corpus currently contains **~20,200 opinions** with **112,000+
+The corpus currently contains **~19,800 opinions** with **108,000+
 citation links** between them, with every correction recorded in an
 auditable, revertible changelog.
 
