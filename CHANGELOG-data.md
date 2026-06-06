@@ -2,6 +2,14 @@
 
 Changes applied to the opinions database after import from CourtListener and ndcourts.gov sources. All corrections are recorded in the `changelog` SQLite table and can be reverted with `python -m ndcourts_mcp.cleanup revert <batch>`.
 
+## Batch `backfill-gov-urls-2026-06-06` — backfill ndcourts.gov `opinion_url` for 1997+ opinions missing one
+
+`opinion_url` (the court's own ndcourts.gov page) is the official-source URL now preferred over the CourtListener `absolute_url` fallback by the new `server._best_url` helper. **26** opinions filed 1997+ had no `opinion_url` (the merge only sets it when the scraper JSON carried one; these were captured with `opinion_url=None` or had no JSON record). **Backfilled 14**, fetched live from ndcourts.gov's citation-addressable opinion search (`cit1=<year>&citType=ND&cit2=<num>`, via the scraper's Cloudflare-bypass `nd_get`) by `scripts/backfill_gov_urls.py`. `authority` = ndcourts.gov citation search; `old_value=NULL`; changelog-revertible.
+
+Each write is gated on a **numeric cite match** of the returned row, never a "take the single result" guess — the search proved unreliable (intermittently returns an unrelated row; zero-pads some cites, e.g. `2021 ND 0216`, so `cit2=216` misses — handled by padded retry + numeric match). That guard caught two would-be mis-writes: **docket-sharing siblings** where the court's by-docket page belongs to the *other* row — docket 990130 *Webster v. Regan* `2000 ND 18` (oid 13074) vs `2000 ND 89` (oid 13136); docket 970363 *Neset* discipline `1997 ND 215` (oid 12581) vs `1998 ND 206` (oid 12782). Both siblings are legitimately distinct opinions (original + rehearing/later proceeding); the targets correctly keep the CL fallback, not their sibling's URL.
+
+**12 left without a gov URL** (all correct): the 2 docket-siblings above; 7 early/special matters absent from the court's online opinion DB by both cite and docket (`1997 ND 1`, `1997 ND 5`, `1998 ND 22`, `1998 ND 171`, `2003 ND 39`, `2017 ND 234`, `2022 ND 69`); and 3 Court of Appeals cases with no neutral cite to search by (Ernst v. Tjon, In re N.B., In re K.N.H.). No DB cites were changed.
+
 ## Batch `citegraph-rebuild-2026-06-01` — full-corpus rebuild of text_citations + cited_by (§6 / TODO #6)
 
 Priority TODO #6. The citation graph had been built incrementally over many ingest cycles and then patched in place (§14 self-cite strip, jurisdiction backfill, truncation-phantom strip) and re-extracted for only the 57 para-marker re-OCR opinions whose `text_content` was wholly replaced. **Rebuilt the entire graph from scratch against the current cleaned text + current jetcite (2.1.2)** so the forward (`text_citations` / `get_cited_authorities`) and reverse (`cited_by` / `get_citing_opinions`) indexes are uniformly derived from one source of truth.

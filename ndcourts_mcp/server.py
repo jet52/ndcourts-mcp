@@ -21,6 +21,39 @@ mcp = FastMCP(
 
 DB_PATH = DEFAULT_DB_PATH
 
+COURTLISTENER_BASE = "https://www.courtlistener.com"
+
+
+def _col(row, name):
+    """Safely read a column that may be absent from a leaner SELECT."""
+    try:
+        return row[name]
+    except (IndexError, KeyError):
+        return None
+
+
+def _best_url(row) -> dict:
+    """Return the best available source URL, preferring the court's own site.
+
+    ndcourts.gov (`opinion_url`) is the North Dakota courts' official copy and
+    is preferred whenever present — *regardless of which source the text came
+    from*. A 1997+ opinion whose text was sourced from Westlaw still links to
+    its ndcourts.gov page, because the URL is stored independently of
+    `source_reporter`. Falls back to the CourtListener cluster URL, fully
+    qualified from the stored relative path. Returns {} if neither exists
+    (e.g. pre-1997 opinions, where ndcourts.gov has no page).
+
+    Shape: {"url": str, "url_source": "ndcourts.gov" | "courtlistener"}.
+    """
+    gov = _col(row, "opinion_url")
+    if gov:
+        return {"url": gov, "url_source": "ndcourts.gov"}
+    cl = _col(row, "absolute_url")
+    if cl:
+        url = cl if cl.startswith("http") else COURTLISTENER_BASE + cl
+        return {"url": url, "url_source": "courtlistener"}
+    return {}
+
 
 def _opinion_summary(row) -> dict:
     """Format an opinion row as a summary dict (no full text)."""
@@ -36,13 +69,14 @@ def _opinion_summary(row) -> dict:
         "court": row["court"],
     }
     # Include enriched fields when available
-    for field in ("case_type", "highlight", "opinion_url", "unanimous", "disposition"):
+    for field in ("case_type", "highlight", "unanimous", "disposition"):
         try:
             val = row[field]
             if val is not None:
                 result[field] = bool(val) if field == "unanimous" else val
         except (IndexError, KeyError):
             pass
+    result.update(_best_url(row))
     return result
 
 
@@ -132,7 +166,7 @@ def _cite_payload(conn, row) -> dict:
         ],
         "synthetic_cites": synthetic,
         "formatted": proofread.format_redbook(row["case_name"], ordered, row["date_filed"]),
-        "absolute_url": row["absolute_url"],
+        **_best_url(row),
     }
 
 
@@ -163,7 +197,6 @@ def lookup_opinion(citation: str, include_text: bool = False, text_limit: int = 
 
         result = _opinion_summary(row)
         result["citations"] = _get_citations(conn, row["id"])
-        result["absolute_url"] = row["absolute_url"]
         result["text_length"] = len(row["text_content"])
 
         if include_text:
@@ -1092,7 +1125,7 @@ def case_summary(citation: str) -> dict:
             "cited_by_count": cited_by_n,
             "cites_out_count": cited_out,
             "text_length": len(text),
-            "absolute_url": row["absolute_url"],
+            **_best_url(row),
             "derived_note": (
                 "`disposition` and `syllabus_points` are heuristically extracted "
                 "from the opinion text; verify before relying on them. Panel and "
