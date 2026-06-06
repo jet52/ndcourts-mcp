@@ -7,21 +7,56 @@ from pathlib import Path
 
 from fastmcp import FastMCP
 
-from . import memo, proofread, research
+from . import corpus, memo, proofread, research
 from .db import DEFAULT_DB_PATH, get_connection
 
 mcp = FastMCP(
     "ndcourts",
     instructions=(
-        "North Dakota Supreme Court opinion database (1889–present). "
-        "Use lookup_opinion for citation-based retrieval, search_opinions for "
-        "full-text search, and get_citing_opinions to find cases that cite a given opinion."
+        "North Dakota primary law. Opinions (1889–present): use lookup_opinion "
+        "for citation-based retrieval, search_opinions for full-text search, and "
+        "get_citing_opinions to find cases that cite a given opinion. Constitution, "
+        "court rules, statutes (N.D.C.C.), and administrative code (where installed): "
+        "use lookup_authority for the text of a provision (with as_of_date for the "
+        "version in force on a given date), get_authority_history for its amendment "
+        "history, and search_authority for full-text search across these sources."
     ),
 )
 
 DB_PATH = DEFAULT_DB_PATH
 
 COURTLISTENER_BASE = "https://www.courtlistener.com"
+
+# Map a normalize_authority() kind to a versioned-law corpus name (corpus.CORPORA).
+KIND_TO_CORPUS = {
+    "constitution": "const",
+    "court_rule": "rule",
+    "statute": "ndcc",
+    "admin": "admin",
+}
+
+
+def _conn_with_corpora() -> sqlite3.Connection:
+    """Opinions connection with every available primary-law corpus ATTACHed.
+
+    Missing corpus DBs are skipped, so this works on a chambers install that
+    has only some corpora (or none — then it behaves like get_connection)."""
+    conn = get_connection(DB_PATH)
+    try:
+        corpus.attach_corpora(conn)
+    except Exception:
+        pass
+    return conn
+
+
+def _attached_corpora(conn: sqlite3.Connection) -> dict[str, str]:
+    """Return {corpus_name: alias} for corpora currently attached to ``conn``."""
+    present = {r["name"] for r in conn.execute("PRAGMA database_list")}
+    return {
+        name: meta["alias"]
+        for name, meta in corpus.CORPORA.items()
+        if meta["alias"] in present
+    }
 
 
 def _col(row, name):
@@ -1515,7 +1550,229 @@ def find_opinions_construing(authority: str, limit: int = 50) -> dict:
                 "The reference matched multiple authorities (no rule-set/§ prefix "
                 "given); each is listed separately."
             )
+
+        # If the cited primary-law corpus is installed, attach the provision's
+        # own text (point-in-time aware) so the caller sees what was construed.
+        ckind = KIND_TO_CORPUS.get(spec["kind"])
+        if ckind:
+            ccorp = _conn_with_corpora()
+            try:
+                alias = _attached_corpora(ccorp).get(ckind)
+                if alias:
+                    prov = corpus.lookup_provision_version(ccorp, alias, authority)
+                    if prov:
+                        result["provision"] = {
+                            "citation": prov["citation"],
+                            "heading": prov["heading"],
+                            "status": prov["status"],
+                            "current_text": prov["text_content"],
+                            "note": "Use lookup_authority(..., as_of_date=) for the version in force on a given date.",
+                        }
+            finally:
+                ccorp.close()
         return result
+    finally:
+        conn.close()
+
+
+@mcp.tool()
+def lookup_authority(citation: str, as_of_date: str | None = None) -> dict:
+    """Retrieve the text of a ND constitutional, statutory, court-rule, or
+    administrative provision — optionally as it read on a specific date.
+
+    Resolves citations like "N.D. Const. art. I, § 8", "N.D.C.C. § 12.1-20-03",
+    "N.D.R.Civ.P. 56", or "N.D. Admin. Code § 75-02-01". When ``as_of_date`` is
+    given (ISO ``YYYY-MM-DD``), returns the version in force on that date; this
+    is what lets you read a statute "as the court applied it" in an older
+    opinion. Omit ``as_of_date`` for the current text.
+
+    Returns the provision text, heading, effective window, enacting/amending
+    authority, source URL, and a count of opinions construing it. If the
+    relevant corpus is not installed, says so.
+
+    Args:
+        citation: A constitutional, statutory, court-rule, or admin-code reference.
+        as_of_date: Optional ISO date; the version in force then (default: current).
+    """
+    spec = research.normalize_authority(citation)
+    ckind = KIND_TO_CORPUS.get(spec["kind"])
+    if not ckind:
+        return {"error": f"Couldn't recognize a ND primary-law citation in: {citation}"}
+
+    conn = _conn_with_corpora()
+    try:
+        alias = _attached_corpora(conn).get(ckind)
+        if not alias:
+            return {
+                "found": False,
+                "citation": citation,
+                "corpus": ckind,
+                "error": f"The {corpus.CORPORA[ckind]['label']} corpus is not installed on this server.",
+            }
+        row = corpus.lookup_provision_version(conn, alias, citation, as_of_date)
+        if not row:
+            asof = f" in force on {as_of_date}" if as_of_date else ""
+            return {"found": False, "citation": citation, "corpus": ckind,
+                    "error": f"No provision matching {citation!r}{asof}."}
+        # cross-link: how many opinions construe this authority
+        construing = conn.execute(
+            "SELECT COUNT(DISTINCT opinion_id) AS n FROM text_citations WHERE normalized LIKE ?",
+            (f"%{(spec['exact'] or citation)}",),
+        ).fetchone()["n"]
+        return {
+            "found": True,
+            "corpus": ckind,
+            "citation": row["citation"],
+            "heading": row["heading"],
+            "status": row["status"],
+            "as_of_date": as_of_date,
+            "effective_start": row["effective_start"],
+            "effective_end": row["effective_end"],
+            "is_current": row["effective_end"] is None,
+            "source_authority": row["source_authority"],
+            "source_url": row["source_url"],
+            "text": row["text_content"],
+            "opinions_construing": construing,
+        }
+    finally:
+        conn.close()
+
+
+@mcp.tool()
+def get_authority_history(citation: str) -> dict:
+    """Show the amendment history of a ND constitutional, statutory, court-rule,
+    or administrative provision — every version with its effective dates and the
+    authority that enacted or amended it.
+
+    Use this to see how a provision changed over time, then call
+    ``lookup_authority`` with a specific ``as_of_date`` to read any version in
+    full. Version text is truncated here; full text comes from lookup_authority.
+
+    Args:
+        citation: A constitutional, statutory, court-rule, or admin-code reference.
+    """
+    spec = research.normalize_authority(citation)
+    ckind = KIND_TO_CORPUS.get(spec["kind"])
+    if not ckind:
+        return {"error": f"Couldn't recognize a ND primary-law citation in: {citation}"}
+
+    conn = _conn_with_corpora()
+    try:
+        alias = _attached_corpora(conn).get(ckind)
+        if not alias:
+            return {"found": False, "citation": citation, "corpus": ckind,
+                    "error": f"The {corpus.CORPORA[ckind]['label']} corpus is not installed."}
+        q = f"{alias}."
+        prov = conn.execute(
+            f"SELECT id, citation, heading, status FROM {q}provisions WHERE cite_key = ?",
+            (corpus.cite_key(citation),),
+        ).fetchone()
+        if not prov:
+            return {"found": False, "citation": citation, "corpus": ckind,
+                    "error": f"No provision matching {citation!r}."}
+        versions = conn.execute(
+            f"""SELECT effective_start, effective_end, source_authority, source_url,
+                       substr(text_content, 1, 240) AS excerpt, length(text_content) AS len
+                FROM {q}provision_versions WHERE provision_id = ?
+                ORDER BY COALESCE(effective_start, '0000-01-01')""",
+            (prov["id"],),
+        ).fetchall()
+        return {
+            "found": True,
+            "corpus": ckind,
+            "citation": prov["citation"],
+            "heading": prov["heading"],
+            "status": prov["status"],
+            "version_count": len(versions),
+            "versions": [
+                {
+                    "effective_start": v["effective_start"],
+                    "effective_end": v["effective_end"],
+                    "is_current": v["effective_end"] is None,
+                    "source_authority": v["source_authority"],
+                    "source_url": v["source_url"],
+                    "excerpt": v["excerpt"] + ("…" if v["len"] > 240 else ""),
+                }
+                for v in versions
+            ],
+        }
+    finally:
+        conn.close()
+
+
+@mcp.tool()
+def search_authority(
+    query: str, corpus_name: str | None = None,
+    as_of_date: str | None = None, limit: int = 20,
+) -> dict:
+    """Full-text search across ND primary law (Constitution, court rules,
+    statutes, administrative code).
+
+    Searches provision text and headings. By default returns the version
+    currently in force; pass ``as_of_date`` (ISO ``YYYY-MM-DD``) to search the
+    text as it read on that date. Restrict to one corpus with ``corpus_name``
+    ('const', 'rule', 'ndcc', or 'admin').
+
+    Args:
+        query: Search terms (FTS5 syntax; e.g. 'search seizure', '"probable cause"').
+        corpus_name: Optional corpus filter ('const' | 'rule' | 'ndcc' | 'admin').
+        as_of_date: Optional ISO date; search text in force then (default: current).
+        limit: Max results across all corpora (default 20, max 100).
+    """
+    limit = min(limit, 100)
+    conn = _conn_with_corpora()
+    try:
+        attached = _attached_corpora(conn)
+        if corpus_name:
+            if corpus_name not in corpus.CORPORA:
+                return {"error": f"Unknown corpus {corpus_name!r}; expected one of {list(corpus.CORPORA)}."}
+            attached = {k: v for k, v in attached.items() if k == corpus_name}
+        if not attached:
+            return {"found": False, "query": query,
+                    "error": "No matching primary-law corpus is installed on this server."}
+
+        hits: list[dict] = []
+        for name, alias in attached.items():
+            q = f"{alias}."
+            if as_of_date is None:
+                where = "v.id = p.current_version_id"
+                params: tuple = (query, limit)
+                window = ""
+            else:
+                where = ("COALESCE(v.effective_start,'0000-01-01') <= ? "
+                         "AND COALESCE(v.effective_end, ?) >= ?")
+                params = (query, as_of_date, corpus.OPEN_ENDED, as_of_date, limit)
+                window = ""
+            sql = (
+                f"SELECT p.citation, p.heading, v.effective_start, v.effective_end, "
+                f"       substr(v.text_content, 1, 280) AS excerpt "
+                f"FROM {q}provisions_fts f "
+                f"JOIN {q}provision_versions v ON v.id = f.rowid "
+                f"JOIN {q}provisions p ON p.id = v.provision_id "
+                f"WHERE f.provisions_fts MATCH ? AND {where} "
+                f"ORDER BY rank LIMIT ?"
+            )
+            try:
+                rows = conn.execute(sql, params).fetchall()
+            except sqlite3.OperationalError as e:
+                return {"error": f"search failed for corpus {name}: {e}"}
+            for r in rows:
+                hits.append({
+                    "corpus": name,
+                    "citation": r["citation"],
+                    "heading": r["heading"],
+                    "effective_start": r["effective_start"],
+                    "is_current": r["effective_end"] is None,
+                    "excerpt": r["excerpt"],
+                })
+        return {
+            "found": bool(hits),
+            "query": query,
+            "as_of_date": as_of_date,
+            "corpora_searched": list(attached),
+            "count": len(hits[:limit]),
+            "results": hits[:limit],
+        }
     finally:
         conn.close()
 

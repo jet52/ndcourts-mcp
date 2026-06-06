@@ -168,6 +168,17 @@ def normalize_authority(query: str) -> dict:
     q = query.strip()
     low = q.lower().replace(" ", "").replace(".", "")
 
+    # Constitution? (e.g. "N.D. Const. art. I, § 8", "ND Const Art I Sec 8")
+    if "const" in low and ("nd" in low or "northdakota" in low):
+        return {"kind": "constitution", "token": None, "exact": q}
+
+    # Administrative code? ("N.D. Admin. Code § 75-02-01", "NDAC 75-02-01")
+    if "admincode" in low or low.startswith("ndac") or "adminc" in low:
+        m = _SECTION_RE.search(q)
+        sec = m.group(1) if m else None
+        exact = f"N.D. Admin. Code § {sec}" if sec else None
+        return {"kind": "admin", "token": sec, "exact": exact}
+
     # Court rule? (contains "r." rule-set or an alias, or the word "rule")
     rule_prefix = None
     for alias, canon in _RULE_ALIASES.items():
