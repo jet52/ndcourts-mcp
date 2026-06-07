@@ -1463,6 +1463,680 @@
    "discrepancies": "No substantive disagreement among sources. Two OCR-only corrections applied from off1925.txt: (1) marker 'anuual tax' -> 'annual tax'; (2) marker line 674 'first mortgage' / line 676 'anuual' OCR artifacts resolved. All corrected forms are confirmed by the 1925 official snapshot. The 1954 Blue Book text is too OCR-degraded (e.g., 'shnll', 'stnte', 'Ifjkuc') to use for wording but confirms the distinctive operative clause. Amendment XLII changed § 182's deadline language from the prior 'within thirty years from the passage of such law' (per cl1913.txt) to 'within thirty years from the date of the issue of such bonds'."
   },
   {
+   "number": "XLIII",
+   "effective_date": "1926-07-30",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 82",
+     "heading": "Term of office of railroad commissioners (six years, staggered)",
+     "text": "There shall be chosen by the qualified electors of the State at the times and places of choosing members of the legislative assembly, a secretary of state, auditor, treasurer, superintendent of public instruction, commissioner of insurance, three commissioners of railroads, one attorney general and one commissioner of agriculture and labor, who shall have attained the age of twenty-five years, shall be citizens of the United States, and shall have the qualifications of state electors. They shall severally hold their offices at the seat of government, and, with the exception of the commissioners of railroads, for the term of two years and until their successors are elected and duly qualified, but no person shall be eligible to the office of treasurer for more than two consecutive terms. Of the commissioners of railroads elected at the general election in 1926, the one having held his office for the longest time shall serve for six years; the one having held his office the next longest time shall serve for four years, and the one having held this office the shortest time, shall serve for two years, provided, however, if two or more such commissioners shall have held such office an equal or no length of time, the one having the highest vote shall serve for the longer term; thereafter one commissioner of railroads shall be elected every two years, and shall hold his office for a term of six years and until his successor is elected and qualified."
+    }
+   ],
+   "authority": "Amendment ratified undefined",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/seg4a_marker/seg4a_src/seg4a_src.md (PRIMARY — enacted session law, S.L. 1925 Concurrent Resolution, Article 43, Approved June 30, 1926, 69,214 to 61,235)",
+    "/tmp/cl1913.txt (pre-amendment § 82, confirms opening clauses)",
+    "/tmp/manual1919.txt (pre-amendment § 82, confirms opening clauses)",
+    "/tmp/manual1907.txt (pre-amendment § 82, confirms opening clauses)",
+    "/tmp/bb1954_marker/bb1954_const/bb1954_const.md (later re-amended § 82 — tax/public-service-commissioner version; confirms this railroad-staggering text was superseded)"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "one attorney general and one commissioner of agriculture and labor",
+     "enacted_session_law": "one attorney general",
+     "other_publications": "The pre-amendment printings of § 82 read \"an attorney general\" (cl1913, manual1907, manual1919). The 1926 enacted session law reads \"one attorney general\" (parallel to \"one commissioner of agriculture and labor\"). Transcribed per the session law."
+    },
+    {
+     "location": "shall serve for the longer term; thereafter",
+     "enacted_session_law": "shall serve for the longer term ; thereafter (space before semicolon, per session-law printing)",
+     "other_publications": "No other publication carries this clause (it is unique to this amendment). The space-before-semicolon is a session-law typesetting artifact; normalized to standard \"term; thereafter\" spacing in the transcribed text. Flagged as a judgment call."
+    }
+   ]
+  },
+  {
+   "number": "XLIV",
+   "effective_date": "1928-04-20",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 179",
+     "heading": "Property assessed by the State Board of Equalization; light, heat, and power companies included",
+     "text": "All taxable property except as hereinafter in this section provided, shall be assessed in the county, city, township, village or district in which it is situated, in the manner prescribed by law. The property, including franchises of all railroads operated in this state, and of all express companies, freight line companies, dining car companies, sleeping car companies, car equipment companies, or private car line companies, telegraph or telephone companies, the property of any person, firm or corporation used for the purpose of furnishing electric light, heat or power, or in distributing the same for public use, and the property of any other corporation, firm or individual now or hereafter operating in this state, and used directly or indirectly in the carrying of persons, property or messages, shall be assessed by the State Board of Equalization in a manner prescribed by such state board or commission as may be provided by law. But should any railroad allow any portion of its railway to be used for any purpose other than the operation of a railroad thereon, such portion of its railway, while so used shall be assessed in a manner provided for the assessment of other real property."
+    }
+   ],
+   "authority": "Amendment ratified undefined",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/seg4a_marker/seg4a_src/seg4a_src.md (primary session-law marker OCR; H. B. No. 341, Session Laws of 1927, Article 44, Joint Resolution; Approved March 20, 1928)",
+    "/tmp/bb1954_marker/bb1954_const/bb1954_const.md line 616 (1954 Blue Book integrated constitution; substantive-wording match)",
+    "/tmp/off1925.txt lines 5498-5530 (1925 official snapshot; pre-amendment form + explanatory note confirming amendment effect)"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "shall be assessed by the State Board of Equalization",
+     "enacted_session_law": "State Board of Equalization (initial-capitalized in the enacted session-law marker text)",
+     "other_publications": "The 1925 official snapshot (off1925.txt), reflecting the prior form of the section, lowercases it as 'state board of equalization'. The 1954 Blue Book matches the session-law capitalization 'State Board of Equalization'."
+    },
+    {
+     "location": "such portion of its railway, while so used shall be assessed",
+     "enacted_session_law": "no comma after 'so used' (\"while so used shall be assessed\")",
+     "other_publications": "1954 Blue Book matches (no comma). 1925 snapshot likewise has no comma in the corresponding clause."
+    }
+   ]
+  },
+  {
+   "number": "XLV",
+   "effective_date": "1930-07-25",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 104",
+     "heading": "Election and terms of judges of district court",
+     "text": "The State shall be divided into not less than six judicial districts, in each of which there shall be elected at general elections by the electors thereof one or more judges of the District Court therein as may be provided by law. The term of office of a Judge of the District Court hereafter elected shall be six years from the first Monday in January succeeding his election and he shall hold his office until his successor is duly qualified. At the general election in 1932 there shall be elected as many judges as there are judgeships to be filled in each Judicial District; the candidate receiving the highest number of votes shall be elected to a term of six years, the candidate receiving the next highest number of votes shall be elected to a term of four years, and in case three judges are to be elected, the candidate receiving the next highest number of votes shall be elected to a term of two years, and thereafter each judge shall be elected to a term of six years."
+    }
+   ],
+   "authority": "Amendment ratified undefined",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/seg4a_marker/seg4a_src/seg4a_src.md (line 157, primary/enacted session law, Chapter 97 Session Laws 1929, Article 45)",
+    "/tmp/bb1954_marker/bb1954_const/bb1954_const.md (line 365, amended version, confirms wording)",
+    "/tmp/off1925.txt (line 3500, PRE-amendment old version, confirms amendment changed terms 4yr->6yr)",
+    "/tmp/cl1913.txt (line 10860, PRE-amendment old version)",
+    "/tmp/manual1919.txt (line 8635, PRE-amendment old version)"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "The State shall be divided ... a Judge of the District Court ... in each Judicial District",
+     "enacted_session_law": "Capitalizes 'State', 'Judge', 'District Court', and 'Judicial District' (session-law/marker reading).",
+     "other_publications": "The 1954 Blue Book lowercases all of these ('state', 'judge', 'district court', 'judicial district'). Capitalization divergence between the enacted session law and the secondary code."
+    },
+    {
+     "location": "to be filled in each Judicial District ; the candidate",
+     "enacted_session_law": "Session-law/marker text typesets a space before the semicolon ('Judicial District ;').",
+     "other_publications": "1954 Blue Book has no space before the semicolon ('judicial district;'). Treated as a typesetting/spacing artifact and normalized to standard 'District;' in the transcribed text."
+    }
+   ]
+  },
+  {
+   "number": "XLVI",
+   "effective_date": "1930-07-25",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 90",
+     "heading": "Election, Terms and Compensation of Judges of the Supreme Court",
+     "text": "The judges of the Supreme Court shall be elected by the qualified electors of the State at general elections. The term of office shall be ten years and the judges shall hold their offices until their successors are duly qualified and shall receive such compensation for their services as may be prescribed by law. Provided that this section shall not be applicable to the terms of office of judges of the Supreme Court elected prior to the general election of the year 1934, at which election three Supreme Court Judges shall be chosen; and the candidate at said election receiving the highest number of votes shall be elected for a term of ten years, the candidate receiving the next highest number of votes shall be elected for a term of eight years and the candidate receiving the next highest number of votes shall be elected for a term of six years."
+    }
+   ],
+   "authority": "Amendment ratified undefined",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/seg4a_marker/seg4a_src/seg4a_src.md (primary session-law marker OCR, lines 161-169)",
+    "/tmp/bb1954_marker/bb1954_const/bb1954_const.md (1954 Blue Book, line 329, confirms wording)"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "three Supreme Court Judges shall be chosen ; and the candidate",
+     "enacted_session_law": "chosen ; and the candidate (space before semicolon, as printed in the session law)",
+     "other_publications": "The 1954 Blue Book prints 'chosen ; and' likewise with a space before the semicolon. I have normalized the spacing to 'chosen; and' in the transcribed text per modern convention; the spaced semicolon is an artifact of the period's typesetting/OCR rather than a substantive variant. Flagged for human review."
+    }
+   ]
+  },
+  {
+   "number": "XLVII",
+   "effective_date": "1932-12-08",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 217",
+     "heading": "Repeal of Prohibition Clause in State Constitution",
+     "text": "That Section 217, Article 20, of the Constitution of the State of North Dakota, be and the same is hereby repealed."
+    }
+   ],
+   "authority": "Amendment ratified undefined",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/seg4a_marker/seg4a_src/seg4a_src.md (lines 246-252: ARTICLE 47, REPEAL OF PROHIBITION CLAUSE IN STATE CONSTITUTION; Approved Nov. 8, 1932; 134742 to 99316)",
+    "/tmp/bb1954_marker/bb1954_const/bb1954_const.md (line 888: repeal note confirming Article 47, Nov. 8, 1932; line 886: original Section 217 text)",
+    "/tmp/off1925.txt (line 6977: original Section 217 prohibition text)",
+    "/tmp/manual1907.txt (line 6810: original Sec. 217 text)"
+   ],
+   "confidence": "high",
+   "variants": [],
+   "status": "pending",
+   "pending_reason": "4a: high confidence / repeal / institutions / incomplete — needs review or re-OCR"
+  },
+  {
+   "number": "XLVIII",
+   "effective_date": "1933-10-22",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 173",
+     "heading": "County Officers",
+     "text": "At the first general election held after the adoption of this amendment, and every two years thereafter, there shall be elected in each organized county in the state, a register of deeds, county auditor, treasurer, sheriff, state's attorney, county judge and a clerk of the district court, who shall be electors in the county in which they are elected and who shall hold their office until their successors are elected and qualified; provided in counties having fifteen thousand population, or less, the county judge shall also be the clerk of the district court. Provided further that counties having a population of 6,000 or less, the register of deeds shall also be clerk of the district court and county judge. The legislative assembly shall provide by law for such other county, township and district officers as may be deemed necessary, and shall prescribe the duties and compensation of all county, township and district officers. The sheriff and treasurer of any county shall not hold their respective offices for more than four years in succession."
+    }
+   ],
+   "authority": "Amendment ratified undefined",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/seg4a_marker/seg4a_src/seg4a_src.md (session law, line 336, ARTICLE 48, approved Sept. 22, 1933)",
+    "/tmp/bb1954_marker/bb1954_const/bb1954_const.md (1954 Blue Book, Section 173 — reflects later 1940 Art. 55 re-amendment)"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "fifteen thousand population, or less",
+     "enacted_session_law": "fifteen thousand population, or less (comma after \"population\")",
+     "other_publications": "1954 Blue Book prints \"fifteen thousand population or less\" with no comma (but the 1954 text reflects the later 1940 re-amendment, not the 1933 enacted text)."
+    },
+    {
+     "location": "elected in each organized county in the state",
+     "enacted_session_law": "in each organized county in the state",
+     "other_publications": "1954 Blue Book reads \"in each county organized under the provisions of Section 172 of the Constitution\" — a substantive change from the 1940 re-amendment (Article 55), not a printing divergence."
+    },
+    {
+     "location": "The legislative assembly shall provide by law for such other county, township and district officers",
+     "enacted_session_law": "Present: full sentence \"The legislative assembly shall provide by law for such other county, township and district officers as may be deemed necessary, and shall prescribe the duties and compensation of all county, township and district officers.\"",
+     "other_publications": "1954 Blue Book OMITS this sentence entirely (dropped by the 1940 re-amendment under Article 55)."
+    }
+   ]
+  },
+  {
+   "number": "XLIX",
+   "effective_date": "1933-10-22",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 63",
+     "heading": "Reading of Legislative Bills",
+     "text": "§ 63. Every bill shall be read two separate times, but the first and second readings may not be upon the same day; and the first reading may be by title of the bill only, unless upon such first reading, a reading at length is demanded. The second reading shall be at length. No legislative day shall be shorter than the natural day."
+    }
+   ],
+   "authority": "Amendment ratified undefined",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/seg4a_marker/seg4a_src/seg4a_src.md (line 344, primary marker OCR of session law)",
+    "/tmp/seg4a_src.pdf p.18 re-OCR @450dpi (confirms semicolon and 'reading')",
+    "/tmp/bb1954_marker/bb1954_const/bb1954_const.md (line 213, 1954 Blue Book — post-amendment text, agrees on wording)",
+    "/tmp/cl1913.txt (line 10291 — PRE-amendment 'three several times', confirms § 63 is what was amended)",
+    "/tmp/off1925.txt (line 2411 — PRE-amendment text)",
+    "/tmp/manual1907.txt (lines 4965, 8810 — PRE-amendment text)"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "may not be upon the same day; and the first reading",
+     "enacted_session_law": "semicolon — '...same day; and the first reading...' (session law, confirmed by 450dpi re-OCR of seg4a_src.pdf p.18)",
+     "other_publications": "1954 Blue Book (bb1954_const.md line 213) prints a COMMA — '...same day, and the first reading...'"
+    }
+   ]
+  },
+  {
+   "number": "L",
+   "effective_date": "1938-07-28",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 158",
+     "heading": "Sale of school and public lands; interest rate reduced to three per cent; refinancing",
+     "text": "No land shall be sold for less than the appraised value and in no case be sold for less than ten dollars ($10.00) per acre. The purchaser shall pay one-fifth of the price in cash, and the remaining four-fifths as follows: One-fifth in five years, one-fifth on or before the expiration of ten years, one-fifth on or before the expiration of fifteen years, and one-fifth on or before the expiration of twenty years, with interest at the rate of not less than three per cent per annum, payable annually; provided that when payments are made before due they shall be made at an interest paying date. All sales shall be held at the county seat of the county in which the land to be sold is situated, and shall be at public auction and to the highest bidder, after sixty days advertisement of the same in a newspaper of general circulation in the vicinity of the land to be sold, and one at the seat of government. Such lands as shall not have been specially subdivided shall be offered in tracts of one quarter section, and those subdivided in the smallest subdivisions. All lands designated for sale and not sold within two years after appraisal shall be reappraised before they are sold. No grant or patent for such lands shall issue until payment is made for the same; provided that the land contracted to be sold by the State shall be subject to taxation from the date of contract. In case the taxes assessed against any of said lands for any year remain unpaid until the first Monday in October of the following year, then thereupon the contract of sale for such land shall, if the Board of University and School Lands so determine, become null and void. Any lands under the provision of Section 158 of the Constitution of the State of North Dakota that have heretofore been sold, may be paid for, except as to interest as provided; provided further, that any school or institutional lands that may be required for townsite purposes, school house sites, church sites, cemetery sites, sites for other educational or charitable institutions, public parks, fair grounds, public highways, railroad right of way or for other railroad uses and purposes, reservoirs for the storage of water for irrigation, drain ditches, and lands that may be required for any of the purposes over which the right of eminent domain may be exercised under the Constitution and the laws of the State of North Dakota, may be sold under the provisions of this act, and shall be paid for, principal and interest, in full in advance at the time of the sale, or at any time thereafter, and patent issued therefor, when principal and interest are paid. Any of the said lands, including lands held in trust for any purpose, may, with the approval of the Board of University and School Lands, be exchanged for lands of the United States, as the Legislature may provide, and the lands so acquired shall be subject to the trust, if any, to which the lands exchanged therefor were subject, and the State shall reserve all mineral and water and water power rights in lands so transferred by the State. Provided, further, that, when land has been sold on contract as hereinbefore provided, and the purchases or his heirs or assigns, has been unable, at least in part by reason of successive crop failures, to pay for the land purchased within twenty years after the date of purchase and such contract is in default and subject to cancellation, the Board of University and School Lands, may, if so requested by such purchaser or his heirs, or assigns, after declaring such contract terminated, resell the land described in such contract to such purchaser, or his heirs or assigns for the amount of the unpaid principal of the original purchase price plus the amount of unpaid accrued interest, but in no case shall the resale price be more than the original sale price, such contract of resale to be upon the same terms as said original contract excepting that the contract of resale may provide that the purchaser may pay the first one-fifth of the resale price in five equal successive annual installments, the first installment to be paid at the time of execution of the resale contract, and that such resale contract shall bear interest at the rate of three per cent per annum payable annually; and provided further, that this Section shall be deemed self-executing insofar as provision is made herein for resale of lands sold to the original purchaser or to his heirs or assigns."
+    }
+   ],
+   "authority": "Amendment ratified undefined",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/seg4a_marker/seg4a_src/seg4a_src.md (primary; ARTICLE 50, lines 376-384)",
+    "/tmp/cl1913.txt (pre-1938 §158, does not match)",
+    "/tmp/off1925.txt (pre-1938 §158, does not match)",
+    "/tmp/manual1919.txt (pre-1938 §158, does not match)",
+    "/tmp/manual1907.txt (no match)",
+    "/tmp/bb1954_marker/bb1954_const/bb1954_const.md (post-amendment superseding §158, line 518)"
+   ],
+   "confidence": "medium",
+   "variants": []
+  },
+  {
+   "number": "LI",
+   "effective_date": "1938-07-28",
+   "type": "new_article",
+   "changes": [
+    {
+     "target": "N.D. Const. amend. art. LI",
+     "heading": "Members of Legislative Assembly prohibited from accepting state employment during term",
+     "text": "The Governor or any officer of this State, or any manager or executive head, or other person employed either directly or indirectly in any department, bureau, commission, institution, or industry of this State, or any member of any State board shall not appoint a member of the Legislative Assembly to any civil office or employment of any nature whatsoever, during the term for which said member of the Legislative Assembly shall have been elected.\n\nNo member of the Legislative Assembly shall accept any such appointment to civil office or other employment during the term for which he was elected."
+    }
+   ],
+   "authority": "Amendment ratified undefined",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/seg4a_marker/seg4a_src/seg4a_src.md (lines 386-398, Article 51 / Amendment LI, session-law marker OCR — PRIMARY)",
+    "/tmp/cl1913.txt (predates amendment; no occurrence)",
+    "/tmp/off1925.txt (predates amendment; no occurrence)",
+    "/tmp/manual1919.txt (predates amendment; no occurrence)",
+    "/tmp/manual1907.txt (predates amendment; no occurrence)",
+    "/tmp/bb1954_marker/bb1954_const/bb1954_const.md (no legible occurrence of Article 51)"
+   ],
+   "confidence": "medium",
+   "variants": []
+  },
+  {
+   "number": "LII",
+   "effective_date": "1938-07-28",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 82",
+     "heading": null,
+     "text": "§ 82. There shall be chosen by the qualified electors of the State at the times and places of choosing members of the Legislative Assembly, a secretary, auditor, treasurer, superintendent of public instruction, commissioner of insurance, three commissioners of railroads, an attorney general, a commissioner of agriculture and labor, and a tax commissioner, who shall have attained the age of twenty-five years and shall have the qualifications of state electors. They shall severally hold their offices at the seat of government for the term of two years and until their successors are elected and duly qualified; but no person shall be eligible for the office of treasurer for more than two consecutive terms; provided, however, the tax commissioner shall hold his office for the term of four years and until his successor is elected and duly qualified.\n\nThe tax commissioner shall be elected on a no-party ballot and he shall be nominated and elected in the manner now provided for the nomination and election of the superintendent of public instruction.\n\nThe first election of the tax commissioner shall not occur until the year 1940."
+    }
+   ],
+   "authority": "Amendment ratified undefined",
+   "source_urls": [],
+   "sources_verified": [],
+   "confidence": "high",
+   "variants": []
+  },
+  {
+   "number": "LIV",
+   "effective_date": "1938-07-28",
+   "type": "new_article",
+   "changes": [
+    {
+     "target": "N.D. Const. amend. art. LIV",
+     "heading": "Article LIV — State Board of Higher Education (new article creating the Board to replace the Board of Administration)",
+     "text": "§ 1. A board of higher education, to be officially known as the State Board of Higher Education, is hereby created for the control and administration of the following state educational institutions, to-wit:\n(1) The State University and School of Mines, at Grand Forks, with their substations.\n(2) The State Agricultural College and Experiment Station, at Fargo, with their substations.\n(3) The School of Science, at Wahpeton.\n(4) The State Normal Schools and Teachers Colleges, at Valley City, Mayville, Minot and Dickinson.\n(5) The Normal and Industrial School, at Ellendale.\n(6) The School of Forestry, at Bottineau.\n(7) And such other State institutions of higher education as may hereafter be established.\n\n§ 2. (a) The State Board of Higher Education shall consist of seven (7) members, all of whom shall be qualified electors and taxpayers of the State, and who shall have resided in this State for not less than five (5) years immediately preceding their appointment, to be appointed by the Governor, by and with the consent of the Senate, from a list of names selected as hereinafter provided. There shall not be on said board more than one (1) alumnus or former student of any one of the institutions under the jurisdiction of said State Board of Higher Education at any one time. No person employed by any institution under the control of the board shall serve as a member of said board, nor shall any employee of any such institution be eligible for membership on the State Board of Higher Education for a period of two (2) years following the termination of his employment.\nOn or before the 1st day of February, 1939, the Governor shall nominate from a list of three names for each position, selected by the unanimous action of the President of the North Dakota Educational Association, the Chief Justice of the Supreme Court, and the Superintendent of Public Instruction, and, with the consent of a majority of the members-elect of the Senate, shall appoint from such list as such State Board of Higher Education seven (7) members, whose terms shall commence on the 1st day of July, 1939, one of which terms shall expire on the 30th day of June, 1940, and one on the 30th day of June in each of the years 1941, 1942, 1943, 1944, 1945, and 1946. The term of office of members appointed to fill vacancies at the expiration of said terms shall be for seven (7) years, and in the case of vacancies otherwise arising, appointments shall be made only for the balance of the term of the members whose places are to be filled.\n(b) In the event any nomination made by the Governor is not consented to and confirmed by the Senate as hereinbefore provided, the Governor shall again nominate a candidate for such office, selected from a new list, prepared in the manner hereinbefore provided, which nomination shall be submitted to the Senate for confirmation, and said proceedings shall be continued until such appointments have been confirmed by the Senate, or the session of the legislature shall have adjourned.\n(c) When any term expires or a vacancy occurs when the legislature is not in session, the Governor may appoint from a list selected as hereinbefore provided, a member who shall serve until the opening of the next session of the legislature, at which time his appointment shall be certified to the Senate for confirmation, as above provided ; and if the appointment be not confirmed by the thirtieth legislative day of such session, his office shall be deemed vacant and the Governor shall nominate from a list selected as hereinbefore provided, another candidate for such office and the same proceedings shall be followed as are above set forth ; provided further, that when the legislature shall be in session at any time within six (6) months prior to the date of the expiration of the term of any member, the Governor shall nominate his successor from a list selected as above set forth, within the first thirty (30) days of such session, and upon confirmation by the Senate such successor shall take office at the expiration of the term of the incumbent. No person who has been nominated and whose nomination the Senate has failed to confirm, shall be eligible for an interim appointment.\n\n§ 3. The members of the State Board of Higher Education may only be removed by impeachment for the offenses and in the manner and according to the procedure provided for the removal of the Governor by impeachment proceedings.\n\n§ 4. The appointive members of the State Board of Higher Education shall receive seven dollars ($7.00) per day and their necessary expenses for travel while attending meetings, or in the performances of such special duties as the board may direct ; provided, however, no member shall receive a total compensation, exclusive of expenses, to exceed five hundred dollars (.$500.00) in any calendar year ; and no member shall receive total expense money in excess of five hundred dollars ($500.00) in any calendar year.\n\n§ 5. The legislature shall provide adequate funds for the proper carrying out of the functions and duties of the State Board of Higher Education.\n\n§ 6. (a) The State Board of Higher Education shall hold its first meeting at the office of the State Board of Administration at Bismarck, on the 6th day of July, 1939, and shall organize and elect one of its members as president of such board for a term of one year. It shall also at said meeting, or as soon thereafter as may be practicable, elect a competent person as secretary, who shall reside during his term of office in the City of Bismarck, North Dakota. Said secretary shall hold office at the will of the board. As soon as said board is established and organized, it shall assume all the powers and perform all the duties now conferred by law upon the Board of Administration in connection with the several institutions hereinbefore mentioned, and the said Board of Administration shall immediately upon the organization of said State Board of Higher Education, surrender and transfer to said State Board of Higher Education all duties, rights, and powers granted to it under the existing laws of this State concerning the institutions hereinbefore mentioned, together with all property, deeds, records, reports, and appurtenances of every kind belonging or appertaining to said institutions.\n(b) The said State Board of Higher Education shall have full authority over the institutions under its control with the right, among its other powers, to prescribe, limit, or modify the courses offered at the several institutions. In furtherance of its powers, the State Board of Higher Education shall have the power to delegate to its employees details of the administration of the institutions under its control. The said State Board of Higher Education shall have full authority to organize or re-organize within constitutional and statutory limitations, the work of each institution under its control, and do each and everything necessary and proper for the efficient and economic administration of said State educational institutions.\n(c) Said board shall prescribe for all of said institutions standard systems of accounts and records and shall biennially, and within six (6) months immediately preceding the regular session of the legislature, make a report to the Governor, covering in detail the operations of the educational institutions under its control.\n(d) It shall be the duty of the heads of the several State institutions hereinbefore mentioned, to submit the budget requests for the biennial appropriations for said institutions to said State Board of Higher Education; and said State Board of Higher Education shall consider said budgets and shall revise the same as in its judgment shall be for the best interests of the educational system of the State; and thereafter the State Board of Higher Education shall prepare and present to the State Budget Board and to the legislature a single unified budget covering the needs of all the institutions under its control. \"Said budget shall be prepared and presented by the Board of Administration until the State Board of [TEXT TRUNCATED — session-law segment ends here at the bottom of page 601; remainder of § 6(d), the close of § 6, any further sections, and the approval/vote-count line are on page 602, which is NOT included in the provided source PDF and appears in no other supplied publication]"
+    }
+   ],
+   "authority": "Amendment ratified undefined",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/seg4a_marker/seg4a_src/seg4a_src.md (marker OCR of session-law pages 600-601)",
+    "/tmp/seg4a_src.pdf pages 26-27 via pdftotext -layout (independent cross-check, agrees with marker)",
+    "/tmp/cl1913.txt (predates amendment; absent)",
+    "/tmp/off1925.txt (predates amendment; absent)",
+    "/tmp/manual1919.txt (predates amendment; absent)",
+    "/tmp/manual1907.txt (predates amendment; absent)",
+    "/tmp/bb1954_marker/bb1954_const/bb1954_const.md (article not present)"
+   ],
+   "confidence": "medium",
+   "variants": [
+    {
+     "location": "five hundred dollars (.$500.00) in any calendar year",
+     "enacted_session_law": "(.$500.00) — first occurrence in § 4 reads \"(.$500.00)\" with a stray leading period before the dollar sign; the second occurrence reads \"($500.00)\" without the stray period",
+     "other_publications": "No other supplied publication contains this article, so no cross-publication comparison is possible. Both the marker OCR and an independent pdftotext rendering of the same PDF page agree on the stray-period form, so it is the printer's text and is preserved verbatim, not OCR garble."
+    }
+   ]
+  },
+  {
+   "number": "LIII",
+   "effective_date": "1939-07-01",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 186",
+     "heading": "Public moneys paid into state treasury; appropriation required; exceptions",
+     "text": "(1.) All public moneys, from whatever source derived, shall be paid over monthly by the public official, employee, agent, director, manager, board, bureau, or institution of the State receiving the same, to the State Treasurer, and deposited by him to the credit of the State, and shall be paid out and disbursed only pursuant to appropriation first made by the Legislature; provided, however, that there is hereby appropriated the necessary funds required in the financial transactions of the Bank of North Dakota, and required for the payment of losses, duly approved, payable from the State Hail Insurance Fund, State Bonding Fund, and State Fire and Tornado Fund, and required for the payment of compensation to injured employees or death claims, duly approved, payable from the Workmen's Compensation Fund, and required for authorized investments made by the Board of University and School Lands, and required for the financial operations of the State Mill and Elevator Association, and required for the payment of interest and principal of bonds and other fixed obligations of the State, and required for payments required by law to be paid to beneficiaries of the Teachers' Insurance and Retirement Fund, and required for refunds made under the provisions of the Retail Sales Tax Act, and the State Income Tax Law, and the State Gasoline Tax Law, and the Estate and Succession Tax Law, and the income of any State institution derived from permanent trust funds, and the funds allocated under the law to the State Highway Department and the various counties for the construction, reconstruction, and maintenance of public roads.\n\nThis constitutional amendment shall not be construed to apply to fees and moneys received in connection with the licensing and organization of physicians and surgeons, pharmacists, dentists, osteopaths, optometrists, embalmers, barbers, lawyers, veterinarians, nurses, chiropractors, accountants, architects, hairdressers, chiropodists, and other similarly organized, licensed trades and professions; and this constitutional amendment shall not be construed to amend or repeal existing laws or acts amendatory thereof concerning such fees and moneys.\n\n(2.) No bills, claims, accounts, or demands against the State or any county or other political subdivision shall be audited, allowed, or paid until a full itemized statement in writing shall be filed with the officer or officers whose duty it may be to audit the same, and then only upon warrant drawn upon the Treasurer of such funds by the proper officer or officers.\n\n(3.) This amendment shall become effective on July 1, 1939."
+    }
+   ],
+   "authority": "Amendment ratified undefined",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/seg4a_marker/seg4a_src/seg4a_src.md (Article 53, session-law marker OCR - PRIMARY)",
+    "/tmp/bb1954_marker/bb1954_const/bb1954_const.md (1954 Blue Book, Section 180 / Article 53 - corroborating)",
+    "/tmp/off1925.txt (predates amendment - no corresponding text)",
+    "/tmp/manual1919.txt (predates - n/a)",
+    "/tmp/cl1913.txt (predates - n/a)",
+    "/tmp/manual1907.txt (predates - n/a)"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "appropriation first made by the Legislature ; provided, however",
+     "enacted_session_law": "made by the Legislature ; provided, however, that there is hereby appropriated",
+     "other_publications": "1954 Blue Book uses a colon and no preceding space: 'made by the Legislature: provided, however' (the space-before-semicolon in the marker text is a session-law/OCR typographic feature; the colon-vs-semicolon divergence is a genuine cross-publication difference)."
+    },
+    {
+     "location": "Section number 186 vs 180",
+     "enacted_session_law": "§ 186",
+     "other_publications": "1954 Blue Book numbers this provision 'Section 180' (a later codification renumbering of the same provision), with the note '(As amended by Article 53, amendments to constitution, adopted June 28, 1938.)'."
+    }
+   ]
+  },
+  {
+   "number": "LVII",
+   "effective_date": "1940-06-25",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 82",
+     "heading": "Section 82 — Board of Railroad Commissioners renamed Public Service Commission",
+     "text": "There shall be chosen by the qualified electors of the state at the times and places of choosing members of the legislative assembly, a secretary of state, auditor, treasurer, superintendent of public instruction, commissioner of insurance, three public service commissioners, an attorney general, a commissioner of agriculture and labor, and a tax commissioner, who shall have attained the age of twenty-five years and shall have the qualifications of state electors. They shall severally hold their offices at the seat of government for the term of two years and until their successors are elected and duly qualified; but no person shall be eligible for the office of treasurer for more than two consecutive terms; provided, however, the tax commissioner shall hold his office for the term of four years and until his successor is elected and duly qualified; and provided further, that the public service commissioners shall severally hold their offices for the term of six years and until their successors are elected and duly qualified.\n\nThe tax commissioner shall be elected on a no-party ballot and he shall be nominated and elected in the manner now provided for the nomination and election of the superintendent of public instruction. The first election of a tax commissioner shall not occur until the year 1940.\n\nAt the general election in 1940 there shall be chosen two public service commissioners to fill the two terms expiring on the first Monday in January, 1941. The candidate at said election receiving the highest number of votes shall be elected for a term of six years, and the candidate receiving the next highest number of votes shall be elected for a term of four years. Thereafter there shall be chosen one such public service commissioner every two years.\n\nThe board of railroad commissioners shall hereafter be known as the public service commission and the members of the board of railroad commissioners as public service commissioners and the powers and duties now or hereafter granted to and conferred upon the board of railroad commissioners are hereby transferred to the public service commission."
+    }
+   ],
+   "authority": "Amendment ratified undefined",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/seg4a_marker/seg4a_src/seg4a_src.md (PRIMARY marker — Section 82 present is the 1938 Art. 52 tax-commissioner amendment, lines 402-410; Article 57 PSC rename NOT present)",
+    "/tmp/bb1954_marker/bb1954_const/bb1954_const.md (1954 Blue Book, lines 293-301 — only source with amended Section 82 text; OCR-garbled)",
+    "/tmp/off1925.txt (1925 official snapshot — predates amendment; 'board of railroad commissioners')",
+    "/tmp/cl1913.txt",
+    "/tmp/manual1919.txt",
+    "/tmp/manual1907.txt"
+   ],
+   "confidence": "low",
+   "variants": [
+    {
+     "location": "three public service commissioners",
+     "enacted_session_law": "UNVERIFIABLE — not present in marker primary source; reconstructed as 'three public service commissioners' from 1954 Blue Book",
+     "other_publications": "1938 Article 52 text (marker file, pre-amendment) reads 'three commissioners of railroads'; 1925 official snapshot and 1907/1919 manuals predate the amendment and read 'commissioners of railroads.' Only the 1954 Blue Book carries 'three public service commissioners.'"
+    },
+    {
+     "location": "They shall severally hold their offices at the seat of government for the term of two years",
+     "enacted_session_law": "session-law reading unverifiable; transcribed per 1954 Blue Book de-garbled",
+     "other_publications": "1938 marker text matches this base clause verbatim ('They shall severally hold their offices at the seat of government for the term of two years and until their successors are elected and duly qualified; but no person shall be eligible for the office of treasurer for more than two consecutive terms'), corroborating the shared base of the 1940 section."
+    }
+   ],
+   "status": "pending",
+   "pending_reason": "4a: low confidence / repeal / institutions / incomplete — needs review or re-OCR"
+  },
+  {
+   "number": "LV",
+   "effective_date": "1940-07-25",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 167",
+     "heading": "Organization, consolidation, and dissolution of counties",
+     "text": "The Legislative Assembly shall provide by general law for organizing new counties, locating county seats thereof temporarily, and changing the county lines; but no new county shall be organized, nor shall any organized county be so reduced as to include an area of less than twenty-four congressional townships, and containing a population of less than five thousand bona fide inhabitants. And in the organization of new counties and in changing the lines of organized counties and boundaries of congressional townships the natural boundaries shall be observed as nearly as may be. The Legislative Assembly shall also provide by general law for the consolidation of counties, and for their dissolution, but no counties shall be consolidated without a fifty-five per cent vote of those voting on the question in each county affected, and no county shall be dissolved without a fifty-five per cent vote of the electors of such county voting on such question."
+    },
+    {
+     "target": "N.D. Const. § 170",
+     "heading": "Optional forms of county government; county manager",
+     "text": "The Legislative Assembly shall provide by law for optional forms of government for counties, which forms shall be, in addition to that form provided by Sections 172 and 173 of the Constitution, and which forms shall specify the number, functions and manner of selection of county officers, but no such optional form of government shall become operative in any county until submitted to the electors thereof at a special election or a general election, and approved by fifty-five per cent of those voting thereon. The manner of exercising the powers herein granted shall be by general laws, but such laws shall provide that the initiative for the submission of the question of the adoption of one of the optional forms of county government may be had either by a vote of not less than two-thirds of the county legislative body or upon petition of electors of the county equal to at least fifteen per centum of the total number of voters of the county who voted for Governor at the last general election. Among the optional forms of county government to be provided by the Legislative Assembly under this provision, at least one form shall provide for a county manager."
+    },
+    {
+     "target": "N.D. Const. § 171",
+     "heading": "Township-board system of county government (repealed)",
+     "text": "[Section 171 was REPEALED by Article 55 of the amendments to the Constitution, adopted June 25, 1940. The original (repealed) section read: \"In any county that shall have adopted a system of government by the chairmen of the several township boards, the question of continuing the same may be submitted to the electors of such county at a general election in such a manner as may be provided by law, and if a majority of all the votes cast upon such question shall be against the said system of government, then such system shall cease in said county and the affairs of said county shall then be transacted by a board of county commissioners as is now provided by the laws of the territory of Dakota.\"]"
+    },
+    {
+     "target": "N.D. Const. § 172",
+     "heading": "Board of county commissioners until optional form adopted",
+     "text": "Until one of the optional forms of county government provided by the Legislative Assembly under Section 170 of the Constitution, as amended, be adopted by any county, the fiscal affairs of said county shall be transacted by a board of county commissioners. Said board shall consist of not less than three and not more than five members whose terms of office shall be prescribed by law. Said board shall hold sessions for the transaction of county business, as shall be provided by law."
+    },
+    {
+     "target": "N.D. Const. § 173",
+     "heading": "Election of county officers under Section 172",
+     "text": "At the first general election after the adoption of this amendment, and every two years thereafter, there shall be elected in each county organized under the provisions of Section 172 of the Constitution, a register of deeds, county auditor, treasurer, sheriff, state's attorney, county judge and a clerk of the district court, who shall be electors in the county in which they are elected and who shall hold office until their successors are elected and qualified; provided in counties having fifteen thousand population or less, the county judge shall also be clerk of the district court; provided further that in counties having a population of 6000 or less, the register of deeds shall also be clerk of the district court and county judge. The sheriff and treasurer of any county shall not hold their respective offices for more than four years in succession."
+    }
+   ],
+   "authority": "Amendment ratified undefined",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/bb1954_marker/bb1954_const/bb1954_const.md (1954 Blue Book -- ONLY source containing Article 55 text; heavily OCR-corrupted)",
+    "/tmp/seg4a_marker/seg4a_src/seg4a_src.md (primary source -- does NOT contain Amendment 55; ends at Article 54/1938)",
+    "/tmp/cl1913.txt (pre-1940; no Art. 55)",
+    "/tmp/off1925.txt (pre-1940; no Art. 55)",
+    "/tmp/manual1919.txt (pre-1940; no Art. 55)",
+    "/tmp/manual1907.txt (pre-1940; no Art. 55)"
+   ],
+   "confidence": "low",
+   "variants": [
+    {
+     "location": "§167 'fifty-five per cent vote' / §170 'fifty-five per cent of those voting'",
+     "enacted_session_law": "NOT AVAILABLE -- enacted session-law source (S.L. 1941 p. 588) not present in supplied files; cannot confirm hyphenation 'fifty-five' vs 'fiftyfive' or 'per cent' vs 'percent'",
+     "other_publications": "1954 Blue Book OCR renders it 'fiftyfive per cent' in §167 (no hyphen) but 'fifty-five per cent' in §170; this internal inconsistency is likely OCR, not an enacted variant -- flagged for human verification against the session law"
+    },
+    {
+     "location": "§170 'in addition to that form provided by Sections 172 and 173'",
+     "enacted_session_law": "NOT AVAILABLE",
+     "other_publications": "1954 Blue Book reads 'of the Constitution' but the OCR shows 'or the Constitution' ('thnt form provided by Sections 172 and 173 or the Constitution') -- 'or' is almost certainly an OCR error for 'of'; flagged"
+    },
+    {
+     "location": "§173 'provided further that in counties having a population of 6000 or less'",
+     "enacted_session_law": "NOT AVAILABLE",
+     "other_publications": "1954 Blue Book OCR shows 'G000' (read as 6000). Note an EARLIER (pre-1940) printing of §173 in seg4a_src.md line 336 reads 'counties having a population of 6,000 or less' with a comma and 'fifteen thousand population, or less' -- spelling/comma usage differs across printings and the 1940 amendment changed the structure; the enacted 1940 wording must be confirmed from S.L. 1941"
+    }
+   ],
+   "status": "pending",
+   "pending_reason": "4a: low confidence / repeal / institutions / incomplete — needs review or re-OCR"
+  },
+  {
+   "number": "LVI",
+   "effective_date": "1940-07-25",
+   "type": "new_article",
+   "changes": [
+    {
+     "target": "N.D. Const. amend. art. LVI",
+     "heading": null,
+     "text": "TEXT NOT FOUND IN PROVIDED SOURCES. The operative constitutional text of Amendment LVI (the 1940 amendment dedicating highway-user taxes to the cost of construction and maintenance of highways, effective 1940-07-25) could not be located in any of the supplied files. The primary marker source (/tmp/seg4a_marker/seg4a_src/seg4a_src.md) ends at the 1939 State Board of Higher Education amendment (its last article, captioned 'CONSTITUTIONAL AMENDMENT ESTABLISHING A STATE BOARD OF HIGHER EDUCATION', Article 54) and contains no 1940 highway-revenue dedication article; an exhaustive grep for 'LVI', 'registration', 'excise', 'cost of construction', 'aviation gasoline', and related dedication phrasing returned no match for this amendment. The 1954 Blue Book integrated constitution (/tmp/bb1954_marker/bb1954_const/bb1954_const.md) likewise does not contain a standalone highway-revenue dedication section among its numbered sections (its 'highway' hits are the public-moneys appropriation section [Sec. 180], the railroad/common-carrier section, and the school-lands eminent-domain list). The 1907, 1913, 1919, and 1925 publications all predate the 1940 amendment and cannot contain it. No verbatim text is transcribed because none is present in the provided sources; fabricating it would violate the accuracy/no-fabrication rule."
+    }
+   ],
+   "authority": "Amendment ratified undefined",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/seg4a_marker/seg4a_src/seg4a_src.md (full structural scan; ends at 1939 higher-education amendment, no 1940 highway article)",
+    "/tmp/bb1954_marker/bb1954_const/bb1954_const.md (all 'highway'/'registration'/'excise' hits reviewed; no dedication article)",
+    "/tmp/cl1913.txt (predates 1940; no match)",
+    "/tmp/manual1919.txt (predates 1940; no match)",
+    "/tmp/manual1907.txt (predates 1940; no match)",
+    "/tmp/off1925.txt (predates 1940; no match)"
+   ],
+   "confidence": "low",
+   "variants": [],
+   "status": "pending",
+   "pending_reason": "4a: low confidence / repeal / institutions / incomplete — needs review or re-OCR"
+  },
+  {
+   "number": "LVIII",
+   "effective_date": "1944-07-27",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 158",
+     "heading": "Sale of school and public lands (Article 58, adopted June 27, 1944)",
+     "text": "[LOW-CONFIDENCE TRANSCRIPTION — from 1954 Blue Book OCR only; authoritative 1944 session-law text NOT available in supplied sources] No original grant school or institutional land shall be sold for less than the fair market value thereof, and in no case for less than ten dollars ($10.00) per acre, provided that when lands have been sold on contract and the contract has been cancelled, such lands may be resold without reappraisement by the board of appraisal. The purchaser shall pay twenty (20) per cent of the purchase price at the time the contract is executed; thereafter annual payments shall be made of not less than six (6) per cent of the original purchase price. An amount equal to not less than three (3) per cent per annum of the unpaid principal shall be credited to interest and the balance shall be applied as payment on principal as credit on purchase price. The purchaser may pay all or any installment or installments not yet due to any interest paying date. If the purchaser so desires, he may pay the entire balance due on his contract with interest to date of payment at any time and he will then be entitled to proper conveyance.\n\nAll sales shall be held at the county seat of the county in which the land to be sold is situated, and shall be at public auction and to the highest bidder, and notice of such sale shall be published once each week for a period of three weeks prior to the day of sale in a legal newspaper published nearest the land and in the newspaper designated for the publication of the official proceedings and legal policies within the county in which said land is situated.\n\nNo grant or patent for such lands shall issue until payment is made for the same; provided that the land contracted to be sold by the state shall be subject to taxation from the date of the contract. In case the taxes assessed against any of said lands for any year remain unpaid until the first Monday in October of the following year, the contract of sale for such land shall, if the Board of University and School Lands so determine, by it, be declared null and void. No contract of sale heretofore made under the provisions of said Section 158 of the Constitution as then providing shall be affected by this amendment, except prepayment of principal may be made as herein provided.\n\nAny of said lands that may be required for townsite purposes, school house sites, church sites, cemetery sites, sites for other educational or charitable institutions, public parks, air plane landing fields, fair grounds, public highways, railroad right-of-way, or other railroad uses and purposes, reservoirs for the storage of water for irrigation, irrigation canals, and ditches, drainage ditches, or for any of the purposes for which private lands may be taken under the right of eminent domain under the Constitution and Laws of this state, may be sold under the provisions of this Article, and shall be paid for in full at the time of sale, or at any time thereafter as herein provided. Any of said lands and any other lands controlled by the Board of University and School Lands, may, with the approval of said Board, be exchanged for lands of the United States, the state of North Dakota or any county or municipality thereof as the Legislature may provide, and the lands so acquired shall be subject to the trust to which the lands exchanged therefor were subject, and the state shall reserve all mineral and water power rights in lands so transferred.\n\nWhen any of said lands have been heretofore or may be hereafter sold on contract, and the purchaser or his heirs or assigns is unable to pay in full for the land purchased within twenty years after the date of purchase and such contract is in default and subject to being declared null and void as by law provided, the Board of University and School Lands may, after declaring such contract null and void, resell the land described in such contract to such purchaser, his heirs or assigns, for the amount of the unpaid principal, together with interest thereon reckoned to the date of such resale at the rate of not less than three (3%) per cent, but in no case shall the resale price be more than the original sale price; such contract of resale shall be upon the terms herein provided, provided this section shall be deemed self-executing insofar as the provisions for resale herein made are concerned."
+    }
+   ],
+   "authority": "Amendment ratified undefined",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/seg4a_marker/seg4a_src/seg4a_src.md (PRIMARY — does NOT contain Amendment LVIII; contains only the 1938 Article 50 version of Section 158)",
+    "/tmp/bb1954_marker/bb1954_const/bb1954_const.md (1954 Blue Book — contains the Article 58/1944 text, but heavily OCR-garbled and uncorroborated)",
+    "/tmp/cl1913.txt (1913 Compiled Laws — predates amendment)",
+    "/tmp/off1925.txt (1925 official snapshot — predates amendment)",
+    "/tmp/manual1919.txt (1919 Manual — predates amendment)",
+    "/tmp/manual1907.txt (1907 Manual — predates amendment)"
+   ],
+   "confidence": "low",
+   "variants": [
+    {
+     "location": "the contract of sale for such land shall, if the Board of University and School Lands so determine, by it, be declared null and void",
+     "enacted_session_law": "UNKNOWN — session-law text absent from primary source",
+     "other_publications": "1954 Blue Book reads (cleaned): 'the contract of sale for such land shall, if the Board of University and School Lands so determine, by it, be declared null and void.' The earlier 1938 Article 50 version in the primary source instead read 'then thereupon the contract of sale for such land shall, if the Board of University and School Lands so determine, become null and void.' Cannot determine which phrasing the 1944 session law actually used."
+    },
+    {
+     "location": "self-executing insofar as the provisions for resale herein made are concerned",
+     "enacted_session_law": "UNKNOWN — session-law text absent from primary source",
+     "other_publications": "1954 Blue Book OCR: 'sclf-cxccutlng insofar ns the / provisions for resale herein mnde nre concerned' (cleaned to 'self-executing insofar as the provisions for resale herein made are concerned'). No corroborating source."
+    }
+   ],
+   "status": "pending",
+   "pending_reason": "4a: low confidence / repeal / institutions / incomplete — needs review or re-OCR"
+  },
+  {
+   "number": "LIX",
+   "effective_date": "1948-07-29",
+   "type": "new_article",
+   "changes": [
+    {
+     "target": "N.D. Const. amend. art. LIX",
+     "heading": "State Building Program Bond Authorization (NOT FOUND)",
+     "text": "[NOT FOUND IN PROVIDED SOURCES] The text of Amendment LIX (a new article bonding the state up to $27,000,000 for a state building program, effective 1948-07-29) could not be located in any of the supplied local files. The primary marker source /tmp/seg4a_marker/seg4a_src/seg4a_src.md covers constitutional amendments only through approximately Article 54 (ending with the 1938 State Board of Higher Education amendment) and does not contain Article LIX/59. The 1954 Blue Book (/tmp/bb1954_marker/bb1954_const/bb1954_const.md), the only cross-check publication post-dating 1948, enumerates amendment articles through Article 63 (adopted June 24, 1952) but contains no $27,000,000 building-program / state-bonding article. No source contains the strings '27,000,000', 'twenty-seven million', 'building program', or 'Article 59/LIX' as the operative new article. Verbatim transcription is impossible without the source text; standing instructions forbid fabricating constitutional language."
+    }
+   ],
+   "authority": "Amendment ratified undefined",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/seg4a_marker/seg4a_src/seg4a_src.md (primary marker OCR — covers amendments through ~Article 54/1938; LIX absent)",
+    "/tmp/bb1954_marker/bb1954_const/bb1954_const.md (1954 Blue Book — enumerates articles through Art. 63/1952; no $27M building-program article)",
+    "/tmp/cl1913.txt (1913 Compiled Laws — predates 1948; absent)",
+    "/tmp/off1925.txt (1925 official snapshot — predates 1948; absent)",
+    "/tmp/manual1919.txt (1919 Legislative Manual — predates 1948; absent)",
+    "/tmp/manual1907.txt (1907 Legislative Manual — predates 1948; absent)"
+   ],
+   "confidence": "low",
+   "variants": [],
+   "status": "pending",
+   "pending_reason": "4a: low confidence / repeal / institutions / incomplete — needs review or re-OCR"
+  },
+  {
+   "number": "LX",
+   "effective_date": "1948-12-02",
+   "type": "new_article",
+   "changes": [
+    {
+     "target": "N.D. Const. amend. art. LX",
+     "heading": "Property tax levy of one mill to finance state building (new article) — NOT FOUND IN SOURCES",
+     "text": "TEXT NOT FOUND. The substantive text of this amendment (Amendment No. LX / Article 60, effective 1948-12-02, authorizing a one-mill property tax levy to finance state building) could NOT be located in the designated primary source file /tmp/seg4a_marker/seg4a_src/seg4a_src.md. That segment file is chronologically scoped to ND constitutional amendments through 1939 only; it begins with the 1925-era concurrent resolutions and ends at Article 54 (the State Board of Higher Education amendment, providing for appointments commencing July 1, 1939). It contains no Article 55-60, no 1948 amendments, and no one-mill state-building-fund provision. The cross-check publications dated before 1948 (1907 Legislative Manual, 1913 Compiled Laws, 1919 Legislative Manual, 1925 official ndlegis.gov snapshot) necessarily predate the 1948 amendment and do not contain it. The 1954 Blue Book (/tmp/bb1954_marker/bb1954_const/bb1954_const.md) is an integrated/codified constitution whose OCR is heavily degraded; searches for every distinctive phrase (one mill / one (1) mill / state building fund / building fund / annual tax / special tax levy / Article 60 / June 1948 / December 1948) returned no recognizable matching section. No verbatim enacted text could be transcribed without fabrication."
+    }
+   ],
+   "authority": "Amendment ratified undefined",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/seg4a_marker/seg4a_src/seg4a_src.md (covers through Art. 54 / 1939; amendment absent)",
+    "/tmp/cl1913.txt (1913, predates amendment)",
+    "/tmp/off1925.txt (1925, predates amendment)",
+    "/tmp/manual1919.txt (1919, predates amendment)",
+    "/tmp/manual1907.txt (1907, predates amendment)",
+    "/tmp/bb1954_marker/bb1954_const/bb1954_const.md (1954, integrated codification; no matching section found under any distinctive phrase; OCR heavily degraded)"
+   ],
+   "confidence": "low",
+   "variants": [],
+   "status": "pending",
+   "pending_reason": "4a: low confidence / repeal / institutions / incomplete — needs review or re-OCR"
+  },
+  {
+   "number": "LXI",
+   "effective_date": "1952-07-24",
+   "type": "amend_section",
+   "changes": [],
+   "authority": "Amendment ratified undefined",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/seg4a_marker/seg4a_src/seg4a_src.md (primary; ends at Article 54, no 1952 amendment present)",
+    "/tmp/manual1919.txt (SEC. 162 = permanent school fund; SEC. 173 = county officers incl. sheriff four-year limit)",
+    "/tmp/off1925.txt (§173 county officers incl. sheriff four-year-succession limit)",
+    "/tmp/bb1954_marker/bb1954_const/bb1954_const.md (only 1952 amendment = Article 63 amending §216; §173 still shows four-year limit as of Article 55/1940; no §162 county-officers text)",
+    "/tmp/cl1913.txt (predates 1952; no match)"
+   ],
+   "confidence": "low",
+   "variants": [],
+   "status": "pending",
+   "pending_reason": "4a: low confidence / repeal / institutions / incomplete — needs review or re-OCR"
+  },
+  {
+   "number": "LXII",
+   "effective_date": "1952-07-24",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 173",
+     "heading": "Investment of permanent school funds in farm loans (NOT RECOVERABLE FROM PROVIDED SOURCES)",
+     "text": "[UNRECOVERABLE] The enacted session-law text of this amendment is not present in the designated primary source. /tmp/seg4a_marker/seg4a_src/seg4a_src.md contains constitutional amendments only through Article 54 (State Board of Higher Education, approved June 28, 1938) and does not extend to the 1952 amendment (Amendment LXII). The §173 that DOES appear in that file is an unrelated COUNTY OFFICERS provision (Article 48 era): 'At the first general election held after the adoption of this amendment, and every two years thereafter, there shall be elected in each organized county in the state, a register of deeds, county auditor, treasurer, sheriff, state's attorney, county judge and a clerk of the district court ...' — which has nothing to do with permanent school funds or farm loans. No enacted text could be transcribed."
+    }
+   ],
+   "authority": "Amendment ratified undefined",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/seg4a_marker/seg4a_src/seg4a_src.md (primary — does NOT contain this amendment; ends at Article 54, 1938)",
+    "/tmp/off1925.txt (§162 baseline, pre-1952)",
+    "/tmp/bb1954_marker/bb1954_const/bb1954_const.md (§162 line 550, shows unamended language)",
+    "/tmp/manual1919.txt (§162 baseline, pre-1952)",
+    "/tmp/manual1907.txt (§162 baseline, pre-1952)",
+    "/tmp/cl1913.txt (§162 baseline, pre-1952)"
+   ],
+   "confidence": "low",
+   "variants": [],
+   "status": "pending",
+   "pending_reason": "4a: low confidence / repeal / institutions / incomplete — needs review or re-OCR"
+  },
+  {
+   "number": "LXIII",
+   "effective_date": "1952-07-24",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 216",
+     "heading": "Public institutions permanently located; removal of School for the Blind from Pembina County (Bathgate) authorized",
+     "text": "Section 216. The following named public institutions are hereby permanently located as hereinafter provided, each to have so much of the remaining grant of one hundred seventy thousand acres of land made by the United States for \"other educational and charitable institutions\" as is allotted by law, namely:\n\nFirst: A soldiers' home, when located, or such other charitable institution as the legislative assembly may determine, at Lisbon, in the county of Ransom, with a grant of forty thousand acres of land.\n\nSecond: The blind asylum shall be known as the North Dakota school for the blind and may be removed from the county of Pembina to such other location as may be determined by the board of administration to be in the best interests of the students of such institution and the state of North Dakota,\n\nThird: An industrial school and school for manual training or such other educational or charitable institution as the legislative assembly may provide at the town of Ellendale, in the county of Dickey, with a grant of forty thousand acres.\n\nFourth: A school of forestry, or such other institution as the legislative assembly may determine, at such place in one of the counties of McHenry, Ward, Bottineau or Rolette, as the electors of said counties may determine by an election for that purpose, to be held as provided by the legislative assembly.\n\nFifth: A scientific school or such other educational or charitable institution as the legislative assembly may prescribe, at the city of Wahpeton, county of Richland, with a grant of forty thousand acres.\n\nSixth: A state normal school at the city of Minot in the county of Ward.\n\nSeventh: (a) A state normal school at the city of Dickinson, in the county of Stark. (b) A state hospital for the insane at such place within this state as shall be selected by the legislative assembly, provided, that no other institution of a character similar to any one of those located by this article shall be established or maintained without a revision of this constitution."
+    }
+   ],
+   "authority": "Amendment ratified undefined",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/seg4a_marker/seg4a_src/seg4a_src.md (PRIMARY session-law file — searched; does NOT contain Article 63 / §216 / blind / Bathgate; covers only 1925-1939 amendments)",
+    "/tmp/bb1954_marker/bb1954_const/bb1954_const.md (1954 Blue Book — sole post-1952 source for amended §216, lines 862-884)",
+    "/tmp/off1925.txt (1925 official snapshot — pre-amendment §216, line 6922)",
+    "/tmp/cl1913.txt (1913 Compiled Laws — pre-amendment §216, line 13045; plus the at-Bathgate proposal at line 13335)",
+    "/tmp/manual1919.txt (1919 Legislative Manual — pre-1952 §216 with \"at Bathgate\" Second clause, line 10655)",
+    "/tmp/manual1907.txt (searched — no Article 63 / 1952 content)"
+   ],
+   "confidence": "medium",
+   "variants": [
+    {
+     "location": "one hundred seventy thousand acres",
+     "enacted_session_law": "UNAVAILABLE (session-law primary source missing); 1954 Blue Book reads \"one hundred seventy thousand acres\"",
+     "other_publications": "1925 official (/tmp/off1925.txt) and 1913 Compiled Laws (/tmp/cl1913.txt) read \"one hundred and seventy thousand acres\" (with \"and\"); 1925 also adds \"(170,000)\". The 1954 Blue Book omits \"and\". This clause predates Article 63 and was not amended by it."
+    },
+    {
+     "location": "Second: ... and the state of North Dakota,",
+     "enacted_session_law": "UNAVAILABLE; 1954 Blue Book ends the clause with a comma",
+     "other_publications": "No other available publication reproduces the post-1952 Second clause, so the comma-vs-period reading cannot be cross-checked. Flagged for human review against the 1951 session laws / N.D.C.C. constitution appendix."
+    },
+    {
+     "location": "at Lisbon, in the county of Ransom",
+     "enacted_session_law": "UNAVAILABLE; corrected to \"Lisbon\"",
+     "other_publications": "1954 Blue Book OCR garbles this as \"Libon\"; 1925 official, 1913 Compiled Laws, and 1919 Manual all read \"Lisbon\". Treated as OCR error, not a genuine variant. (Unchanged-by-Article-63 clause.)"
+    }
+   ],
+   "status": "pending",
+   "pending_reason": "4a: medium confidence / repeal / institutions / incomplete — needs review or re-OCR"
+  },
+  {
+   "number": "LXIV",
+   "effective_date": "1954-07-29",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 138",
+     "heading": null,
+     "text": "[ENACTED TEXT NOT FOUND IN AVAILABLE SOURCES. Amendment LXIV (eff. 1954-07-29) amends N.D. Const. § 138 to eliminate the 60-day notice requirement for increasing corporate stock/indebtedness. The primary source file /tmp/seg4a_marker/seg4a_src/seg4a_src.md contains only 1925-1939 session-law concurrent resolutions (ending at Article 54, 1939) and does NOT contain this 1954 amendment. All available secondary publications still print the ORIGINAL, PRE-AMENDMENT text of section 138, which reads: 'No corporation shall issue stock or bonds except for money, labor done, or money or property actually received; and all fictitious increase of stock or indebtedness shall be void. The stock and indebtedness of corporations shall not be increased except in pursuance of general law, nor without the consent of the persons holding the larger amount in value of the stock first obtained at a meeting to be held after sixty days' notice given in pursuance of law.' The 1954 amendment evidently struck the closing clause 'first obtained at a meeting to be held after sixty days' notice given in pursuance of law' (or the entire consent/notice sentence). The verbatim ENACTED amended text could not be retrieved from any provided file and must be obtained from the 1955 (post-amendment) constitution printing or the 1953/1954 session laws.]"
+    }
+   ],
+   "authority": "Amendment ratified undefined",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/seg4a_marker/seg4a_src/seg4a_src.md (PRIMARY -- does not contain Amendment LXIV; covers 1925-1939 only)",
+    "/tmp/off1925.txt (line 4183 -- original sec 138)",
+    "/tmp/cl1913.txt (line 11201 -- original sec 138)",
+    "/tmp/manual1907.txt (line 5653 -- original sec 138)",
+    "/tmp/manual1919.txt (line 8881 -- original sec 138)",
+    "/tmp/bb1954_marker/bb1954_const/bb1954_const.md (line 470 -- still original/pre-amendment sec 138)"
+   ],
+   "confidence": "low",
+   "variants": [],
+   "status": "pending",
+   "pending_reason": "4a: low confidence / repeal / institutions / incomplete — needs review or re-OCR"
+  },
+  {
    "number": "LXV",
    "effective_date": "1956-07-26",
    "type": "new_article",
