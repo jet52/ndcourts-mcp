@@ -1,17 +1,324 @@
 {
-  "_README": "Source-verified ND constitutional amendments for the point-in-time history (Model 1). Applied in order by ingest_constitution_history.py after the 1889 base. text is verbatim from the authoritative session law, cross-checked against the published codes named in sources_verified. type 'new_article' appends an Amendment Article; 'amend_section' replaces an existing section's text from effective_date. Pre-1981 only; 1981+ amendments live in the modern const corpus.",
-  "amendments": [
+ "_README": "Source-verified ND constitutional amendments (Model 1 history). Applied in order after the 1889 base. type new_article appends an Amendment Article; amend_section replaces the target section text from effective_date. status 'pending' = extracted+verified but awaiting full-section structural assembly (subdivision/partial amendments), not yet applied. Text from high-quality marker OCR of the authoritative session law, cross-checked against the published codes (see sources_verified).",
+ "amendments": [
+  {
+   "number": "1",
+   "election_date": "1894-11-06",
+   "effective_date": "1894-12-06",
+   "type": "new_article",
+   "changes": [
     {
-      "number": "1",
-      "election_date": "1894-11-06",
-      "effective_date": "1894-12-06",
-      "type": "new_article",
-      "citation": "N.D. Const. amend. art. 1",
-      "heading": "Lotteries prohibited",
-      "text": "The legislative assembly shall have no power to authorize lotteries or gift enterprises for any purpose, and shall pass laws to prohibit the sale of lottery or gift enterprise tickets.",
-      "authority": "Amendment ratified Nov. 6, 1894",
-      "source_urls": ["https://www.legis.nd.gov/assembly/sessionlaws/1893/sl1893.pdf#page=291"],
-      "sources_verified": ["S.L. 1893 p. 294 (proposing resolution)", "1895 Revised Codes (codified as Amendment Article 1)", "ndconst.org :amendments"]
+     "target": "N.D. Const. amend. art. 1",
+     "heading": "Lotteries prohibited",
+     "text": "The legislative assembly shall have no power to authorize lotteries or gift enterprises for any purpose, and shall pass laws to prohibit the sale of lottery or gift enterprise tickets."
     }
-  ]
+   ],
+   "authority": "Amendment ratified Nov. 6, 1894",
+   "source_urls": [
+    "https://www.legis.nd.gov/assembly/sessionlaws/1893/sl1893.pdf#page=291"
+   ],
+   "sources_verified": [
+    "S.L. 1893 p.294",
+    "1895 Revised Codes",
+    "ndconst.org :amendments"
+   ]
+  },
+  {
+   "number": "2",
+   "election_date": "1898-11-08",
+   "effective_date": "1898-12-08",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 121",
+     "heading": "Qualifications of voters",
+     "text": "Every male person of the age of 21 years or upwards, belonging to either of the following classes who shall have resided in the state one year and in the county six months and in the precinct ninety days next preceding any election shall be a qualified elector at such election.\n\nFirst. Citizens of the United States.\n\nSecond. Civilized persons of Indian descent, who shall have severed their tribal relations two years next preceding such election."
+    },
+    {
+     "target": "N.D. Const. § 127",
+     "heading": "Disqualifications of voters; educational test",
+     "text": "No person who is under guardianship, non compos mentis, or insane, shall be qualified to vote at any election, nor shall any person convicted of treason or felony, unless restored to civil rights, and the legislature shall by law establish an educational test as a qualification, and may prescribe penalties for failing, neglecting or refusing to vote at any general election."
+    }
+   ],
+   "authority": "Amendment ratified 1898-11-08",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/seg2_marker/seg2_src/seg2_src.md (marker OCR of 1897 session law, p.426)",
+    "/tmp/manual1907.txt (1907 Legislative Manual, amended Art. 2 §§ 121, 127)",
+    "/tmp/cl1913.txt (1913 Compiled Laws, Amendments Article 2, plus original §§ 121/127 for contrast)"
+   ],
+   "confidence": "high",
+   "discrepancies": "OCR-level only, resolved against the published codes: the marker reads \"non compus mentis\" and the 1913 amendments text reads \"nou compos mentis\"; the 1907 and 1919 Manuals confirm the correct spelling \"non compos mentis,\" which is adopted. The amended § 121 deletes the original section's \"Persons of foreign birth who shall have declared their intention to become citizens...\" clause (present in the unamended 1913 code body at line ~11051), leaving only the two classes shown; this is the operative change, not a source disagreement. Section 121 amended text omits the bracketed cross-references and annotations found in the codes. No unresolved substantive conflicts."
+  },
+  {
+   "number": "3",
+   "election_date": "1900-11-06",
+   "effective_date": "1900-12-06",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 76",
+     "heading": "Board of pardons",
+     "text": "The governor shall have power in conjunction with the board of pardons, of which the governor shall be ex officio a member and the other members of which shall consist of the attorney general of the State of North Dakota, the chief justice of the Supreme Court of the State of North Dakota and two qualified electors who shall be appointed by the governor, to remit fines and forfeitures, to grant reprieves, commutations and pardons after conviction for all offenses except treason and cases of impeachment; but the legislative assembly may by law regulate the manner in which the remission of fines, pardons, commutations and reprieves may be applied for.\n\nUpon conviction for treason the governor shall have the power to suspend the execution of sentence until the case shall be reported to the legislative assembly at its next regular session, when the legislative assembly shall either pardon or commute the sentence, direct the execution of the sentence or grant further reprieve.\n\nThe governor shall communicate to the legislative assembly at each regular session each case of remission of fine, reprieve, commutation or pardon granted by the board of pardons, stating the name of the convict, the crime for which he is convicted, the sentence and its date and the date of the remission, commutation, pardon or reprieve, with their reasons for granting the same."
+    }
+   ],
+   "authority": "Amendment ratified 1900-11-06",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/seg2_marker/seg2_src/seg2_src.md (marker OCR of 1899 Session Laws, p. 256)",
+    "/tmp/cl1913.txt (1913 Compiled Laws, Art. 3 § 76)",
+    "/tmp/manual1907.txt (1907 Legislative Manual, Sec. 76)",
+    "/tmp/manual1919.txt (1919 Legislative Manual)"
+   ],
+   "confidence": "high",
+   "discrepancies": "OCR-level only, all resolved by cross-check (text reflects the published-code reading): (1) Marker rendered the section number as \"§ jl5\" and the intro as \"Section 76 of article 3\"; the operative section is § 76, confirmed by both codes. (2) Marker read \"board of pardon\" (singular); both 1913 and 1907 codes read \"board of pardons\" (plural) in both occurrences — adopted plural. (3) Marker read \"each case of remission or fine\"; 1913 and 1907 codes read \"remission of fine\" — adopted \"of fine\". (4) Marker read \"ex-officio\" (hyphen); both codes read \"ex officio\" (no hyphen) — adopted no hyphen. (5) Marker garbles (\"tl,e\", \"Stat&#65533;\", \"goveruor\") are OCR artifacts corrected to confirmed spellings. No substantive disagreement among sources."
+  },
+  {
+   "number": "4",
+   "election_date": "1900-11-06",
+   "effective_date": "1900-12-06",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 179",
+     "heading": "Assessment of railroads, express, telegraph, etc. by state board of equalization",
+     "text": "All property, except as hereinafter in this section provided, shall be assessed in the county, city, township, town, village or district in which it is situated, in the manner prescribed by law. The franchise, roadway, roadbed, rails and rolling stock of all railroads and the franchise and all other property of all express companies, freight line companies, car equipment companies, sleeping car companies, dining car companies, telegraph or telephone companies or corporations operated in this state and used directly or indirectly in the carrying of persons, property or messages, shall be assessed by the state board of equalization at their actual value and such assessed value shall be apportioned to the counties, cities, towns, villages, townships and districts in which such railroad companies, express companies, sleeping car companies, dining car companies, telegraph and telephone companies are located or through which they are operated as a basis for the taxation of such property, in proportion to the number of miles of such property within such counties, cities, towns, villages, townships and districts or over which any part of such property is used or operated within such counties, towns, villages, townships and districts. But should any railroad allow any portion of its roadway to be used for any purpose other than the operation of a railroad thereon, such portion of its roadway, while so used, shall be assessed in the manner provided for the assessment of other real property."
+    }
+   ],
+   "authority": "Amendment ratified 1900-11-06",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/seg2_marker/seg2_src/seg2_src.md (marker OCR of session-law operative text, line 148; '...be amended to read as follows')",
+    "/tmp/cl1913.txt (1913 Compiled Laws, constitutional Art. 4 amendments, line 12892)",
+    "/tmp/manual1907.txt (1907 Legislative Manual, Amendments to the Constitution, ARTICLE IV / Sec. 179, line 7242)",
+    "/tmp/manual1919.txt (1919 Legislative Manual, Art. IV, SEC. 179, line 10288)"
+   ],
+   "confidence": "high",
+   "discrepancies": "Base text taken from the authoritative session-law operative passage (marker line 148). OCR artifacts corrected against the three published codes and the parallel referral resolution (marker line 13): 'All property.' -> 'All property,'; restored dropped comma in 'villages, townships and districts'; 'use<l' -> 'used'; 'provicled' -> 'provided'. (1) 'carrying of persons, property or messages': the operative session-law text and manual1907 (the Art. IV amendment) BOTH include 'property'; cl1913 (line 12892) and manual1919 (line 10288) omit 'property' — treated as a later published-code omission; 'property' retained per the operative text. (2) Final clause 'over which any part ... within such counties, towns, villages, townships and districts' omits 'cities' in the operative text AND in all three published codes; only the earlier referral resolution (marker line 13) had 'cities' there — the operative/ratified reading (no 'cities') is used. (3) The three published codes insert commas after 'railroads', 'state', and 'value' ('roadbed, rails and rolling stock of all railroads, and...'; 'operated in this state, and used...'; 'actual value, and such assessed value...'); the operative session-law marker text lacks these commas. The session-law text governs, so they are not added; the difference is non-substantive punctuation."
+  },
+  {
+   "number": "5",
+   "election_date": "1904-11-08",
+   "effective_date": "1904-12-08",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 215",
+     "heading": "Subdivision 5 of section 215",
+     "text": "Fifth. The school for the deaf and dumb of North Dakota, at the city of Devils Lake, in the county of Ramsey."
+    }
+   ],
+   "authority": "Amendment ratified 1904-11-08",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/seg2_marker/seg2_src/seg2_src.md (primary, session law SL 1903 concurrent resolution, H.B. No. 73-Davis, Approved March 4, 1903)",
+    "/tmp/cl1913.txt (1913 Compiled Laws, Article 5, Subdivision 5 of section 215, Approved and ratified 1904)",
+    "/tmp/manual1907.txt (1907 Legislative Manual, Article V, Subdivision 5 of section 215)",
+    "/tmp/manual1919.txt (1919 Legislative Manual, Article V)"
+   ],
+   "confidence": "high",
+   "discrepancies": "None material. All four sources agree on the substantive wording. The primary marker source, 1913 Compiled Laws, and 1907 Manual are character-for-character identical (allowing for line breaks). The 1919 Manual line 10320 has an OCR artifact (stray apostrophe in \"'deaf and dumb\") and a later re-printing at line 11103 capitalizes \"School for the Deaf and Dumb\" with all-caps \"FIFTH:\" — these are cosmetic OCR/typesetting variants, not text disagreements. The amendment renames the institution from the prior \"deaf and dumb asylum at the city of Devils Lake\" (former subdivision 5, sec. 215) to \"the school for the deaf and dumb of North Dakota, at the city of Devils Lake, in the county of Ramsey.\"",
+   "status": "pending",
+   "pending_reason": "§215 subdivision Fifth — needs full-section assembly"
+  },
+  {
+   "number": "6",
+   "election_date": "1904-11-08",
+   "effective_date": "1904-12-08",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 215",
+     "heading": "Subdivision 8 of section 215 (state hospital for insane at Jamestown; institution for feeble minded at Grafton)",
+     "text": "8. A state hospital for the insane at the City of Jamestown, in the County of Stutsman. And the legislative assembly shall appropriate twenty thousand acres of the grant of lands made by the act of congress aforesaid for \"Other Educational and Charitable Institutions\" to the benefit and for the endowment of said institution, and there shall be located at or near the City of Grafton, in the County of Walsh, an institution for the feeble minded, on the grounds purchased by the secretary of the interior for a penitentiary building."
+    }
+   ],
+   "authority": "Amendment ratified 1904-11-08",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/seg2_marker/seg2_src/seg2_src.md (marker OCR of session law, lines 135-137)",
+    "/tmp/manual1907.txt (1907 Legislative Manual, Article VI, line 7270ff)",
+    "/tmp/cl1913.txt (1913 Compiled Laws, Article 6, subdivision 8 of section 215, line 12929ff, marked \"[Approved and ratified 1904.]\")"
+   ],
+   "confidence": "high",
+   "discrepancies": "Only capitalization/style divergences, no substantive disagreement. (1) The session-law marker source capitalizes \\\"City,\\\" \\\"County,\\\" and \\\"Other Educational and Charitable Institutions\\\"; both published codes lowercase these (\\\"city,\\\" \\\"county,\\\" \\\"other educational and charitable institutions\\\"). Per instructions, the session-law (authoritative) capitalization is preserved. (2) The session law reads \\\"8.\\\" while both published codes render it \\\"Eighth.\\\"; preserved the session-law \\\"8.\\\". (3) The 1913 Compiled Laws prints \\\"Orafton\\\" — a clear OCR error for \\\"Grafton\\\" (confirmed by the marker source, 1907 Manual, and the subject matter). No re-OCR needed; wording fully resolved.",
+   "status": "pending",
+   "pending_reason": "§215 subdivision Eighth (+ Grafton feeble-minded) — needs full-section assembly"
+  },
+  {
+   "number": "7",
+   "election_date": "1904-11-08",
+   "effective_date": "1904-12-08",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 176",
+     "heading": "Addenda to section 176 (taxation of grain in elevators)",
+     "text": "The legislative assembly may further provide that grain grown within the state and held therein in elevators, warehouses and granaries may be taxed at a fixed rate."
+    }
+   ],
+   "authority": "Amendment ratified 1904-11-08",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/seg2_marker/seg2_src/seg2_src.md (primary marker OCR, H.B. No. 63-Chaffee, lines 182-196)",
+    "/tmp/cl1913.txt (1913 Compiled Laws, Article 7, Addenda to section 176)",
+    "/tmp/manual1919.txt (1919 Legislative Manual, Article VII, Addenda to section 176)"
+   ],
+   "confidence": "high",
+   "discrepancies": "None material. (1) The primary source's sentence is interrupted by a stray page-footer artifact \"s. L.—19.\" which is not part of the constitutional text and was excluded. (2) The 1913 Compiled Laws OCR shuffled the words \"The legislative assembly may further provide\" but the substance matches; the 1919 Manual resolves it cleanly. This amendment ADDS a clause to existing section 176 (it does not restate the entire section); the operative text recorded is the added clause exactly as agreed across sources.",
+   "status": "pending",
+   "pending_reason": "§176 appended grain-taxation clause — needs full-section assembly"
+  },
+  {
+   "number": "8",
+   "election_date": "1908-11-03",
+   "effective_date": "1908-12-03",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 162",
+     "heading": "Investment of permanent school and educational funds",
+     "text": "§ 162. The moneys of the permanent school fund and other educational funds shall be invested only in bonds of school corporations or of counties, or of townships, or of municipalities within the state, bonds issued for the construction of drains under authority of law within the state, bonds of the United States, bonds of the state of North Dakota, bonds of other states; provided, such states have never repudiated any of their indebtedness, or on first mortgages on farm lands in this state, not exceeding in amount one-third of the actual value of any subdivision on which the same may be loaned, such value to be determined by the board of appraisal of school lands."
+    }
+   ],
+   "authority": "Amendment ratified 1908-11-03",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/seg2_marker/seg2_src/seg2_src.md (primary session-law marker OCR, S.B. No. 334, line 316)",
+    "/tmp/cl1913.txt (1913 Compiled Laws, Amendments Article 8, line 12944, 'Approved and ratified 1908')",
+    "/tmp/manual1919.txt (1919 Legislative Manual, ARTICLE VIII, line 10342)"
+   ],
+   "confidence": "high",
+   "discrepancies": "No substantive disagreement among the three sources. Note: the marker source contained two unrelated earlier versions of an amendment to § 162 (lines 159 and 210) that lack the 'municipalities' / 'drains' language; these are an earlier (pre-1907) proposal and were correctly excluded — only the S.B. No. 334 resolution (referred by the ninth legislative assembly to the tenth, ratified 1908) matches Amendment #8's subject. cl1913 separately reprints the ORIGINAL pre-amendment § 162 in the constitution body (line 11491) with the cross-reference 'See amendments, article 8'; that original text was not used. Minor OCR artifacts in the marker primary ('cor porations', 're pudiated', 'subdivison') were corrected against the two published codes; 'one-third' hyphenation confirmed by manual1919."
+  },
+  {
+   "number": "9",
+   "election_date": "1908-11-03",
+   "effective_date": "1908-12-03",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 158",
+     "heading": "Minimum price of state lands",
+     "text": "§ 158. Minimum price of state lands. No land shall be sold for less than the appraised value and in no case for less than ten dollars per acre. The purchaser shall pay one-fifth of the price in cash, and the remaining four-fifths as follows: One-fifth in five years, one-fifth in ten years, one-fifth in fifteen years and one-fifth in twenty years, with interest at the rate of not less than six per centum, payable annually in advance. All sales shall be held at the county seat of the county in which the land to be sold is situate, and shall be at public auction and to the highest bidder, after sixty days' advertisement of the same in a newspaper of general circulation in the vicinity of the lands to be sold, and one at the seat of government. Such lands as shall not have been specially subdivided shall be offered in tracts of one-quarter section, and those so subdivided in the smallest subdivisions. All lands designated for sale and not sold within two years after appraisal shall be re-appraised before they are sold. No grant or patent for any such lands shall issue until payment is made for the same; provided, that the lands contracted to be sold by the state shall be subject to taxation from date of such contract. In case the taxes assessed against any of said lands for any year remain unpaid until the first Monday in October of the following year, then and thereupon the contracts of sale for such lands shall, at the election of the board of university and school lands, become null and void; and no such contract heretofore made shall be held void for non-payment of taxes accruing on the lands described therein; provided, such taxes shall have been paid before this amendment takes effect; provided, further, that any school or institution lands that may be required for townsite purposes may be paid for at any time and patent issued therefor."
+    }
+   ],
+   "authority": "Amendment ratified 1908-11-03",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/seg2_marker/seg2_src/seg2_src.md (primary marker OCR of 1907 session law, S.B. No. 302, AMENDMENT heading, § 158)",
+    "/tmp/cl1913.txt (1913 Compiled Laws, Article 9 § 158, headed '[Approved and ratified 1908.]')"
+   ],
+   "confidence": "high",
+   "discrepancies": "Minor non-substantive OCR/typesetting variances between the two sources: (1) session law reads \"from date of such contract\" while cl1913 reads \"from the date of such contract\"; (2) session law \"the contracts of sale for such lands\" vs. cl1913 \"the contracts of sale of such lands\"; (3) session law opens \"No land shall be sold\" while cl1913 opens \"No lands shall be sold.\" The session-law text (authoritative source) is used verbatim. None affect meaning. The phrase did NOT appear in manual1907.txt (predates the 1908 amendment) or manual1919.txt (no hit on the distinctive phrase), which is expected given the 1919 manual likely carried a later-amended version of § 158."
+  },
+  {
+   "number": "10",
+   "election_date": "1908-11-03",
+   "effective_date": "1908-12-03",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 89",
+     "heading": "Number of judges of the supreme court",
+     "text": "§ 89. The supreme court shall consist of five judges, a majority of whom shall be necessary to form a quorum or pronounce a decision, but one or more of said judges may adjourn the court from day to day or to a day certain."
+    }
+   ],
+   "authority": "Amendment ratified 1908-11-03",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/seg2_marker/seg2_src/seg2_src.md (marker OCR of 1907 session law, p.482)",
+    "/tmp/cl1913.txt (1913 Compiled Laws, § 89)",
+    "/tmp/manual1919.txt (1919 Legislative Manual, Sec. 89)"
+   ],
+   "confidence": "high",
+   "discrepancies": "Minor punctuation/OCR variance only: the marker OCR and 1907 session law read a comma before 'but,' while the 1919 Manual and 1913 Compiled Laws use a semicolon ('decision; but'). The 1913 Compiled Laws also contains obvious OCR artifacts ('supreme- court', a stray semicolon) not present in the cleaner sources. None affect the substantive text. Adopted the comma form from the authoritative session-law marker OCR."
+  },
+  {
+   "number": "11",
+   "election_date": "1910-11-08",
+   "effective_date": "1910-12-08",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 158",
+     "heading": "Sale of public lands; interest reduced to five per cent; notice at county seat",
+     "text": "§ 158. No land shall be sold for less than the appraised value, and in no case for less than ten dollars per acre. The purchaser shall pay one-fifth of the price in cash and the remaining four-fifths as follows: One-fifth in five years, one-fifth on or before the expiration of ten years, one-fifth on or before the expiration of fifteen years, and one-fifth on or before the expiration of twenty years, with interest at the rate of not less than five per cent per annum payable annually in advance; provided, that when payments are made before due they shall be made at an interest paying date, and one years' interest in advance shall be paid on all moneys so paid. All sales shall be held at the county seat of the county in which the land to be sold is situated, and all be at public auction and to the highest bidder after sixty days advertisement of the same in a newspaper in general circulation in the vicinity of the land to be sold, and also published in a newspaper published at the county seat, and also in a newspaper published at the seat of government. Such lands as shall not have been especially subdivided shall be offered in tracts of one-quarter section and those subdivided in the smallest subdivision. All lands designated for sale and not sold within two years after appraisal shall be re-appraised before they are sold. No grant or patent for such lands shall issue until payment is made for the same; provided, that the lands contracted to be sold by the state shall be subject to taxation from the date of such contract. In case the taxes assessed against any of said lands for any year remain unpaid until the first Monday in October of the following year, then and thereupon the contract of sale for such lands shall, if the board of university and school lands so determine, become null and void. Any lands under the provisions of section 158 of the constitution of the state of North Dakota that have heretofore been sold may be paid for, except as to interest, as provided herein; provided, further, that any school or institution lands that may be required for townsite purposes, may be paid for at any time and patent issued therefor."
+    }
+   ],
+   "authority": "Amendment ratified 1910-11-08",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/seg2_marker/seg2_src/seg2_src.md (1909 session law, marker OCR, H.B. 146, line 478; \"Filed in the office of the secretary of state, March 16, 1909\")",
+    "/tmp/cl1913.txt (1913 Compiled Laws §158, line 13084 — corroborates interest rate and unchanged portions; prints the later 1912 version)",
+    "/tmp/manual1919.txt (1919 Legislative Manual §158, line 10472 — corroborates interest rate and unchanged portions; prints the later 1912 version)"
+   ],
+   "confidence": "medium",
+   "discrepancies": "The published codes (1913 Compiled Laws and 1919 Manual) do NOT corroborate the full text because they reflect the superseding 1912 amendment to the same §158, not the 1910 amendment. Specifically: (a) the 1910 text requires advertisement \\\"also published in a newspaper published at the county seat, and also in a newspaper published at the seat of government,\\\" whereas the code (1912) text reverts to \\\"and one at the seat of government\\\" with no county-seat-newspaper clause; (b) the code (1912) text adds an extensive railroad/eminent-domain enumeration absent from the 1910 amendment. Marker OCR artifacts preserved/normalized: line-wrap hyphenations rejoined; the phrase \\\"and all be at public auction\\\" appears in the marker source (likely OCR/typesetting for \\\"and shall be at public auction\\\") and is preserved verbatim; \\\"one years' interest\\\" retained as printed. These were not modernized. Because the full operative text rests on a single source for the changed portions, confidence is medium rather than high."
+  },
+  {
+   "number": "12",
+   "election_date": "1910-11-08",
+   "effective_date": "1910-12-08",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 216",
+     "heading": "Add state normal school at Minot to list of state institutions",
+     "text": "§ 216. The following named public institutions are hereby permanently located as hereinafter provided, each to have so much of the remaining grant of one hundred and seventy thousand acres of land made by the United States for \"other educational and charitable institutions\" as is allotted by law, namely:\n\nFirst. A soldiers' home, when located, or such other charitable institution as the legislative assembly may determine, at Lisbon, in the county of Ransom, with a grant of forty thousand acres of land.\n\nSecond. A blind asylum, or such other institution as the legislative assembly may determine at such place in the county of Pembina as the qualified electors of the said county may determine at an election to be held as prescribed by the legislative assembly, with a grant of thirty thousand acres.\n\nThird. An industrial school and school for manual training, or such other educational or charitable institution as the legislative assembly may provide, at the town of Ellendale, in the county of Dickey, with a grant of forty thousand acres.\n\nFourth. A school of forestry, or such other institution as the legislative assembly may determine, at such place in one of the counties of McHenry, Ward, Bottineau or Rolette as the electors of the said counties may determine by an election for that purpose, to be held as provided by the legislative assembly.\n\nFifth. A scientific school, or such other educational or charitable institution as the legislative assembly may prescribe, at the city of Wahpeton, county of Richland, with a grant of forty thousand acres.\n\nSixth. A state normal school at the city of Minot, in the county of Ward; provided, that no other institution of a character similar to any one of those located by this article, shall be established or maintained without a revision of this constitution."
+    }
+   ],
+   "authority": "Amendment ratified 1910-11-08",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/seg2_marker/seg2_src/seg2_src.md (primary marker OCR of session law)",
+    "/tmp/cl1913.txt (1913 Compiled Laws, Article 12, § 216, '[Approved and ratified 1910.]')"
+   ],
+   "confidence": "high",
+   "discrepancies": "None affecting the operative text. NOTE: /tmp/cl1913.txt also contains a LATER amendment to § 216 (Chap. 95, 1913 Session Laws, 'Approved March 10, 1913,' lines 13305-13352) which renamed the blind asylum to 'school for the blind at Bathgate' and relocated forestry to Bottineau — that is a separate, post-1910 amendment, not amendment #12, and was disregarded. The minor OCR variants in cl1913.txt for the 1910 version (e.g., 'Bllendale' for 'Ellendale', 'grant >of', 'leprislative', a misplaced semicolon at Sixth) are OCR artifacts; the marker source is clean and governs."
+  },
+  {
+   "number": "13",
+   "election_date": "1912-11-05",
+   "effective_date": "1912-12-05",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 158",
+     "heading": "Sale of school and public lands; minimum price; sale for public purposes",
+     "text": "§ 158. No land shall be sold for less than the appraised value, and in no case for less than ten dollars per acre. The purchaser shall pay one-fifth of the price in cash, and the remaining four-fifths as follows: One-fifth in five years, one-fifth on or before the expiration of ten years, one-fifth on or before the expiration of fifteen years, and one-fifth on or before the expiration of twenty years, with interest at the rate of not less than five per cent per annum, payable annually in advance; provided, that when payments are made before due they shall be made at an interest paying date, and one year's interest in advance shall be paid on all moneys so paid. All sales shall be held at the county seat of the county in which the land to be sold is situated, and shall be at public auction and to the highest bidder, after sixty days' advertisement of the same in a newspaper of general circulation in the vicinity of the land to be sold, and one at the seat of government. Such lands as shall not have been specially subdivided shall be offered in tracts of one-quarter section, and those subdivided in the smallest subdivisions. All lands designated for sale and not sold within two years after appraisal shall be reappraised before they are sold. No grant or patent for such lands shall issue until payment is made for the same; provided, that the land contracted to be sold by the state shall be subject to taxation from the date of contract. In case the taxes assessed against any of said lands for any year remain unpaid until the first Monday in October of the following year, then thereupon the contract of sale for such lands shall, if the board of university and school lands so determine, become null and void. Any lands under the provisions of section 158 of the constitution of the state of North Dakota that have heretofore been sold, may be paid for, except as to interest, as provided, further, that any school or institution lands that may be required for townsite purposes, school house sites, church sites, cemetery sites, sites for other educational or charitable institutions, public parks, fair grounds, public highways, railroad right of way, or for other railroad uses and purposes, reservoirs for the storage of water for irrigation, drain ditches or irrigation ditches, and lands that may be required for any of the purposes over which the right of eminent domain may be exercised under the constitution and the laws of the state of North Dakota, may be sold under the provisions of this section, and shall be paid for, principal and interest, in full in advance, at the time of sale, or at any time thereafter, and patent issued therefor, when principal and interest are paid."
+    }
+   ],
+   "authority": "Amendment ratified 1912-11-05",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/seg2_marker/seg2_src/seg2_src.md (Ch. 88, S.B. No. 188, lines 514-528 — 1911 session law referring amendment adopted by Eleventh Assembly to Twelfth Assembly)",
+    "/tmp/cl1913.txt (1913 Compiled Laws § 158, lines 13077-13115, marked [Approved and ratified 1912.])"
+   ],
+   "confidence": "high",
+   "discrepancies": "The marker OCR of the operative text (lines 524-526) is heavily corrupted; relied on the 1913 Compiled Laws for verbatim wording, which is consistent with the legible portions of the marker. The 1913 Compiled Laws prints the section header as \"§ 168,\" an OCR/typesetting error for 158 (the body text and resolution caption both say 158). A distinct, earlier 1909-filed amendment of § 158 (lines 470-478, five per cent, townsite only, no eminent-domain list) and an 1897 and a 1907 § 158 amendment also appear in the source; none match the 1912 subject (sale for public purposes / eminent-domain uses), so this Ch. 88 version is the correct one for Amendment 13. Minor period punctuation/spelling preserved as in source."
+  },
+  {
+   "number": "14",
+   "election_date": "1912-11-05",
+   "effective_date": "1912-12-05",
+   "type": "new_article",
+   "changes": [
+    {
+     "target": "N.D. Const. amend. art. 14",
+     "heading": "Terminal grain elevators in Minnesota or Wisconsin",
+     "text": "The legislative assembly is hereby authorized and empowered to provide by law for the erection, purchasing or leasing and operation of one or more terminal grain elevators in the states of Minnesota or Wisconsin, or both, to be maintained and operated in such manner as the legislative assembly shall prescribe, and provide for inspection, weighing and grading of all grain received in such elevator or elevators."
+    }
+   ],
+   "authority": "Amendment ratified 1912-11-05",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/seg2_marker/seg2_src/seg2_src.md (marker OCR of 1911 session laws, Chapter 87, S.B. No. 135)",
+    "/tmp/cl1913.txt (1913 Compiled Laws, Article 14)",
+    "/tmp/manual1919.txt (1919 Legislative Manual, Article XIV)"
+   ],
+   "confidence": "high",
+   "discrepancies": "No substantive disagreement. Only the 1913 Compiled Laws has an OCR artifact at the final word ('^e^utors'), resolved as 'elevators' by agreement of the marker source and the 1919 Legislative Manual. The 1907 Legislative Manual (through 1906) does not contain this article, as expected for a 1912 amendment. Capitalization of 'states/States' varies by edition; marker source and 1913 use lowercase 'states', adopted here as the session-law text."
+  }
+ ]
 }

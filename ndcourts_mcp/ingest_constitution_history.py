@@ -194,61 +194,70 @@ def apply_amendments(conn, *, batch: str) -> dict:
     if not AMENDMENTS_JSON.exists():
         return {"amendments_applied": 0}
     records = json.loads(AMENDMENTS_JSON.read_text()).get("amendments", [])
-    n_new = n_mod = 0
+    n_new = n_mod = n_skipped = 0
     for r in records:
+        if r.get("status") == "pending":   # extracted but not yet structurally assembled
+            n_skipped += 1
+            continue
         eff = r["effective_date"]
         auth = r.get("authority")
         url = (r.get("source_urls") or [None])[0]
-        if r["type"] == "new_article":
-            cite = r["citation"]
-            pid = conn.execute(
-                "INSERT INTO provisions (corpus, citation, cite_key, hierarchy, heading, status) "
-                "VALUES (?,?,?,?,?,?)",
-                ("const", cite, corpus.cite_key(cite),
-                 json.dumps({"scheme": "1889-amendment", "amendment_number": r.get("number")}),
-                 r.get("heading"), "active"),
-            ).lastrowid
-            vid = conn.execute(
-                "INSERT INTO provision_versions (provision_id, effective_start, effective_end, "
-                " text_content, source_authority, source_url, batch) VALUES (?,?,?,?,?,?,?)",
-                (pid, eff, REORG_EVE, r["text"], auth, url, batch),
-            ).lastrowid
-            conn.execute("UPDATE provisions SET current_version_id=? WHERE id=?", (vid, pid))
-            corpus.index_version_fts(conn, vid, cite, r.get("heading"), r["text"])
-            n_new += 1
-        elif r["type"] == "amend_section":
-            cite = r["target"]
-            row = conn.execute(
-                "SELECT p.id pid, v.id vid FROM provisions p "
-                "JOIN provision_versions v ON v.id=p.current_version_id "
-                "WHERE p.cite_key=?", (corpus.cite_key(cite),)).fetchone()
-            if not row:
-                print(f"  WARN amend §{cite}: target not found", file=sys.stderr); continue
-            conn.execute("UPDATE provision_versions SET effective_end=? WHERE id=?",
-                         (_day_before(eff), row["vid"]))
-            vid = conn.execute(
-                "INSERT INTO provision_versions (provision_id, effective_start, effective_end, "
-                " text_content, source_authority, source_url, batch) VALUES (?,?,?,?,?,?,?)",
-                (row["pid"], eff, REORG_EVE, r["text"], auth, url, batch),
-            ).lastrowid
-            conn.execute("UPDATE provisions SET current_version_id=? WHERE id=?", (vid, row["pid"]))
-            corpus.index_version_fts(conn, vid, cite, None, r["text"])
-            n_mod += 1
-        # record the amendment event
-        pid_for_event = conn.execute(
-            "SELECT id FROM provisions WHERE cite_key=?",
-            (corpus.cite_key(r.get("citation") or r.get("target")),)).fetchone()
-        conn.execute(
-            "INSERT OR IGNORE INTO amendments (provision_id, action, effective_date, "
-            " election_date, affected, amendment_number, authority, source_url, raw) "
-            "VALUES (?,?,?,?,?,?,?,?,?)",
-            (pid_for_event["id"] if pid_for_event else None,
-             "adopted" if r["type"] == "new_article" else "amended",
-             eff, r.get("election_date"), r.get("affected") or r.get("citation") or r.get("target"),
-             r.get("number"), auth, url, r.get("heading") or ""),
-        )
+        # normalize to a changes[] list
+        changes = r.get("changes")
+        if not changes:  # legacy single-target form
+            changes = [{"target": r.get("citation") or r.get("target"),
+                        "heading": r.get("heading"), "text": r.get("text")}]
+        for ch in changes:
+            cite = ch["target"]
+            # Strip a leading "§ N." section-number prefix so amended versions
+            # match the base layer's prefix-free convention.
+            ch["text"] = re.sub(r"^\s*§\s*[0-9]+[A-Za-z]?\.\s*", "", ch["text"])
+            if r["type"] == "new_article":
+                pid = conn.execute(
+                    "INSERT INTO provisions (corpus, citation, cite_key, hierarchy, heading, status) "
+                    "VALUES (?,?,?,?,?,?)",
+                    ("const", cite, corpus.cite_key(cite),
+                     json.dumps({"scheme": "1889-amendment", "amendment_number": r.get("number")}),
+                     ch.get("heading"), "active"),
+                ).lastrowid
+                vid = conn.execute(
+                    "INSERT INTO provision_versions (provision_id, effective_start, effective_end, "
+                    " text_content, source_authority, source_url, batch) VALUES (?,?,?,?,?,?,?)",
+                    (pid, eff, REORG_EVE, ch["text"], auth, url, batch),
+                ).lastrowid
+                conn.execute("UPDATE provisions SET current_version_id=? WHERE id=?", (vid, pid))
+                corpus.index_version_fts(conn, vid, cite, ch.get("heading"), ch["text"])
+                n_new += 1
+            else:  # amend_section: cap the standing version, add the new one
+                row = conn.execute(
+                    "SELECT p.id pid, v.id vid FROM provisions p "
+                    "JOIN provision_versions v ON v.id=p.current_version_id "
+                    "WHERE p.cite_key=?", (corpus.cite_key(cite),)).fetchone()
+                if not row:
+                    print(f"  WARN amend {cite}: target not found", file=sys.stderr); continue
+                conn.execute("UPDATE provision_versions SET effective_end=? WHERE id=?",
+                             (_day_before(eff), row["vid"]))
+                vid = conn.execute(
+                    "INSERT INTO provision_versions (provision_id, effective_start, effective_end, "
+                    " text_content, source_authority, source_url, batch) VALUES (?,?,?,?,?,?,?)",
+                    (row["pid"], eff, REORG_EVE, ch["text"], auth, url, batch),
+                ).lastrowid
+                conn.execute("UPDATE provisions SET current_version_id=? WHERE id=?", (vid, row["pid"]))
+                corpus.index_version_fts(conn, vid, cite, ch.get("heading"), ch["text"])
+                n_mod += 1
+            ev = conn.execute("SELECT id FROM provisions WHERE cite_key=?",
+                              (corpus.cite_key(cite),)).fetchone()
+            conn.execute(
+                "INSERT OR IGNORE INTO amendments (provision_id, action, effective_date, "
+                " election_date, affected, amendment_number, authority, source_url, raw) "
+                "VALUES (?,?,?,?,?,?,?,?,?)",
+                (ev["id"] if ev else None,
+                 "adopted" if r["type"] == "new_article" else "amended",
+                 eff, r.get("election_date"), r.get("affected") or cite,
+                 r.get("number"), auth, url, ch.get("heading") or ""),
+            )
     conn.commit()
-    return {"amendments_applied": n_new + n_mod, "new_articles": n_new, "section_amendments": n_mod}
+    return {"new_versions": n_new, "section_amendments": n_mod, "pending_skipped": n_skipped}
 
 
 def main() -> None:
