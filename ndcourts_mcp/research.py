@@ -172,11 +172,13 @@ def normalize_authority(query: str) -> dict:
     if "const" in low and ("nd" in low or "northdakota" in low):
         return {"kind": "constitution", "token": None, "exact": q}
 
-    # Administrative code? ("N.D. Admin. Code § 75-02-01", "NDAC 75-02-01")
+    # Administrative code? ("N.D.A.C. § 75-02-04.1-02", "N.D. Admin. Code ...",
+    # "NDAC 75-02-04.1-02"). Canonical form is N.D.A.C. — matching jetcite's
+    # normalized 'regulation' cites so opinions cross-link.
     if "admincode" in low or low.startswith("ndac") or "adminc" in low:
         m = _SECTION_RE.search(q)
         sec = m.group(1) if m else None
-        exact = f"N.D. Admin. Code § {sec}" if sec else None
+        exact = f"N.D.A.C. § {sec}" if sec else None
         return {"kind": "admin", "token": sec, "exact": exact}
 
     # Court rule? (contains "r." rule-set or an alias, or the word "rule")

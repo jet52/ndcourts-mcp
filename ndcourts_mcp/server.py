@@ -1491,15 +1491,16 @@ def find_opinions_construing(authority: str, limit: int = 50) -> dict:
     conn = get_connection(DB_PATH)
     try:
         matched: list[dict] = []
-        if spec["kind"] == "constitution":
-            # Constitution cites match text_citations by canonical normalized
-            # string (jetcite's normalized form == the canonical citation).
-            # Canonicalize via the corpus if installed so varied input still
-            # matches; report the provision even if no opinion cites it.
-            canonical = authority
+        if spec["kind"] in ("constitution", "admin"):
+            # Constitution and admin-code cites match text_citations by canonical
+            # normalized string (jetcite's normalized form == the canonical
+            # citation). Canonicalize via the corpus if installed so varied input
+            # still matches; report the provision even if no opinion cites it.
+            canonical = spec["exact"] or authority
+            ckind = KIND_TO_CORPUS[spec["kind"]]
             ccorp = _conn_with_corpora()
             try:
-                calias = _attached_corpora(ccorp).get("const")
+                calias = _attached_corpora(ccorp).get(ckind)
                 if calias:
                     prow = ccorp.execute(
                         f"SELECT citation FROM {calias}.provisions WHERE cite_key = ?",
@@ -1510,8 +1511,7 @@ def find_opinions_construing(authority: str, limit: int = 50) -> dict:
             finally:
                 ccorp.close()
             row = conn.execute(
-                "SELECT normalized, url FROM text_citations "
-                "WHERE cite_type = 'constitution' AND normalized = ? LIMIT 1",
+                "SELECT normalized, url FROM text_citations WHERE normalized = ? LIMIT 1",
                 (canonical,),
             ).fetchone()
             matched = [{"normalized": canonical, "url": row["url"] if row else None}]
@@ -1820,18 +1820,18 @@ def search_authority(
             return {"found": False, "query": query,
                     "error": "No matching primary-law corpus is installed on this server."}
 
-        hits: list[dict] = []
+        # Collect each corpus's best matches separately, then round-robin merge
+        # so no single corpus crowds the others out of a small result set.
+        per_corpus: dict[str, list[dict]] = {}
         for name, alias in attached.items():
             q = f"{alias}."
             if as_of_date is None:
                 where = "v.id = p.current_version_id"
                 params: tuple = (query, limit)
-                window = ""
             else:
                 where = ("COALESCE(v.effective_start,'0000-01-01') <= ? "
                          "AND COALESCE(v.effective_end, ?) >= ?")
                 params = (query, as_of_date, corpus.OPEN_ENDED, as_of_date, limit)
-                window = ""
             sql = (
                 f"SELECT p.citation, p.heading, v.effective_start, v.effective_end, "
                 f"       substr(v.text_content, 1, 280) AS excerpt "
@@ -1845,22 +1845,31 @@ def search_authority(
                 rows = conn.execute(sql, params).fetchall()
             except sqlite3.OperationalError as e:
                 return {"error": f"search failed for corpus {name}: {e}"}
-            for r in rows:
-                hits.append({
-                    "corpus": name,
-                    "citation": r["citation"],
-                    "heading": r["heading"],
-                    "effective_start": r["effective_start"],
-                    "is_current": r["effective_end"] is None,
-                    "excerpt": r["excerpt"],
-                })
+            per_corpus[name] = [{
+                "corpus": name,
+                "citation": r["citation"],
+                "heading": r["heading"],
+                "effective_start": r["effective_start"],
+                "is_current": r["effective_end"] is None,
+                "excerpt": r["excerpt"],
+            } for r in rows]
+
+        # Round-robin: take the i-th best from each corpus in turn until full.
+        hits: list[dict] = []
+        for i in range(max((len(v) for v in per_corpus.values()), default=0)):
+            for name in attached:
+                if i < len(per_corpus[name]):
+                    hits.append(per_corpus[name][i])
+            if len(hits) >= limit:
+                break
+        hits = hits[:limit]
         return {
             "found": bool(hits),
             "query": query,
             "as_of_date": as_of_date,
             "corpora_searched": list(attached),
-            "count": len(hits[:limit]),
-            "results": hits[:limit],
+            "count": len(hits),
+            "results": hits,
         }
     finally:
         conn.close()
