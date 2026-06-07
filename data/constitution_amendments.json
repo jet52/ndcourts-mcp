@@ -1,0 +1,17 @@
+{
+  "_README": "Source-verified ND constitutional amendments for the point-in-time history (Model 1). Applied in order by ingest_constitution_history.py after the 1889 base. text is verbatim from the authoritative session law, cross-checked against the published codes named in sources_verified. type 'new_article' appends an Amendment Article; 'amend_section' replaces an existing section's text from effective_date. Pre-1981 only; 1981+ amendments live in the modern const corpus.",
+  "amendments": [
+    {
+      "number": "1",
+      "election_date": "1894-11-06",
+      "effective_date": "1894-12-06",
+      "type": "new_article",
+      "citation": "N.D. Const. amend. art. 1",
+      "heading": "Lotteries prohibited",
+      "text": "The legislative assembly shall have no power to authorize lotteries or gift enterprises for any purpose, and shall pass laws to prohibit the sale of lottery or gift enterprise tickets.",
+      "authority": "Amendment ratified Nov. 6, 1894",
+      "source_urls": ["https://www.legis.nd.gov/assembly/sessionlaws/1893/sl1893.pdf#page=291"],
+      "sources_verified": ["S.L. 1893 p. 294 (proposing resolution)", "1895 Revised Codes (codified as Amendment Article 1)", "ndconst.org :amendments"]
+    }
+  ]
+}

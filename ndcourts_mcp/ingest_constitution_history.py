@@ -23,12 +23,16 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import sys
 import urllib.request
+from datetime import date, datetime, timedelta
 from pathlib import Path
 
 from . import corpus
+
+AMENDMENTS_JSON = Path(__file__).resolve().parent.parent / "data" / "constitution_amendments.json"
 
 BASE_URL = "https://ndconst.org"
 SNAPSHOT_1889 = "date/1889-11-02"
@@ -171,8 +175,80 @@ def build(db_path: Path, *, batch: str) -> dict:
          f"1889 base layer: {n_prov} provisions (effective {ADOPTED}..{REORG_EVE}, "
          f"to be subdivided by amendments)"),
     )
-    conn.commit(); conn.close()
-    return {"provisions": n_prov, "versions": n_ver}
+    conn.commit()
+    amd = apply_amendments(conn, batch=batch)
+    conn.close()
+    return {"provisions": n_prov, "versions": n_ver, **amd}
+
+
+def _day_before(iso: str) -> str:
+    d = datetime.strptime(iso, "%Y-%m-%d").date() - timedelta(days=1)
+    return d.isoformat()
+
+
+def apply_amendments(conn, *, batch: str) -> dict:
+    """Apply the source-verified pre-1981 amendments (data/constitution_amendments
+    .json) in order on top of the 1889 base. 'new_article' appends an Amendment
+    Article; 'amend_section' caps the target section's current version at the day
+    before the effective date and adds the amended text as a new version."""
+    if not AMENDMENTS_JSON.exists():
+        return {"amendments_applied": 0}
+    records = json.loads(AMENDMENTS_JSON.read_text()).get("amendments", [])
+    n_new = n_mod = 0
+    for r in records:
+        eff = r["effective_date"]
+        auth = r.get("authority")
+        url = (r.get("source_urls") or [None])[0]
+        if r["type"] == "new_article":
+            cite = r["citation"]
+            pid = conn.execute(
+                "INSERT INTO provisions (corpus, citation, cite_key, hierarchy, heading, status) "
+                "VALUES (?,?,?,?,?,?)",
+                ("const", cite, corpus.cite_key(cite),
+                 json.dumps({"scheme": "1889-amendment", "amendment_number": r.get("number")}),
+                 r.get("heading"), "active"),
+            ).lastrowid
+            vid = conn.execute(
+                "INSERT INTO provision_versions (provision_id, effective_start, effective_end, "
+                " text_content, source_authority, source_url, batch) VALUES (?,?,?,?,?,?,?)",
+                (pid, eff, REORG_EVE, r["text"], auth, url, batch),
+            ).lastrowid
+            conn.execute("UPDATE provisions SET current_version_id=? WHERE id=?", (vid, pid))
+            corpus.index_version_fts(conn, vid, cite, r.get("heading"), r["text"])
+            n_new += 1
+        elif r["type"] == "amend_section":
+            cite = r["target"]
+            row = conn.execute(
+                "SELECT p.id pid, v.id vid FROM provisions p "
+                "JOIN provision_versions v ON v.id=p.current_version_id "
+                "WHERE p.cite_key=?", (corpus.cite_key(cite),)).fetchone()
+            if not row:
+                print(f"  WARN amend §{cite}: target not found", file=sys.stderr); continue
+            conn.execute("UPDATE provision_versions SET effective_end=? WHERE id=?",
+                         (_day_before(eff), row["vid"]))
+            vid = conn.execute(
+                "INSERT INTO provision_versions (provision_id, effective_start, effective_end, "
+                " text_content, source_authority, source_url, batch) VALUES (?,?,?,?,?,?,?)",
+                (row["pid"], eff, REORG_EVE, r["text"], auth, url, batch),
+            ).lastrowid
+            conn.execute("UPDATE provisions SET current_version_id=? WHERE id=?", (vid, row["pid"]))
+            corpus.index_version_fts(conn, vid, cite, None, r["text"])
+            n_mod += 1
+        # record the amendment event
+        pid_for_event = conn.execute(
+            "SELECT id FROM provisions WHERE cite_key=?",
+            (corpus.cite_key(r.get("citation") or r.get("target")),)).fetchone()
+        conn.execute(
+            "INSERT OR IGNORE INTO amendments (provision_id, action, effective_date, "
+            " election_date, affected, amendment_number, authority, source_url, raw) "
+            "VALUES (?,?,?,?,?,?,?,?,?)",
+            (pid_for_event["id"] if pid_for_event else None,
+             "adopted" if r["type"] == "new_article" else "amended",
+             eff, r.get("election_date"), r.get("affected") or r.get("citation") or r.get("target"),
+             r.get("number"), auth, url, r.get("heading") or ""),
+        )
+    conn.commit()
+    return {"amendments_applied": n_new + n_mod, "new_articles": n_new, "section_amendments": n_mod}
 
 
 def main() -> None:
