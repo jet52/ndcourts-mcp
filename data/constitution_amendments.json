@@ -8,7 +8,7 @@
    "type": "new_article",
    "changes": [
     {
-     "target": "N.D. Const. amend. art. 1",
+     "target": "N.D. Const. amend. art. I",
      "heading": "Lotteries prohibited",
      "text": "The legislative assembly shall have no power to authorize lotteries or gift enterprises for any purpose, and shall pass laws to prohibit the sale of lottery or gift enterprise tickets."
     }
@@ -279,7 +279,7 @@
    "type": "new_article",
    "changes": [
     {
-     "target": "N.D. Const. amend. art. 14",
+     "target": "N.D. Const. amend. art. XIV",
      "heading": "Terminal grain elevators in Minnesota or Wisconsin",
      "text": "The legislative assembly is hereby authorized and empowered to provide by law for the erection, purchasing or leasing and operation of one or more terminal grain elevators in the states of Minnesota or Wisconsin, or both, to be maintained and operated in such manner as the legislative assembly shall prescribe, and provide for inspection, weighing and grading of all grain received in such elevator or elevators."
     }
@@ -1461,6 +1461,1447 @@
     }
    ],
    "discrepancies": "No substantive disagreement among sources. Two OCR-only corrections applied from off1925.txt: (1) marker 'anuual tax' -> 'annual tax'; (2) marker line 674 'first mortgage' / line 676 'anuual' OCR artifacts resolved. All corrected forms are confirmed by the 1925 official snapshot. The 1954 Blue Book text is too OCR-degraded (e.g., 'shnll', 'stnte', 'Ifjkuc') to use for wording but confirms the distinctive operative clause. Amendment XLII changed § 182's deadline language from the prior 'within thirty years from the passage of such law' (per cl1913.txt) to 'within thirty years from the date of the issue of such bonds'."
+  },
+  {
+   "number": "LXV",
+   "effective_date": "1956-07-26",
+   "type": "new_article",
+   "changes": [
+    {
+     "target": "N.D. Const. amend. art. LXV",
+     "heading": "Korean Veterans Bonus Bond Issue",
+     "text": "§ 1.) The legislative assembly of the state of North Dakota is hereby authorized and empowered to provide by legislation for the issuance, sale and delivery of the bonds of the state of North Dakota in the principal amount not to exceed $9,000,000.00, the proceeds thereof to be used in payment of adjusted compensation to North Dakota veterans of the Korean conflict who served in the armed forces of the United States or any of its allies during the period from June 25, 1950 to July 27, 1953 on the basis of terms of service, and under such terms and conditions as the legislative assembly may prescribe."
+    }
+   ],
+   "authority": "House Concurrent Resolution \"D\", Chapter 358, 1955 Session Laws (enacted as Chapter 396, 1957 Session Laws); approved June 26, 1956",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1957.pdf (Chapter 396, Article 65, p. 780) — primary enacted CAA text",
+    "/tmp/bb1961.txt (Article 65, line ~18208) — gross OCR cross-check",
+    "/tmp/bb1973.txt (Article 65, line ~21250) — gross OCR cross-check"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "N.D. Blue Book 1961, Article 65",
+     "enacted_session_law": "§ 1.) The legislative assembly ... under such terms and conditions as the legislative assembly may prescribe. (CAA enacted text)",
+     "other_publications": "Rendered as 'Section 1.' (dropping the '§ 1.)' enacting marker). Substantive text identical; remaining differences are OCR noise (e.g. 'such terms .uid conditions')."
+    },
+    {
+     "location": "N.D. Blue Book 1973, Article 65",
+     "enacted_session_law": "§ 1.) The legislative assembly ... under such terms and conditions as the legislative assembly may prescribe. (CAA enacted text)",
+     "other_publications": "Rendered as 'Section 1.' (dropping the '§ 1.)' enacting marker). Substantive text identical to CAA."
+    }
+   ]
+  },
+  {
+   "number": "LXVI",
+   "effective_date": "1956-07-26",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 14",
+     "heading": "Article 66 — Compensation for Public Taking Private Property",
+     "text": "Private property shall not be taken or damaged for public use without just compensation having been first made to, or paid into court for the owner. No right of way shall be appropriated to the use of any corporation until full compensation therefor be first made in money or ascertained and paid into court for the owner, irrespective of any benefit from any improvement proposed by such corporation, which compensation shall be ascertained by a jury, unless a jury be waived, provided however, that when the state or any of its departments, agencies or political subdivisions seeks to acquire right of way, it may take possession upon making an offer to purchase and by depositing the amount of such offer with the clerk of the district court of the county wherein the right of way is located. The clerk shall immediately notify the owner of such deposit. The owner may thereupon appeal to the court in the manner provided by law, and may have a jury trial, unless a jury be waived, to determine the damages."
+    }
+   ],
+   "authority": "House Concurrent Resolution \"O\", Chapter 359, 1955 Session Laws (S.L. 1957, ch. 397); approved June 26, 1956",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1957.pdf (page 2, Chapter 397, Article 66 — primary/enacted CAA text)",
+    "/tmp/bb1961.txt line 15707 (gross OCR cross-check)",
+    "/tmp/bb1973.txt line 18824 (gross OCR cross-check)"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "N.D. Const. § 14 (Art. 66)",
+     "enacted_session_law": "CAA 1957 ch. 397 (clean typeset): '...irrespective of any benefit from any improvement proposed by such corporation...' — single-spelling, no internal capitalization of 'improvement', 'money', 'jury' mid-sentence.",
+     "other_publications": "1961 and 1973 Blue Book integrated codifications carry the identical substantive text and identical amendment note ('Amendment: Art. 66, June 26, 1956, (S.L. 1957, ch. 397)'). The only divergences are OCR scanning artifacts (e.g., 1973 stray mid-sentence capitals 'In money', 'any Improvement', 'Its departments', 'way. It may', 'shall Immediately', 'a Jury trial'; 1961 garbled letters 'shnll', 'sulxlivisions', 'muy', 'wuy', 'wuived'). No genuine punctuation, capitalization, or spelling variant in the official text was found; the CAA reading governs."
+    }
+   ]
+  },
+  {
+   "number": "LXVII",
+   "effective_date": "1956-07-26",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 173",
+     "heading": "SECTION 173.",
+     "text": "SECTION 173. At the first general election after the adoption of this amendment, and every two years thereafter, there shall be elected in each county, organized under the provision of section 172 of the Constitution of the state of North Dakota, a register of deeds, county auditor, treasurer, sheriff, state's attorney, county judge and a clerk of the district court, who shall be electors in the county in which they are elected and who shall hold office until their successors are elected and qualified; provided in counties having fifteen thousand population or less, the county judge shall also be clerk of the district court; provided further that in counties having a population of six thousand or less the register of deeds shall also be clerk of the district court and county judge. The legislative assembly shall enact appropriate legislation to make this amendment effective at their first session after its adoption."
+    }
+   ],
+   "authority": "N.D. Const. amend. art. LXVII (1956); S.L. 1957, ch. 398 (initiated measure approved June 26, 1956)",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1957.pdf (Constitutional Amendments Approved, ch. 398, Article 67, p. 782 — clean modern typeset; PRIMARY)",
+    "/tmp/bb1961.txt (1961 ND Blue Book, section 173 — OCR, gross cross-check; matches CAA text)",
+    "/tmp/bb1973.txt (1973 ND Blue Book, section 173 — OCR; shows later Art. 77 (1962) text, not the Art. 67 text)"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "N.D. Const. § 173 (as enacted by amend. art. LXVII)",
+     "enacted_session_law": "CAA ch. 398, Art. 67 (PRIMARY, governs): \"...there shall be elected in each county... who shall hold office until their successors are elected and qualified...\"",
+     "other_publications": "1961 Blue Book substantively matches the CAA text (apparent differences are OCR noise: 'ilecled'/'elected', 'yeurs'/'years', 'ench'/'each', 'nnd'/'and', 'comity'/'county' — no genuine punctuation/capitalization/spelling divergence). 1973 Blue Book prints a DIFFERENT section 173 (four-year term, 'self-executing' language) because Art. 77 (Nov. 6, 1962; S.L. 1963, ch. 447) superseded the Art. 67 version; the 1973 text is not a variant of this amendment."
+    }
+   ]
+  },
+  {
+   "number": "LXVIII",
+   "effective_date": "1958-07-24",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 203",
+     "heading": "JURISDICTION OF UNITED STATES AND INDIAN LANDS (paragraph 2 \"Second.\")",
+     "text": "Second. The people inhabiting this state do agree and declare that they forever disclaim all right and title to the unappropriated public lands lying within the boundaries thereof, and to all lands lying within said limits owned or held by any Indian or Indian tribes, and that until the title thereto shall have been extinguished by the United States, the same shall be and remain subject to the disposition of the United States, and that said Indian lands shall remain under the absolute jurisdiction and control of the Congress of the United States, provided, however, that the Legislative Assembly of the state of North Dakota may, upon such terms and conditions as it shall adopt, provide for the acceptance of such jurisdiction as may be delegated to the state by act of Congress; that the lands belonging to citizens of the United States residing without this state shall never be taxed at a higher rate than the lands belonging to residents of this state; that no taxes shall be imposed by this state on lands or property therein, belonging to, or which may hereafter be purchased by the United States or reserved for its use. But nothing in this article shall preclude this state from taxing as other lands are taxed, any lands owned or held by any Indian who has severed his tribal relations, and has obtained from the United States or from any person, a title thereto, by patent or other grant, save and except such lands as have been or may be granted to any Indian or Indians under any acts of Congress containing a provision exempting the lands thus granted from taxation, which last mentioned lands shall be exempt from taxation so long, and to such an extent, as is, or may be provided in the act of Congress granting the same."
+    }
+   ],
+   "authority": "Senate Concurrent Resolution \"Q\", chapter 403, 1957 Session Laws, 35th Legislative Assembly; ratified at primary election (measure No. 1), approved June 24, 1958 (74,398 to 40,639); published as Chapter 430, Constitutional Amendments Approved (1959 Session Laws)",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1959.pdf (Chapter 430, pp. 843-844 — primary enacted CAA text)",
+    "/tmp/bb1961.txt (integrated Const. art. XVI, sec. 203 \"Second.\", line ~17106 — OCR gross check)",
+    "/tmp/bb1973.txt (integrated Enabling Act / Const. cross-reference — OCR gross check)"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "N.D. Const. § 203, paragraph 2 (\"Second.\")",
+     "enacted_session_law": "CAA 1959, ch. 430 (clean typeset): \"...by act of Congress; that the lands belonging to citizens...\" — lowercase \"act\"; standard punctuation as set out in \"text\".",
+     "other_publications": "BB1961 (line ~17106) integrated text substantively identical (OCR noise only: \"ng''ee\"=agree, \"dis-claim\", \"ar Indinn\"=or Indian, \"hinds\"=lands, \"nets\"=acts). The resolution's recital clause (CAA header) capitalizes \"Act of Congress\" — a recital, not the enacted body. No substantive punctuation/spelling/capitalization divergence found in the enacted text across sources."
+    }
+   ]
+  },
+  {
+   "number": "LXIX",
+   "effective_date": "1958-07-24",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 121",
+     "heading": "ELECTIVE FRANCHISE",
+     "text": "SECTION 121. Every person of the age of twenty-one or upwards who is a citizen of the United States and who shall have resided in the state one year and in the county ninety days and in the precinct thirty days next preceding any election shall be a qualified elector at such election. Provided that where a qualified elector moves from one precinct to another within the state he shall be entitled to vote in the precinct from which he moves until he establishes his residence in the precinct to which he moves."
+    }
+   ],
+   "authority": "Senate Concurrent Resolution \"B-B\", chapter 402, 1957 Session Laws; Constitutional Amendments Approved, chapter 431, 1959 Session Laws; approved June 24, 1958 (99,749 to 25,296)",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1959.pdf (Constitutional Amendments Approved, ch. 431, 1959 Session Laws — primary enacted text)",
+    "/tmp/bb1961.txt (N.D. Blue Book 1961, § 121 — gross OCR cross-check, matches)",
+    "/tmp/bb1973.txt (N.D. Blue Book 1973, § 121 — gross OCR cross-check, matches)"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "N.D. Const. § 121",
+     "enacted_session_law": "CAA ch. 431 (1959 S.L.): \"Every person of the age of twenty-one or upwards who is a citizen of the United States and who shall have resided in the state one year and in the county ninety days and in the precinct thirty days next preceding any election shall be a qualified elector at such election.\"",
+     "other_publications": "Blue Book 1961 and 1973 match the enacted text. Apparent differences in the OCR (\"nnd\"/\"and\", \"bis\"/\"his\", \"Is\"/\"is\", \"Provtded\"/\"Provided\") are OCR scanning artifacts in the poor-quality Blue Book texts, not genuine textual divergences. No substantive punctuation, capitalization, or spelling divergence found."
+    }
+   ]
+  },
+  {
+   "number": "LXX",
+   "effective_date": "1960-07-28",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 82",
+     "heading": "Authorizing Department of Labor",
+     "text": "There shall be chosen by the qualified electors of the state at the times and places of choosing members of the legislative assembly, a secretary of state, auditor, treasurer, superintendent of public instruction, commissioner of insurance, three public service commissioners, an attorney general, a commissioner of agriculture and labor, and a tax commissioner, who shall have attained the age of twenty-five years and shall have the qualifications of state electors. They shall severally hold their offices at the seat of government for the term of two years and until their successors are elected and duly qualified; but no person shall be eligible for the office of treasurer for more than two consecutive terms; provided, however, the tax commissioner shall hold his office for the term of four years and until his successor is elected and duly qualified; and provided further, that the public service commissioners shall severally hold their offices for the term of six years and until their successors are elected and duly qualified.\nThe legislative assembly may by law provide for a department of labor which, if provided for, shall be separate and distinct from the department of agriculture, and shall be administered by a public official who may be either elected or appointed, whichever the legislative assembly shall declare; and if such a department is established, the commissioner of agriculture and labor provided for above shall become the commissioner of agriculture.\nThe tax commissioner shall be elected on a no-party ballot and he shall be nominated and elected in the manner now provided for the nomination and election of the superintendent of public instruction. The first election of a tax commissioner shall not occur until the year 1940.\nAt the general election in 1940 there shall be chosen two public service commissioners to fill the two terms expiring on the first Monday in January, 1941. The candidate at said election receiving the highest number of votes shall be elected for a term of six years, and the candidate receiving the next highest number of votes shall be elected for a term of four years. Thereafter there shall be chosen one such public service commissioner every two years.\nThe board of railroad commissioners shall hereafter be known as the public service commission and the members of the board of railroad commissioners as public service commissioners and the powers and duties now or hereafter granted to and conferred upon the board of railroad commissioners are hereby transferred to the public service commission."
+    },
+    {
+     "target": "N.D. Const. § 83",
+     "heading": "Authorizing Department of Labor",
+     "text": "The powers and duties of the secretary of state, auditor, treasurer, superintendent of public instruction, commissioner of insurance, commissioners of railroads, attorney general and commissioner of agriculture and labor shall be prescribed by law. In the event that the legislative assembly shall establish a separate and distinct department of labor, the powers and duties of the officer administering such department of labor shall be prescribed by law."
+    },
+    {
+     "target": "N.D. Const. § 84",
+     "heading": "Authorizing Department of Labor",
+     "text": "Salaries of public officers shall be as prescribed by law, but the salaries of any of the said officers shall not be increased or diminished during the period for which they shall have been elected, and all fees and profits arising from any of the said offices shall be covered into the state treasury."
+    }
+   ],
+   "authority": "N.D. Sess. Laws 1961, ch. 403 (Senate Concurrent Resolution \"A\", ch. 437, 1959 Session Laws; approved at primary election June 28, 1960, 82,114 to 79,112)",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1961.pdf (CAA 1961, ch. 403, pp. 688-689) - primary enacted text",
+    "/tmp/bb1961.txt (gross OCR cross-check, sec. 82)",
+    "/tmp/bb1973.txt (gross OCR cross-check, sec. 82)"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "N.D. Const. §§ 82, 83 (officer titles)",
+     "enacted_session_law": "CAA enacts officer titles in lowercase (\"secretary of state, auditor, treasurer, superintendent of public instruction, commissioner of insurance ... attorney general, a commissioner of agriculture and labor\")",
+     "other_publications": "1973 Blue Book integrated text capitalizes the officer titles (\"Secretary of State, Auditor, Treasurer, Superintendent of Public Instruction, Commissioner of Insurance, an Attorney General, a Commissioner ...\"); 1961 Blue Book lowercase but OCR-garbled (\"Section 8 2 .\", \"shnll\"). Capitalization difference is a codifier styling choice, not a substantive change; enacted CAA lowercase governs."
+    }
+   ]
+  },
+  {
+   "number": "LXXI",
+   "effective_date": "1960-07-28",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 155",
+     "heading": "SALE OF COAL LANDS AND RESERVATION OF MINERALS",
+     "text": "After one year from the assembling of the first legislative assembly the lands granted to the state from the United States for the support of the common schools, may be sold upon the following conditions and no other: No more than one-fourth of all such lands shall be sold within the first five years after the same become salable by virtue of this section. No more than one-half of the remainder within ten years after the same become salable as aforesaid. The residue may be sold at any time after the expiration of said ten years. The legislative assembly shall provide for the sale of all school lands subject to the provisions of this article. In all sales of lands subject to the provisions of this article all minerals therein, including but not limited to oil, gas, coal, cement materials, sodium sulphate, sand and gravel, road material, building stone, chemical substances, metallic ores, uranium ores, or colloidal or other clays, shall be reserved and excepted to the state of North Dakota, except that leases may be executed for the extraction and sale of such materials in such manner and upon such terms as the legislative assembly may provide."
+    }
+   ],
+   "authority": "House Concurrent Resolution \"J\", chapter 436, 1959 Session Laws; approved June 28, 1960 (vote 84,348 to 72,088); enacted as Constitutional Measures, Approved, Chapter 404, 1961 Session Laws",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1961.pdf p.690 (Chapter 404)",
+    "/tmp/bb1961.txt line 16637 (§ 155)",
+    "/tmp/bb1973.txt line 19777 (§ 155)"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "N.D. Const. § 155",
+     "enacted_session_law": "CAA 1961, ch. 404: \"...salable by virtue of this section. No more than one-half of the remainder within ten years after the same become salable as aforesaid.\" / \"...except that leases may be executed for the extraction and sale of such materials...\"",
+     "other_publications": "Blue Book 1961 OCR garbage only (no real text variants): \"became salable us aforesaid\", \"teases may be executed\", \"Mich terms\". Blue Book 1973 OCR garbage only: \"same become soluble as aforesaid\". Both Blue Books label the amendment \"Art. 71, June 28, 1960 (S.L. 1959, ch. 436)\". All divergences are scanning/OCR artifacts, not genuine punctuation/capitalization/spelling differences."
+    }
+   ]
+  },
+  {
+   "number": "LXXII",
+   "effective_date": "1960-07-28",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 26",
+     "heading": "Legislative Districts and Reapportionment",
+     "text": "The senate shall be composed of forty-nine members."
+    },
+    {
+     "target": "N.D. Const. § 29",
+     "heading": "Legislative Districts and Reapportionment",
+     "text": "Each existing senatorial district as provided by law at the effective date of this amendment shall permanently constitute a senatorial district. Each senatorial district shall be represented by one senator and no more."
+    },
+    {
+     "target": "N.D. Const. § 35",
+     "heading": "Legislative Districts and Reapportionment",
+     "text": "Each senatorial district shall be represented in the House of Representatives by at least one representative except that any senatorial district comprised of more than one county shall be represented in the House of Representatives by at least as many representatives as there are counties in such senatorial district. In addition the Legislative Assembly shall, at the first regular session after each federal decennial census, proceed to apportion the balance of the members of the House of Representatives to be elected from the several senatorial districts, within the limits prescribed by this Constitution, according to the population of the several senatorial districts. If any Legislative Assembly whose duty it is to make an apportionment shall fail to make the same as herein provided it shall be the duty of the Chief Justice of the Supreme Court, Attorney General, Secretary of State, and the majority and minority leaders of the House of Representatives within ninety days after the adjournment of the legislature to make such apportionment and when so made a proclamation shall be issued by the Chief Justice announcing such apportionment which shall have the same force and effect as though made by the Legislative Assembly."
+    }
+   ],
+   "authority": "Senate Concurrent Resolution \"M,\" chapter 438, 1959 Session Laws; Chapter 405, Constitutional Measures, Approved; approved June 28, 1960 (84,002 to 66,529)",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1961.pdf (pdftotext -layout): CHAPTER 405, Legislative Districts and Reapportionment, pp. 691-692",
+    "/tmp/bb1961.txt (gross OCR check): § 26 + 'Amendment: Art. 72, June 28, 1960 (S.L. 1959, ch. 438)'",
+    "/tmp/bb1973.txt (gross OCR check): § 26 + 'Amendment: Art. 72, June 28, 1960 (S.L. 1959, ch. 438)'"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "N.D. Const. § 26",
+     "enacted_session_law": "CAA (Chapter 405): \"The senate shall be composed of forty-nine members.\"",
+     "other_publications": "bb1961/bb1973 confirm identical substance and attribute to Art. 72, June 28, 1960 (S.L. 1959, ch. 438); only OCR garble present (e.g., bb1961 'Section 2G ... shnll he cnmposLAi'), not a genuine textual variant."
+    }
+   ]
+  },
+  {
+   "number": "LXXIII",
+   "effective_date": "1960-07-28",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. amend. art. LVI",
+     "heading": "Article 56",
+     "text": "1. Revenue from gasoline and other motor fuel excise and license taxation, motor vehicle registration and license taxes, except revenue from aviation gasoline and unclaimed aviation motor fuel refunds and other aviation motor fuel excise and license taxation used by aircraft, after deduction of cost of administration and collection authorized by legislative appropriation only, and statutory refunds, shall be appropriated and used solely for construction, reconstruction, repair and maintenance of public highways, and the payment of obligations incurred in the construction, reconstruction, repair and maintenance of public highways."
+    }
+   ],
+   "authority": "S.L. 1959, ch. 439 (Senate Concurrent Resolution \"CC\"); approved June 28, 1960 (83,604 to 80,352); Constitutional Measures Approved, ch. 406",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1961.pdf (p. 693, ch. 406)",
+    "/tmp/bb1961.txt (Article 56)",
+    "/tmp/bb1973.txt (Article 56)"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "/tmp/bb1961.txt Article 56",
+     "enacted_session_law": "...other aviation motor fuel excise and license taxation used / by aircraft, after deduction of cost of administration and collection authorized by legislative appropriation only, and statutory refunds, shall be appropriated and used solely...",
+     "other_publications": "OCR corruptions only (not real divergences): 'avinticn' for 'aviation', 'med' for 'used', 'nnd' for 'and', 'he' for 'be'. No genuine punctuation/spelling/capitalization differences."
+    },
+    {
+     "location": "/tmp/bb1973.txt Article 56",
+     "enacted_session_law": "...the payment of obligations incurred in the construction, reconstruction, repair and maintenance of public highways.",
+     "other_publications": "OCR corruption only: capital 'In' for 'in' ('incurred In the construction'). No genuine divergence."
+    }
+   ],
+   "status": "pending",
+   "pending_reason": "complex structural amendment (repeal / section range / amendment-article edit / institutions-list / judicial rewrite) — needs careful individual handling"
+  },
+  {
+   "number": "LXXIV",
+   "effective_date": "1960-12-08",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 215",
+     "heading": "North Dakota State University of Agriculture and Applied Science",
+     "text": "Third: The North Dakota State University of Agriculture and Applied Science at the City of Fargo, in the County of Cass."
+    }
+   ],
+   "authority": "An Initiative Petition to amend and reenact the third paragraph of section 215 of Article XIX of the Constitution of the state of North Dakota to change the name of the Agricultural College to \"The North Dakota State University of Agriculture and Applied Science.\" Approved November 8, 1960, 174,566 to 86,106 (Chapter 407, 1961 Session Laws; Constitutional Measures, Approved, pp. 693).",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1961.pdf (page 6, Chapter 407, Constitutional Measures Approved, pp. 693 — primary enacted text)",
+    "/tmp/bb1973.txt (lines 20484-20485, OCR cross-check)",
+    "/tmp/bb1961.txt (cross-check; no clean constitutional-text rendering found)"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "N.D. Const. § 215, Third (paragraph third)",
+     "enacted_session_law": "CAA 1961 (Chapter 407): \"Third: The North Dakota State University of Agriculture and Applied Science at the City of Fargo, in the County of Cass.\" (capital C in \"City\" and \"County\")",
+     "other_publications": "Blue Book 1973 (OCR, gross check): \"Third: The North Dakota State University of Agriculture and Applied Science at the city of Fargo, in the county of Cuss.\" — lowercase \"city\"/\"county\" and OCR garble \"Cuss\" for \"Cass\". Blue Book 1961 has no clean constitutional-text rendering of this paragraph (only biographical mentions of the institution name)."
+    }
+   ],
+   "status": "pending",
+   "pending_reason": "complex structural amendment (repeal / section range / amendment-article edit / institutions-list / judicial rewrite) — needs careful individual handling"
+  },
+  {
+   "number": "LXXV",
+   "effective_date": "1962-07-26",
+   "type": "new_article",
+   "changes": [
+    {
+     "target": "N.D. Const. amend. art. LXXV",
+     "heading": "Continuity of Government",
+     "text": "The legislative assembly, in order to insure continuity of state and local governmental operations in periods of emergency resulting from disaster caused by enemy attack, shall have the power and immediate duty (1) to provide for prompt and temporary succession to the powers and duties of public offices, of whatever nature and whether filled by election or appointment, the incumbents of which may become unavailable for carrying on the powers and duties of such offices, and (2) to adopt such other measures as may be necessary and proper for insuring the continuity of governmental operations including, but not limited to, waiver of constitutional restrictions upon the place of transaction of governmental business, upon the calling of sessions of the legislative assembly, length of sessions, quorum and voting requirements, subjects of legislation and appropriation bill requirements, upon eligibility of legislators to hold other offices, residence requirements for legislators, and upon expenditures, loans or donations of public moneys. In the exercise of the powers hereby conferred the legislative assembly shall in all respects conform to the requirements of this Constitution except to the extent that in the judgment of the legislative assembly so to do would be impracticable or would admit of undue delay."
+    }
+   ],
+   "authority": "S.L. 1963, ch. 445 (House Concurrent Resolution \"A\", ch. 409, 1961 Session Laws; proposed by the 37th Legislative Assembly); approved June 26, 1962, 56,097 to 46,646",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1963.pdf (S.L. 1963, ch. 445) — clean enacted text, governs",
+    "/tmp/bb1973.txt — integrated Article 75 (gross OCR cross-check, matches)",
+    "/tmp/bb1961.txt — pre-amendment, provision absent (as expected)"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "N.D. Const. amend. art. LXXV (Continuity of Government)",
+     "enacted_session_law": "S.L. 1963, ch. 445: \"length of sessions, quorum and voting requirements\"; \"shall in all respects conform\"; \"in the judgment of the legislative assembly so to do would be impracticable\"",
+     "other_publications": "Blue Book 1973 (Art. 75) reads \"length or sessions\" (drops \"of sessions,\"), \"shall in all respect conform\", and capitalizes \"In the judgment\"/\"would be Impracticable\" — these are OCR artifacts of the poor scan, not genuine textual variants. No substantive divergence detected."
+    }
+   ]
+  },
+  {
+   "number": "LXXVI",
+   "effective_date": "1962-12-06",
+   "type": "new_article",
+   "changes": [
+    {
+     "target": "N.D. Const. amend. art. LXXVI",
+     "heading": "State Bond Issue",
+     "text": "§ 1.) Notwithstanding any other provision in the Constitution, and for the purpose of promoting the economic growth of the state, the development of its natural resources, and the prosperity and welfare of its people, the state may issue bonds and use the proceeds thereof to make loans to privately or cooperatively owned enterprises to plan, construct, acquire, equip, improve, and extend facilities for converting natural resources into power and generating and transmitting such power, and to acquire real and personal property and water and mineral rights needed for such facilities.\n\n§ 2.) The state may issue general obligation bonds for this purpose to an amount which, with all outstanding general obligation bonds, less the amount of all money on hand and taxes in process of collection which are appropriated for their payment, will not exceed five percent of the full and true value of all of the taxable property in the state, to be ascertained by the last assessment made for state and county purposes: but nothing herein shall increase or diminish the limitations established by other provisions of the Constitution on the amount of bonds therein authorized to be issued.\n\n§ 3.) The state may also issue revenue bonds for the purpose of providing part or all of the funds required for any project undertaken under section 1, payable solely from sums realized from payments of principal and interest on money loaned for such project, and from other similar projects if so determined by the legislature, and from the liquidation of security given for such payments. Revenue bonds issued for any project shall not exceed the cost thereof, including all expenses reasonably incurred to complete and finance the project, but shall not be subject to any other limitation of amount.\n\n§ 4.) The full faith and credit of the state shall be pledged for the prompt and full payment of all bonds issued under section 2. Its obligation with respect to bonds issued under section 3 shall be limited to the prompt and full performance of such covenants as the legislature may authorize to be made respecting the enforcing of the provisions of underlying loan agreements and the segregation, accounting, and application of bond proceeds and of loan payments and other security pledged for the payment of the bonds. All bonds authorized by sections 1 to 3, inclusive, shall mature within forty years from their respective dates of issue, but may be refunded at or before maturity in such manner and for such term and upon such conditions as the legislature may direct. Any such bonds may, but need not be, secured by mortgage upon real or personal property acquired with the proceeds of the same or any other issue of general obligation or revenue bonds, or upon other property mortgaged by the debtor. Pledges of revenues and mortgages of property securing bonds of any issue may be prior or subordinate to or on a parity with pledges and mortgages securing any other issue of general obligation or revenue bonds, as determined by the legislature from time to time in conformity with any provisions made for the security of outstanding bonds.\n\n§ 5.) The legislature shall pass such laws as are appropriate to implement this amendment.\n\n§ 6.) If any section of this amendment, or any part of a section, or any application thereof to particular circumstances should be held invalid for any reason, such invalidity shall not affect the validity of all remaining provisions of this amendment which may be given effect without that which is declared invalid, as applied to any circumstances: and for this purpose all sections and parts of sections and applications thereof are declared to be severable."
+    }
+   ],
+   "authority": "S.L. 1963, ch. 446 (Constitutional Measures, Approved); House measure approved Nov. 6, 1962, 105,787 to 84,112",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1963.pdf (CHAPTER 446, STATE BOND ISSUE, pp. 880-881)",
+    "/tmp/bb1973.txt (ARTICLE 76)"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "N.D. Const. amend. art. LXXVI § 2",
+     "enacted_session_law": "CAA (S.L. 1963, ch. 446) reads \"five percent\" (one word) and capitalizes \"Constitution.\"",
+     "other_publications": "Blue Book 1973 (ARTICLE 76, Section 2) reads \"five per cent\" (three words) and lowercases \"constitution\"; this is the integrated-code restyling/OCR, not a substantive divergence."
+    },
+    {
+     "location": "N.D. Const. amend. art. LXXVI (section designators)",
+     "enacted_session_law": "CAA designates the six provisions \"§ 1.)\" through \"§ 6.)\".",
+     "other_publications": "Blue Book 1973 renders the same provisions as \"Section 1.\" through \"Section 6.\" under the heading \"ARTICLE 76\"; numbering format differs but substance is identical."
+    }
+   ]
+  },
+  {
+   "number": "LXXVII",
+   "effective_date": "1962-12-06",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 173",
+     "heading": "County Officials' Terms",
+     "text": "There shall be elected in each county, organized under the provisions of section 172 of the Constitution of the state of North Dakota, a register of deeds, county auditor, treasurer, sheriff, state's attorney, county judge and a clerk of the district court, who shall be electors in the county in which they are elected and who shall hold their office for a term of four years and until their successors are elected and qualified; provided in counties having fifteen thousand population or less, the county judge shall also be clerk of the district court; provided further that in counties having population of six thousand or less the register of deeds shall also be clerk of the district court and county judge. This amendment shall be construed as applying to the officers elected at the general election in 1962. This amendment shall be self-executing, but legislation may be enacted to facilitate its operation."
+    }
+   ],
+   "authority": "S.L. 1963, ch. 447 (Initiated Measure No. 2, general election ballot; approved November 6, 1962, 111,733 to 91,924)",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1963.pdf p.4 (Chapter 447, County Officials' Terms — clean enacted CAA text)",
+    "/tmp/bb1973.txt (integrated post-amendment text, OCR — gross match confirms)",
+    "/tmp/bb1961.txt (pre-amendment two-year-term text, OCR — confirms the change effected)"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "N.D. Const. § 173 (Art. X)",
+     "enacted_session_law": "S.L. 1963, ch. 447: \"... a clerk of the district court, who shall be electors in the county in which they are elected and who shall hold their office for a term of four years and until their successors are elected and qualified ...\" (Initiated Measure, Art. 77; approved Nov. 6, 1962)",
+     "other_publications": "ND Blue Book 1973 (OCR) reads consistently with the enacted text apart from OCR noise (e.g., \"shull lie elected,\" \"u clerk,\" \"cterk,\" \"Its operation\"); ND Blue Book 1961 (OCR) prints the superseded pre-1962 text with two-year terms (\"every two years thereafter ... shall hold office until their successors are elected and qualified\")."
+    }
+   ]
+  },
+  {
+   "number": "LXXVIII",
+   "effective_date": "1964-07-30",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. art. 54, § 6(d)",
+     "heading": "Separation of Budgets — Subdivision (d) of subsection 6 of Article 54",
+     "text": "6. (d). It shall be the duty of the heads of the several state institutions hereinbefore mentioned, to submit the budget requests for the biennial appropriations for said institutions to said state board of higher education; and said state board of higher education shall consider said budgets and shall revise the same as in its judgment shall be for the best interests of the educational system of the state; and thereafter the state board of higher education shall prepare and present to the state budget board and to the legislature a single unified budget covering the needs of all the institutions under its control. \"Said budget shall be prepared and presented by the board of administration until the state board of higher education organizes as provided in section 6 (a).\" The appropriations for all of said institutions shall be contained in one legislative measure. The budgets and appropriation measures for the agricultural experiment stations and their substations and the extension division of the North Dakota State University of Agriculture and Applied Science may be separate from those of state educational institutions."
+    }
+   ],
+   "authority": "House Concurrent Resolution \"F\", chapter 452, 1963 Session Laws (38th Legislative Assembly); enacted as ch. 473, 1965 Constitutional Measures, Approved; approved June 30, 1964 (61,721 to 46,333). Amendment Art. 78 to the Constitution of North Dakota.",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1965.pdf (ch. 473, p. 965-966) — clean enacted Constitutional Measures, Approved text (PRIMARY)",
+    "/tmp/bb1973.txt (integrated Blue Book, lines ~21161-21186) — confirms substantive text and identifies the amendment as Art. 78, June 30, 1964 (S.L. 1963, ch. 452)"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "N.D. Const. art. 54, § 6(d)",
+     "enacted_session_law": "CAA ch. 473 (clean typeset): \"... a single unified budget covering the needs of all the institutions under its control.\" — governs; verbatim text in \"text\".",
+     "other_publications": "bb1973.txt integrated Blue Book reproduces the identical substantive provision (\"single unified budget covering the needs of all the institutions under its control ... may be separate from those of state educational institutions\"). Divergences are OCR artifacts only (e.g., \"und\"/\"u\" for \"and\"/\"a\", \"us\" for \"as\"), not genuine textual variants. bb1961.txt does not contain the post-amendment subdivision (d) language (pre-amendment edition; only narrative agency descriptions of the Agricultural Experiment Station / Extension Service appear)."
+    }
+   ],
+   "status": "pending",
+   "pending_reason": "complex structural amendment (repeal / section range / amendment-article edit / institutions-list / judicial rewrite) — needs careful individual handling"
+  },
+  {
+   "number": "LXXIX",
+   "effective_date": "1964-07-30",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 113",
+     "heading": "Municipal Judges",
+     "text": "SECTION 113. The legislative assembly shall provide by law for the selection or election and the qualifications of municipal judges in cities, incorporated towns, and villages, who shall hear, try, and determine cases arising under the ordinances of said cities, towns and villages, and shall have such other jurisdiction as the legislative assembly may confer upon them."
+    }
+   ],
+   "authority": "House Concurrent Resolution \"T\" (mislabeled \"T\"), chapter 454, 1963 Session Laws; enacted ch. 474, 1965 Session Laws (\"Constitutional Measures, Approved\")",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1965.pdf (ch. 474, p. 966 — primary, clean modern typeset)",
+    "/tmp/bb1961.txt (pre-amendment section 113, OCR gross check)",
+    "/tmp/bb1973.txt (post-amendment section 113, identifies \"Amendment: Art. 79. June 30, 1964\", OCR gross check)"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "N.D. Const. § 113",
+     "enacted_session_law": "1965 Session Laws ch. 474 (CAA): \"...municipal judges in cities, incorporated towns, and villages, who shall hear, try, and determine cases arising under the ordinances of said cities, towns and villages...\"",
+     "other_publications": "1973 Blue Book (integrated, poor OCR) reads \"municipal judges In cities. Incorporated towns, and villages... arising under the ordinances of suid cities\" — capitalization (In/Incorporated), terminal period mid-sentence, and \"suid\" for \"said\" are OCR artifacts, not genuine publication divergences. The pre-amendment 1961 Blue Book carries the prior \"police magistrate\" text (confirming the amendment took effect between editions)."
+    }
+   ]
+  },
+  {
+   "number": "LXXX",
+   "effective_date": "1964-07-30",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 71",
+     "heading": "Terms of office for state officials and superintendent of schools for each county",
+     "text": "The executive power shall be vested in a governor, who shall reside at the seat of government and shall hold his office for the term of four years beginning in the year 1965, and until his successor is elected and duly qualified."
+    },
+    {
+     "target": "N.D. Const. § 82",
+     "heading": "Terms of office for state officials and superintendent of schools for each county",
+     "text": "There shall be chosen by the qualified electors of the state at the times and places of choosing members of the legislative assembly, a secretary of state, auditor, treasurer, superintendent of public instruction, commissioner of insurance, an attorney general, a commissioner of agriculture and labor, and a tax commissioner, who shall have attained the age of twenty-five years and shall have the qualifications of state electors. They shall severally hold their offices at the seat of government for the term of four years beginning with the year 1965, and until their successors are elected and duly qualified; but no person shall be eligible for the office of treasurer for more than two consecutive terms. The tax commissioner shall be elected on a no party ballot and he shall be nominated and elected in the manner now provided for the nomination and election of the superintendent of public instruction.\n\nThe board of railroad commissioners shall hereafter be known as the public service commission and the members of the board of railroad commissioners as public service commissioners and the powers and duties now or hereafter granted to and conferred upon the board of railroad commissioners are hereby transferred to the public service commission. The public service commissioners shall have the qualifications of state electors, have attained the age of twenty-five years, be chosen by the qualified electors of the state at the times and places of choosing members of the legislative assembly, hold office at the seat of government and until their successors are elected and duly qualified. As each of the three public service commissioners now holding office completes his term, his successor shall be elected for a term of six years.\n\nThe legislative assembly may by law provide for a department of labor, which, if provided for, shall be separate and distinct from the department of agriculture, and shall be administered by a public official who may be either elected or appointed, whichever the legislative assembly shall declare; and if such a department is established the commissioner of agriculture and labor provided for above shall become the commissioner of agriculture."
+    },
+    {
+     "target": "N.D. Const. § 150",
+     "heading": "Terms of office for state officials and superintendent of schools for each county",
+     "text": "A superintendent of schools for each county shall be elected every four years beginning in the year 1964, whose qualifications, duties, powers and compensation shall be fixed by law."
+    }
+   ],
+   "authority": "An initiated measure (Chapter 475, 1965 Session Laws), approved June 30, 1964 (60,099 to 55,294); measure No. 5 on the primary election ballot.",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1965.pdf (Chapter 475, p. 967-968, primary enacted text)",
+    "/tmp/bb1973.txt (integrated Blue Book, OCR gross cross-check of sec. 71 and 150)"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "N.D. Const. § 71",
+     "enacted_session_law": "CAA (ch. 475): \"a governor, who shall reside at the seat of government and shall hold his office for the term of four years beginning in the year 1965\" (lowercase \"governor\"; phrase \"beginning in the year 1965\")",
+     "other_publications": "1973 Blue Book integrated codification: \"a Governor ... beginning the year 1965\" (capitalizes \"Governor\"; drops \"in\" before \"the year 1965\"). OCR-quality codification difference; enacted CAA text governs."
+    },
+    {
+     "location": "N.D. Const. § 150",
+     "enacted_session_law": "CAA (ch. 475): ends at \"... shall be fixed by law.\" (no proviso)",
+     "other_publications": "1973 Blue Book integrated codification adds a later proviso: \"Provided, however, a superintendent of schools may be elected by and serve two or more counties or parts of counties as provided by law.\" This reflects a later, separate amendment to sec. 150, NOT a variant of the 1964 enacted text; excluded from \"text\"."
+    }
+   ]
+  },
+  {
+   "number": "LXXXI",
+   "effective_date": "1964-12-03",
+   "type": "repeal",
+   "changes": [
+    {
+     "target": "N.D. Const. § 25",
+     "heading": "Publicity Pamphlet, Repeal",
+     "text": "[Repealed effective 1964-12-03]"
+    }
+   ],
+   "authority": "Senate Concurrent Resolution \"O\", chapter 451, 1963 Session Laws, proposed by the 38th Legislative Assembly; enacted as Chapter 476, Constitutional Measures Approved, 1965 Session Laws; approved by the electors November 3, 1964 (measure No. 1 on the general election ballot), 125,117 to 96,283.",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1965.pdf (Chapter 476, pp. 968-969 — clean modern typeset, authoritative)",
+    "/tmp/bb1961.txt (line 15808+ — pre-repeal text of the tenth paragraph of section 25, gross OCR check)",
+    "/tmp/bb1973.txt (line 3435 — confirms Ch. 476, S.L. 1965 enactment and post-repeal status)"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "1961 North Dakota Blue Book (integrated text of § 25, tenth paragraph), line 15808 et seq.",
+     "enacted_session_law": "CAA Ch. 476 (clean): \"The secretary of state shall cause to be printed and mailed to each elector a publicity pamphlet, containing a copy of each measure together with its ballot title... shall be the sum of two hundred dollars per page.\"",
+     "other_publications": "Blue Book OCR (gross check only): \"The Secretary State shall cause to he printed and mailed to each elector a publicity pamphlet, containing a copy of each measure together with its ballot title... Any citi/en, or the officers of any organization... concerning nny mensure...\" These are OCR artifacts in the Blue Book scan, not genuine textual divergences; the CAA text governs."
+    },
+    {
+     "location": "1973 North Dakota Blue Book, line 3435",
+     "enacted_session_law": "Affirmative vote per CAA Ch. 476: 125,117 to 96,283; approved November 3, 1964.",
+     "other_publications": "1973 Blue Book lists \"Constitution, publicity pamphlet (Ch. 476, S.L. 1965) 125,177 96,283\" — affirmative tally differs by one digit (125,177 vs. 125,117), an OCR/typographical variant in the vote count, not in constitutional text."
+    }
+   ],
+   "status": "pending",
+   "pending_reason": "complex structural amendment (repeal / section range / amendment-article edit / institutions-list / judicial rewrite) — needs careful individual handling"
+  },
+  {
+   "number": "LXXXII",
+   "effective_date": "1966-10-06",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 175",
+     "heading": "Tax Levies",
+     "text": "SECTION 175. No tax shall be levied except in pursuance of law, and every law imposing a tax shall state distinctly the object of the same, to which only it shall be applied. Notwithstanding the foregoing or any other provisions of this Constitution, the legislative assembly, in any law imposing a tax or taxes on, in respect to or measured by income, may define the income on, in respect to or by which such tax or taxes are imposed or measured or may define the tax itself by reference to any provision of the laws of the United States as the same may be or become effective at any time or from time to time, and may prescribe exceptions or modifications to any such provision."
+    }
+   ],
+   "authority": "Senate Concurrent Resolution \"L\", chapter 482, 1965 Session Laws (Thirty-ninth Legislative Assembly); enacted as chapter 508, 1967 Session Laws. Approved September 6, 1966, 46,052 to 37,743 (measure No. 1, primary election ballot).",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1967.pdf (Chapter 508, Tax Levies, p. 1208 — clean enacted CAA text, authoritative)",
+    "/tmp/bb1973.txt (integrated Blue Book post-amendment, section 175, line 19969 — confirms text and 'Amendment: Art. 82, September 6, 1966 (S.L. 1965 ch. 482; S.L. 1967, ch. 508)')",
+    "/tmp/bb1961.txt (line 16864 — pre-amendment original section 175, confirms the added income-tax language is new)"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "N.D. Const. § 175",
+     "enacted_session_law": "CAA 1967 ch. 508 (authoritative): \"...and every law imposing a tax shall state distinctly...\"; \"...in any law imposing a tax or taxes...\"; \"...such tax or taxes are imposed or measured...\"",
+     "other_publications": "bb1973 integrated text matches substantively; apparent divergences are OCR artifacts only, not real variants: 'law Impos-ing' (spurious capital I from line-break hyphenation) and similar mid-word capital I's. bb1961 contains only the pre-amendment original (lacks the entire 'Notwithstanding the foregoing...' second sentence), confirming the second sentence is the amendment's addition."
+    }
+   ]
+  },
+  {
+   "number": "LXXXIII",
+   "effective_date": "1966-10-06",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 150",
+     "heading": "Office of County Superintendent of Schools",
+     "text": "A superintendent of schools for each county shall be elected every four years beginning in the year 1964, whose qualifications, duties, powers and compensation shall be fixed by law. Provided, however, a superintendent of schools may be elected by and serve two or more counties or parts of counties as provided by law."
+    }
+   ],
+   "authority": "House Concurrent Resolution \"O\", chapter 485, 1965 Session Laws; enacted as chapter 509, 1967 Session Laws (Constitutional Amendments, Approved)",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1967.pdf (Chapter 509, pp. 1208-1209, clean modern typeset, governs)",
+    "/tmp/bb1973.txt (post-amendment code text, matches CAA)",
+    "/tmp/bb1961.txt (pre-amendment text confirms the change: 'every two years')"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "N.D. Const. § 150 (1973 Blue Book integrated code)",
+     "enacted_session_law": "CAA Ch. 509: \"...elected every four years beginning in the year 1964, whose qualifications, duties, powers and compensation shall be fixed by law. Provided, however, a superintendent of schools may be elected by and serve two or more counties or parts of counties as provided by law.\"",
+     "other_publications": "1973 Blue Book OCR matches the enacted CAA text verbatim (modulo OCR noise); no substantive punctuation, capitalization, or spelling divergence detected. 1961 Blue Book shows the superseded pre-amendment text ('elected every two years'), confirming the amendment's operation."
+    }
+   ]
+  },
+  {
+   "number": "LXXXIV",
+   "effective_date": "1966-12-08",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 130",
+     "heading": "HOME RULE FOR CITIES AND VILLAGES",
+     "text": "SECTION 130. Except in the case of home rule cities and villages as provided in this section the legislative assembly shall provide by general law for the organization of municipal corporations, restricting their powers as to levying taxes and assessments, borrowing money, and contracting debts. Money raised by taxation, loan or assessment for any purpose shall not be diverted to any other purpose except by authority of law.\n\nThe legislative assembly shall provide by law for the establishment of home rule in cities and villages. It may authorize such cities and villages to exercise all or a portion of any power or function which the legislative assembly has power to devolve upon a non-home rule city or village, not denied to such city or village by its own home rule charter and which is not denied to all home rule cities and villages by statute. The legislative assembly shall not be restricted in granting of home rule powers to home rule cities and villages by section 183 of this Constitution."
+    }
+   ],
+   "authority": "S.C.R. \"C\", ch. 480, 1965 Session Laws; Constitutional Amendments Approved, ch. 510, 1967 Session Laws. Approved at the general election November 8, 1966 (84,255 to 77,187).",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1967.pdf (Constitutional Amendments Approved, ch. 510, p. 1210 — primary enacted text)",
+    "/tmp/bb1973.txt (1973 ND Blue Book integrated text, gross OCR check — confirms post-amendment text)",
+    "/tmp/bb1961.txt (1961 ND Blue Book — pre-amendment, no match as expected)"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "N.D. Const. § 130 (second paragraph, first sentence)",
+     "enacted_session_law": "Constitutional Amendments Approved, ch. 510 (1967 Session Laws): \"The legislative assembly shall provide by law for the establishment of home rule in cities and villages.\" (CAA pdftotext shows a stray \"·\" artifact before \"cities\"; the enacted word is \"cities\".)",
+     "other_publications": "1973 ND Blue Book: \"establishment of home rule in cities and villages\" — agrees with enacted text (no stray character); remaining Blue Book differences are OCR errors (me/the, lb/its, mis/this)."
+    }
+   ]
+  },
+  {
+   "number": "LXXXV",
+   "effective_date": "1968-10-03",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 148",
+     "heading": "Uniform System of Free Public Schools",
+     "text": "SECTION 148. The legislative assembly shall provide for a uniform system of free public schools throughout the state, beginning with the primary and extending through all grades up to and including schools of higher education, except that the legislative assembly may authorize tuition, fees and service charges to assist in the financing of public schools of higher education."
+    }
+   ],
+   "authority": "Senate Concurrent Resolution \"J\", chapter 514, 1967 Session Laws; enacted as chapter 581, Constitutional Amendments Approved (1969 Session Laws). Approved September 3, 1968 (vote 59,675 to 52,449). Constitutional measure No. 1 on the primary election ballot.",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1969.pdf (Chapter 581, p.1239 — clean enacted text, primary)",
+    "/tmp/bb1973.txt (integrated post-amendment § 148, gross OCR cross-check — matches)",
+    "/tmp/bb1961.txt (pre-amendment § 148, gross check)"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "N.D. Const. § 148 (Blue Book 1973 integrated text, OCR)",
+     "enacted_session_law": "...to assist in the financing of public schools of higher education.",
+     "other_publications": "BB1973 OCR reads \"to assist In the financing\" (capital I) — an OCR artifact, not a genuine textual variant; otherwise identical to the enacted CAA text."
+    }
+   ]
+  },
+  {
+   "number": "LXXXVI",
+   "effective_date": "1968-10-03",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 41",
+     "heading": "SECTION 41.",
+     "text": "The term of service of the members of the legislative assembly shall begin on the first day of December following their election, or at such other time as may be prescribed by law."
+    },
+    {
+     "target": "N.D. Const. § 53",
+     "heading": "SECTION 53.",
+     "text": "The legislative assembly shall meet at the seat of government in the month of December following the election of the members thereof for organizational and orientation purposes as provided by law and shall thereafter recess until twelve o'clock noon on the first Tuesday after the first Monday in January or at such other time as may be prescribed by law but not later than the eighth day of January."
+    },
+    {
+     "target": "N.D. Const. § 56",
+     "heading": "SECTION 56.",
+     "text": "Each session of the legislative assembly shall not exceed sixty legislative days, except in the case of impeachment. The organizational meeting of the legislative assembly as provided in section 53 shall not be counted as part of such sixty legislative days."
+    }
+   ],
+   "authority": "Constitutional Amendments Approved, 1969 N.D. Sess. Laws ch. 582 (H.C.R. \"O\", ch. 519, 1967 Sess. Laws), approved Sept. 3, 1968, 64,727 to 41,675 (constitutional measure No. 3, primary election ballot)",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1969.pdf (page 2, ch. 582, pp. 1240-1241 — enacted CAA text, clean modern typeset; governs)",
+    "/tmp/bb1973.txt (§§ 41, 53, 56 post-amendment; labels Amendment Art. 86 = LXXXVI, S.L. 1969 ch. 582; OCR gross check)",
+    "/tmp/bb1961.txt (§ 41 pre-amendment 'first Tuesday in January' — confirms the change)"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "N.D. Const. § 53 (recess clause, unchanged portion)",
+     "enacted_session_law": "CAA ch. 582: \"twelve o'clock noon on the first Tuesday after the first Monday in January\"",
+     "other_publications": "BB1973: \"twelve o'clock noon of the first Tuesday after the first Munday in January\" (of vs. on; 'Munday' is OCR noise)"
+    },
+    {
+     "location": "N.D. Const. § 56 (impeachment exception)",
+     "enacted_session_law": "CAA ch. 582: \"except in the case of impeachment\"",
+     "other_publications": "BB1973: \"except in case of impeachment\" (omits 'the')"
+    }
+   ]
+  },
+  {
+   "number": "LXXXVII",
+   "effective_date": "1970-10-01",
+   "type": "new_article",
+   "changes": [
+    {
+     "target": "N.D. Const. amend. art. LXXXVII",
+     "heading": "Vietnam Veterans Bonus",
+     "text": "The legislative assembly of the state of North Dakota is hereby authorized and empowered to provide by legislation for the issuance, sale, and delivery of bonds of the state of North Dakota in such principal amounts as determined by the legislative assembly to be necessary for the payment of adjusted compensation to North Dakota veterans of the Vietnam conflict. Such adjusted compensation shall be paid from the proceeds of the bonds at rates equal to the rates provided by law for adjusted compensation paid by the state of North Dakota to veterans of World War II and the Korean conflict on the basis of terms of service and such other terms and conditions as the legislative assembly may provide. Grants or stipends paid pursuant to law by the state of North Dakota to any veteran for educational assistance shall be deducted from the adjusted compensation otherwise payable to such veteran."
+    }
+   ],
+   "authority": "S.C.R. No. 17, ch. 592, 1969 Session Laws; ch. 616, 1971 Session Laws (Constitutional Amendments Approved); approved September 1, 1970 (75,294 to 25,199)",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1971.pdf (Constitutional Amendments Approved, ch. 616, p. 1332) — primary enacted text",
+    "/tmp/bb1973.txt (North Dakota Blue Book 1973, Article 87) — gross OCR cross-check, confirms substance"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "necessary for the payment",
+     "enacted_session_law": "necessary for the payment (CAA ch. 616) — note: the CAA pdftotext extraction renders this as 'fer', an OCR misread; bb1973 reads 'for'; corrected to 'for' as the manifest enacted reading",
+     "other_publications": "bb1973 Art. 87: '...necessary for the pay-ment...' (OCR; reads 'for')"
+    },
+    {
+     "location": "veterans of the Vietnam conflict",
+     "enacted_session_law": "veterans of the Vietnam conflict (CAA ch. 616)",
+     "other_publications": "bb1973 Art. 87 OCR: 'vetenms for the Viet Nam conflict' — OCR-corrupted; the CAA 'veterans of the Vietnam conflict' governs"
+    }
+   ]
+  },
+  {
+   "number": "LXXXVIII",
+   "effective_date": "1970-10-01",
+   "type": "new_article",
+   "changes": [
+    {
+     "target": "N.D. Const. amend. art. LXXXVIII",
+     "heading": "Calls for a constitutional convention",
+     "text": "A constitutional convention shall be called for the purpose of proposing a new Constitution, or revision or amendment of the existing Constitution. Such convention shall be called and conducted, and delegates thereto shall be chosen in the manner provided by law.\n\nA constitutional convention called by a majority affirmative vote on this question shall be called and conducted as provided by law, and the proposed revision or amendment of the Constitution resulting from such shall be submitted by such convention directly to the people of North Dakota for approval or disapproval at the statewide special election called by the governor as provided by law."
+    }
+   ],
+   "authority": "S.L. 1969, ch. 595 (House Concurrent Resolution No. 16); approved September 1, 1970; S.L. 1971, ch. 617",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1971.pdf (Constitutional Amendments Approved, ch. 617, p. 1333) — primary enacted text",
+    "/tmp/bb1973.txt (integrated Blue Book, Article 88) — cross-check"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "Art. 88, para. 1 — \"Such convention shall be called and conducted\"",
+     "enacted_session_law": "S.L. 1971, ch. 617 (CAA): \"Such conventio~ shall be called and conducted, and delegates thereto shall be chosen in the manner provided by law.\" (the \"~\" is an OCR artifact for \"n\"; true reading \"convention\")",
+     "other_publications": "Blue Book 1973 (Art. 88): \"Such convention shall be called and conducted and delegates thereto shall be chosen in the manner provided by law.\" — OCR drops the comma after \"conducted\" (poor-OCR artifact). Blue Book OCR also shows \"culled\"/\"und\" for \"called\"/\"and\" throughout (scanning artifacts, not real divergences). CAA enacted text governs and retains the comma after \"conducted.\""
+    }
+   ]
+  },
+  {
+   "number": "LXXXIX",
+   "effective_date": "1970-10-01",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 153",
+     "heading": "INVESTMENT OF INSTITUTIONAL TRUST FUNDS",
+     "text": "Section 153. All proceeds of the public lands that have heretofore been, or may hereafter be granted by the United States for the support of the common schools in this state; all such per centum as may be granted by the United States on the sale of public lands; the proceeds of property that shall fall to the state by escheat; all gifts, donations, or the proceeds thereof that come to the state for support of the common schools, or not otherwise appropriated by the terms of the gift, and all other property otherwise acquired for common schools, shall be and remain a perpetual trust fund for the maintenance of the common schools of the state. Only the interest and income of the fund may be expended and the principal shall be retained and devoted to the trust purpose. All property, real or personal, received by the state from whatever source, for any specific educational or charitable institution, unless otherwise designated by the donor, shall be and remain a perpetual trust fund for the creation and maintenance of such institution, and may be commingled only with similar funds for the same institution. Should a gift be made to an institution for a specific purpose, without designating a trustee, such gift may be placed in the institution's fund; provided that such a donation may be expended as the terms of the gift provide.\n\nThe interest and income of each institutional trust fund held by the state shall, unless otherwise specified by the donor, be appropriated by the legislative assembly to the exclusive use of the institution for which the funds were given."
+    },
+    {
+     "target": "N.D. Const. § 156",
+     "heading": "INVESTMENT OF INSTITUTIONAL TRUST FUNDS",
+     "text": "Section 156. The superintendent of public instruction, governor, attorney general, secretary of state and state auditor shall constitute a board of commissioners, which shall be denominated the \"Board of University and School Lands,\" and, subject to the provisions of this article and any law that may be passed by the legislative assembly, said board shall have control of the appraisement, sale, rental, and disposal of all school and university lands, and the proceeds from the sale of such lands shall be invested as provided by law."
+    },
+    {
+     "target": "N.D. Const. § 159",
+     "heading": "INVESTMENT OF INSTITUTIONAL TRUST FUNDS",
+     "text": "[Repealed effective 1970-10-01]"
+    },
+    {
+     "target": "N.D. Const. § 162",
+     "heading": "INVESTMENT OF INSTITUTIONAL TRUST FUNDS",
+     "text": "[Repealed effective 1970-10-01]"
+    }
+   ],
+   "authority": "Senate Concurrent Resolution No. 62, chapter 594, 1969 Session Laws (Forty-first Legislative Assembly); enacted ch. 618, 1971 Session Laws; approved by the people September 1, 1970, 48,552 to 43,435.",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1971.pdf (1971 Session Laws ch. 618, p. 1334-1335, \"Constitutional Amendments, Approved\" — clean enacted text, governing)",
+    "/tmp/bb1973.txt (North Dakota Blue Book 1973, pp. 334-335 — OCR cross-check, gross match)"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "N.D. Const. § 153",
+     "enacted_session_law": "Enacted CAA (1971 S.L. ch. 618) reads \"common schools in this state\" and uses lowercase \"interest and income,\" \"institution,\" \"invested.\"",
+     "other_publications": "1973 Blue Book (p. 334-335) substantively identical; only OCR artifacts diverge (e.g., \"In this State,\" \"Income,\" \"Institution,\" \"Invested\" erroneously capitalized) — not genuine textual variants."
+    },
+    {
+     "location": "N.D. Const. § 156",
+     "enacted_session_law": "Enacted CAA: \"secretary of state and state auditor\"; \"shall be invested as provided by law.\"",
+     "other_publications": "1973 Blue Book (p. 334-335) substantively identical; OCR-only divergences (\"public Instruction,\" \"Invested\")."
+    }
+   ],
+   "status": "pending",
+   "pending_reason": "complex structural amendment (repeal / section range / amendment-article edit / institutions-list / judicial rewrite) — needs careful individual handling"
+  },
+  {
+   "number": "XC",
+   "effective_date": "1972-10-05",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 216",
+     "heading": "Constitutional status of UND-Ellendale branch (institutions list)",
+     "text": "Section 216. The following named public institutions are hereby permanently located as hereinafter provided, each to have so much of the remaining grant of one hundred seventy thousand acres of land made by the United States for \"other educational and charitable institutions\" as is allotted by law, namely:\n       First: A soldiers' home, when located, or such other charitable institution as the legislative assembly may determine, at Lisbon, in the county of Ransom, with a grant of forty thousand acres of land.\n       Second: The blind asylum shall be known as the North Dakota school for the blind and may be removed from the county of Pembina to such other location as may be determined by the board of administration to be in the best interests of the students of such institution and the state of North Dakota.\n       Third: A school of forestry, or such other institution as the legislative assembly may determine, at such place in one of the counties of McHenry, Ward, Bottineau, or Rolette, as the electors of said counties may determine by an election for that purpose, to be held as provided by the legislative assembly.\n       Fourth: A scientific school or such other educational or charitable institution as the legislative assembly may prescribe, at the city of Wahpeton, county of Richland, with a grant of forty thousand acres.\n       Fifth: A state normal school at the city of Minot in the county of Ward.\n       Sixth: (a) A state normal school at the city of Dickinson, in the county of Stark. (b) A state hospital for the insane at such place within this state as shall be selected by the legislative assembly, provided, that no other institution of a character similar to any one of those located by this article shall be established or maintained without a revision of this Constitution."
+    },
+    {
+     "target": "N.D. Const. amend. art. LIV, subsec. 1",
+     "heading": "State Board of Higher Education — institutions under its control (removal of Ellendale branch)",
+     "text": "1. A board of higher education, to be officially known as the State Board of Higher Education, is hereby created for the control and administration of the following state educational institutions, to-wit:\n         (1) The State University and School of Mines, at Grand Forks, with their substations.\n         (2) The State Agricultural College and Experiment Station, at Fargo, with their substations.\n         (3) The School of Science, at Wahpeton.\n         (4) The State Normal Schools and Teachers Colleges, at Valley City, Mayville, Minot, and Dickinson.\n         (5) The School of Forestry, at Bottineau.\n         (6) And such other State institutions of higher education as may hereafter be established."
+    }
+   ],
+   "authority": "House Concurrent Resolution No. 3045, chapter 623, 1971 Session Laws, proposed by the Forty-second Legislative Assembly; approved at primary election (constitutional measure No. 2) September 5, 1972, 68,575 to 41,350; chapter 526.",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1973.pdf (Constitutional Amendments Approved, ch. 526, p. 1385-1386 — enacted, governing text)",
+    "/tmp/bb1973.txt (integrated Blue Book 1973, OCR — gross cross-check, confirms substance)",
+    "/tmp/bb1961.txt (integrated Blue Book 1961, OCR — pre-amendment baseline for § 216 wording)"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "N.D. Const. § 216, Third (counties list)",
+     "enacted_session_law": "CAA ch. 526 reads: \"McHenry, Ward, Bottineau, or Rolette\" (serial comma before \"or\")",
+     "other_publications": "bb1973 (OCR) reads: \"McHenry, Ward, Bottineau or Rolette\" (no serial comma)"
+    },
+    {
+     "location": "N.D. Const. amend. art. LIV, subsec. 1, clause (4) (normal schools list)",
+     "enacted_session_law": "CAA ch. 526 reads: \"Valley City, Mayville, Minot, and Dickinson\" (serial comma before \"and\")",
+     "other_publications": "bb1973 (OCR) reads: \"Valley City, Muyville, Minot and Dickinson\" — no serial comma; \"Muyville\" is an OCR artifact of \"Mayville\""
+    }
+   ],
+   "status": "pending",
+   "pending_reason": "complex structural amendment (repeal / section range / amendment-article edit / institutions-list / judicial rewrite) — needs careful individual handling"
+  },
+  {
+   "number": "XCIII",
+   "effective_date": "1974-12-05",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 74",
+     "heading": "JOINT BALLOT FOR GOVERNOR AND LIEUTENANT GOVERNOR",
+     "text": "Section 74. The governor and lieutenant governor shall be elected upon a joint ballot by the qualified electors of the state beginning with elections held in 1976. A single vote shall be cast upon a joint ballot by each qualified elector for the joint candidates representing the political party or affiliation of his choice. The joint candidates having the highest number of votes shall be declared elected, but if two or more joint candidates shall have an equal and highest number of votes for governor and lieutenant governor, the two houses of the legislative assembly at its next regular session shall forthwith in joint session choose one pair of such joint candidates for said offices. The returns of the election for governor and lieutenant governor shall be made in such manner as shall be prescribed by law."
+    },
+    {
+     "target": "N.D. Const. § 77",
+     "heading": "JOINT BALLOT FOR GOVERNOR AND LIEUTENANT GOVERNOR",
+     "text": "Section 77. The powers and duties of the lieutenant governor shall be to serve as president of the senate, but he shall have no vote unless they be equally divided. Additional duties shall be prescribed by the governor. If, during a vacancy in the office of governor, the lieutenant governor shall be impeached, displaced, resign or die, or from mental or physical disease, or otherwise become incapable of performing the duties of his office, the secretary of state shall act as governor until the vacancy shall be filled or the disability removed."
+    }
+   ],
+   "authority": "Senate Concurrent Resolution No. 4031, chapter 531, 1973 Session Laws (chapter 605, Constitutional Amendments, Approved)",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1975.pdf (page 3, Chapter 605 — clean modern typeset, authoritative enacted text)",
+    "/tmp/bb1973.txt (poor OCR, gross cross-check — shows PRE-amendment text)"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "N.D. Const. § 77, enacted CAA text",
+     "enacted_session_law": "\"...he shall have no vote unless they be equally divided.\"",
+     "other_publications": "bb1973.txt (pre-amendment text) reads \"...but shall have no vote unless they be equally divided.\" — but that is the OLD section 77 superseded by this amendment, not a typeset variant of the new text"
+    }
+   ]
+  },
+  {
+   "number": "XCIV",
+   "effective_date": "1974-12-05",
+   "type": "new_article",
+   "changes": [
+    {
+     "target": "N.D. Const. amend. art. XCIV",
+     "heading": "RETIREMENT, DISCIPLINE, AND REMOVAL OF JUDGES",
+     "text": "The legislative assembly may provide for the retirement, discipline and removal of judges of the supreme court and district court. The removal procedure provided for herein may be used in addition to the impeachment proceedings provided for in sections 194, 195, and 196."
+    }
+   ],
+   "authority": "House Concurrent Resolution No. 3017, chapter 533, 1973 Session Laws; enacted as chapter 606, Constitutional Amendments Approved (1975); approved at the general election November 5, 1974 (130,600 to 66,523)",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1975.pdf (page 4, CHAPTER 606)"
+   ],
+   "confidence": "high",
+   "variants": []
+  },
+  {
+   "number": "XCI",
+   "effective_date": "1975-07-01",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 7",
+     "heading": "Size of Trial Juries",
+     "text": "Section 7. The right of trial by jury shall be secured to all, and remain inviolate. A person accused of a crime for which he may be confined for a period of more than one year has the right of trial by a jury of twelve. The legislative assembly may determine the size of the jury for all other cases, provided that the jury consists of at least six members. All verdicts must be unanimous."
+    }
+   ],
+   "authority": "Chapter 532, House Concurrent Resolution No. 3002 (1973), approved at the primary election held in 1974; effective July 1, 1975.",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/cap1973.pdf (CAA, Chapter 532, HCR 3002, p. 1421) - primary, clean",
+    "/tmp/bb1961.txt (integrated Blue Book, OCR - shows pre-amendment text)",
+    "/tmp/bb1973.txt (integrated Blue Book, OCR - shows pre-amendment text)"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "N.D. Const. § 7",
+     "enacted_session_law": "CAA (Chapter 532, HCR 3002, 1973), enacted/effective text: \"Section 7. The right of trial by jury shall be secured to all, and remain inviolate. A person accused of a crime for which he may be confined for a period of more than one year has the right of trial by a jury of twelve. The legislative assembly may determine the size of the jury for all other cases, provided that the jury consists of at least six members. All verdicts must be unanimous.\"",
+     "other_publications": "Both integrated Blue Books predate the July 1, 1975 effective date and therefore print the PRE-amendment text of section 7. bb1961.txt (OCR): \"Section 7. The right of trial by jury shall [be] secured to all, and remain inviolate; but a jury in civil cases, in courts not of record m[a]y consist of less than twelve men, [a]s may be prescribed by law.\" bb1973.txt (OCR, with scan typo \"trail\"): \"Section 7. The right of tra[i]l by jury shall be secured to all, and remain inviolate; but a jury in civil cases. [I]n courts not of record may consist of less than twelve men, as may be prescribed by law.\" This is a substantive content difference (old vs. new section 7), not a punctuation/spelling drift in the same text — expected because both codes predate this amendment's effective date. No clean cross-check of the post-1975 text is available in the supplied Blue Books."
+    }
+   ]
+  },
+  {
+   "number": "XCII",
+   "effective_date": "1975-07-01",
+   "type": "new_article",
+   "changes": [
+    {
+     "target": "N.D. Const. amend. art. XCII",
+     "heading": "Open Meetings (new article)",
+     "text": "Unless otherwise provided by law, all meetings of public or governmental bodies, boards, bureaus, commissions, or agencies of the state or any political subdivision of the state, or organizations or agencies supported in whole or in part by public funds, or expending public funds, shall be open to the public."
+    },
+    {
+     "target": "N.D. Const. § 50",
+     "heading": "Open Meetings of the Legislative Assembly",
+     "text": "Section 50. All sessions of the legislative assembly, including the committee of the whole and meetings of legislative committees, shall be open to the public."
+    }
+   ],
+   "authority": "N.D. Const. amend. XCII (1973 S.C.R. No. 4010, ch. 530, approved 1974, eff. July 1, 1975)",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/cap1973.pdf p.1419 (Constitutional Amendments, Proposed, ch. 530, S.C.R. No. 4010)",
+    "/tmp/bb1973.txt (old § 50, pre-amendment; line 19056)",
+    "/tmp/bb1961.txt (old § 50, pre-amendment; line 15949)"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "N.D. Const. § 50",
+     "enacted_session_law": "CAA (1973 ch. 530, § 2): \"Section 50. All sessions of the legislative assembly, including the committee of the whole and meetings of legislative committees, shall be open to the public.\"",
+     "other_publications": "1961 and 1973 Blue Books still print the pre-amendment § 50 (\"The sessions of each house and of the committee of the whole shall be open unless the business is such as ought to be kept secret.\"), because the amendment was not approved (Sept. 1974 primary) or effective (July 1, 1975) until after both compilations. No textual divergence in the amendment itself; the Blue Book simply predates integration."
+    }
+   ],
+   "status": "pending",
+   "pending_reason": "mixed new-article + existing-section change — needs careful individual handling"
+  },
+  {
+   "number": "XCV",
+   "effective_date": "1976-10-07",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 53",
+     "heading": "Section 53 (organizational/orientation meeting; recess until January session)",
+     "text": "Section 53. The legislative assembly shall meet at the seat of government in the month of December following the election of the members thereof for organizational and orientation purposes as provided by law and shall thereafter recess until twelve o'clock noon on the first Tuesday after the third day in January or at such other time as may be prescribed by law but not later than the eleventh day of January."
+    },
+    {
+     "target": "N.D. Const. § 55",
+     "heading": "Section 55 (repealed)",
+     "text": "[Repealed effective 1976-10-07]"
+    },
+    {
+     "target": "N.D. Const. § 56",
+     "heading": "Section 56 (eighty natural days; biennium)",
+     "text": "Section 56. Each regular session of the legislative assembly shall not exceed eighty natural days during the biennium. The organizational meeting of the legislative assembly as provided in section 53 shall not be counted as part of such eighty natural days, nor shall days spent in session at the call of the governor pursuant to section 75, or while engaged in impeachment proceedings, be counted. Days spent in regular session need not be consecutive, and the legislative assembly may authorize its committees to meet at any time during the biennium. As used in this section, a \"natural day\" means a period of twenty-four consecutive hours."
+    }
+   ],
+   "authority": "Senate Concurrent Resolution No. 4023, chapter 611, 1975 Session Laws; Constitutional Amendments Approved, chapter 596 (approved September 7, 1976, 60,587 to 60,145; primary election constitutional measure No. 2)",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1977.pdf (Constitutional Amendments Approved, chapter 596, p.1374) — clean modern typeset, authoritative enacted text"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "N.D. Const. § 56 (pre-1976 / Blue Books)",
+     "enacted_session_law": "Enacted CAA text (ch. 596): \"Each regular session of the legislative assembly shall not exceed eighty natural days during the biennium ... a 'natural day' means a period of twenty-four consecutive hours.\"",
+     "other_publications": "Cross-check of /tmp/bb1973.txt and /tmp/bb1961.txt found no \"eighty natural days\" language; bb1973 carries the pre-amendment clause \"No legislative day shall be shorter than the natural day.\" Both integrated codes predate this 1976 amendment, so the divergence is temporal (superseded prior text), not a publication discrepancy in the enacted text."
+    }
+   ],
+   "status": "pending",
+   "pending_reason": "complex structural amendment (repeal / section range / amendment-article edit / institutions-list / judicial rewrite) — needs careful individual handling"
+  },
+  {
+   "number": "XCVII",
+   "effective_date": "1976-10-07",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 28",
+     "heading": "Qualifications of Legislators (Senators)",
+     "text": "Section 28. Each person elected as a senator must be, on the day of his election, a qualified elector in the district from which he is chosen and have been a resident of the state for one year next preceding his election."
+    },
+    {
+     "target": "N.D. Const. § 34",
+     "heading": "Qualifications of Legislators (Representatives)",
+     "text": "Section 34. Each person elected as a representative must be, on the day of his election, a qualified elector in the district from which he is chosen and have been a resident of the state for one year next preceding his election."
+    }
+   ],
+   "authority": "House Concurrent Resolution No. 3016, chapter 614, 1975 Session Laws; Constitutional Amendments Approved, chapter 598. Approved September 7, 1976 (66,383 to 58,538), primary election measure No. 1.",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1977.pdf p.1377-1378 (CHAPTER 598, QUALIFICATIONS OF LEGISLATORS)",
+    "/tmp/bb1973.txt lines 18941-18943 (pre-amendment § 28), lines 18966-18968 (pre-amendment § 34)"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "N.D. Const. § 28 (pre-amendment, prior text only)",
+     "enacted_session_law": "Section 28. Each person elected as a senator must be, on the day of his election, a qualified elector in the district from which he is chosen and have been a resident of the state for one year next preceding his election. (CAA chapter 598, governs)",
+     "other_publications": "bb1973.txt: \"Section 28. No person shall he [be] a senator who is not a qualified elector in the district in which he may be chosen, and who shall not have attained the age of twenty-five years and have been a resident of the state or territory for two years next preceding his election.\" This is the SUPERSEDED pre-1976 text, not a publication variant of the enacted amendment."
+    },
+    {
+     "location": "N.D. Const. § 34 (pre-amendment, prior text only)",
+     "enacted_session_law": "Section 34. Each person elected as a representative must be, on the day of his election, a qualified elector in the district from which he is chosen and have been a resident of the state for one year next preceding his election. (CAA chapter 598, governs)",
+     "other_publications": "bb1973.txt: \"Section 34. No person shall be a representative who is not a qualified elector In [in] the district from which he may be chosen, and who shall not have attained the age of twenty-one years, and have been a resident of the state or territory for two years next preceding his election.\" This is the SUPERSEDED pre-1976 text, not a publication variant of the enacted amendment."
+    }
+   ]
+  },
+  {
+   "number": "XCVIII",
+   "effective_date": "1976-10-07",
+   "type": "new_article",
+   "changes": [
+    {
+     "target": "N.D. Const. amend. art. XCVIII",
+     "heading": "JUDICIAL ARTICLE (new Article IV; created and enacted, replacing old Article IV consisting of sections 85 through 120)",
+     "text": "SECTION 1.) Article IV of the Constitution of the State of North Dakota is hereby created and enacted to read as follows:"
+    },
+    {
+     "target": "N.D. Const. § 85",
+     "heading": "Section 85",
+     "text": "Section 85. The judicial power of the state is vested in a unified judicial system consisting of a supreme court, a district court, and such other courts as may be provided by law."
+    },
+    {
+     "target": "N.D. Const. § 86",
+     "heading": "Section 86",
+     "text": "Section 86. The supreme court shall be the highest court of the state. It shall have appellate jurisdiction, and shall also have original jurisdiction with authority to issue, hear, and determine such original and remedial writs as may be necessary to properly exercise its jurisdiction. The supreme court shall consist of five justices, one of whom shall be designated chief justice in the manner provided by law."
+    },
+    {
+     "target": "N.D. Const. § 87",
+     "heading": "Section 87",
+     "text": "Section 87. The supreme court shall have authority to promulgate rules of procedure, including appellate procedure, to be followed by all the courts of this state; and, unless otherwise provided by law, to promulgate rules and regulations for the admission to practice, conduct, disciplining, and disbarment of attorneys at law.\n\nThe chief justice shall be the administrative head of the unified judicial system. He may assign judges, including retired judges, for temporary duty in any court or district under such rules and regulations as may be promulgated by the supreme court. The chief justice shall appoint a court administrator for the unified judicial system. Unless otherwise provided by law, the powers, duties, qualifications, and terms of office of the court administrator, and other court officials, shall be as provided by rules of the court."
+    },
+    {
+     "target": "N.D. Const. § 88",
+     "heading": "Section 88",
+     "text": "Section 88. A majority of the supreme court shall be necessary to constitute a quorum or to pronounce a decision, provided that the supreme court shall not declare a legislative enactment unconstitutional unless at least four of the members of the court so decide."
+    },
+    {
+     "target": "N.D. Const. § 89",
+     "heading": "Section 89",
+     "text": "Section 89. When a judgment or order is reversed, modified, or confirmed by the supreme court, the reasons shall be concisely stated in writing, signed by the justices concurring, filed in the office of the clerk of the supreme court, and preserved with a record of the case. Any justice dissenting may give the reason for his dissent in writing over his signature."
+    },
+    {
+     "target": "N.D. Const. § 90",
+     "heading": "Section 90",
+     "text": "Section 90. Appeals shall be allowed from decisions of lower courts to the supreme court as may be provided by law."
+    },
+    {
+     "target": "N.D. Const. § 91",
+     "heading": "Section 91",
+     "text": "Section 91. The justices of the supreme court shall be chosen by the electors of the state for ten-year terms, so arranged that one justice is elected every two years. They shall hold office until their successors are duly qualified, and shall receive compensation as provided by law, but the compensation of any justice shall not be diminished during his term of office."
+    },
+    {
+     "target": "N.D. Const. § 92",
+     "heading": "Section 92",
+     "text": "Section 92. The district court shall have original jurisdiction of all causes, except as otherwise provided by law, and such appellate jurisdiction as may be provided by law or by rule of the supreme court. The district court shall have authority to issue such writs as are necessary to the proper exercise of its jurisdiction."
+    },
+    {
+     "target": "N.D. Const. § 93",
+     "heading": "Section 93",
+     "text": "Section 93. The state shall be divided into judicial districts by order of the supreme court. In each district, one or more judges, as provided by law, shall be chosen by the electors of the district. The term of office shall be six years, and a district judge shall hold office until his successor is duly qualified. The compensation of district judges shall be fixed by law, but the compensation of any district judge shall not be diminished during his term of office."
+    },
+    {
+     "target": "N.D. Const. § 94",
+     "heading": "Section 94",
+     "text": "Section 94. Supreme court justices and district court judges shall be citizens of the United States and residents of this state, shall be learned in the law, and shall possess any additional qualifications prescribed by law. Judges of other courts shall be selected for such terms and shall have such qualifications as may be prescribed by law.\n\nNo justice of the supreme court or judge of the district court of this state shall engage in the practice of law, or hold any public office, elective or appointive, not judicial in nature. No duties shall be imposed by law upon the supreme court or any of the justices thereof, except such as are judicial, nor shall any of the justices exercise any power of appointment except as herein provided. No judge of any court of this state shall be paid from the fees of his office, nor shall the amount of his compensation be measured by fees, other moneys received, or the amount of judicial activity of his office."
+    },
+    {
+     "target": "N.D. Const. § 95",
+     "heading": "Section 95",
+     "text": "Section 95. When any justice or judge has a conflict of interest in a pending cause or is unable to sit in court because he is physically or mentally incapacitated, the chief justice, or a justice acting in his stead, shall assign a judge, or retired justice or judge, to hear the cause."
+    },
+    {
+     "target": "N.D. Const. § 96",
+     "heading": "Section 96",
+     "text": "Section 96. The legislative assembly may provide for the retirement, discipline, and removal of judges. The removal procedure provided for herein may be used in addition to the impeachment proceedings provided for in sections 194, 195, and 196 and removal provided for in section 197."
+    },
+    {
+     "target": "N.D. Const. § 97",
+     "heading": "Section 97",
+     "text": "Section 97. A judicial nominating committee shall be established by law. Any vacancy in the office of supreme court justice or district court judge shall be filled by appointment by the governor from a list of candidates nominated by the committee, unless the governor calls a special election to fill the vacancy for the remainder of the term. An appointment shall continue until the next general election, when the office shall be filled by election for the remainder of the term."
+    }
+   ],
+   "authority": "House Concurrent Resolution No. 3056, chapter 615, 1975 Session Laws; enacted as Constitutional Amendments Approved, chapter 599 (approved September 7, 1976, 59,795 to 55,784); primary election constitutional measure No. 3.",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1977.pdf (page 5, Chapter 599, JUDICIAL ARTICLE) — clean enacted CAA text, governs",
+    "/tmp/bb1961.txt (gross-check only; contains pre-amendment old Article IV)",
+    "/tmp/bb1973.txt (gross-check only; contains pre-amendment old Article IV)"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "N.D. Const. § 85",
+     "enacted_session_law": "CAA ch. 599 (1976): \"The judicial power of the state is vested in a unified judicial system consisting of a supreme court, a district court, and such other courts as may be provided by law.\"",
+     "other_publications": "bb1961.txt l.16210 and bb1973.txt l.19312 show the PRE-amendment section 85 (\"The judicial power of the state of North Dakota shall be vested in a supreme [court]...\"). These are the OLD/repealed text, not a variant of the enacted new text — both Blue Books predate the 1976 effective date, so no post-amendment integrated publication was available for variant comparison. New-text phrasing of §§95 and 97 (\"conflict of interest in a pending cause\", \"judicial nominating committee\") does not appear in either Blue Book, as expected."
+    }
+   ],
+   "status": "pending",
+   "pending_reason": "complex structural amendment (repeal / section range / amendment-article edit / institutions-list / judicial rewrite) — needs careful individual handling"
+  },
+  {
+   "number": "XCIX",
+   "effective_date": "1976-10-07",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. amend. art. I",
+     "heading": "ARTICLE I — Lotteries and Gift Enterprises",
+     "text": "The legislative assembly shall not authorize any game of chance, lottery, or gift enterprises, under any pretense, or for any purpose whatever. However, the legislative assembly may authorize by law bona fide nonprofit veterans', charitable, educational, religious, or fraternal organizations, civic and service clubs, or such other public-spirited organizations as it may recognize, to conduct games of chance when the entire net proceeds of such games of chance are to be devoted to educational, charitable, patriotic, fraternal, religious, or other public-spirited uses."
+    }
+   ],
+   "authority": "House Concurrent Resolution No. 3087, chapter 616, 1975 Session Laws; Constitutional Amendments, Approved, Chapter 600 (constitutional measure No. 4 on the primary election ballot; approved September 7, 1976, 93,287 to 38,394)",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1977.pdf p.1381 (Chapter 600, Lotteries and Gift Enterprises)",
+    "/tmp/bb1961.txt (gross check)",
+    "/tmp/bb1973.txt (gross check)"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "N.D. Const. amend. art. I (lottery/gift enterprises provision)",
+     "enacted_session_law": "CAA Chapter 600: \"The legislative assembly shall not authorize any game of chance, lottery, or gift enterprises, under any pretense, or for any purpose whatever. However, the legislative assembly may authorize by law bona fide nonprofit veterans', charitable, educational, religious, or fraternal organizations, civic and service clubs, or such other public-spirited organizations as it may recognize, to conduct games of chance when the entire net proceeds of such games of chance are to be devoted to educational, charitable, patriotic, fraternal, religious, or other public-spirited uses.\"",
+     "other_publications": "Blue Book 1961 (line 17723-24) and Blue Book 1973 (line 20784-85) show the PRE-amendment text: \"The legislative assembly shall have no power to authorize lotteries or gift enterprises for any purpose and shall pass laws to prohibit the sale of lottery or gift enterprise tickets.\" This is the superseded version (these editions predate the 1976 amendment), not a variant reading of the enacted text. No code with the post-amendment text was available for punctuation comparison."
+    }
+   ],
+   "status": "pending",
+   "pending_reason": "complex structural amendment (repeal / section range / amendment-article edit / institutions-list / judicial rewrite) — needs careful individual handling"
+  },
+  {
+   "number": "XCVI",
+   "effective_date": "1976-12-02",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. art. LIV, subsection 2 (amend. art. LIV)",
+     "heading": "Board of Higher Education Qualifications and Compensation — Subsection 2",
+     "text": "2.  (a)  The State Board of Higher Education shall consist of seven members, all of whom shall be qualified electors and taxpayers of the State, and who shall have resided in this State for not less than five years immediately preceding their appointment, to be appointed by the Governor, by and with the consent of the Senate, from a list of names selected as hereinafter provided.\n\nThere shall not be on said board more than one graduate of any one of the institutions under the jurisdiction of the State Board of Higher Education at any one time. No person employed by any institution under the control of the board shall serve as a member of the board, nor shall any employee of any such institution be eligible for membership on the State Board of Higher Education for a period of two years following the termination of his employment.\n\nOn or before the first day of February, 1939, the Governor shall nominate from a list of three names for each position, selected by the unanimous action of the President of the North Dakota Educational Association, the Chief Justice of the Supreme Court, and the Superintendent of Public Instruction, and, with the consent of a majority of the members-elect of the Senate, shall appoint from such list as such State Board of Higher Education seven members, whose terms shall commence on the first day of July, 1939, one of which terms shall expire on the thirtieth day of June, 1940, and one on the thirtieth day of June in each of the years 1941, 1942, 1943, 1944, 1945, and 1946. The term of office of members appointed to fill vacancies at the expiration of said terms shall be for seven years, and in the case of vacancies otherwise arising, appointments shall be made only for the balance of the term of the members whose places are to be filled.\n\n(b)  In the event any nomination made by the Governor is not consented to and confirmed by the Senate as hereinbefore provided, the Governor shall again nominate a candidate for such office, selected from a new list, prepared in the manner hereinbefore provided, which nomination shall be submitted to the Senate for confirmation, and said proceedings shall be continued until such appointments have been confirmed by the Senate, or the session of the legislature shall have adjourned.\n\n(c) When any term expires or a vacancy occurs when the legislature is not in session, the Governor may appoint from a list selected as hereinbefore provided, a member who shall serve until the opening of the next session of the legislature, at which time his appointment shall be certified to the Senate for confirmation, as above provided; and if the appointment be not confirmed by the thirtieth legislative day of such session, his office shall be deemed vacant and the Governor shall nominate from a list selected as hereinbefore provided, another candidate for such office and the same proceedings shall be followed as are above set forth; provided further, that when the legislature shall be in session at any time within six months prior to the date of the expiration of the term of any member, the Governor shall nominate his successor from a list selected as above set forth, within the first thirty days of such session, and upon confirmation by the Senate such successor shall take office at the expiration of the term of the incumbent. No person who has been nominated and whose nomination the Senate has failed to confirm shall be eligible for an interim appointment."
+    },
+    {
+     "target": "N.D. Const. art. LIV, subsection 4 (amend. art. LIV)",
+     "heading": "Board of Higher Education Qualifications and Compensation — Subsection 4",
+     "text": "4. Each appointive member of the State Board of Higher Education shall receive such compensation as may be determined by the Legislative Assembly for the time actually spent devoted to the duties of his office, and, in addition, shall receive his necessary expenses in the same manner and amounts as other state officials for attending meetings and performing other functions of his office."
+    }
+   ],
+   "authority": "Senate Concurrent Resolution No. 4027, chapter 612, 1975 Session Laws; Constitutional Amendments Approved, chapter 597 (approved November 2, 1976, 136,720 to 99,080)",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1977.pdf (Constitutional Amendments Approved, chapter 597, pp. 1375-1376) — clean modern typeset, authoritative enacted text",
+    "/tmp/bb1961.txt and /tmp/bb1973.txt — Blue Books predate the 1976 amendment; OCR too poor for fine comparison; gross check only"
+   ],
+   "confidence": "high",
+   "variants": [],
+   "status": "pending",
+   "pending_reason": "complex structural amendment (repeal / section range / amendment-article edit / institutions-list / judicial rewrite) — needs careful individual handling"
+  },
+  {
+   "number": "C",
+   "effective_date": "1978-10-05",
+   "type": "repeal",
+   "changes": [
+    {
+     "target": "N.D. Const. § 214",
+     "heading": "Original State Apportionment and Transition Schedule",
+     "text": "[Repealed effective 1978-10-05]"
+    },
+    {
+     "target": "N.D. Const. Sched. §§ 1-25",
+     "heading": "Original State Apportionment and Transition Schedule",
+     "text": "[Repealed effective 1978-10-05]"
+    }
+   ],
+   "authority": "S.C.R. No. 4009, ch. 607, 1977 Sess. Laws (Forty-fifth Legislative Assembly); ch. 691, Constitutional Amendments Approved",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1979.pdf (Chapter 691, p. 1726)",
+    "/tmp/bb1973.txt (§ 214 superseded/original text)"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "N.D. Const. § 214 and Sched. §§ 1-25",
+     "enacted_session_law": "CAA ch. 691: \"Section 214 and sections 1 through 25 of the transition schedule of the Constitution of the State of North Dakota are hereby repealed.\"",
+     "other_publications": "Blue Book 1973 (/tmp/bb1973.txt) shows § 214 already annotated as \"(Superceded by legislative action. Section 54-03-01, and also by Federal District ...)\" with the original text reproduced in an editorial note; this is an editorial/annotation divergence in the integrated code, not a divergence in enacted text. No section 214 hit located in /tmp/bb1961.txt on the \"transition schedule\" grep (OCR/coverage)."
+    }
+   ],
+   "status": "pending",
+   "pending_reason": "complex structural amendment (repeal / section range / amendment-article edit / institutions-list / judicial rewrite) — needs careful individual handling"
+  },
+  {
+   "number": "CI",
+   "effective_date": "1978-10-05",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 65",
+     "heading": "POWERS AND DUTIES OF LIEUTENANT GOVERNOR",
+     "text": "No bill shall become a law: except by a vote of a majority of all the members-elect in the house of representatives, and a vote of the majority of the members-elect in the senate, however the lieutenant governor may vote as provided in section 77 in the event the senate is equally divided, nor unless, on its final passage, the vote be taken by yeas and nays, and the names of those voting be entered on the journal."
+    },
+    {
+     "target": "N.D. Const. § 77",
+     "heading": "POWERS AND DUTIES OF LIEUTENANT GOVERNOR",
+     "text": "The powers and duties of the lieutenant governor shall be to serve as president of the senate, and he may, when the senate is equally divided, vote on procedural matters, and on substantive matters if his vote would be decisive. Additional duties shall be prescribed by the governor. If, during the vacancy in the office of governor, the lieutenant governor shall be impeached, displaced, resign, or die, or from mental or physical disease, or otherwise become incapable of performing the duties of his office, the secretary of state shall act as governor until the vacancy shall be filled or the disability removed."
+    }
+   ],
+   "authority": "S.C.R. No. 4075, ch. 610, 1977 Session Laws (ch. 692, Constitutional Amendments Approved); approved September 5, 1978 (46,442 to 29,960)",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1979.pdf (Chapter 692, pp. 1727 [PDF page 2]) — primary, clean enacted text",
+    "/tmp/bb1973.txt (Blue Book 1973) — OCR cross-check, shows pre-amendment text",
+    "/tmp/bb1961.txt (Blue Book 1961) — OCR cross-check, shows pre-amendment text"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "N.D. Const. § 65 (pre-amendment, as published in Blue Book 1973, p.~19104)",
+     "enacted_session_law": "Enacted CAA text reads (in part): \"No bill shall become a law: except by a vote of a majority of all the members-elect in the house of representatives, and a vote of the majority of the members-elect in the senate, however the lieutenant governor may vote as provided in section 77 in the event the senate is equally divided, nor unless, on its final passage ...\"",
+     "other_publications": "Blue Book 1973 shows the PRIOR (unamended) text: \"No bill shall become a law except by a vote of a majority of all [OCR: 'till'] the members-elect in each house, nor unless, on its final passage ...\" This is the pre-1978 version, not a divergent reading of the same enacted text. No genuine punctuation/spelling variant of the enacted text detected."
+    },
+    {
+     "location": "N.D. Const. § 77 (pre-amendment, as published in Blue Book 1973, p.~19227, and Blue Book 1961, p.~16113)",
+     "enacted_session_law": "Enacted CAA text reads (in part): \"The powers and duties of the lieutenant governor shall be to serve as president of the senate, and he may, when the senate is equally divided, vote on procedural matters, and on substantive matters if his vote would be decisive ...\"",
+     "other_publications": "Blue Books 1961 and 1973 show the PRIOR (unamended) text: \"The lieutenant governor shall be president of the senate, but shall have no vote unless they be equally divided. If, during a vacancy in the office of governor ...\" This is the pre-1978 version that the amendment replaced, not a divergent reading of the same enacted text."
+    }
+   ],
+   "status": "pending",
+   "pending_reason": "complex structural amendment (repeal / section range / amendment-article edit / institutions-list / judicial rewrite) — needs careful individual handling"
+  },
+  {
+   "number": "CII",
+   "effective_date": "1978-10-05",
+   "type": "repeal",
+   "changes": [
+    {
+     "target": "N.D. Const. amend. art. 59",
+     "heading": "Veteran Bonus Bonds and Constitutional Convention",
+     "text": "[Repealed effective 1978-10-05]"
+    },
+    {
+     "target": "N.D. Const. amend. art. 65",
+     "heading": "Veteran Bonus Bonds and Constitutional Convention",
+     "text": "[Repealed effective 1978-10-05]"
+    },
+    {
+     "target": "N.D. Const. amend. art. 87",
+     "heading": "Veteran Bonus Bonds and Constitutional Convention",
+     "text": "[Repealed effective 1978-10-05]"
+    },
+    {
+     "target": "N.D. Const. amend. art. 88",
+     "heading": "Veteran Bonus Bonds and Constitutional Convention",
+     "text": "[Repealed effective 1978-10-05]"
+    }
+   ],
+   "authority": "House Concurrent Resolution No. 3004, chapter 603, 1977 Session Laws (Forty-fifth Legislative Assembly); enacted as Chapter 693, Constitutional Amendments, Approved, 1979 Session Laws; approved September 5, 1978 (41,379 to 32,613); primary election ballot measure No. 6.",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1979.pdf (Chapter 693, p. 1728): HCR No. 3004, ch. 603, 1977 Session Laws — repeal of articles 59, 65, 87, and 88 of the amendments to the Constitution, relating to bonds for bonuses to veterans of World War II, the Korean conflict, and the Vietnam conflict, and to the calling of a constitutional convention; 'SECTION 1. REPEAL.) Articles 59, 65, 87, and 88 of the amendments to the Constitution of the State of North Dakota are hereby repealed.'",
+    "/tmp/bb1961.txt (gross OCR check — no relevant constitutional text)",
+    "/tmp/bb1973.txt (gross OCR check — no relevant constitutional text)"
+   ],
+   "confidence": "high",
+   "variants": [],
+   "status": "pending",
+   "pending_reason": "complex structural amendment (repeal / section range / amendment-article edit / institutions-list / judicial rewrite) — needs careful individual handling"
+  },
+  {
+   "number": "CIII",
+   "effective_date": "1978-12-07",
+   "type": "new_article",
+   "changes": [
+    {
+     "target": "N.D. Const. amend. art. CIII",
+     "heading": "OPEN RECORDS",
+     "text": "Unless otherwise provided by law, all records of public or governmental bodies, boards, bureaus, commissions, or agencies of the state or any political subdivision of the state, or organizations or agencies supported in whole or in part by public funds, or expending public funds, shall be public records, open and accessible for inspection during reasonable office hours."
+    }
+   ],
+   "authority": "Senate Concurrent Resolution No. 4024, chapter 612, 1977 Session Laws (Forty-fifth Legislative Assembly); enacted as 1979 Session Laws ch. 694; approved Nov. 7, 1978 (172,125 to 33,965).",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1979.pdf p.1729 (Chapter 694, OPEN RECORDS)",
+    "/tmp/bb1961.txt (no match — predates amendment)",
+    "/tmp/bb1973.txt (no match — predates amendment)"
+   ],
+   "confidence": "high",
+   "variants": []
+  },
+  {
+   "number": "CIV",
+   "effective_date": "1978-12-07",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 121",
+     "heading": "Elective Franchise",
+     "text": "Section 121. The general election of the state shall be held biennially as provided by law.\n\nEvery citizen of the United States, who has attained the age of eighteen years and who is a North Dakota resident, shall be a qualified elector. When an elector moves within the state he shall be entitled to vote in the precinct from which he moves until he establishes voting residence in another precinct. The legislative assembly shall provide by law for the determination of residence for voting eligibility, other than physical presence. No elector shall lose his residency for voting eligibility solely by reason of his absence from the state.\n\nThe legislative assembly shall provide by law for secrecy in voting, for absentee voting, for administration of elections and for the nomination of candidates."
+    },
+    {
+     "target": "N.D. Const. § 122",
+     "heading": "Elective Franchise",
+     "text": "Section 122. No person who has been declared mentally incompetent by order of a court or other authority having jurisdiction, which order has not been rescinded, shall be qualified to vote. No person convicted of a felony shall be qualified to vote until his or her civil rights are restored."
+    },
+    {
+     "target": "N.D. Const. §§ 123-129",
+     "heading": "Elective Franchise (former Article V)",
+     "text": "[Repealed effective 1978-12-07]"
+    },
+    {
+     "target": "N.D. Const. amend. art. 36",
+     "heading": "Residency for voting purposes",
+     "text": "[Repealed effective 1978-12-07]"
+    },
+    {
+     "target": "N.D. Const. amend. art. 40 (XL)",
+     "heading": "Residency for voting purposes",
+     "text": "[Repealed effective 1978-12-07]"
+    }
+   ],
+   "authority": "Senate House Concurrent Resolution No. 3014, chapter 611, 1977 Session Laws; Constitutional Amendments Approved, chapter 695 (Forty-fifth Legislative Assembly); approved November 7, 1978, 124,519 to 61,224 (constitutional measure No. 2 on the general election ballot)",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1979.pdf (Constitutional Amendments Approved, chapter 695, p. 1730 of session laws / PDF page 5) — primary enacted text, clean modern typeset",
+    "/tmp/bb1973.txt — gross OCR check (contains the pre-1978 former Article V being repealed, not the new text)",
+    "/tmp/bb1961.txt — gross OCR check (former Article V)"
+   ],
+   "confidence": "high",
+   "variants": [],
+   "status": "pending",
+   "pending_reason": "complex structural amendment (repeal / section range / amendment-article edit / institutions-list / judicial rewrite) — needs careful individual handling"
+  },
+  {
+   "number": "CV",
+   "effective_date": "1978-12-07",
+   "type": "new_article",
+   "changes": [
+    {
+     "target": "N.D. Const. amend. art. CV",
+     "heading": "INITIATIVE, REFERENDUM, AND RECALL",
+     "text": "INITIATIVE, REFERENDUM, AND RECALL\n      Section 1. While the legislative power of this state shall be vested in a legislative assembly consisting of a Senate and a House of Representatives, the people reserve the power to propose and enact laws by the initiative, including the call for a constitutional convention; to approve or reject legislative acts, or parts thereof, by the referendum; to propose and adopt constitutional amendments by the initiative; and to recall certain elected officials. This article is self-executing and all of its provisions are mandatory. Laws may be enacted to facilitate and safeguard, but not to hamper, restrict, or impair these powers.\n      Section 2. A petition to initiate or to refer a measure shall be presented to the secretary of state for approval as to form. A request for approval shall be presented over the names and signatures of twenty-five or more electors as sponsors, one of whom shall be designated as chairman of the sponsoring committee. The secretary of state shall approve the petition for circulation if it is in proper form and contains the names and addresses of the sponsors and the full text of the measure.\n      Section 3. The petition shall be circulated only by electors. They shall swear thereon that the electors who have signed the petition did so in their presence. Each elector signing a petition shall also write in the date of signing and his post-office address. No law shall be enacted limiting the number of copies of a petition. The copies shall become part of the original petition when filed.\n      Section 4. The petition may be submitted to the secretary of state if signed by electors equal in number to two percent of the resident population of the state at the last federal decennial census.\n      Section 5. An initiative petition shall be submitted not less than ninety days before the statewide election at which the measure is to be voted upon. A referendum petition may be submitted only within ninety days after the filing of the measure with the secretary of state. The submission of a petition shall suspend the operation of any measure enacted by the legislative assembly except emergency measures and appropriation measures for the support and maintenance of state departments and institutions. The submission of a petition against one or more items or parts of any measure shall not prevent the remainder from going into effect. A referred measure may be voted upon at a statewide election or at a special election called by the governor.\n      Section 6. The secretary of state shall pass upon each petition, and if he finds it insufficient, he shall notify the \"Committee for the Petitioners\" and allow twenty days for correction or amendment. All decisions of the secretary of state in regard to any such petition shall be subject to review by the supreme court. But if the sufficiency of such petition is being reviewed at the time the ballot is prepared, the secretary of state shall place the measure on the ballot and no subsequent decision shall invalidate such measure if it is at such election approved by a majority of the votes cast thereon. If proceedings are brought against any petition upon any ground, the burden of proof shall be upon the party attacking it.\n      Section 7. All decisions of the secretary of state in the petition process are subject to review by the supreme court in the exercise of original jurisdiction. If his decision is being reviewed at the time the ballot is prepared, he shall place the measure on the ballot and no court action shall invalidate the measure if it is approved at the election by a majority of the votes cast thereon.\n      Section 8. If a majority of votes cast upon an initiated or a referred measure are affirmative, it shall be deemed enacted. An initiated or referred measure which is approved shall become law thirty days after the election, and a referred measure which is rejected shall be void immediately. If conflicting measures are approved, the one receiving the highest number of affirmative votes shall be law. A measure approved by the electors may not be repealed or amended by the legislative assembly for seven years from its effective date, except by a two-thirds vote of the members elected to each house.\n      Section 9. A constitutional amendment may be proposed by initiative petition. If signed by electors equal in number to four percent of the resident population of the state at the last federal decennial census, the petition may be submitted to the secretary of state. All other provisions relating to initiative measures apply hereto.\n      Section 10. Any elected official of the state, of any county or of any legislative or county commissioner district shall be subject to recall by petition of electors equal in number to twenty-five percent of those who voted at the preceding general election for the office of governor in the state, county, or district in which the official is to be recalled.\n      The petition shall be filed with the official with whom a petition for nomination to the office in question is filed, who shall call a special election if he finds the petition valid and sufficient. No elector may remove his name from a recall petition.\n      The name of the official to be recalled shall be placed on the ballot unless he resigns within ten days after the filing of the petition. Other candidates for the office may be nominated in a manner provided by law. When the election results have been officially declared, the candidate receiving the highest number of votes shall be deemed elected for the remainder of the term. No official shall be subject twice to recall during the term for which he was elected."
+    },
+    {
+     "target": "N.D. Const. § 25",
+     "heading": null,
+     "text": "[Repealed effective 1978-12-07]"
+    },
+    {
+     "target": "N.D. Const. amend. art. XXXIII",
+     "heading": null,
+     "text": "[Repealed effective 1978-12-07]"
+    }
+   ],
+   "authority": "Senate... House Concurrent Resolution No. 3088, chapter 613, 1977 Session Laws; chapter 696, Constitutional Amendments, Approved (1979 compilation); approved Nov. 7, 1978, 102,182 to 75,413 (constitutional measure No. 3, general election ballot)",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1979.pdf p.1731-1733 (Chapter 696)",
+    "/tmp/bb1973.txt (gross OCR cross-check, §202 prior wording only)",
+    "/tmp/bb1961.txt (gross OCR cross-check)"
+   ],
+   "confidence": "high",
+   "variants": [],
+   "status": "pending",
+   "pending_reason": "complex structural amendment (repeal / section range / amendment-article edit / institutions-list / judicial rewrite) — needs careful individual handling"
+  },
+  {
+   "number": "CVI",
+   "effective_date": "1980-10-02",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 174",
+     "heading": "STATE PROPERTY TAX AUTHORITY",
+     "text": "Section 174. The legislative assembly shall be prohibited from raising revenue to defray the expenses of the state through the levying of a tax on the assessed value of real or personal property."
+    }
+   ],
+   "authority": "House Concurrent Resolution No. 3009, chapter 703, 1979 Session Laws; enacted as chapter 654, 1981 Session Laws (Constitutional Amendments, Approved); approved September 2, 1980 (primary election measure No. 2), 63,699 to 56,618.",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1981.pdf (Chapter 654, p.1816) - clean enacted CAA text",
+    "/tmp/bb1961.txt (gross OCR cross-check, pre-amendment text)",
+    "/tmp/bb1973.txt (gross OCR cross-check, pre-amendment text)"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "Blue Book 1961 (/tmp/bb1961.txt, line 16859) and Blue Book 1973 (/tmp/bb1973.txt, line 19965)",
+     "enacted_session_law": "Amended Section 174 reads: \"The legislative assembly shall be prohibited from raising revenue to defray the expenses of the state through the levying of a tax on the assessed value of real or personal property.\"",
+     "other_publications": "Both Blue Books predate the 1980 amendment and print the SUPERSEDED text of Section 174: \"The legislative assembly shall provide for raising revenue sufficient to defray the expenses of the state for each year, not to exceed in any one year four (4) mills on the dollar of the assessed valuation of all taxable property in the state, to be ascertained by the last assessment made for state and county purposes, and also a sufficient sum to pay the interest on the state debt.\" This is the language the CAA shows struck through, not a punctuation/spelling divergence in the enacted text. No post-amendment integrated code was available for cross-check."
+    }
+   ]
+  },
+  {
+   "number": "CVII",
+   "effective_date": "1980-10-02",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 173",
+     "heading": "Judicial Officers — election of certain county officials",
+     "text": "Section 173. There shall be elected in each county, organized under the provisions of section 172 of the Constitution of the State of North Dakota, a register of deeds, county auditor, treasurer, sheriff, state's attorney, and a clerk of the district court, who shall be electors in the county in which they are elected and who shall hold their office for a term of four years and until their successors are elected and qualified; provided that in counties having population of six thousand or less the register of deeds shall also be clerk of the district court. This amendment shall be self-executing, but legislation may be enacted to facilitate its operation."
+    },
+    {
+     "target": "N.D. Const. § 69",
+     "heading": "Repeal of subsection 6 of section 69 (jurisdiction of police magistrates, constables, and justices of the peace)",
+     "text": "[Repealed effective 1980-10-02]"
+    }
+   ],
+   "authority": "Senate Concurrent Resolution No. 4006, chapter 706, 1979 Session Laws (Forty-sixth Legislative Assembly); approved September 2, 1980 (58,827 to 50,643); enacted as Chapter 655, Constitutional Amendments, Approved (1981 Session Laws compilation)",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1981.pdf (Chapter 655, p. 1817-1818) — enacted CAA text, clean modern typeset, governs",
+    "/tmp/bb1973.txt — integrated Blue Book 1973, pre-amendment Section 173 (gross OCR cross-check)",
+    "/tmp/bb1961.txt — integrated Blue Book 1961 (gross OCR cross-check, section 69 jurisdiction provisions)"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "N.D. Const. § 173",
+     "enacted_session_law": "CAA Chapter 655: \"...sheriff, state's attorney, and a clerk of the district court... provided that in counties having population of six thousand or less the register of deeds shall also be clerk of the district court.\" (county judge and fifteen-thousand-population proviso struck)",
+     "other_publications": "Blue Book 1973 (pre-amendment): \"...sheriff, state's attorney, county judge and a clerk of the district court... provided in counties having fifteen thousand population or less, the county judge shall also be clerk of the district court; provided further that in counties having population of six thousand or less the register of deeds shall also be clerk of the district court and county judge. This amendment shall be construed as applying to the officers elected at the general election in 1962.\" Divergence is substantive (this is the older text the 1980 amendment superseded), not a publication-error variant; minor Blue Book OCR artifacts: \"shull lie\" for \"shall be,\" \"cterk\" for \"clerk,\" \"u\"/\"und\" for \"a\"/\"and.\""
+    }
+   ],
+   "status": "pending",
+   "pending_reason": "complex structural amendment (repeal / section range / amendment-article edit / institutions-list / judicial rewrite) — needs careful individual handling"
+  },
+  {
+   "number": "CVIII",
+   "effective_date": "1980-12-04",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 182",
+     "heading": "STATE BOND SECURITY",
+     "text": "Section 182. The state may issue or guarantee the payment of bonds, provided that all bonds in excess of two million dollars shall be secured by first mortgage upon real estate in amounts not to exceed sixty-five percent of its value; or upon real and personal property of state-owned utilities, enterprises, or industries, in amounts not exceeding its value, and provided further, that the state shall not issue or guarantee bonds upon property of state-owned utilities, enterprises, or industries in excess of ten million dollars.\n      No further indebtedness shall be incurred by the state unless evidenced by a bond issue, which shall be authorized by law for certain purposes, to be clearly defined. Every law authorizing a bond issue shall provide for levying an annual tax, or make other provision, sufficient to pay the interest semiannually, and the principal within thirty years from the date of the issue of such bonds and shall specially appropriate the proceeds of such tax, or of such other provisions to the payment of said principal and interest; and such appropriation shall not be repealed nor the tax or other provisions discontinued until such debt, both principal and interest, shall have been paid. No debt in excess of the limit named herein shall be incurred except for the purpose of repelling invasion, suppressing insurrection, defending the state in time of war or to provide for the public defense in case of threatened hostilities."
+    }
+   ],
+   "authority": "Senate Concurrent Resolution No. 4004, chapter 708, 1979 Session Laws (Forty-sixth Legislative Assembly); Constitutional Amendments, Approved, chapter 656",
+   "source_urls": [],
+   "sources_verified": [
+    "/tmp/caa1981.pdf (Constitutional Amendments, Approved, ch. 656, p. 1819)",
+    "/tmp/bb1973.txt (gross OCR cross-check, line 20023)"
+   ],
+   "confidence": "high",
+   "variants": [
+    {
+     "location": "N.D. Const. § 182 (first sentence, mortgage security ratio)",
+     "enacted_session_law": "Constitutional Amendments, Approved, ch. 656 (CAA 1981): \"in amounts not to exceed sixty-five percent of its value\" (the prior phrase \"one-half\" is shown struck through and replaced)",
+     "other_publications": "1973 Blue Book integrated text (pre-amendment) reads: \"in amounts not to exceed one-half of its value\" — this reflects the prior section, not a publication discrepancy. (No 182 hit in /tmp/bb1961.txt.) The 1973 codification also shows OCR/typesetting differences: \"state owned\" (no hyphen), \"enterprises or industries. In amounts\" (period and capital I), and \"in excess often million dollars\" (OCR run-together), all attributable to OCR rather than substantive divergence."
+    }
+   ]
   }
  ]
 }

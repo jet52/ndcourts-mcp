@@ -1,10 +1,13 @@
-# Constitution history — cross-publication judgment calls (segment 3, 1914–1924)
+# Constitution history — cross-publication judgment calls
 
-Each row is a place where official publications diverge in punctuation, capitalization, or
-spelling. Per policy, the **session law (enacted text) governs** and is what was ingested;
-**89 variants across 28 amendments.**
+Places where official publications diverge in punctuation, capitalization, or spelling.
+Policy: the **session law (enacted text) governs** and was ingested; these are flagged for
+review and cross-reference against ndconst.org section sidebar notes.
+**138 variants flagged across segments 3–4.**
 
-these are flagged for review and cross-reference against ndconst.org sidebar notes.
+
+
+# Segment 3 (1914–1924)
 
 ## Amendment XV (1914-12-03) — N.D. Const. § 25
 - **at least ten per cent. of the legal voters**
@@ -328,3 +331,229 @@ these are flagged for review and cross-reference against ndconst.org sidebar not
 - **except for the purpose of repelling invasion**
   - enacted (session law): singular 'purpose' ("except for the purpose of repelling invasion")
   - other publications: off1925.txt agrees (singular 'purpose'). The superseded 1918 Article XXXI version (seg3_src.md line 403) read plural 'purposes'. Enacted 1924 = singular.
+
+
+# Segment 4 (1956–1980, CAA PDFs)
+
+## Amendment LXV (1956-07-26) — N.D. Const. amend. art. LXV
+- **N.D. Blue Book 1961, Article 65**
+  - enacted (session law): § 1.) The legislative assembly ... under such terms and conditions as the legislative assembly may prescribe. (CAA enacted text)
+  - other publications: Rendered as 'Section 1.' (dropping the '§ 1.)' enacting marker). Substantive text identical; remaining differences are OCR noise (e.g. 'such terms .uid conditions').
+- **N.D. Blue Book 1973, Article 65**
+  - enacted (session law): § 1.) The legislative assembly ... under such terms and conditions as the legislative assembly may prescribe. (CAA enacted text)
+  - other publications: Rendered as 'Section 1.' (dropping the '§ 1.)' enacting marker). Substantive text identical to CAA.
+
+## Amendment LXVI (1956-07-26) — N.D. Const. § 14
+- **N.D. Const. § 14 (Art. 66)**
+  - enacted (session law): CAA 1957 ch. 397 (clean typeset): '...irrespective of any benefit from any improvement proposed by such corporation...' — single-spelling, no internal capitalization of 'improvement', 'money', 'jury' mid-sentence.
+  - other publications: 1961 and 1973 Blue Book integrated codifications carry the identical substantive text and identical amendment note ('Amendment: Art. 66, June 26, 1956, (S.L. 1957, ch. 397)'). The only divergences are OCR scanning artifacts (e.g., 1973 stray mid-sentence capitals 'In money', 'any Improvement', 'Its departments', 'way. It may', 'shall Immediately', 'a Jury trial'; 1961 garbled letters 'shnll', 'sulxlivisions', 'muy', 'wuy', 'wuived'). No genuine punctuation, capitalization, or spelling variant in the official text was found; the CAA reading governs.
+
+## Amendment LXVII (1956-07-26) — N.D. Const. § 173
+- **N.D. Const. § 173 (as enacted by amend. art. LXVII)**
+  - enacted (session law): CAA ch. 398, Art. 67 (PRIMARY, governs): "...there shall be elected in each county... who shall hold office until their successors are elected and qualified..."
+  - other publications: 1961 Blue Book substantively matches the CAA text (apparent differences are OCR noise: 'ilecled'/'elected', 'yeurs'/'years', 'ench'/'each', 'nnd'/'and', 'comity'/'county' — no genuine punctuation/capitalization/spelling divergence). 1973 Blue Book prints a DIFFERENT section 173 (four-year term, 'self-executing' language) because Art. 77 (Nov. 6, 1962; S.L. 1963, ch. 447) superseded the Art. 67 version; the 1973 text is not a variant of this amendment.
+
+## Amendment LXVIII (1958-07-24) — N.D. Const. § 203
+- **N.D. Const. § 203, paragraph 2 ("Second.")**
+  - enacted (session law): CAA 1959, ch. 430 (clean typeset): "...by act of Congress; that the lands belonging to citizens..." — lowercase "act"; standard punctuation as set out in "text".
+  - other publications: BB1961 (line ~17106) integrated text substantively identical (OCR noise only: "ng''ee"=agree, "dis-claim", "ar Indinn"=or Indian, "hinds"=lands, "nets"=acts). The resolution's recital clause (CAA header) capitalizes "Act of Congress" — a recital, not the enacted body. No substantive punctuation/spelling/capitalization divergence found in the enacted text across sources.
+
+## Amendment LXIX (1958-07-24) — N.D. Const. § 121
+- **N.D. Const. § 121**
+  - enacted (session law): CAA ch. 431 (1959 S.L.): "Every person of the age of twenty-one or upwards who is a citizen of the United States and who shall have resided in the state one year and in the county ninety days and in the precinct thirty days next preceding any election shall be a qualified elector at such election."
+  - other publications: Blue Book 1961 and 1973 match the enacted text. Apparent differences in the OCR ("nnd"/"and", "bis"/"his", "Is"/"is", "Provtded"/"Provided") are OCR scanning artifacts in the poor-quality Blue Book texts, not genuine textual divergences. No substantive punctuation, capitalization, or spelling divergence found.
+
+## Amendment LXX (1960-07-28) — N.D. Const. § 82, N.D. Const. § 83, N.D. Const. § 84
+- **N.D. Const. §§ 82, 83 (officer titles)**
+  - enacted (session law): CAA enacts officer titles in lowercase ("secretary of state, auditor, treasurer, superintendent of public instruction, commissioner of insurance ... attorney general, a commissioner of agriculture and labor")
+  - other publications: 1973 Blue Book integrated text capitalizes the officer titles ("Secretary of State, Auditor, Treasurer, Superintendent of Public Instruction, Commissioner of Insurance, an Attorney General, a Commissioner ..."); 1961 Blue Book lowercase but OCR-garbled ("Section 8 2 .", "shnll"). Capitalization difference is a codifier styling choice, not a substantive change; enacted CAA lowercase governs.
+
+## Amendment LXXI (1960-07-28) — N.D. Const. § 155
+- **N.D. Const. § 155**
+  - enacted (session law): CAA 1961, ch. 404: "...salable by virtue of this section. No more than one-half of the remainder within ten years after the same become salable as aforesaid." / "...except that leases may be executed for the extraction and sale of such materials..."
+  - other publications: Blue Book 1961 OCR garbage only (no real text variants): "became salable us aforesaid", "teases may be executed", "Mich terms". Blue Book 1973 OCR garbage only: "same become soluble as aforesaid". Both Blue Books label the amendment "Art. 71, June 28, 1960 (S.L. 1959, ch. 436)". All divergences are scanning/OCR artifacts, not genuine punctuation/capitalization/spelling differences.
+
+## Amendment LXXII (1960-07-28) — N.D. Const. § 26, N.D. Const. § 29, N.D. Const. § 35
+- **N.D. Const. § 26**
+  - enacted (session law): CAA (Chapter 405): "The senate shall be composed of forty-nine members."
+  - other publications: bb1961/bb1973 confirm identical substance and attribute to Art. 72, June 28, 1960 (S.L. 1959, ch. 438); only OCR garble present (e.g., bb1961 'Section 2G ... shnll he cnmposLAi'), not a genuine textual variant.
+
+## Amendment LXXIII (1960-07-28) — N.D. Const. amend. art. LVI
+- **/tmp/bb1961.txt Article 56**
+  - enacted (session law): ...other aviation motor fuel excise and license taxation used / by aircraft, after deduction of cost of administration and collection authorized by legislative appropriation only, and statutory refunds, shall be appropriated and used solely...
+  - other publications: OCR corruptions only (not real divergences): 'avinticn' for 'aviation', 'med' for 'used', 'nnd' for 'and', 'he' for 'be'. No genuine punctuation/spelling/capitalization differences.
+- **/tmp/bb1973.txt Article 56**
+  - enacted (session law): ...the payment of obligations incurred in the construction, reconstruction, repair and maintenance of public highways.
+  - other publications: OCR corruption only: capital 'In' for 'in' ('incurred In the construction'). No genuine divergence.
+
+## Amendment LXXIV (1960-12-08) — N.D. Const. § 215
+- **N.D. Const. § 215, Third (paragraph third)**
+  - enacted (session law): CAA 1961 (Chapter 407): "Third: The North Dakota State University of Agriculture and Applied Science at the City of Fargo, in the County of Cass." (capital C in "City" and "County")
+  - other publications: Blue Book 1973 (OCR, gross check): "Third: The North Dakota State University of Agriculture and Applied Science at the city of Fargo, in the county of Cuss." — lowercase "city"/"county" and OCR garble "Cuss" for "Cass". Blue Book 1961 has no clean constitutional-text rendering of this paragraph (only biographical mentions of the institution name).
+
+## Amendment LXXV (1962-07-26) — N.D. Const. amend. art. LXXV
+- **N.D. Const. amend. art. LXXV (Continuity of Government)**
+  - enacted (session law): S.L. 1963, ch. 445: "length of sessions, quorum and voting requirements"; "shall in all respects conform"; "in the judgment of the legislative assembly so to do would be impracticable"
+  - other publications: Blue Book 1973 (Art. 75) reads "length or sessions" (drops "of sessions,"), "shall in all respect conform", and capitalizes "In the judgment"/"would be Impracticable" — these are OCR artifacts of the poor scan, not genuine textual variants. No substantive divergence detected.
+
+## Amendment LXXVI (1962-12-06) — N.D. Const. amend. art. LXXVI
+- **N.D. Const. amend. art. LXXVI § 2**
+  - enacted (session law): CAA (S.L. 1963, ch. 446) reads "five percent" (one word) and capitalizes "Constitution."
+  - other publications: Blue Book 1973 (ARTICLE 76, Section 2) reads "five per cent" (three words) and lowercases "constitution"; this is the integrated-code restyling/OCR, not a substantive divergence.
+- **N.D. Const. amend. art. LXXVI (section designators)**
+  - enacted (session law): CAA designates the six provisions "§ 1.)" through "§ 6.)".
+  - other publications: Blue Book 1973 renders the same provisions as "Section 1." through "Section 6." under the heading "ARTICLE 76"; numbering format differs but substance is identical.
+
+## Amendment LXXVII (1962-12-06) — N.D. Const. § 173
+- **N.D. Const. § 173 (Art. X)**
+  - enacted (session law): S.L. 1963, ch. 447: "... a clerk of the district court, who shall be electors in the county in which they are elected and who shall hold their office for a term of four years and until their successors are elected and qualified ..." (Initiated Measure, Art. 77; approved Nov. 6, 1962)
+  - other publications: ND Blue Book 1973 (OCR) reads consistently with the enacted text apart from OCR noise (e.g., "shull lie elected," "u clerk," "cterk," "Its operation"); ND Blue Book 1961 (OCR) prints the superseded pre-1962 text with two-year terms ("every two years thereafter ... shall hold office until their successors are elected and qualified").
+
+## Amendment LXXVIII (1964-07-30) — N.D. Const. art. 54, § 6(d)
+- **N.D. Const. art. 54, § 6(d)**
+  - enacted (session law): CAA ch. 473 (clean typeset): "... a single unified budget covering the needs of all the institutions under its control." — governs; verbatim text in "text".
+  - other publications: bb1973.txt integrated Blue Book reproduces the identical substantive provision ("single unified budget covering the needs of all the institutions under its control ... may be separate from those of state educational institutions"). Divergences are OCR artifacts only (e.g., "und"/"u" for "and"/"a", "us" for "as"), not genuine textual variants. bb1961.txt does not contain the post-amendment subdivision (d) language (pre-amendment edition; only narrative agency descriptions of the Agricultural Experiment Station / Extension Service appear).
+
+## Amendment LXXIX (1964-07-30) — N.D. Const. § 113
+- **N.D. Const. § 113**
+  - enacted (session law): 1965 Session Laws ch. 474 (CAA): "...municipal judges in cities, incorporated towns, and villages, who shall hear, try, and determine cases arising under the ordinances of said cities, towns and villages..."
+  - other publications: 1973 Blue Book (integrated, poor OCR) reads "municipal judges In cities. Incorporated towns, and villages... arising under the ordinances of suid cities" — capitalization (In/Incorporated), terminal period mid-sentence, and "suid" for "said" are OCR artifacts, not genuine publication divergences. The pre-amendment 1961 Blue Book carries the prior "police magistrate" text (confirming the amendment took effect between editions).
+
+## Amendment LXXX (1964-07-30) — N.D. Const. § 71, N.D. Const. § 82, N.D. Const. § 150
+- **N.D. Const. § 71**
+  - enacted (session law): CAA (ch. 475): "a governor, who shall reside at the seat of government and shall hold his office for the term of four years beginning in the year 1965" (lowercase "governor"; phrase "beginning in the year 1965")
+  - other publications: 1973 Blue Book integrated codification: "a Governor ... beginning the year 1965" (capitalizes "Governor"; drops "in" before "the year 1965"). OCR-quality codification difference; enacted CAA text governs.
+- **N.D. Const. § 150**
+  - enacted (session law): CAA (ch. 475): ends at "... shall be fixed by law." (no proviso)
+  - other publications: 1973 Blue Book integrated codification adds a later proviso: "Provided, however, a superintendent of schools may be elected by and serve two or more counties or parts of counties as provided by law." This reflects a later, separate amendment to sec. 150, NOT a variant of the 1964 enacted text; excluded from "text".
+
+## Amendment LXXXI (1964-12-03) — N.D. Const. § 25
+- **1961 North Dakota Blue Book (integrated text of § 25, tenth paragraph), line 15808 et seq.**
+  - enacted (session law): CAA Ch. 476 (clean): "The secretary of state shall cause to be printed and mailed to each elector a publicity pamphlet, containing a copy of each measure together with its ballot title... shall be the sum of two hundred dollars per page."
+  - other publications: Blue Book OCR (gross check only): "The Secretary State shall cause to he printed and mailed to each elector a publicity pamphlet, containing a copy of each measure together with its ballot title... Any citi/en, or the officers of any organization... concerning nny mensure..." These are OCR artifacts in the Blue Book scan, not genuine textual divergences; the CAA text governs.
+- **1973 North Dakota Blue Book, line 3435**
+  - enacted (session law): Affirmative vote per CAA Ch. 476: 125,117 to 96,283; approved November 3, 1964.
+  - other publications: 1973 Blue Book lists "Constitution, publicity pamphlet (Ch. 476, S.L. 1965) 125,177 96,283" — affirmative tally differs by one digit (125,177 vs. 125,117), an OCR/typographical variant in the vote count, not in constitutional text.
+
+## Amendment LXXXII (1966-10-06) — N.D. Const. § 175
+- **N.D. Const. § 175**
+  - enacted (session law): CAA 1967 ch. 508 (authoritative): "...and every law imposing a tax shall state distinctly..."; "...in any law imposing a tax or taxes..."; "...such tax or taxes are imposed or measured..."
+  - other publications: bb1973 integrated text matches substantively; apparent divergences are OCR artifacts only, not real variants: 'law Impos-ing' (spurious capital I from line-break hyphenation) and similar mid-word capital I's. bb1961 contains only the pre-amendment original (lacks the entire 'Notwithstanding the foregoing...' second sentence), confirming the second sentence is the amendment's addition.
+
+## Amendment LXXXIII (1966-10-06) — N.D. Const. § 150
+- **N.D. Const. § 150 (1973 Blue Book integrated code)**
+  - enacted (session law): CAA Ch. 509: "...elected every four years beginning in the year 1964, whose qualifications, duties, powers and compensation shall be fixed by law. Provided, however, a superintendent of schools may be elected by and serve two or more counties or parts of counties as provided by law."
+  - other publications: 1973 Blue Book OCR matches the enacted CAA text verbatim (modulo OCR noise); no substantive punctuation, capitalization, or spelling divergence detected. 1961 Blue Book shows the superseded pre-amendment text ('elected every two years'), confirming the amendment's operation.
+
+## Amendment LXXXIV (1966-12-08) — N.D. Const. § 130
+- **N.D. Const. § 130 (second paragraph, first sentence)**
+  - enacted (session law): Constitutional Amendments Approved, ch. 510 (1967 Session Laws): "The legislative assembly shall provide by law for the establishment of home rule in cities and villages." (CAA pdftotext shows a stray "·" artifact before "cities"; the enacted word is "cities".)
+  - other publications: 1973 ND Blue Book: "establishment of home rule in cities and villages" — agrees with enacted text (no stray character); remaining Blue Book differences are OCR errors (me/the, lb/its, mis/this).
+
+## Amendment LXXXV (1968-10-03) — N.D. Const. § 148
+- **N.D. Const. § 148 (Blue Book 1973 integrated text, OCR)**
+  - enacted (session law): ...to assist in the financing of public schools of higher education.
+  - other publications: BB1973 OCR reads "to assist In the financing" (capital I) — an OCR artifact, not a genuine textual variant; otherwise identical to the enacted CAA text.
+
+## Amendment LXXXVI (1968-10-03) — N.D. Const. § 41, N.D. Const. § 53, N.D. Const. § 56
+- **N.D. Const. § 53 (recess clause, unchanged portion)**
+  - enacted (session law): CAA ch. 582: "twelve o'clock noon on the first Tuesday after the first Monday in January"
+  - other publications: BB1973: "twelve o'clock noon of the first Tuesday after the first Munday in January" (of vs. on; 'Munday' is OCR noise)
+- **N.D. Const. § 56 (impeachment exception)**
+  - enacted (session law): CAA ch. 582: "except in the case of impeachment"
+  - other publications: BB1973: "except in case of impeachment" (omits 'the')
+
+## Amendment LXXXVII (1970-10-01) — N.D. Const. amend. art. LXXXVII
+- **necessary for the payment**
+  - enacted (session law): necessary for the payment (CAA ch. 616) — note: the CAA pdftotext extraction renders this as 'fer', an OCR misread; bb1973 reads 'for'; corrected to 'for' as the manifest enacted reading
+  - other publications: bb1973 Art. 87: '...necessary for the pay-ment...' (OCR; reads 'for')
+- **veterans of the Vietnam conflict**
+  - enacted (session law): veterans of the Vietnam conflict (CAA ch. 616)
+  - other publications: bb1973 Art. 87 OCR: 'vetenms for the Viet Nam conflict' — OCR-corrupted; the CAA 'veterans of the Vietnam conflict' governs
+
+## Amendment LXXXVIII (1970-10-01) — N.D. Const. amend. art. LXXXVIII
+- **Art. 88, para. 1 — "Such convention shall be called and conducted"**
+  - enacted (session law): S.L. 1971, ch. 617 (CAA): "Such conventio~ shall be called and conducted, and delegates thereto shall be chosen in the manner provided by law." (the "~" is an OCR artifact for "n"; true reading "convention")
+  - other publications: Blue Book 1973 (Art. 88): "Such convention shall be called and conducted and delegates thereto shall be chosen in the manner provided by law." — OCR drops the comma after "conducted" (poor-OCR artifact). Blue Book OCR also shows "culled"/"und" for "called"/"and" throughout (scanning artifacts, not real divergences). CAA enacted text governs and retains the comma after "conducted."
+
+## Amendment LXXXIX (1970-10-01) — N.D. Const. § 153, N.D. Const. § 156, N.D. Const. § 159, N.D. Const. § 162
+- **N.D. Const. § 153**
+  - enacted (session law): Enacted CAA (1971 S.L. ch. 618) reads "common schools in this state" and uses lowercase "interest and income," "institution," "invested."
+  - other publications: 1973 Blue Book (p. 334-335) substantively identical; only OCR artifacts diverge (e.g., "In this State," "Income," "Institution," "Invested" erroneously capitalized) — not genuine textual variants.
+- **N.D. Const. § 156**
+  - enacted (session law): Enacted CAA: "secretary of state and state auditor"; "shall be invested as provided by law."
+  - other publications: 1973 Blue Book (p. 334-335) substantively identical; OCR-only divergences ("public Instruction," "Invested").
+
+## Amendment XC (1972-10-05) — N.D. Const. § 216, N.D. Const. amend. art. LIV, subsec. 1
+- **N.D. Const. § 216, Third (counties list)**
+  - enacted (session law): CAA ch. 526 reads: "McHenry, Ward, Bottineau, or Rolette" (serial comma before "or")
+  - other publications: bb1973 (OCR) reads: "McHenry, Ward, Bottineau or Rolette" (no serial comma)
+- **N.D. Const. amend. art. LIV, subsec. 1, clause (4) (normal schools list)**
+  - enacted (session law): CAA ch. 526 reads: "Valley City, Mayville, Minot, and Dickinson" (serial comma before "and")
+  - other publications: bb1973 (OCR) reads: "Valley City, Muyville, Minot and Dickinson" — no serial comma; "Muyville" is an OCR artifact of "Mayville"
+
+## Amendment XCIII (1974-12-05) — N.D. Const. § 74, N.D. Const. § 77
+- **N.D. Const. § 77, enacted CAA text**
+  - enacted (session law): "...he shall have no vote unless they be equally divided."
+  - other publications: bb1973.txt (pre-amendment text) reads "...but shall have no vote unless they be equally divided." — but that is the OLD section 77 superseded by this amendment, not a typeset variant of the new text
+
+## Amendment XCI (1975-07-01) — N.D. Const. § 7
+- **N.D. Const. § 7**
+  - enacted (session law): CAA (Chapter 532, HCR 3002, 1973), enacted/effective text: "Section 7. The right of trial by jury shall be secured to all, and remain inviolate. A person accused of a crime for which he may be confined for a period of more than one year has the right of trial by a jury of twelve. The legislative assembly may determine the size of the jury for all other cases, provided that the jury consists of at least six members. All verdicts must be unanimous."
+  - other publications: Both integrated Blue Books predate the July 1, 1975 effective date and therefore print the PRE-amendment text of section 7. bb1961.txt (OCR): "Section 7. The right of trial by jury shall [be] secured to all, and remain inviolate; but a jury in civil cases, in courts not of record m[a]y consist of less than twelve men, [a]s may be prescribed by law." bb1973.txt (OCR, with scan typo "trail"): "Section 7. The right of tra[i]l by jury shall be secured to all, and remain inviolate; but a jury in civil cases. [I]n courts not of record may consist of less than twelve men, as may be prescribed by law." This is a substantive content difference (old vs. new section 7), not a punctuation/spelling drift in the same text — expected because both codes predate this amendment's effective date. No clean cross-check of the post-1975 text is available in the supplied Blue Books.
+
+## Amendment XCII (1975-07-01) — N.D. Const. amend. art. XCII, N.D. Const. § 50
+- **N.D. Const. § 50**
+  - enacted (session law): CAA (1973 ch. 530, § 2): "Section 50. All sessions of the legislative assembly, including the committee of the whole and meetings of legislative committees, shall be open to the public."
+  - other publications: 1961 and 1973 Blue Books still print the pre-amendment § 50 ("The sessions of each house and of the committee of the whole shall be open unless the business is such as ought to be kept secret."), because the amendment was not approved (Sept. 1974 primary) or effective (July 1, 1975) until after both compilations. No textual divergence in the amendment itself; the Blue Book simply predates integration.
+
+## Amendment XCV (1976-10-07) — N.D. Const. § 53, N.D. Const. § 55, N.D. Const. § 56
+- **N.D. Const. § 56 (pre-1976 / Blue Books)**
+  - enacted (session law): Enacted CAA text (ch. 596): "Each regular session of the legislative assembly shall not exceed eighty natural days during the biennium ... a 'natural day' means a period of twenty-four consecutive hours."
+  - other publications: Cross-check of /tmp/bb1973.txt and /tmp/bb1961.txt found no "eighty natural days" language; bb1973 carries the pre-amendment clause "No legislative day shall be shorter than the natural day." Both integrated codes predate this 1976 amendment, so the divergence is temporal (superseded prior text), not a publication discrepancy in the enacted text.
+
+## Amendment XCVII (1976-10-07) — N.D. Const. § 28, N.D. Const. § 34
+- **N.D. Const. § 28 (pre-amendment, prior text only)**
+  - enacted (session law): Section 28. Each person elected as a senator must be, on the day of his election, a qualified elector in the district from which he is chosen and have been a resident of the state for one year next preceding his election. (CAA chapter 598, governs)
+  - other publications: bb1973.txt: "Section 28. No person shall he [be] a senator who is not a qualified elector in the district in which he may be chosen, and who shall not have attained the age of twenty-five years and have been a resident of the state or territory for two years next preceding his election." This is the SUPERSEDED pre-1976 text, not a publication variant of the enacted amendment.
+- **N.D. Const. § 34 (pre-amendment, prior text only)**
+  - enacted (session law): Section 34. Each person elected as a representative must be, on the day of his election, a qualified elector in the district from which he is chosen and have been a resident of the state for one year next preceding his election. (CAA chapter 598, governs)
+  - other publications: bb1973.txt: "Section 34. No person shall be a representative who is not a qualified elector In [in] the district from which he may be chosen, and who shall not have attained the age of twenty-one years, and have been a resident of the state or territory for two years next preceding his election." This is the SUPERSEDED pre-1976 text, not a publication variant of the enacted amendment.
+
+## Amendment XCVIII (1976-10-07) — N.D. Const. amend. art. XCVIII, N.D. Const. § 85, N.D. Const. § 86, N.D. Const. § 87, N.D. Const. § 88, N.D. Const. § 89, N.D. Const. § 90, N.D. Const. § 91, N.D. Const. § 92, N.D. Const. § 93, N.D. Const. § 94, N.D. Const. § 95, N.D. Const. § 96, N.D. Const. § 97
+- **N.D. Const. § 85**
+  - enacted (session law): CAA ch. 599 (1976): "The judicial power of the state is vested in a unified judicial system consisting of a supreme court, a district court, and such other courts as may be provided by law."
+  - other publications: bb1961.txt l.16210 and bb1973.txt l.19312 show the PRE-amendment section 85 ("The judicial power of the state of North Dakota shall be vested in a supreme [court]..."). These are the OLD/repealed text, not a variant of the enacted new text — both Blue Books predate the 1976 effective date, so no post-amendment integrated publication was available for variant comparison. New-text phrasing of §§95 and 97 ("conflict of interest in a pending cause", "judicial nominating committee") does not appear in either Blue Book, as expected.
+
+## Amendment XCIX (1976-10-07) — N.D. Const. amend. art. I
+- **N.D. Const. amend. art. I (lottery/gift enterprises provision)**
+  - enacted (session law): CAA Chapter 600: "The legislative assembly shall not authorize any game of chance, lottery, or gift enterprises, under any pretense, or for any purpose whatever. However, the legislative assembly may authorize by law bona fide nonprofit veterans', charitable, educational, religious, or fraternal organizations, civic and service clubs, or such other public-spirited organizations as it may recognize, to conduct games of chance when the entire net proceeds of such games of chance are to be devoted to educational, charitable, patriotic, fraternal, religious, or other public-spirited uses."
+  - other publications: Blue Book 1961 (line 17723-24) and Blue Book 1973 (line 20784-85) show the PRE-amendment text: "The legislative assembly shall have no power to authorize lotteries or gift enterprises for any purpose and shall pass laws to prohibit the sale of lottery or gift enterprise tickets." This is the superseded version (these editions predate the 1976 amendment), not a variant reading of the enacted text. No code with the post-amendment text was available for punctuation comparison.
+
+## Amendment C (1978-10-05) — N.D. Const. § 214, N.D. Const. Sched. §§ 1-25
+- **N.D. Const. § 214 and Sched. §§ 1-25**
+  - enacted (session law): CAA ch. 691: "Section 214 and sections 1 through 25 of the transition schedule of the Constitution of the State of North Dakota are hereby repealed."
+  - other publications: Blue Book 1973 (/tmp/bb1973.txt) shows § 214 already annotated as "(Superceded by legislative action. Section 54-03-01, and also by Federal District ...)" with the original text reproduced in an editorial note; this is an editorial/annotation divergence in the integrated code, not a divergence in enacted text. No section 214 hit located in /tmp/bb1961.txt on the "transition schedule" grep (OCR/coverage).
+
+## Amendment CI (1978-10-05) — N.D. Const. § 65, N.D. Const. § 77
+- **N.D. Const. § 65 (pre-amendment, as published in Blue Book 1973, p.~19104)**
+  - enacted (session law): Enacted CAA text reads (in part): "No bill shall become a law: except by a vote of a majority of all the members-elect in the house of representatives, and a vote of the majority of the members-elect in the senate, however the lieutenant governor may vote as provided in section 77 in the event the senate is equally divided, nor unless, on its final passage ..."
+  - other publications: Blue Book 1973 shows the PRIOR (unamended) text: "No bill shall become a law except by a vote of a majority of all [OCR: 'till'] the members-elect in each house, nor unless, on its final passage ..." This is the pre-1978 version, not a divergent reading of the same enacted text. No genuine punctuation/spelling variant of the enacted text detected.
+- **N.D. Const. § 77 (pre-amendment, as published in Blue Book 1973, p.~19227, and Blue Book 1961, p.~16113)**
+  - enacted (session law): Enacted CAA text reads (in part): "The powers and duties of the lieutenant governor shall be to serve as president of the senate, and he may, when the senate is equally divided, vote on procedural matters, and on substantive matters if his vote would be decisive ..."
+  - other publications: Blue Books 1961 and 1973 show the PRIOR (unamended) text: "The lieutenant governor shall be president of the senate, but shall have no vote unless they be equally divided. If, during a vacancy in the office of governor ..." This is the pre-1978 version that the amendment replaced, not a divergent reading of the same enacted text.
+
+## Amendment CVI (1980-10-02) — N.D. Const. § 174
+- **Blue Book 1961 (/tmp/bb1961.txt, line 16859) and Blue Book 1973 (/tmp/bb1973.txt, line 19965)**
+  - enacted (session law): Amended Section 174 reads: "The legislative assembly shall be prohibited from raising revenue to defray the expenses of the state through the levying of a tax on the assessed value of real or personal property."
+  - other publications: Both Blue Books predate the 1980 amendment and print the SUPERSEDED text of Section 174: "The legislative assembly shall provide for raising revenue sufficient to defray the expenses of the state for each year, not to exceed in any one year four (4) mills on the dollar of the assessed valuation of all taxable property in the state, to be ascertained by the last assessment made for state and county purposes, and also a sufficient sum to pay the interest on the state debt." This is the language the CAA shows struck through, not a punctuation/spelling divergence in the enacted text. No post-amendment integrated code was available for cross-check.
+
+## Amendment CVII (1980-10-02) — N.D. Const. § 173, N.D. Const. § 69
+- **N.D. Const. § 173**
+  - enacted (session law): CAA Chapter 655: "...sheriff, state's attorney, and a clerk of the district court... provided that in counties having population of six thousand or less the register of deeds shall also be clerk of the district court." (county judge and fifteen-thousand-population proviso struck)
+  - other publications: Blue Book 1973 (pre-amendment): "...sheriff, state's attorney, county judge and a clerk of the district court... provided in counties having fifteen thousand population or less, the county judge shall also be clerk of the district court; provided further that in counties having population of six thousand or less the register of deeds shall also be clerk of the district court and county judge. This amendment shall be construed as applying to the officers elected at the general election in 1962." Divergence is substantive (this is the older text the 1980 amendment superseded), not a publication-error variant; minor Blue Book OCR artifacts: "shull lie" for "shall be," "cterk" for "clerk," "u"/"und" for "a"/"and."
+
+## Amendment CVIII (1980-12-04) — N.D. Const. § 182
+- **N.D. Const. § 182 (first sentence, mortgage security ratio)**
+  - enacted (session law): Constitutional Amendments, Approved, ch. 656 (CAA 1981): "in amounts not to exceed sixty-five percent of its value" (the prior phrase "one-half" is shown struck through and replaced)
+  - other publications: 1973 Blue Book integrated text (pre-amendment) reads: "in amounts not to exceed one-half of its value" — this reflects the prior section, not a publication discrepancy. (No 182 hit in /tmp/bb1961.txt.) The 1973 codification also shows OCR/typesetting differences: "state owned" (no hyphen), "enterprises or industries. In amounts" (period and capital I), and "in excess often million dollars" (OCR run-together), all attributable to OCR rather than substantive divergence.
