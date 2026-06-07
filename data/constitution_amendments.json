@@ -1591,16 +1591,16 @@
   {
    "number": "XLVII",
    "effective_date": "1932-12-08",
-   "type": "amend_section",
+   "type": "repeal",
    "changes": [
     {
      "target": "N.D. Const. § 217",
-     "heading": "Repeal of Prohibition Clause in State Constitution",
-     "text": "That Section 217, Article 20, of the Constitution of the State of North Dakota, be and the same is hereby repealed."
+     "heading": "Prohibition",
+     "action": "repeal",
+     "text": "[Repealed]"
     }
    ],
    "authority": "Amendment ratified undefined",
-   "source_urls": [],
    "sources_verified": [
     "/tmp/seg4a_marker/seg4a_src/seg4a_src.md (lines 246-252: ARTICLE 47, REPEAL OF PROHIBITION CLAUSE IN STATE CONSTITUTION; Approved Nov. 8, 1932; 134742 to 99316)",
     "/tmp/bb1954_marker/bb1954_const/bb1954_const.md (line 888: repeal note confirming Article 47, Nov. 8, 1932; line 886: original Section 217 text)",
@@ -1609,8 +1609,7 @@
    ],
    "confidence": "high",
    "variants": [],
-   "status": "pending",
-   "pending_reason": "4a: high confidence / repeal / institutions / incomplete — needs review or re-OCR"
+   "notes": "Repeals §217 (Article XX, Prohibition), effective 1932-12-08."
   },
   {
    "number": "XLVIII",
@@ -2385,11 +2384,11 @@
     {
      "target": "N.D. Const. amend. art. LVI",
      "heading": "Article 56",
-     "text": "1. Revenue from gasoline and other motor fuel excise and license taxation, motor vehicle registration and license taxes, except revenue from aviation gasoline and unclaimed aviation motor fuel refunds and other aviation motor fuel excise and license taxation used by aircraft, after deduction of cost of administration and collection authorized by legislative appropriation only, and statutory refunds, shall be appropriated and used solely for construction, reconstruction, repair and maintenance of public highways, and the payment of obligations incurred in the construction, reconstruction, repair and maintenance of public highways."
+     "text": "1. Revenue from gasoline and other motor fuel excise and license taxation, motor vehicle registration and license taxes, except revenue from aviation gasoline and unclaimed aviation motor fuel refunds and other aviation motor fuel excise and license taxation used by aircraft, after deduction of cost of administration and collection authorized by legislative appropriation only, and statutory refunds, shall be appropriated and used solely for construction, reconstruction, repair and maintenance of public highways, and the payment of obligations incurred in the construction, reconstruction, repair and maintenance of public highways.",
+     "action": "amend"
     }
    ],
    "authority": "S.L. 1959, ch. 439 (Senate Concurrent Resolution \"CC\"); approved June 28, 1960 (83,604 to 80,352); Constitutional Measures Approved, ch. 406",
-   "source_urls": [],
    "sources_verified": [
     "/tmp/caa1961.pdf (p. 693, ch. 406)",
     "/tmp/bb1961.txt (Article 56)",
@@ -2409,7 +2408,7 @@
     }
    ],
    "status": "pending",
-   "pending_reason": "complex structural amendment (repeal / section range / amendment-article edit / institutions-list / judicial rewrite) — needs careful individual handling"
+   "pending_reason": "LXXIII amends Amendment Article LVI which is in the deferred low-confidence 4a set"
   },
   {
    "number": "LXXIV",
@@ -2629,11 +2628,11 @@
     {
      "target": "N.D. Const. § 25",
      "heading": "Publicity Pamphlet, Repeal",
-     "text": "[Repealed effective 1964-12-03]"
+     "text": "[Repealed effective 1964-12-03]",
+     "action": "repeal"
     }
    ],
    "authority": "Senate Concurrent Resolution \"O\", chapter 451, 1963 Session Laws, proposed by the 38th Legislative Assembly; enacted as Chapter 476, Constitutional Measures Approved, 1965 Session Laws; approved by the electors November 3, 1964 (measure No. 1 on the general election ballot), 125,117 to 96,283.",
-   "source_urls": [],
    "sources_verified": [
     "/tmp/caa1965.pdf (Chapter 476, pp. 968-969 — clean modern typeset, authoritative)",
     "/tmp/bb1961.txt (line 15808+ — pre-repeal text of the tenth paragraph of section 25, gross OCR check)",
@@ -2653,7 +2652,7 @@
     }
    ],
    "status": "pending",
-   "pending_reason": "complex structural amendment (repeal / section range / amendment-article edit / institutions-list / judicial rewrite) — needs careful individual handling"
+   "pending_reason": "LXXXI is a PARTIAL repeal of §25 (removes a clause) mis-extracted as a full repeal; needs the amended §25 text"
   },
   {
    "number": "LXXXII",
@@ -2870,26 +2869,29 @@
     {
      "target": "N.D. Const. § 153",
      "heading": "INVESTMENT OF INSTITUTIONAL TRUST FUNDS",
-     "text": "Section 153. All proceeds of the public lands that have heretofore been, or may hereafter be granted by the United States for the support of the common schools in this state; all such per centum as may be granted by the United States on the sale of public lands; the proceeds of property that shall fall to the state by escheat; all gifts, donations, or the proceeds thereof that come to the state for support of the common schools, or not otherwise appropriated by the terms of the gift, and all other property otherwise acquired for common schools, shall be and remain a perpetual trust fund for the maintenance of the common schools of the state. Only the interest and income of the fund may be expended and the principal shall be retained and devoted to the trust purpose. All property, real or personal, received by the state from whatever source, for any specific educational or charitable institution, unless otherwise designated by the donor, shall be and remain a perpetual trust fund for the creation and maintenance of such institution, and may be commingled only with similar funds for the same institution. Should a gift be made to an institution for a specific purpose, without designating a trustee, such gift may be placed in the institution's fund; provided that such a donation may be expended as the terms of the gift provide.\n\nThe interest and income of each institutional trust fund held by the state shall, unless otherwise specified by the donor, be appropriated by the legislative assembly to the exclusive use of the institution for which the funds were given."
+     "text": "Section 153. All proceeds of the public lands that have heretofore been, or may hereafter be granted by the United States for the support of the common schools in this state; all such per centum as may be granted by the United States on the sale of public lands; the proceeds of property that shall fall to the state by escheat; all gifts, donations, or the proceeds thereof that come to the state for support of the common schools, or not otherwise appropriated by the terms of the gift, and all other property otherwise acquired for common schools, shall be and remain a perpetual trust fund for the maintenance of the common schools of the state. Only the interest and income of the fund may be expended and the principal shall be retained and devoted to the trust purpose. All property, real or personal, received by the state from whatever source, for any specific educational or charitable institution, unless otherwise designated by the donor, shall be and remain a perpetual trust fund for the creation and maintenance of such institution, and may be commingled only with similar funds for the same institution. Should a gift be made to an institution for a specific purpose, without designating a trustee, such gift may be placed in the institution's fund; provided that such a donation may be expended as the terms of the gift provide.\n\nThe interest and income of each institutional trust fund held by the state shall, unless otherwise specified by the donor, be appropriated by the legislative assembly to the exclusive use of the institution for which the funds were given.",
+     "action": "amend"
     },
     {
      "target": "N.D. Const. § 156",
      "heading": "INVESTMENT OF INSTITUTIONAL TRUST FUNDS",
-     "text": "Section 156. The superintendent of public instruction, governor, attorney general, secretary of state and state auditor shall constitute a board of commissioners, which shall be denominated the \"Board of University and School Lands,\" and, subject to the provisions of this article and any law that may be passed by the legislative assembly, said board shall have control of the appraisement, sale, rental, and disposal of all school and university lands, and the proceeds from the sale of such lands shall be invested as provided by law."
+     "text": "Section 156. The superintendent of public instruction, governor, attorney general, secretary of state and state auditor shall constitute a board of commissioners, which shall be denominated the \"Board of University and School Lands,\" and, subject to the provisions of this article and any law that may be passed by the legislative assembly, said board shall have control of the appraisement, sale, rental, and disposal of all school and university lands, and the proceeds from the sale of such lands shall be invested as provided by law.",
+     "action": "amend"
     },
     {
      "target": "N.D. Const. § 159",
      "heading": "INVESTMENT OF INSTITUTIONAL TRUST FUNDS",
-     "text": "[Repealed effective 1970-10-01]"
+     "text": "[Repealed effective 1970-10-01]",
+     "action": "repeal"
     },
     {
      "target": "N.D. Const. § 162",
      "heading": "INVESTMENT OF INSTITUTIONAL TRUST FUNDS",
-     "text": "[Repealed effective 1970-10-01]"
+     "text": "[Repealed effective 1970-10-01]",
+     "action": "repeal"
     }
    ],
    "authority": "Senate Concurrent Resolution No. 62, chapter 594, 1969 Session Laws (Forty-first Legislative Assembly); enacted ch. 618, 1971 Session Laws; approved by the people September 1, 1970, 48,552 to 43,435.",
-   "source_urls": [],
    "sources_verified": [
     "/tmp/caa1971.pdf (1971 Session Laws ch. 618, p. 1334-1335, \"Constitutional Amendments, Approved\" — clean enacted text, governing)",
     "/tmp/bb1973.txt (North Dakota Blue Book 1973, pp. 334-335 — OCR cross-check, gross match)"
@@ -2906,9 +2908,7 @@
      "enacted_session_law": "Enacted CAA: \"secretary of state and state auditor\"; \"shall be invested as provided by law.\"",
      "other_publications": "1973 Blue Book (p. 334-335) substantively identical; OCR-only divergences (\"public Instruction,\" \"Invested\")."
     }
-   ],
-   "status": "pending",
-   "pending_reason": "complex structural amendment (repeal / section range / amendment-article edit / institutions-list / judicial rewrite) — needs careful individual handling"
+   ]
   },
   {
    "number": "XC",
@@ -3034,16 +3034,17 @@
     {
      "target": "N.D. Const. amend. art. XCII",
      "heading": "Open Meetings (new article)",
-     "text": "Unless otherwise provided by law, all meetings of public or governmental bodies, boards, bureaus, commissions, or agencies of the state or any political subdivision of the state, or organizations or agencies supported in whole or in part by public funds, or expending public funds, shall be open to the public."
+     "text": "Unless otherwise provided by law, all meetings of public or governmental bodies, boards, bureaus, commissions, or agencies of the state or any political subdivision of the state, or organizations or agencies supported in whole or in part by public funds, or expending public funds, shall be open to the public.",
+     "action": "add"
     },
     {
      "target": "N.D. Const. § 50",
      "heading": "Open Meetings of the Legislative Assembly",
-     "text": "Section 50. All sessions of the legislative assembly, including the committee of the whole and meetings of legislative committees, shall be open to the public."
+     "text": "Section 50. All sessions of the legislative assembly, including the committee of the whole and meetings of legislative committees, shall be open to the public.",
+     "action": "amend"
     }
    ],
    "authority": "N.D. Const. amend. XCII (1973 S.C.R. No. 4010, ch. 530, approved 1974, eff. July 1, 1975)",
-   "source_urls": [],
    "sources_verified": [
     "/tmp/cap1973.pdf p.1419 (Constitutional Amendments, Proposed, ch. 530, S.C.R. No. 4010)",
     "/tmp/bb1973.txt (old § 50, pre-amendment; line 19056)",
@@ -3056,9 +3057,7 @@
      "enacted_session_law": "CAA (1973 ch. 530, § 2): \"Section 50. All sessions of the legislative assembly, including the committee of the whole and meetings of legislative committees, shall be open to the public.\"",
      "other_publications": "1961 and 1973 Blue Books still print the pre-amendment § 50 (\"The sessions of each house and of the committee of the whole shall be open unless the business is such as ought to be kept secret.\"), because the amendment was not approved (Sept. 1974 primary) or effective (July 1, 1975) until after both compilations. No textual divergence in the amendment itself; the Blue Book simply predates integration."
     }
-   ],
-   "status": "pending",
-   "pending_reason": "mixed new-article + existing-section change — needs careful individual handling"
+   ]
   },
   {
    "number": "XCV",
@@ -3068,21 +3067,23 @@
     {
      "target": "N.D. Const. § 53",
      "heading": "Section 53 (organizational/orientation meeting; recess until January session)",
-     "text": "Section 53. The legislative assembly shall meet at the seat of government in the month of December following the election of the members thereof for organizational and orientation purposes as provided by law and shall thereafter recess until twelve o'clock noon on the first Tuesday after the third day in January or at such other time as may be prescribed by law but not later than the eleventh day of January."
+     "text": "Section 53. The legislative assembly shall meet at the seat of government in the month of December following the election of the members thereof for organizational and orientation purposes as provided by law and shall thereafter recess until twelve o'clock noon on the first Tuesday after the third day in January or at such other time as may be prescribed by law but not later than the eleventh day of January.",
+     "action": "amend"
     },
     {
      "target": "N.D. Const. § 55",
      "heading": "Section 55 (repealed)",
-     "text": "[Repealed effective 1976-10-07]"
+     "text": "[Repealed effective 1976-10-07]",
+     "action": "repeal"
     },
     {
      "target": "N.D. Const. § 56",
      "heading": "Section 56 (eighty natural days; biennium)",
-     "text": "Section 56. Each regular session of the legislative assembly shall not exceed eighty natural days during the biennium. The organizational meeting of the legislative assembly as provided in section 53 shall not be counted as part of such eighty natural days, nor shall days spent in session at the call of the governor pursuant to section 75, or while engaged in impeachment proceedings, be counted. Days spent in regular session need not be consecutive, and the legislative assembly may authorize its committees to meet at any time during the biennium. As used in this section, a \"natural day\" means a period of twenty-four consecutive hours."
+     "text": "Section 56. Each regular session of the legislative assembly shall not exceed eighty natural days during the biennium. The organizational meeting of the legislative assembly as provided in section 53 shall not be counted as part of such eighty natural days, nor shall days spent in session at the call of the governor pursuant to section 75, or while engaged in impeachment proceedings, be counted. Days spent in regular session need not be consecutive, and the legislative assembly may authorize its committees to meet at any time during the biennium. As used in this section, a \"natural day\" means a period of twenty-four consecutive hours.",
+     "action": "amend"
     }
    ],
    "authority": "Senate Concurrent Resolution No. 4023, chapter 611, 1975 Session Laws; Constitutional Amendments Approved, chapter 596 (approved September 7, 1976, 60,587 to 60,145; primary election constitutional measure No. 2)",
-   "source_urls": [],
    "sources_verified": [
     "/tmp/caa1977.pdf (Constitutional Amendments Approved, chapter 596, p.1374) — clean modern typeset, authoritative enacted text"
    ],
@@ -3093,9 +3094,7 @@
      "enacted_session_law": "Enacted CAA text (ch. 596): \"Each regular session of the legislative assembly shall not exceed eighty natural days during the biennium ... a 'natural day' means a period of twenty-four consecutive hours.\"",
      "other_publications": "Cross-check of /tmp/bb1973.txt and /tmp/bb1961.txt found no \"eighty natural days\" language; bb1973 carries the pre-amendment clause \"No legislative day shall be shorter than the natural day.\" Both integrated codes predate this 1976 amendment, so the divergence is temporal (superseded prior text), not a publication discrepancy in the enacted text."
     }
-   ],
-   "status": "pending",
-   "pending_reason": "complex structural amendment (repeal / section range / amendment-article edit / institutions-list / judicial rewrite) — needs careful individual handling"
+   ]
   },
   {
    "number": "XCVII",
@@ -3136,81 +3135,88 @@
   {
    "number": "XCVIII",
    "effective_date": "1976-10-07",
-   "type": "new_article",
+   "type": "amend_section",
    "changes": [
-    {
-     "target": "N.D. Const. amend. art. XCVIII",
-     "heading": "JUDICIAL ARTICLE (new Article IV; created and enacted, replacing old Article IV consisting of sections 85 through 120)",
-     "text": "SECTION 1.) Article IV of the Constitution of the State of North Dakota is hereby created and enacted to read as follows:"
-    },
     {
      "target": "N.D. Const. § 85",
      "heading": "Section 85",
+     "action": "add",
      "text": "Section 85. The judicial power of the state is vested in a unified judicial system consisting of a supreme court, a district court, and such other courts as may be provided by law."
     },
     {
      "target": "N.D. Const. § 86",
      "heading": "Section 86",
+     "action": "add",
      "text": "Section 86. The supreme court shall be the highest court of the state. It shall have appellate jurisdiction, and shall also have original jurisdiction with authority to issue, hear, and determine such original and remedial writs as may be necessary to properly exercise its jurisdiction. The supreme court shall consist of five justices, one of whom shall be designated chief justice in the manner provided by law."
     },
     {
      "target": "N.D. Const. § 87",
      "heading": "Section 87",
+     "action": "add",
      "text": "Section 87. The supreme court shall have authority to promulgate rules of procedure, including appellate procedure, to be followed by all the courts of this state; and, unless otherwise provided by law, to promulgate rules and regulations for the admission to practice, conduct, disciplining, and disbarment of attorneys at law.\n\nThe chief justice shall be the administrative head of the unified judicial system. He may assign judges, including retired judges, for temporary duty in any court or district under such rules and regulations as may be promulgated by the supreme court. The chief justice shall appoint a court administrator for the unified judicial system. Unless otherwise provided by law, the powers, duties, qualifications, and terms of office of the court administrator, and other court officials, shall be as provided by rules of the court."
     },
     {
      "target": "N.D. Const. § 88",
      "heading": "Section 88",
+     "action": "add",
      "text": "Section 88. A majority of the supreme court shall be necessary to constitute a quorum or to pronounce a decision, provided that the supreme court shall not declare a legislative enactment unconstitutional unless at least four of the members of the court so decide."
     },
     {
      "target": "N.D. Const. § 89",
      "heading": "Section 89",
+     "action": "add",
      "text": "Section 89. When a judgment or order is reversed, modified, or confirmed by the supreme court, the reasons shall be concisely stated in writing, signed by the justices concurring, filed in the office of the clerk of the supreme court, and preserved with a record of the case. Any justice dissenting may give the reason for his dissent in writing over his signature."
     },
     {
      "target": "N.D. Const. § 90",
      "heading": "Section 90",
+     "action": "add",
      "text": "Section 90. Appeals shall be allowed from decisions of lower courts to the supreme court as may be provided by law."
     },
     {
      "target": "N.D. Const. § 91",
      "heading": "Section 91",
+     "action": "add",
      "text": "Section 91. The justices of the supreme court shall be chosen by the electors of the state for ten-year terms, so arranged that one justice is elected every two years. They shall hold office until their successors are duly qualified, and shall receive compensation as provided by law, but the compensation of any justice shall not be diminished during his term of office."
     },
     {
      "target": "N.D. Const. § 92",
      "heading": "Section 92",
+     "action": "add",
      "text": "Section 92. The district court shall have original jurisdiction of all causes, except as otherwise provided by law, and such appellate jurisdiction as may be provided by law or by rule of the supreme court. The district court shall have authority to issue such writs as are necessary to the proper exercise of its jurisdiction."
     },
     {
      "target": "N.D. Const. § 93",
      "heading": "Section 93",
+     "action": "add",
      "text": "Section 93. The state shall be divided into judicial districts by order of the supreme court. In each district, one or more judges, as provided by law, shall be chosen by the electors of the district. The term of office shall be six years, and a district judge shall hold office until his successor is duly qualified. The compensation of district judges shall be fixed by law, but the compensation of any district judge shall not be diminished during his term of office."
     },
     {
      "target": "N.D. Const. § 94",
      "heading": "Section 94",
+     "action": "add",
      "text": "Section 94. Supreme court justices and district court judges shall be citizens of the United States and residents of this state, shall be learned in the law, and shall possess any additional qualifications prescribed by law. Judges of other courts shall be selected for such terms and shall have such qualifications as may be prescribed by law.\n\nNo justice of the supreme court or judge of the district court of this state shall engage in the practice of law, or hold any public office, elective or appointive, not judicial in nature. No duties shall be imposed by law upon the supreme court or any of the justices thereof, except such as are judicial, nor shall any of the justices exercise any power of appointment except as herein provided. No judge of any court of this state shall be paid from the fees of his office, nor shall the amount of his compensation be measured by fees, other moneys received, or the amount of judicial activity of his office."
     },
     {
      "target": "N.D. Const. § 95",
      "heading": "Section 95",
+     "action": "add",
      "text": "Section 95. When any justice or judge has a conflict of interest in a pending cause or is unable to sit in court because he is physically or mentally incapacitated, the chief justice, or a justice acting in his stead, shall assign a judge, or retired justice or judge, to hear the cause."
     },
     {
      "target": "N.D. Const. § 96",
      "heading": "Section 96",
+     "action": "add",
      "text": "Section 96. The legislative assembly may provide for the retirement, discipline, and removal of judges. The removal procedure provided for herein may be used in addition to the impeachment proceedings provided for in sections 194, 195, and 196 and removal provided for in section 197."
     },
     {
      "target": "N.D. Const. § 97",
      "heading": "Section 97",
+     "action": "add",
      "text": "Section 97. A judicial nominating committee shall be established by law. Any vacancy in the office of supreme court justice or district court judge shall be filled by appointment by the governor from a list of candidates nominated by the committee, unless the governor calls a special election to fill the vacancy for the remainder of the term. An appointment shall continue until the next general election, when the office shall be filled by election for the remainder of the term."
     }
    ],
    "authority": "House Concurrent Resolution No. 3056, chapter 615, 1975 Session Laws; enacted as Constitutional Amendments Approved, chapter 599 (approved September 7, 1976, 59,795 to 55,784); primary election constitutional measure No. 3.",
-   "source_urls": [],
    "sources_verified": [
     "/tmp/caa1977.pdf (page 5, Chapter 599, JUDICIAL ARTICLE) — clean enacted CAA text, governs",
     "/tmp/bb1961.txt (gross-check only; contains pre-amendment old Article IV)",
@@ -3224,8 +3230,7 @@
      "other_publications": "bb1961.txt l.16210 and bb1973.txt l.19312 show the PRE-amendment section 85 (\"The judicial power of the state of North Dakota shall be vested in a supreme [court]...\"). These are the OLD/repealed text, not a variant of the enacted new text — both Blue Books predate the 1976 effective date, so no post-amendment integrated publication was available for variant comparison. New-text phrasing of §§95 and 97 (\"conflict of interest in a pending cause\", \"judicial nominating committee\") does not appear in either Blue Book, as expected."
     }
    ],
-   "status": "pending",
-   "pending_reason": "complex structural amendment (repeal / section range / amendment-article edit / institutions-list / judicial rewrite) — needs careful individual handling"
+   "notes": "1976 Judicial Article: rewrites §§85-97 in place with the new judicial-article text (new content under the same section numbers)."
   },
   {
    "number": "XCIX",
@@ -3235,11 +3240,11 @@
     {
      "target": "N.D. Const. amend. art. I",
      "heading": "ARTICLE I — Lotteries and Gift Enterprises",
-     "text": "The legislative assembly shall not authorize any game of chance, lottery, or gift enterprises, under any pretense, or for any purpose whatever. However, the legislative assembly may authorize by law bona fide nonprofit veterans', charitable, educational, religious, or fraternal organizations, civic and service clubs, or such other public-spirited organizations as it may recognize, to conduct games of chance when the entire net proceeds of such games of chance are to be devoted to educational, charitable, patriotic, fraternal, religious, or other public-spirited uses."
+     "text": "The legislative assembly shall not authorize any game of chance, lottery, or gift enterprises, under any pretense, or for any purpose whatever. However, the legislative assembly may authorize by law bona fide nonprofit veterans', charitable, educational, religious, or fraternal organizations, civic and service clubs, or such other public-spirited organizations as it may recognize, to conduct games of chance when the entire net proceeds of such games of chance are to be devoted to educational, charitable, patriotic, fraternal, religious, or other public-spirited uses.",
+     "action": "amend"
     }
    ],
    "authority": "House Concurrent Resolution No. 3087, chapter 616, 1975 Session Laws; Constitutional Amendments, Approved, Chapter 600 (constitutional measure No. 4 on the primary election ballot; approved September 7, 1976, 93,287 to 38,394)",
-   "source_urls": [],
    "sources_verified": [
     "/tmp/caa1977.pdf p.1381 (Chapter 600, Lotteries and Gift Enterprises)",
     "/tmp/bb1961.txt (gross check)",
@@ -3252,9 +3257,7 @@
      "enacted_session_law": "CAA Chapter 600: \"The legislative assembly shall not authorize any game of chance, lottery, or gift enterprises, under any pretense, or for any purpose whatever. However, the legislative assembly may authorize by law bona fide nonprofit veterans', charitable, educational, religious, or fraternal organizations, civic and service clubs, or such other public-spirited organizations as it may recognize, to conduct games of chance when the entire net proceeds of such games of chance are to be devoted to educational, charitable, patriotic, fraternal, religious, or other public-spirited uses.\"",
      "other_publications": "Blue Book 1961 (line 17723-24) and Blue Book 1973 (line 20784-85) show the PRE-amendment text: \"The legislative assembly shall have no power to authorize lotteries or gift enterprises for any purpose and shall pass laws to prohibit the sale of lottery or gift enterprise tickets.\" This is the superseded version (these editions predate the 1976 amendment), not a variant reading of the enacted text. No code with the post-amendment text was available for punctuation comparison."
     }
-   ],
-   "status": "pending",
-   "pending_reason": "complex structural amendment (repeal / section range / amendment-article edit / institutions-list / judicial rewrite) — needs careful individual handling"
+   ]
   },
   {
    "number": "XCVI",
@@ -3291,16 +3294,17 @@
     {
      "target": "N.D. Const. § 214",
      "heading": "Original State Apportionment and Transition Schedule",
-     "text": "[Repealed effective 1978-10-05]"
+     "text": "[Repealed effective 1978-10-05]",
+     "action": "repeal"
     },
     {
      "target": "N.D. Const. Sched. §§ 1-25",
      "heading": "Original State Apportionment and Transition Schedule",
-     "text": "[Repealed effective 1978-10-05]"
+     "text": "[Repealed effective 1978-10-05]",
+     "action": "repeal"
     }
    ],
    "authority": "S.C.R. No. 4009, ch. 607, 1977 Sess. Laws (Forty-fifth Legislative Assembly); ch. 691, Constitutional Amendments Approved",
-   "source_urls": [],
    "sources_verified": [
     "/tmp/caa1979.pdf (Chapter 691, p. 1726)",
     "/tmp/bb1973.txt (§ 214 superseded/original text)"
@@ -3312,9 +3316,7 @@
      "enacted_session_law": "CAA ch. 691: \"Section 214 and sections 1 through 25 of the transition schedule of the Constitution of the State of North Dakota are hereby repealed.\"",
      "other_publications": "Blue Book 1973 (/tmp/bb1973.txt) shows § 214 already annotated as \"(Superceded by legislative action. Section 54-03-01, and also by Federal District ...)\" with the original text reproduced in an editorial note; this is an editorial/annotation divergence in the integrated code, not a divergence in enacted text. No section 214 hit located in /tmp/bb1961.txt on the \"transition schedule\" grep (OCR/coverage)."
     }
-   ],
-   "status": "pending",
-   "pending_reason": "complex structural amendment (repeal / section range / amendment-article edit / institutions-list / judicial rewrite) — needs careful individual handling"
+   ]
   },
   {
    "number": "CI",
@@ -3363,35 +3365,36 @@
     {
      "target": "N.D. Const. amend. art. 59",
      "heading": "Veteran Bonus Bonds and Constitutional Convention",
-     "text": "[Repealed effective 1978-10-05]"
+     "text": "[Repealed effective 1978-10-05]",
+     "action": "repeal"
     },
     {
      "target": "N.D. Const. amend. art. 65",
      "heading": "Veteran Bonus Bonds and Constitutional Convention",
-     "text": "[Repealed effective 1978-10-05]"
+     "text": "[Repealed effective 1978-10-05]",
+     "action": "repeal"
     },
     {
      "target": "N.D. Const. amend. art. 87",
      "heading": "Veteran Bonus Bonds and Constitutional Convention",
-     "text": "[Repealed effective 1978-10-05]"
+     "text": "[Repealed effective 1978-10-05]",
+     "action": "repeal"
     },
     {
      "target": "N.D. Const. amend. art. 88",
      "heading": "Veteran Bonus Bonds and Constitutional Convention",
-     "text": "[Repealed effective 1978-10-05]"
+     "text": "[Repealed effective 1978-10-05]",
+     "action": "repeal"
     }
    ],
    "authority": "House Concurrent Resolution No. 3004, chapter 603, 1977 Session Laws (Forty-fifth Legislative Assembly); enacted as Chapter 693, Constitutional Amendments, Approved, 1979 Session Laws; approved September 5, 1978 (41,379 to 32,613); primary election ballot measure No. 6.",
-   "source_urls": [],
    "sources_verified": [
     "/tmp/caa1979.pdf (Chapter 693, p. 1728): HCR No. 3004, ch. 603, 1977 Session Laws — repeal of articles 59, 65, 87, and 88 of the amendments to the Constitution, relating to bonds for bonuses to veterans of World War II, the Korean conflict, and the Vietnam conflict, and to the calling of a constitutional convention; 'SECTION 1. REPEAL.) Articles 59, 65, 87, and 88 of the amendments to the Constitution of the State of North Dakota are hereby repealed.'",
     "/tmp/bb1961.txt (gross OCR check — no relevant constitutional text)",
     "/tmp/bb1973.txt (gross OCR check — no relevant constitutional text)"
    ],
    "confidence": "high",
-   "variants": [],
-   "status": "pending",
-   "pending_reason": "complex structural amendment (repeal / section range / amendment-article edit / institutions-list / judicial rewrite) — needs careful individual handling"
+   "variants": []
   },
   {
    "number": "CIII",
@@ -3422,40 +3425,42 @@
     {
      "target": "N.D. Const. § 121",
      "heading": "Elective Franchise",
-     "text": "Section 121. The general election of the state shall be held biennially as provided by law.\n\nEvery citizen of the United States, who has attained the age of eighteen years and who is a North Dakota resident, shall be a qualified elector. When an elector moves within the state he shall be entitled to vote in the precinct from which he moves until he establishes voting residence in another precinct. The legislative assembly shall provide by law for the determination of residence for voting eligibility, other than physical presence. No elector shall lose his residency for voting eligibility solely by reason of his absence from the state.\n\nThe legislative assembly shall provide by law for secrecy in voting, for absentee voting, for administration of elections and for the nomination of candidates."
+     "text": "Section 121. The general election of the state shall be held biennially as provided by law.\n\nEvery citizen of the United States, who has attained the age of eighteen years and who is a North Dakota resident, shall be a qualified elector. When an elector moves within the state he shall be entitled to vote in the precinct from which he moves until he establishes voting residence in another precinct. The legislative assembly shall provide by law for the determination of residence for voting eligibility, other than physical presence. No elector shall lose his residency for voting eligibility solely by reason of his absence from the state.\n\nThe legislative assembly shall provide by law for secrecy in voting, for absentee voting, for administration of elections and for the nomination of candidates.",
+     "action": "amend"
     },
     {
      "target": "N.D. Const. § 122",
      "heading": "Elective Franchise",
-     "text": "Section 122. No person who has been declared mentally incompetent by order of a court or other authority having jurisdiction, which order has not been rescinded, shall be qualified to vote. No person convicted of a felony shall be qualified to vote until his or her civil rights are restored."
+     "text": "Section 122. No person who has been declared mentally incompetent by order of a court or other authority having jurisdiction, which order has not been rescinded, shall be qualified to vote. No person convicted of a felony shall be qualified to vote until his or her civil rights are restored.",
+     "action": "amend"
     },
     {
      "target": "N.D. Const. §§ 123-129",
      "heading": "Elective Franchise (former Article V)",
-     "text": "[Repealed effective 1978-12-07]"
+     "text": "[Repealed effective 1978-12-07]",
+     "action": "repeal"
     },
     {
      "target": "N.D. Const. amend. art. 36",
      "heading": "Residency for voting purposes",
-     "text": "[Repealed effective 1978-12-07]"
+     "text": "[Repealed effective 1978-12-07]",
+     "action": "repeal"
     },
     {
-     "target": "N.D. Const. amend. art. 40 (XL)",
+     "target": "N.D. Const. amend. art. 40",
      "heading": "Residency for voting purposes",
-     "text": "[Repealed effective 1978-12-07]"
+     "text": "[Repealed effective 1978-12-07]",
+     "action": "repeal"
     }
    ],
    "authority": "Senate House Concurrent Resolution No. 3014, chapter 611, 1977 Session Laws; Constitutional Amendments Approved, chapter 695 (Forty-fifth Legislative Assembly); approved November 7, 1978, 124,519 to 61,224 (constitutional measure No. 2 on the general election ballot)",
-   "source_urls": [],
    "sources_verified": [
     "/tmp/caa1979.pdf (Constitutional Amendments Approved, chapter 695, p. 1730 of session laws / PDF page 5) — primary enacted text, clean modern typeset",
     "/tmp/bb1973.txt — gross OCR check (contains the pre-1978 former Article V being repealed, not the new text)",
     "/tmp/bb1961.txt — gross OCR check (former Article V)"
    ],
    "confidence": "high",
-   "variants": [],
-   "status": "pending",
-   "pending_reason": "complex structural amendment (repeal / section range / amendment-article edit / institutions-list / judicial rewrite) — needs careful individual handling"
+   "variants": []
   },
   {
    "number": "CV",
@@ -3465,30 +3470,30 @@
     {
      "target": "N.D. Const. amend. art. CV",
      "heading": "INITIATIVE, REFERENDUM, AND RECALL",
-     "text": "INITIATIVE, REFERENDUM, AND RECALL\n      Section 1. While the legislative power of this state shall be vested in a legislative assembly consisting of a Senate and a House of Representatives, the people reserve the power to propose and enact laws by the initiative, including the call for a constitutional convention; to approve or reject legislative acts, or parts thereof, by the referendum; to propose and adopt constitutional amendments by the initiative; and to recall certain elected officials. This article is self-executing and all of its provisions are mandatory. Laws may be enacted to facilitate and safeguard, but not to hamper, restrict, or impair these powers.\n      Section 2. A petition to initiate or to refer a measure shall be presented to the secretary of state for approval as to form. A request for approval shall be presented over the names and signatures of twenty-five or more electors as sponsors, one of whom shall be designated as chairman of the sponsoring committee. The secretary of state shall approve the petition for circulation if it is in proper form and contains the names and addresses of the sponsors and the full text of the measure.\n      Section 3. The petition shall be circulated only by electors. They shall swear thereon that the electors who have signed the petition did so in their presence. Each elector signing a petition shall also write in the date of signing and his post-office address. No law shall be enacted limiting the number of copies of a petition. The copies shall become part of the original petition when filed.\n      Section 4. The petition may be submitted to the secretary of state if signed by electors equal in number to two percent of the resident population of the state at the last federal decennial census.\n      Section 5. An initiative petition shall be submitted not less than ninety days before the statewide election at which the measure is to be voted upon. A referendum petition may be submitted only within ninety days after the filing of the measure with the secretary of state. The submission of a petition shall suspend the operation of any measure enacted by the legislative assembly except emergency measures and appropriation measures for the support and maintenance of state departments and institutions. The submission of a petition against one or more items or parts of any measure shall not prevent the remainder from going into effect. A referred measure may be voted upon at a statewide election or at a special election called by the governor.\n      Section 6. The secretary of state shall pass upon each petition, and if he finds it insufficient, he shall notify the \"Committee for the Petitioners\" and allow twenty days for correction or amendment. All decisions of the secretary of state in regard to any such petition shall be subject to review by the supreme court. But if the sufficiency of such petition is being reviewed at the time the ballot is prepared, the secretary of state shall place the measure on the ballot and no subsequent decision shall invalidate such measure if it is at such election approved by a majority of the votes cast thereon. If proceedings are brought against any petition upon any ground, the burden of proof shall be upon the party attacking it.\n      Section 7. All decisions of the secretary of state in the petition process are subject to review by the supreme court in the exercise of original jurisdiction. If his decision is being reviewed at the time the ballot is prepared, he shall place the measure on the ballot and no court action shall invalidate the measure if it is approved at the election by a majority of the votes cast thereon.\n      Section 8. If a majority of votes cast upon an initiated or a referred measure are affirmative, it shall be deemed enacted. An initiated or referred measure which is approved shall become law thirty days after the election, and a referred measure which is rejected shall be void immediately. If conflicting measures are approved, the one receiving the highest number of affirmative votes shall be law. A measure approved by the electors may not be repealed or amended by the legislative assembly for seven years from its effective date, except by a two-thirds vote of the members elected to each house.\n      Section 9. A constitutional amendment may be proposed by initiative petition. If signed by electors equal in number to four percent of the resident population of the state at the last federal decennial census, the petition may be submitted to the secretary of state. All other provisions relating to initiative measures apply hereto.\n      Section 10. Any elected official of the state, of any county or of any legislative or county commissioner district shall be subject to recall by petition of electors equal in number to twenty-five percent of those who voted at the preceding general election for the office of governor in the state, county, or district in which the official is to be recalled.\n      The petition shall be filed with the official with whom a petition for nomination to the office in question is filed, who shall call a special election if he finds the petition valid and sufficient. No elector may remove his name from a recall petition.\n      The name of the official to be recalled shall be placed on the ballot unless he resigns within ten days after the filing of the petition. Other candidates for the office may be nominated in a manner provided by law. When the election results have been officially declared, the candidate receiving the highest number of votes shall be deemed elected for the remainder of the term. No official shall be subject twice to recall during the term for which he was elected."
+     "text": "INITIATIVE, REFERENDUM, AND RECALL\n      Section 1. While the legislative power of this state shall be vested in a legislative assembly consisting of a Senate and a House of Representatives, the people reserve the power to propose and enact laws by the initiative, including the call for a constitutional convention; to approve or reject legislative acts, or parts thereof, by the referendum; to propose and adopt constitutional amendments by the initiative; and to recall certain elected officials. This article is self-executing and all of its provisions are mandatory. Laws may be enacted to facilitate and safeguard, but not to hamper, restrict, or impair these powers.\n      Section 2. A petition to initiate or to refer a measure shall be presented to the secretary of state for approval as to form. A request for approval shall be presented over the names and signatures of twenty-five or more electors as sponsors, one of whom shall be designated as chairman of the sponsoring committee. The secretary of state shall approve the petition for circulation if it is in proper form and contains the names and addresses of the sponsors and the full text of the measure.\n      Section 3. The petition shall be circulated only by electors. They shall swear thereon that the electors who have signed the petition did so in their presence. Each elector signing a petition shall also write in the date of signing and his post-office address. No law shall be enacted limiting the number of copies of a petition. The copies shall become part of the original petition when filed.\n      Section 4. The petition may be submitted to the secretary of state if signed by electors equal in number to two percent of the resident population of the state at the last federal decennial census.\n      Section 5. An initiative petition shall be submitted not less than ninety days before the statewide election at which the measure is to be voted upon. A referendum petition may be submitted only within ninety days after the filing of the measure with the secretary of state. The submission of a petition shall suspend the operation of any measure enacted by the legislative assembly except emergency measures and appropriation measures for the support and maintenance of state departments and institutions. The submission of a petition against one or more items or parts of any measure shall not prevent the remainder from going into effect. A referred measure may be voted upon at a statewide election or at a special election called by the governor.\n      Section 6. The secretary of state shall pass upon each petition, and if he finds it insufficient, he shall notify the \"Committee for the Petitioners\" and allow twenty days for correction or amendment. All decisions of the secretary of state in regard to any such petition shall be subject to review by the supreme court. But if the sufficiency of such petition is being reviewed at the time the ballot is prepared, the secretary of state shall place the measure on the ballot and no subsequent decision shall invalidate such measure if it is at such election approved by a majority of the votes cast thereon. If proceedings are brought against any petition upon any ground, the burden of proof shall be upon the party attacking it.\n      Section 7. All decisions of the secretary of state in the petition process are subject to review by the supreme court in the exercise of original jurisdiction. If his decision is being reviewed at the time the ballot is prepared, he shall place the measure on the ballot and no court action shall invalidate the measure if it is approved at the election by a majority of the votes cast thereon.\n      Section 8. If a majority of votes cast upon an initiated or a referred measure are affirmative, it shall be deemed enacted. An initiated or referred measure which is approved shall become law thirty days after the election, and a referred measure which is rejected shall be void immediately. If conflicting measures are approved, the one receiving the highest number of affirmative votes shall be law. A measure approved by the electors may not be repealed or amended by the legislative assembly for seven years from its effective date, except by a two-thirds vote of the members elected to each house.\n      Section 9. A constitutional amendment may be proposed by initiative petition. If signed by electors equal in number to four percent of the resident population of the state at the last federal decennial census, the petition may be submitted to the secretary of state. All other provisions relating to initiative measures apply hereto.\n      Section 10. Any elected official of the state, of any county or of any legislative or county commissioner district shall be subject to recall by petition of electors equal in number to twenty-five percent of those who voted at the preceding general election for the office of governor in the state, county, or district in which the official is to be recalled.\n      The petition shall be filed with the official with whom a petition for nomination to the office in question is filed, who shall call a special election if he finds the petition valid and sufficient. No elector may remove his name from a recall petition.\n      The name of the official to be recalled shall be placed on the ballot unless he resigns within ten days after the filing of the petition. Other candidates for the office may be nominated in a manner provided by law. When the election results have been officially declared, the candidate receiving the highest number of votes shall be deemed elected for the remainder of the term. No official shall be subject twice to recall during the term for which he was elected.",
+     "action": "add"
     },
     {
      "target": "N.D. Const. § 25",
      "heading": null,
-     "text": "[Repealed effective 1978-12-07]"
+     "text": "[Repealed effective 1978-12-07]",
+     "action": "repeal"
     },
     {
      "target": "N.D. Const. amend. art. XXXIII",
      "heading": null,
-     "text": "[Repealed effective 1978-12-07]"
+     "text": "[Repealed effective 1978-12-07]",
+     "action": "repeal"
     }
    ],
    "authority": "Senate... House Concurrent Resolution No. 3088, chapter 613, 1977 Session Laws; chapter 696, Constitutional Amendments, Approved (1979 compilation); approved Nov. 7, 1978, 102,182 to 75,413 (constitutional measure No. 3, general election ballot)",
-   "source_urls": [],
    "sources_verified": [
     "/tmp/caa1979.pdf p.1731-1733 (Chapter 696)",
     "/tmp/bb1973.txt (gross OCR cross-check, §202 prior wording only)",
     "/tmp/bb1961.txt (gross OCR cross-check)"
    ],
    "confidence": "high",
-   "variants": [],
-   "status": "pending",
-   "pending_reason": "complex structural amendment (repeal / section range / amendment-article edit / institutions-list / judicial rewrite) — needs careful individual handling"
+   "variants": []
   },
   {
    "number": "CVI",
@@ -3525,16 +3530,17 @@
     {
      "target": "N.D. Const. § 173",
      "heading": "Judicial Officers — election of certain county officials",
-     "text": "Section 173. There shall be elected in each county, organized under the provisions of section 172 of the Constitution of the State of North Dakota, a register of deeds, county auditor, treasurer, sheriff, state's attorney, and a clerk of the district court, who shall be electors in the county in which they are elected and who shall hold their office for a term of four years and until their successors are elected and qualified; provided that in counties having population of six thousand or less the register of deeds shall also be clerk of the district court. This amendment shall be self-executing, but legislation may be enacted to facilitate its operation."
+     "text": "Section 173. There shall be elected in each county, organized under the provisions of section 172 of the Constitution of the State of North Dakota, a register of deeds, county auditor, treasurer, sheriff, state's attorney, and a clerk of the district court, who shall be electors in the county in which they are elected and who shall hold their office for a term of four years and until their successors are elected and qualified; provided that in counties having population of six thousand or less the register of deeds shall also be clerk of the district court. This amendment shall be self-executing, but legislation may be enacted to facilitate its operation.",
+     "action": "amend"
     },
     {
      "target": "N.D. Const. § 69",
      "heading": "Repeal of subsection 6 of section 69 (jurisdiction of police magistrates, constables, and justices of the peace)",
-     "text": "[Repealed effective 1980-10-02]"
+     "text": "[Repealed effective 1980-10-02]",
+     "action": "repeal"
     }
    ],
    "authority": "Senate Concurrent Resolution No. 4006, chapter 706, 1979 Session Laws (Forty-sixth Legislative Assembly); approved September 2, 1980 (58,827 to 50,643); enacted as Chapter 655, Constitutional Amendments, Approved (1981 Session Laws compilation)",
-   "source_urls": [],
    "sources_verified": [
     "/tmp/caa1981.pdf (Chapter 655, p. 1817-1818) — enacted CAA text, clean modern typeset, governs",
     "/tmp/bb1973.txt — integrated Blue Book 1973, pre-amendment Section 173 (gross OCR cross-check)",
@@ -3547,9 +3553,7 @@
      "enacted_session_law": "CAA Chapter 655: \"...sheriff, state's attorney, and a clerk of the district court... provided that in counties having population of six thousand or less the register of deeds shall also be clerk of the district court.\" (county judge and fifteen-thousand-population proviso struck)",
      "other_publications": "Blue Book 1973 (pre-amendment): \"...sheriff, state's attorney, county judge and a clerk of the district court... provided in counties having fifteen thousand population or less, the county judge shall also be clerk of the district court; provided further that in counties having population of six thousand or less the register of deeds shall also be clerk of the district court and county judge. This amendment shall be construed as applying to the officers elected at the general election in 1962.\" Divergence is substantive (this is the older text the 1980 amendment superseded), not a publication-error variant; minor Blue Book OCR artifacts: \"shull lie\" for \"shall be,\" \"cterk\" for \"clerk,\" \"u\"/\"und\" for \"a\"/\"and.\""
     }
-   ],
-   "status": "pending",
-   "pending_reason": "complex structural amendment (repeal / section range / amendment-article edit / institutions-list / judicial rewrite) — needs careful individual handling"
+   ]
   },
   {
    "number": "CVIII",

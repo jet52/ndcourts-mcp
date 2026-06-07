@@ -116,9 +116,6 @@ def citation_for(item: dict, seen_main: set) -> str:
     n = item["secnum"]
     if item["special"] == "SCHEDULE":
         return f"N.D. Const. Schedule, § {n}"
-    name = (item.get("art_name") or "").lower()
-    if "prohibition" in name:
-        return f"N.D. Const. art. {item['art_roman']}, § {n} (Prohibition)"
     # main body: continuous numbering, but guard against an unexpected restart
     if n in seen_main:
         return f"N.D. Const. art. {item['art_roman']}, § {n}"
@@ -186,78 +183,133 @@ def _day_before(iso: str) -> str:
     return d.isoformat()
 
 
+_ROMAN_NUMS = [(1000,"M"),(900,"CM"),(500,"D"),(400,"CD"),(100,"C"),(90,"XC"),
+               (50,"L"),(40,"XL"),(10,"X"),(9,"IX"),(5,"V"),(4,"IV"),(1,"I")]
+
+
+def _int_to_roman(n: int) -> str:
+    out = ""
+    for v, s in _ROMAN_NUMS:
+        while n >= v:
+            out += s; n -= v
+    return out
+
+
+def _norm_target(t: str) -> str:
+    """Normalize a target citation; amendment-article numbers -> Roman."""
+    m = re.match(r"(N\.D\. Const\. amend\. art\.)\s+(\d+)\b", t)
+    if m:
+        return f"{m.group(1)} {_int_to_roman(int(m.group(2)))}"
+    return t
+
+
+def _expand_targets(t: str) -> list[str]:
+    """Expand a section-range target into individual section citations."""
+    m = re.search(r"§§\s*(\d+)\s*[-&]\s*(\d+)", t)
+    if m:
+        a, b = int(m.group(1)), int(m.group(2))
+        if b >= a and b - a < 60:
+            sched = "Schedule" if re.search(r"Sched", t, re.I) else None
+            if sched:
+                return [f"N.D. Const. Schedule, § {n}" for n in range(a, b + 1)]
+            return [f"N.D. Const. § {n}" for n in range(a, b + 1)]
+    return [_norm_target(t)]
+
+
 def apply_amendments(conn, *, batch: str) -> dict:
-    """Apply the source-verified pre-1981 amendments (data/constitution_amendments
-    .json) in order on top of the 1889 base. 'new_article' appends an Amendment
-    Article; 'amend_section' caps the target section's current version at the day
-    before the effective date and adds the amended text as a new version."""
+    """Apply the source-verified pre-1981 amendments in chronological order on
+    the 1889 base. Each change has an action: 'add' (new Amendment Article /
+    section), 'amend' (cap the standing version, add the amended text), or
+    'repeal' (cap the standing version, mark the provision repealed with a
+    tombstone version). Section ranges (§§ N-M) and Roman/Arabic amendment-
+    article numbers are normalized. Unresolved targets are skipped with a
+    warning rather than crashing the build."""
     if not AMENDMENTS_JSON.exists():
         return {"amendments_applied": 0}
     records = json.loads(AMENDMENTS_JSON.read_text()).get("amendments", [])
-    n_new = n_mod = n_skipped = 0
+    n_add = n_mod = n_rep = n_skipped = n_warn = 0
+
+    def find(cite):
+        return conn.execute(
+            "SELECT p.id pid, v.id vid FROM provisions p "
+            "JOIN provision_versions v ON v.id=p.current_version_id "
+            "WHERE p.cite_key=?", (corpus.cite_key(cite),)).fetchone()
+
     for r in records:
-        if r.get("status") == "pending":   # extracted but not yet structurally assembled
+        if r.get("status") == "pending":
             n_skipped += 1
             continue
         eff = r["effective_date"]
         auth = r.get("authority")
         url = (r.get("source_urls") or [None])[0]
-        # normalize to a changes[] list
-        changes = r.get("changes")
-        if not changes:  # legacy single-target form
-            changes = [{"target": r.get("citation") or r.get("target"),
-                        "heading": r.get("heading"), "text": r.get("text")}]
+        changes = r.get("changes") or [{"target": r.get("citation") or r.get("target"),
+                                        "heading": r.get("heading"), "text": r.get("text")}]
+        rec_default = ("repeal" if r["type"] == "repeal"
+                       else "add" if r["type"] == "new_article" else "amend")
         for ch in changes:
-            cite = ch["target"]
-            # Strip a leading "§ N." section-number prefix so amended versions
-            # match the base layer's prefix-free convention.
-            ch["text"] = re.sub(r"^\s*§\s*[0-9]+[A-Za-z]?\.\s*", "", ch["text"])
-            if r["type"] == "new_article":
-                pid = conn.execute(
-                    "INSERT INTO provisions (corpus, citation, cite_key, hierarchy, heading, status) "
-                    "VALUES (?,?,?,?,?,?)",
-                    ("const", cite, corpus.cite_key(cite),
-                     json.dumps({"scheme": "1889-amendment", "amendment_number": r.get("number")}),
-                     ch.get("heading"), "active"),
-                ).lastrowid
-                vid = conn.execute(
-                    "INSERT INTO provision_versions (provision_id, effective_start, effective_end, "
-                    " text_content, source_authority, source_url, batch) VALUES (?,?,?,?,?,?,?)",
-                    (pid, eff, REORG_EVE, ch["text"], auth, url, batch),
-                ).lastrowid
-                conn.execute("UPDATE provisions SET current_version_id=? WHERE id=?", (vid, pid))
-                corpus.index_version_fts(conn, vid, cite, ch.get("heading"), ch["text"])
-                n_new += 1
-            else:  # amend_section: cap the standing version, add the new one
-                row = conn.execute(
-                    "SELECT p.id pid, v.id vid FROM provisions p "
-                    "JOIN provision_versions v ON v.id=p.current_version_id "
-                    "WHERE p.cite_key=?", (corpus.cite_key(cite),)).fetchone()
-                if not row:
-                    print(f"  WARN amend {cite}: target not found", file=sys.stderr); continue
-                conn.execute("UPDATE provision_versions SET effective_end=? WHERE id=?",
-                             (_day_before(eff), row["vid"]))
-                vid = conn.execute(
-                    "INSERT INTO provision_versions (provision_id, effective_start, effective_end, "
-                    " text_content, source_authority, source_url, batch) VALUES (?,?,?,?,?,?,?)",
-                    (row["pid"], eff, REORG_EVE, ch["text"], auth, url, batch),
-                ).lastrowid
-                conn.execute("UPDATE provisions SET current_version_id=? WHERE id=?", (vid, row["pid"]))
-                corpus.index_version_fts(conn, vid, cite, ch.get("heading"), ch["text"])
-                n_mod += 1
-            ev = conn.execute("SELECT id FROM provisions WHERE cite_key=?",
-                              (corpus.cite_key(cite),)).fetchone()
-            conn.execute(
-                "INSERT OR IGNORE INTO amendments (provision_id, action, effective_date, "
-                " election_date, affected, amendment_number, authority, source_url, raw) "
-                "VALUES (?,?,?,?,?,?,?,?,?)",
-                (ev["id"] if ev else None,
-                 "adopted" if r["type"] == "new_article" else "amended",
-                 eff, r.get("election_date"), r.get("affected") or cite,
-                 r.get("number"), auth, url, ch.get("heading") or ""),
-            )
+            action = ch.get("action") or rec_default
+            text = re.sub(r"^\s*§\s*[0-9]+[A-Za-z]?\.\s*", "", ch.get("text") or "")
+            for cite in _expand_targets(ch["target"]):
+                if action == "add":
+                    if find(cite):  # already exists -> treat as amend
+                        action_eff = "amend"
+                    else:
+                        pid = conn.execute(
+                            "INSERT INTO provisions (corpus, citation, cite_key, hierarchy, heading, status) "
+                            "VALUES (?,?,?,?,?,?)",
+                            ("const", cite, corpus.cite_key(cite),
+                             json.dumps({"scheme": "1889-amendment", "amendment_number": r.get("number")}),
+                             ch.get("heading"), "active"),
+                        ).lastrowid
+                        vid = conn.execute(
+                            "INSERT INTO provision_versions (provision_id, effective_start, effective_end, "
+                            " text_content, source_authority, source_url, batch) VALUES (?,?,?,?,?,?,?)",
+                            (pid, eff, REORG_EVE, text, auth, url, batch)).lastrowid
+                        conn.execute("UPDATE provisions SET current_version_id=? WHERE id=?", (vid, pid))
+                        corpus.index_version_fts(conn, vid, cite, ch.get("heading"), text)
+                        n_add += 1
+                        continue
+                if action in ("amend",) or (action == "add" and find(cite)):
+                    row = find(cite)
+                    if not row:
+                        print(f"  WARN amend {cite} ({r.get('number')}): target not found", file=sys.stderr)
+                        n_warn += 1; continue
+                    conn.execute("UPDATE provision_versions SET effective_end=? WHERE id=?",
+                                 (_day_before(eff), row["vid"]))
+                    vid = conn.execute(
+                        "INSERT INTO provision_versions (provision_id, effective_start, effective_end, "
+                        " text_content, source_authority, source_url, batch) VALUES (?,?,?,?,?,?,?)",
+                        (row["pid"], eff, REORG_EVE, text, auth, url, batch)).lastrowid
+                    conn.execute("UPDATE provisions SET current_version_id=? WHERE id=?", (vid, row["pid"]))
+                    corpus.index_version_fts(conn, vid, cite, ch.get("heading"), text)
+                    n_mod += 1
+                elif action == "repeal":
+                    row = find(cite)
+                    if not row:
+                        print(f"  WARN repeal {cite} ({r.get('number')}): target not found", file=sys.stderr)
+                        n_warn += 1; continue
+                    conn.execute("UPDATE provision_versions SET effective_end=? WHERE id=?",
+                                 (_day_before(eff), row["vid"]))
+                    tomb = f"[Repealed effective {eff}{(' — ' + auth) if auth else ''}.]"
+                    vid = conn.execute(
+                        "INSERT INTO provision_versions (provision_id, effective_start, effective_end, "
+                        " text_content, source_authority, source_url, batch) VALUES (?,?,?,?,?,?,?)",
+                        (row["pid"], eff, REORG_EVE, tomb, auth, url, batch)).lastrowid
+                    conn.execute("UPDATE provisions SET current_version_id=?, status='repealed' WHERE id=?",
+                                 (vid, row["pid"]))
+                    corpus.index_version_fts(conn, vid, cite, ch.get("heading"), tomb)
+                    n_rep += 1
+                ev = conn.execute("SELECT id FROM provisions WHERE cite_key=?",
+                                  (corpus.cite_key(cite),)).fetchone()
+                conn.execute(
+                    "INSERT OR IGNORE INTO amendments (provision_id, action, effective_date, "
+                    " election_date, affected, amendment_number, authority, source_url, raw) "
+                    "VALUES (?,?,?,?,?,?,?,?,?)",
+                    (ev["id"] if ev else None, action, eff, r.get("election_date"),
+                     r.get("affected") or cite, r.get("number"), auth, url, ch.get("heading") or ""))
     conn.commit()
-    return {"new_versions": n_new, "section_amendments": n_mod, "pending_skipped": n_skipped}
+    return {"adds": n_add, "amends": n_mod, "repeals": n_rep,
+            "pending_skipped": n_skipped, "unresolved": n_warn}
 
 
 def main() -> None:
