@@ -46,10 +46,10 @@ def load_chapter_urls(src: Path) -> dict[str, str]:
     if mf.exists():
         try:
             data = json.loads(mf.read_text())
-            for url, meta in data.items():
-                ch = meta.get("chapter_num")
-                if ch:
-                    urls[ch] = url
+            pdfs = data.get("pdfs", data)  # manifest nests entries under "pdfs"
+            for url, meta in pdfs.items():
+                if isinstance(meta, dict) and meta.get("chapter_num"):
+                    urls[meta["chapter_num"]] = url
         except Exception:
             pass
     return urls
@@ -109,6 +109,13 @@ def build(db_path: Path, src: Path, *, limit_titles: int | None, batch: str) -> 
             tnum, tname, cnum, cname, sections = parse_chapter(cf.read_text())
             url = chapter_urls.get(cnum or "")
             for sec in sections:
+                # ndlegis.gov NDCC chapter PDFs carry per-section named
+                # destinations where each '.' in the section number becomes 'p'
+                # (e.g. § 12.1-20-03 -> #nameddest=12p1-20-03). Build a pinpoint
+                # URL into the official PDF.
+                sec_url = (
+                    f"{url}#nameddest={sec['sec_num'].replace('.', 'p')}" if url else None
+                )
                 citation = f"N.D.C.C. § {sec['sec_num']}"
                 status = "repealed" if sec["repealed"] else "active"
                 hierarchy = json.dumps({
@@ -136,7 +143,7 @@ def build(db_path: Path, src: Path, *, limit_titles: int | None, batch: str) -> 
                     "INSERT INTO provision_versions "
                     "(provision_id, effective_start, effective_end, text_content, "
                     " source_authority, source_url, batch) VALUES (?,?,?,?,?,?,?)",
-                    (pid, PUB_DATE, None, sec["text"], src_auth, url, batch),
+                    (pid, PUB_DATE, None, sec["text"], src_auth, sec_url, batch),
                 ).lastrowid
                 n_ver += 1
                 conn.execute("UPDATE provisions SET current_version_id=? WHERE id=?", (vid, pid))
@@ -146,7 +153,7 @@ def build(db_path: Path, src: Path, *, limit_titles: int | None, batch: str) -> 
                         "INSERT OR IGNORE INTO amendments "
                         "(provision_id, version_id, action, effective_date, raw_date, "
                         " authority, source_url, raw) VALUES (?,?,?,?,?,?,?,?)",
-                        (pid, vid, "repealed", None, None, sec["repeal_auth"], url,
+                        (pid, vid, "repealed", None, None, sec["repeal_auth"], sec_url,
                          f"Repealed by {sec['repeal_auth']}" if sec["repeal_auth"] else "Repealed"),
                     )
                     n_amend += 1

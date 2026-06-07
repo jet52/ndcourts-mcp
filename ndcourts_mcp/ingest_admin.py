@@ -28,6 +28,34 @@ from .ingest_statutes import _SECTION_RE, _REPEAL_RE
 
 DEFAULT_SRC = Path("/Users/jerod/refs/reg/NDAC")
 PUB_DATE = "2025-07-01"  # "as published" date; lets pre-date queries warn honestly
+# NDAC chapter PDFs live here, keyed by chapter number. They carry NO named
+# destinations (unlike the N.D.C.C. PDFs), so admin URLs are chapter-level only.
+NDAC_PDF_BASE = "https://ndlegis.gov/information/acdata/pdf/"
+
+
+def load_chapter_urls(src: Path) -> set[str]:
+    """Set of chapter numbers that have an official PDF (from .manifest.json)."""
+    import json
+    mf = src / ".manifest.json"
+    chapters: set[str] = set()
+    if mf.exists():
+        try:
+            data = json.loads(mf.read_text())
+            for url in data.get("pdfs", {}):
+                stem = url.rsplit("/", 1)[-1].removesuffix(".pdf")
+                chapters.add(stem)
+        except Exception:
+            pass
+    return chapters
+
+
+def chapter_pdf_url(sec_num: str, valid_chapters: set[str]) -> str | None:
+    """Official NDAC chapter PDF for a section (chapter = section minus its last
+    -NN component). Returns None if no such PDF is published."""
+    chapter = sec_num.rsplit("-", 1)[0]
+    if not valid_chapters or chapter in valid_chapters:
+        return f"{NDAC_PDF_BASE}{chapter}.pdf"
+    return None
 
 
 def parse_sections(text: str) -> list[dict]:
@@ -76,6 +104,7 @@ def build(db_path: Path, src: Path, *, limit_titles: int | None, batch: str) -> 
     corpus.create_corpus_schema(conn)
 
     files = section_files(src, limit_titles)
+    valid_chapters = load_chapter_urls(src)
     n_prov = n_ver = n_amend = 0
     seen: set[str] = set()
     for f in files:
@@ -86,6 +115,7 @@ def build(db_path: Path, src: Path, *, limit_titles: int | None, batch: str) -> 
                 continue
             seen.add(key)
             status = "repealed" if sec["repealed"] else "active"
+            pdf_url = chapter_pdf_url(sec["sec_num"], valid_chapters)
             src_auth = (
                 f"Repealed by {sec['repeal_auth']}" if sec["repeal_auth"]
                 else f"current text (N.D.A.C., as of {PUB_DATE})"
@@ -100,7 +130,7 @@ def build(db_path: Path, src: Path, *, limit_titles: int | None, batch: str) -> 
                 "INSERT INTO provision_versions "
                 "(provision_id, effective_start, effective_end, text_content, "
                 " source_authority, source_url, batch) VALUES (?,?,?,?,?,?,?)",
-                (pid, PUB_DATE, None, sec["text"], src_auth, None, batch),
+                (pid, PUB_DATE, None, sec["text"], src_auth, pdf_url, batch),
             ).lastrowid
             n_ver += 1
             conn.execute("UPDATE provisions SET current_version_id=? WHERE id=?", (vid, pid))
@@ -110,7 +140,7 @@ def build(db_path: Path, src: Path, *, limit_titles: int | None, batch: str) -> 
                     "INSERT OR IGNORE INTO amendments "
                     "(provision_id, version_id, action, effective_date, raw_date, "
                     " authority, source_url, raw) VALUES (?,?,?,?,?,?,?,?)",
-                    (pid, vid, "repealed", None, None, sec["repeal_auth"], None,
+                    (pid, vid, "repealed", None, None, sec["repeal_auth"], pdf_url,
                      f"Repealed by {sec['repeal_auth']}" if sec["repeal_auth"] else "Repealed"),
                 )
                 n_amend += 1
