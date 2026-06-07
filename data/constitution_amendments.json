@@ -97,79 +97,6 @@
    "discrepancies": "Base text taken from the authoritative session-law operative passage (marker line 148). OCR artifacts corrected against the three published codes and the parallel referral resolution (marker line 13): 'All property.' -> 'All property,'; restored dropped comma in 'villages, townships and districts'; 'use<l' -> 'used'; 'provicled' -> 'provided'. (1) 'carrying of persons, property or messages': the operative session-law text and manual1907 (the Art. IV amendment) BOTH include 'property'; cl1913 (line 12892) and manual1919 (line 10288) omit 'property' — treated as a later published-code omission; 'property' retained per the operative text. (2) Final clause 'over which any part ... within such counties, towns, villages, townships and districts' omits 'cities' in the operative text AND in all three published codes; only the earlier referral resolution (marker line 13) had 'cities' there — the operative/ratified reading (no 'cities') is used. (3) The three published codes insert commas after 'railroads', 'state', and 'value' ('roadbed, rails and rolling stock of all railroads, and...'; 'operated in this state, and used...'; 'actual value, and such assessed value...'); the operative session-law marker text lacks these commas. The session-law text governs, so they are not added; the difference is non-substantive punctuation."
   },
   {
-   "number": "5",
-   "election_date": "1904-11-08",
-   "effective_date": "1904-12-08",
-   "type": "amend_section",
-   "changes": [
-    {
-     "target": "N.D. Const. § 215",
-     "heading": "Subdivision 5 of section 215",
-     "text": "Fifth. The school for the deaf and dumb of North Dakota, at the city of Devils Lake, in the county of Ramsey."
-    }
-   ],
-   "authority": "Amendment ratified 1904-11-08",
-   "source_urls": [],
-   "sources_verified": [
-    "/tmp/seg2_marker/seg2_src/seg2_src.md (primary, session law SL 1903 concurrent resolution, H.B. No. 73-Davis, Approved March 4, 1903)",
-    "/tmp/cl1913.txt (1913 Compiled Laws, Article 5, Subdivision 5 of section 215, Approved and ratified 1904)",
-    "/tmp/manual1907.txt (1907 Legislative Manual, Article V, Subdivision 5 of section 215)",
-    "/tmp/manual1919.txt (1919 Legislative Manual, Article V)"
-   ],
-   "confidence": "high",
-   "discrepancies": "None material. All four sources agree on the substantive wording. The primary marker source, 1913 Compiled Laws, and 1907 Manual are character-for-character identical (allowing for line breaks). The 1919 Manual line 10320 has an OCR artifact (stray apostrophe in \"'deaf and dumb\") and a later re-printing at line 11103 capitalizes \"School for the Deaf and Dumb\" with all-caps \"FIFTH:\" — these are cosmetic OCR/typesetting variants, not text disagreements. The amendment renames the institution from the prior \"deaf and dumb asylum at the city of Devils Lake\" (former subdivision 5, sec. 215) to \"the school for the deaf and dumb of North Dakota, at the city of Devils Lake, in the county of Ramsey.\"",
-   "status": "pending",
-   "pending_reason": "§215 subdivision Fifth — needs full-section assembly"
-  },
-  {
-   "number": "6",
-   "election_date": "1904-11-08",
-   "effective_date": "1904-12-08",
-   "type": "amend_section",
-   "changes": [
-    {
-     "target": "N.D. Const. § 215",
-     "heading": "Subdivision 8 of section 215 (state hospital for insane at Jamestown; institution for feeble minded at Grafton)",
-     "text": "8. A state hospital for the insane at the City of Jamestown, in the County of Stutsman. And the legislative assembly shall appropriate twenty thousand acres of the grant of lands made by the act of congress aforesaid for \"Other Educational and Charitable Institutions\" to the benefit and for the endowment of said institution, and there shall be located at or near the City of Grafton, in the County of Walsh, an institution for the feeble minded, on the grounds purchased by the secretary of the interior for a penitentiary building."
-    }
-   ],
-   "authority": "Amendment ratified 1904-11-08",
-   "source_urls": [],
-   "sources_verified": [
-    "/tmp/seg2_marker/seg2_src/seg2_src.md (marker OCR of session law, lines 135-137)",
-    "/tmp/manual1907.txt (1907 Legislative Manual, Article VI, line 7270ff)",
-    "/tmp/cl1913.txt (1913 Compiled Laws, Article 6, subdivision 8 of section 215, line 12929ff, marked \"[Approved and ratified 1904.]\")"
-   ],
-   "confidence": "high",
-   "discrepancies": "Only capitalization/style divergences, no substantive disagreement. (1) The session-law marker source capitalizes \\\"City,\\\" \\\"County,\\\" and \\\"Other Educational and Charitable Institutions\\\"; both published codes lowercase these (\\\"city,\\\" \\\"county,\\\" \\\"other educational and charitable institutions\\\"). Per instructions, the session-law (authoritative) capitalization is preserved. (2) The session law reads \\\"8.\\\" while both published codes render it \\\"Eighth.\\\"; preserved the session-law \\\"8.\\\". (3) The 1913 Compiled Laws prints \\\"Orafton\\\" — a clear OCR error for \\\"Grafton\\\" (confirmed by the marker source, 1907 Manual, and the subject matter). No re-OCR needed; wording fully resolved.",
-   "status": "pending",
-   "pending_reason": "§215 subdivision Eighth (+ Grafton feeble-minded) — needs full-section assembly"
-  },
-  {
-   "number": "7",
-   "election_date": "1904-11-08",
-   "effective_date": "1904-12-08",
-   "type": "amend_section",
-   "changes": [
-    {
-     "target": "N.D. Const. § 176",
-     "heading": "Addenda to section 176 (taxation of grain in elevators)",
-     "text": "The legislative assembly may further provide that grain grown within the state and held therein in elevators, warehouses and granaries may be taxed at a fixed rate."
-    }
-   ],
-   "authority": "Amendment ratified 1904-11-08",
-   "source_urls": [],
-   "sources_verified": [
-    "/tmp/seg2_marker/seg2_src/seg2_src.md (primary marker OCR, H.B. No. 63-Chaffee, lines 182-196)",
-    "/tmp/cl1913.txt (1913 Compiled Laws, Article 7, Addenda to section 176)",
-    "/tmp/manual1919.txt (1919 Legislative Manual, Article VII, Addenda to section 176)"
-   ],
-   "confidence": "high",
-   "discrepancies": "None material. (1) The primary source's sentence is interrupted by a stray page-footer artifact \"s. L.—19.\" which is not part of the constitutional text and was excluded. (2) The 1913 Compiled Laws OCR shuffled the words \"The legislative assembly may further provide\" but the substance matches; the 1919 Manual resolves it cleanly. This amendment ADDS a clause to existing section 176 (it does not restate the entire section); the operative text recorded is the added clause exactly as agreed across sources.",
-   "status": "pending",
-   "pending_reason": "§176 appended grain-taxation clause — needs full-section assembly"
-  },
-  {
    "number": "8",
    "election_date": "1908-11-03",
    "effective_date": "1908-12-03",
@@ -319,6 +246,53 @@
    ],
    "confidence": "high",
    "discrepancies": "No substantive disagreement. Only the 1913 Compiled Laws has an OCR artifact at the final word ('^e^utors'), resolved as 'elevators' by agreement of the marker source and the 1919 Legislative Manual. The 1907 Legislative Manual (through 1906) does not contain this article, as expected for a 1912 amendment. Capitalization of 'states/States' varies by edition; marker source and 1913 use lowercase 'states', adopted here as the session-law text."
+  },
+  {
+   "number": "5 & 6",
+   "election_date": "1904-11-08",
+   "effective_date": "1904-12-08",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 215",
+     "heading": "State institutions (deaf-and-dumb school; insane hospital / feeble-minded institution)",
+     "text": "The following public institutions of the State are permanently located\nat the places hereinafter named, each to have the lands specifically\ngranted to it by the United States, in the Act of Congress, approved\nFebruary 22, 1889, to be disposed of and used in such manner as the\nLegislative Assembly may prescribe, subject to the limitations\nprovided in the article on school and public lands contained in this\nConstitution.\n\nFirst. The seat of government at the city of Bismarck in the county of\nBurleigh.\n\nSecond. The State University and the School of Mines at the city of\nGrand Forks, in the county of Grand Forks.\n\nThird. The Agricultural College at the city of Fargo in the county of\nCass.\n\nFourth. A State Normal School at the city of Valley City, in the\ncounty of Barnes; and the Legislative Assembly in apportioning the\ngrant of eighty thousand acres of land for Normal schools made in the\nAct of Congress referred to shall grant to the said Normal School at\nValley City as aforementioned, fifty thousand (50,000) acres, and said\nlands are hereby appropriated to said institution for that purpose.\n\nFifth. The school for the deaf and dumb of North Dakota, at the city of Devils Lake, in the county of Ramsey.\n\nSixth. A State Reform School at the city of Mandan in the county of\nMorton.\n\nSeventh. A State Normal School at the city of Mayville, in the county\nof Traill. And the Legislative Assembly in apportioning the grant of\nlands made by Congress, in the act aforesaid for State Normal Schools,\nshall assign thirty thousand acres to the institution hereby located\nat Mayville, and said lands are hereby appropriated for said purpose.\n\nEighth. A state hospital for the insane at the City of Jamestown, in the County of Stutsman. And the legislative assembly shall appropriate twenty thousand acres of the grant of lands made by the act of congress aforesaid for \"Other Educational and Charitable Institutions\" to the benefit and for the endowment of said institution, and there shall be located at or near the City of Grafton, in the County of Walsh, an institution for the feeble minded, on the grounds purchased by the secretary of the interior for a penitentiary building."
+    }
+   ],
+   "authority": "Amendments V & VI, ratified Nov. 8, 1904",
+   "source_urls": [
+    "https://www.legis.nd.gov/assembly/sessionlaws/1903/sl1903.pdf#page=292"
+   ],
+   "sources_verified": [
+    "marker OCR of S.L. 1903 (subdivisions Fifth & Eighth)",
+    "1954 Blue Book integrated §215 (Fifth/Eighth confirmed)",
+    "assembled onto validated 1889 base §215"
+   ],
+   "confidence": "high",
+   "notes": "Subdivision-level amendments (Fifth: deaf-and-dumb school; Eighth: separates insane hospital at Jamestown from feeble-minded institution at Grafton) assembled into the full §215 from the 1889 base; other subdivisions unchanged. Single 1904-12-08 version."
+  },
+  {
+   "number": "7",
+   "election_date": "1904-11-08",
+   "effective_date": "1904-12-08",
+   "type": "amend_section",
+   "changes": [
+    {
+     "target": "N.D. Const. § 176",
+     "heading": "Taxation; grain in elevators",
+     "text": "Laws shall be passed taxing by uniform rule all property according to\nits true value in money, but the property of the United States and the\nstate, county and municipal corporations, both real and personal,\nshall be exempt from taxation, and the Legislative Assembly shall by a\ngeneral law exempt from taxation property used exclusively for school,\nreligions, cemetery or charitable purposes and personal property to\nany amount not exceeding in value two hundred dollars for each\nindividual liable to taxation; but the Legislative Assembly may, by\nlaw, provide for the payment of a per centum of gross earnings of\nrailroad companies to be paid in lieu of all State, county, township\nand school taxes on property exclusively used in and about the\nprosecution of the business of such companies as common carriers, but\nno real estate of said corporations shall be exempted from taxation in\nthe same manner, and on the same basis as other real estate is taxed,\nexcept roadbed, right of way, shops and buildings used exclusively in\ntheir business as common carriers, and whenever and so long as such\nlaw providing for the payment of a per centum on earnings shall be in\nforce, that part of section 179 of this article relating to assessment\nof railroad property shall cease to be in force.\n\nThe legislative assembly may further provide that grain grown within the state and held therein in elevators, warehouses and granaries may be taxed at a fixed rate."
+    }
+   ],
+   "authority": "Amendment VII, ratified Nov. 8, 1904",
+   "source_urls": [
+    "https://www.legis.nd.gov/assembly/sessionlaws/1903/sl1903.pdf#page=291"
+   ],
+   "sources_verified": [
+    "marker OCR of S.L. 1903 (appended clause)",
+    "assembled onto validated 1889 base §176"
+   ],
+   "confidence": "high",
+   "notes": "Amendment appended a grain-in-elevators taxation clause to §176; assembled onto the 1889 base §176."
   }
  ]
 }
