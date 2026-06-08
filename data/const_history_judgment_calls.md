@@ -5,6 +5,24 @@ Policy: the **session law (enacted text) governs** and was ingested; these are f
 review and cross-reference against ndconst.org section sidebar notes.
 **138 variants flagged across segments 3–4.**
 
+## 1925 clean-OCR verification pass (2026-06-08)
+
+All 45 segment-3 (1914–1924) entries that cited the *old poor* embedded extraction
+`/tmp/off1925.txt` were re-verified against the clean datalab-`marker` OCR of the same
+publication: `~/refs/nd/const/processed/1925_official_constitution.md`. The clean OCR
+confirmed the recorded off1925 reading in ~40 of 45 entries (those notes now stand on a
+clean source rather than the poor pdftotext extraction). Five did not hold up:
+
+- **3 spurious divergences** — the recorded off1925 reading was itself a poor-OCR artifact;
+  the clean OCR shows 1925 *agrees with the session law*. Marked **RESOLVED** below: §67
+  "in each house shall declare" (no comma), §162 "townships," (comma), §182 (Amdt XXXI)
+  "in amounts, not exceeding" (comma).
+- **2 note corrections** — §202 (Amdt XXVIII) and §185 (Amdt XXXII): clean 1925 actually
+  *capitalizes* "Constitution" (the recorded "lowercase" was wrong); corrected in place.
+
+No DB text changes result (session law already governs the enacted text); this pass only
+prunes/hardens the variant log.
+
 
 
 # Segment 3 (1914–1924)
@@ -157,9 +175,9 @@ review and cross-reference against ndconst.org section sidebar notes.
 - **approval by the Governor**
   - enacted (session law): "Governor" capitalized
   - other publications: The 1919 Manual and 1954 Blue Book also capitalize "Governor"; the 1925 official snapshot lowercases it as "governor".
-- **voting, in each house shall declare**
+- **voting, in each house shall declare** — ✓ **RESOLVED (1925 clean OCR)**
   - enacted (session law): no comma after "house" — "in each house shall declare"
-  - other publications: The 1919 Manual, 1954 Blue Book, and 1925 official snapshot insert a comma: "in each house, shall declare".
+  - other publications: The 1919 Manual and 1954 Blue Book insert a comma: "in each house, shall declare". ~~off1925~~ **CORRECTED:** the clean 1925 marker OCR (`1925_official_constitution.md:1994`) reads "...present and voting, in each house shall declare it an emergency measure" — **no** comma after "house" (the comma is after "voting"). The recorded off1925 comma was a poor-OCR artifact; 1925 agrees with the session law.
 
 ## Amendment XXVIII (1918-12-05) — N.D. Const. § 202
 - **majority of the members elected to each house it shall be submitted**
@@ -176,7 +194,7 @@ review and cross-reference against ndconst.org section sidebar notes.
   - other publications: manual1919 and bb1954 add a comma after "initiative petition": "by initiative petition, and on referendum petition shall apply" (comma after "initiative petition," none after "referendum petition"). off1925 matches the session law.
 - **capitalization of Constitution / State / Legislature / Electors / Secretary of State**
   - enacted (session law): marker capitalizes "Constitution," "State," "Legislature," "Electors," and "Secretary of State"
-  - other publications: off1925, manual1919, and bb1954 lowercase "constitution," "state," "legislature," "electors"; manual1919 and bb1954 capitalize "Secretary of State." These are typographic/period-rendering differences across printings.
+  - other publications: manual1919 and bb1954 lowercase "constitution," "state," "legislature," "electors"; manual1919 and bb1954 capitalize "Secretary of State." **CORRECTED (1925 clean OCR, `1925_official_constitution.md:4480`):** off1925 actually *capitalizes* "Constitution" (twice — "a part of the Constitution," "amendments to the Constitution"), matching the session law; it lowercases only "electors" and "secretary of state." The earlier "off1925 lowercases constitution" was a poor-OCR misread. These are typographic/period-rendering differences across printings.
 
 ## Amendment XXIX (1918-12-05) — N.D. Const. § 176
 - **same class of property including franchises, within**
@@ -210,9 +228,9 @@ review and cross-reference against ndconst.org section sidebar notes.
 - **property of State owned utilities, enterprises**
   - enacted (session law): State owned utilities (capital S in first occurrence; 'state owned' lowercase in the second occurrence within the section)
   - other publications: off1925 note prints both occurrences lowercase 'state owned'; manual1919 prints 'state-owned' (hyphenated, lowercase). The capital 'S' in the marker first occurrence is likely an OCR/printing artifact.
-- **in amounts, not exceeding its value**
+- **in amounts, not exceeding its value** — ✓ **RESOLVED (1925 clean OCR)**
   - enacted (session law): in amounts, not exceeding its value (comma after 'amounts')
-  - other publications: off1925 note prints 'in amounts. not exceeding' (stray period — OCR); manual1919 prints 'in amounts not exceeding' (no comma).
+  - other publications: manual1919 prints 'in amounts not exceeding' (no comma). ~~off1925 'in amounts. not exceeding' (stray period)~~ **CORRECTED:** the clean 1925 marker OCR (`1925_official_constitution.md:4125`, the 1918 Art. XXXI rendering) reads "in amounts, not exceeding its value" — comma, agreeing with the session law. The stray period was a poor-OCR artifact only.
 - **and provided, further, that the state shall not issue**
   - enacted (session law): and provided, further, that
   - other publications: off1925 note agrees: 'provided, further'. manual1919 reads 'and, provided further, that'.
@@ -226,7 +244,7 @@ review and cross-reference against ndconst.org section sidebar notes.
   - other publications: The 1919 Legislative Manual (manual1919) omits the comma: "enterprise or business not prohibited". The 1925 official snapshot (off1925) retains the comma, agreeing with the session law.
 - **not prohibited by Article 20 of the Constitution**
   - enacted (session law): capital "A" and capital "C": "Article 20 of the Constitution"
-  - other publications: The 1925 official snapshot (off1925) lowercases both: "article 20 of the Constitution" (and elsewhere "article 20"). The 1919 Manual matches the session law with capital "Article 20".
+  - other publications: The 1925 official snapshot lowercases "article" but **capitalizes "Constitution"**: "article 20 of the Constitution" (clean OCR `1925_official_constitution.md:4209`; the earlier "lowercases both" was imprecise — only "article" is lowercased). The 1919 Manual matches the session law with capital "Article 20".
 
 ## Amendment XXXIII (1920-04-15) — N.D. Const. amend. art. XXXIII
 - **thirty per cent of the qualified electors**
@@ -298,9 +316,9 @@ review and cross-reference against ndconst.org section sidebar notes.
 - **any sub-division on which the same may be loaned**
   - enacted (session law): sub-division (hyphenated)
   - other publications: subdivision (no hyphen) in off1925.txt (1925 official snapshot, current text), bb1954_const.md (1954 Blue Book), and the prior-version cl1913.txt (1913 Compiled Laws)
-- **or of townships, or of municipalities within the state**
+- **or of townships, or of municipalities within the state** — ✓ **RESOLVED (1925 clean OCR)**
   - enacted (session law): townships, (comma) — per 400-dpi re-OCR of sl1921.pdf p.272
-  - other publications: townships. (period) in the marker compilation seg3_src.md and in off1925.txt; judged an OCR/typesetting artifact. cl1913.txt (prior version) also reads 'townships,' with a comma.
+  - other publications: townships. (period) in the marker compilation seg3_src.md and in the poor off1925.txt; judged an OCR/typesetting artifact. **CONFIRMED:** the clean 1925 marker OCR (`1925_official_constitution.md:3637`) reads "or of townships, or of municipalities within the state" — comma, agreeing with the session law and the prior cl1913 version. The "period" was a poor-OCR artifact only.
 
 ## Amendment XL (1922-07-28) — N.D. Const. amend. art. XL
 - **in the county 90 days and in the precinct 30 days**
