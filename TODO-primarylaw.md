@@ -6,6 +6,12 @@ Validation backlog for the primary-law databases (`constitution.db`, `constituti
 
 ### PL-1 · Investigate dropped-line extraction bug in `ingest_statutes.py` and re-validate all of `statutes.db`
 
+**✅ ROOT-CAUSED + FIXED + APPLIED 2026-06-08.** Root cause: `scrape_nd_code.py` `_text_to_markdown` TOC filter (skips `NN-NN-NN ` + non-period lines) also ate **wrapped body lines starting with a section cross-reference**. pdfplumber extracted correctly; the converter dropped the line. Fixed by gating the TOC filter to the pre-first-section region (`seen_section` flag) — `~/code/code-mirror/scrape_nd_code.py` (working-tree edit, NOT yet committed). Isolated the fix by diffing old-vs-new re-extraction of all 2,526 chapter PDFs; **applied 627 strictly-additive, unique-header, DB==old sections** to `statutes.db` (batch `ndcc-dropline-fix-2026-06-08`). Seam-detector 600→202 (residual = PL-2 holds + source/FP, verified not TOC drops). Tools: `triage/apply_dropline_fix_2026-06-08.py`, `triage/detect_dropped_xrefs_2026-06-08.py`, `~/code/code-mirror/rebuild_ndcc_md.py` (parallel re-extractor). DB backup `statutes.db.bak-pre-dropline-2026-06-08`.
+
+**Remaining under PL-1:** (a) **16 sections held** — they have the dropped-line bug too but are entangled with PL-2 phantom-duplicate headers, so fixing them depends on PL-2: `10-33-68, 21-10-06, 26.1-06.1-34, 30.1-05-05, 39-06.1-10, 39-16.1-11, 40-58-20.1, 41-04-31, 44-04-18, 50-01.1-04, 54-44.4-13, 54-46.1-05, 54-52.1-03.2, 57-15-06.7, 65-01-02, 65-06.2-08`. (b) **regenerate the `~/refs/statute/NDCC` markdown** with the fixed converter (the served DB is fixed, but the markdown source still has the bug — a future re-ingest would reintroduce it; the tree also has unrelated uncommitted changes the user should review). (c) **commit the `scrape_nd_code.py` fix** in the code-mirror repo.
+
+**Original trigger / analysis (kept for the record):**
+
 **Trigger:** N.D.C.C. § 29-15-21(3) was found with a full clause missing — 17 words dropped between "pursuant to section" and "considered a proceeding separate," removing both cross-references (§ 14-05-24, § 14-05-22) and the verb "must be." Fixed under batch `ndcc-fix-29-15-21-subsec3-2026-06-08` (see `CHANGELOG-data-primarylaw.md`); the official text was verified against the ndlegis.gov cencode PDF.
 
 **Why it's systematic, not one-off:** the missing words — "14-05-24 or an order for child custody pursuant to section 14-05-22 must be" — are **exactly one wrapped physical line** in the source PDF (`https://ndlegis.gov/cencode/t29c15.pdf`). The drop sits at a line boundary (`section⏎considered`), which points at a line-join / wrap-handling defect in PDF text extraction rather than a content-specific fluke. If the extractor drops a line under some repeatable condition (page break, column artifact, specific wrap pattern), there are likely **other affected sections among the 29,107** ingested (batch `statutes-ingest-2026-06-07`, source `~/refs/statute/NDCC`, via `ingest_statutes.py`).
@@ -29,6 +35,35 @@ Validation backlog for the primary-law databases (`constitution.db`, `constituti
 **Magnitude:** ~600 corrupted cross-references across ~555 sections (≈1.9% of the corpus) — each silently drops a statutory cross-reference, the highest-stakes kind of error for an authoritative text. This is NOT a hand-fixable tail; it needs the extractor fix + full re-ingest + re-validation, not per-section patches. (29-15-21 was patched individually only because it was the surfacing instance.)
 
 **Detector:** the tight-pattern query is the triage tool; save it as `triage/` script when §1 begins. The full authoritative diff (re-extract vs DB) remains the definitive check — the heuristic only finds drops that leave an ungrammatical seam, not clean substitutions.
+
+### PL-2 · Phantom-duplicate section headers — body cross-references mis-parsed as `### §` headers
+
+**✅ ROOT-CAUSED + FIXED + APPLIED 2026-06-08.** Fix in `scrape_nd_code.py` `_real_header_indices`: keep only the longest strictly-increasing subsequence (LIS) of candidate headers after dropping cross-chapter candidates (numeric sort-key prefix, zero-padding-insensitive). Phantoms demote to body text. **0 phantom-duplicate headers corpus-wide** (was 168). Applied **258 section corrections** (72 headings) via `triage/apply_phantom_fix_2026-06-08.py` (batch `ndcc-phantom-header-fix-2026-06-08`); **DB now == clean re-extraction for all 29,107 ndcc sections.** Subsumed the 16 PL-1 held sections. DB backup `statutes.db.bak-pre-phantom-2026-06-08`. Validation: integrity ok, FTS ok, 0 dup citations, seam-detector 202→41 (residual all source/FP), near-empty sections all legit dispositions (Superseded/Omitted/Reserved). **Remaining:** (a) regenerate `~/refs/statute/NDCC` markdown with the fixed converter — shared with PL-1(b); until then a re-ingest re-corrupts the DB; (b) commit the `scrape_nd_code.py` fix (both PL-1 + PL-2 edits) in code-mirror.
+
+**Original analysis (kept for the record):**
+
+**Discovered while isolating PL-1.** Same trigger as PL-1 (a section cross-reference wrapping to the start of a line), opposite symptom. `scrape_nd_code.py`'s section detector `_NDCC_SECTION_RE = ^([\d.]+(?:-[\d.]+){2,})\.\s+(.+)` matches any line beginning `NN-NN-NN. Word`. A **body** line that wraps to start with a cross-reference *ending a sentence* — e.g. `…as provided in section 10-19.1-30. Unless reserved by the articles…` wrapping so a line begins `10-19.1-30. Unless reserved by the articles…` — is mis-parsed as a new section header. (PL-1 is the no-period version of the same wrap; PL-2 is the period version.)
+
+**Effect — already corrupts `statutes.db` (worse than PL-1):** the spurious header fragments a section and creates a **phantom duplicate** of section number `NN-NN-NN`. The DB ingest's `INSERT OR IGNORE` keeps whichever occurrence the parse emits **first**, so for some sections the DB silently holds a garbage fragment instead of the real text:
+- § 65-01-02 (workers-comp "Definitions") — DB has a **208-char** fragment (a mis-parsed body line as its heading); the real section is ~42,997 chars.
+- § 14-15-16 — DB text is literally **`"14-15-16."`** (9 chars); real section ~14,930 chars.
+- § 29-26-22 — DB 16 chars; real ~3,066.
+  Conversely some sections are *correct* in the DB but the phantom would win on re-ingest (order-dependent), so this is also why a naive full re-ingest is unsafe.
+
+**Scope:** **168 sections** carry >1 `### §` header corpus-wide — **55 cross-chapter** (the phantom number doesn't belong to the file it's in — unambiguously a mis-parse) + **113 intra-chapter**. This is the footprint of the bug; the count of *DB-corrupted* sections is a subset (where the phantom sorted first) and must be enumerated against the official text.
+
+**Fix approach (harder than PL-1 — mis-parses occur mid-body, so position-gating won't work):** make the header detector reject a candidate unless its number (a) **belongs to the current chapter** (prefix match) AND (b) is **greater than the last accepted section** in this chapter (monotonic). That rejects both cross-chapter phantoms and backward mid-body refs. Mind sub-section suffixes (`.1`, `.2`) and the first real header. Then regenerate + re-validate, and **per-section verify each DB-corrupted section against the official ndlegis.gov text** before overwriting (some sections the DB is right and the re-extraction is wrong — do not bulk-trust either source). Re-validation detectors: section-length outliers vs neighbors, headings that are sentence fragments / lowercase-start bodies, and the cross-reference resolver (PL-VALIDATE below). The 16 PL-1 held sections get fixed as part of this pass.
+
+### PL-VALIDATE · Broader text-faithfulness validators (proposed 2026-06-08)
+
+Beyond the two known bugs, to certify the corpus as authoritative (and reusable for the admin-code + constitution corpora). Ranked by which blind spot they close — the seam-detector only catches drops that leave an ungrammatical seam; clean substitutions and whole-section loss need these:
+1. **Cross-reference resolver** — parse every internal "section NN-NN-NN / chapter / subsection N" reference and check the target exists in the corpus. Catches corrupted/garbled reference *numbers* (no grammatical seam) — the seam-detector's blind spot. Highest value; cheap; reusable across corpora.
+2. **Second-engine extraction diff** — re-extract with poppler `pdftotext -layout` / PyMuPDF / mutool and diff per section vs pdfplumber. Only check that certifies *faithfulness to the PDF* (PL-1's old-vs-new was within-engine). Capstone.
+3. **Section-inventory cross-check** — diff the DB section list + headings against the PDF bookmarks/named-destinations and the ndlegis.gov index pages. Catches whole **missing** sections (no body heuristic can) and corrupted headings. Directly relevant to PL-2.
+4. **Enumeration-continuity** — flag gaps in subsection 1,2,3… / subdivision a,b,c… sequences (a dropped enumerated block reads grammatically). Cheap, no external source.
+5. **Doubled-token detector** — flag "of section section …", "under section under section …" (a distinct duplication artifact already observed). Near-zero false positives.
+6. **Heading/body split sanity** — the converter splits heading at the first period, so a catchline with "U.S."/"Inc."/"No." splits wrong; flag headings ending mid-phrase or bodies starting lowercase.
+7. **Character/format histogram** — mojibake, failed ligatures, stray form-feeds, anomalous whitespace.
 
 ---
 
