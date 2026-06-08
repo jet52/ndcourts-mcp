@@ -397,7 +397,7 @@
    "changes": [
     {
      "target": "N.D. Const. § 216",
-     "heading": "Permanent location of state institutions; School for the Blind at Bathgate; School of Forestry at Bottineau",
+     "heading": "State institutions (Blind at Bathgate, Forestry at Bottineau)",
      "text": "§ 216. The following named public institutions are hereby permanently located as hereinafter provided, each to have so much of the remaining grant of one hundred and seventy thousand acres of land made by the United States for \"other educational and charitable institutions,\" as is allotted by law, viz:\n\nFIRST: A Soldiers' Home, when located, or such other charitable institution as the legislative assembly may determine at Lisbon, in the County of Ransom, with a grant of forty thousand acres of land.\n\nSECOND: The School for the Blind of North Dakota, at Bathgate, in the County of Pembina, with a grant of thirty thousand acres.\n\nTHIRD: An Industrial School and School for Manual Training, or such other educational or charitable institution as the legislative assembly may provide, at the Town of Ellendale, in the County of Dickey, with a grant of forty thousand acres.\n\nFOURTH: A School of Forestry, or such other institution as the legislative assembly may determine, at the City of Bottineau in the County of Bottineau.\n\nFIFTH: A Scientific School, or such other educational or charitable institution as the legislative assembly may prescribe, at the City of Wahpeton, County of Richland, with a grant of forty thousand acres.\n\nSIXTH: A State Normal School, at the City of Minot in the County of Ward; provided, that no other institution, of a character similar to any one of those located by this Article, shall be established or maintained without a revision of this Constitution."
     }
    ],
@@ -437,8 +437,7 @@
     }
    ],
    "discrepancies": "No substantive disagreement among the three sources carrying this version. All divergences are punctuation/capitalization (recorded in variants): cl1913 uses lower-case institution names and ordinal-with-period (\"First.\") whereas the session law and the 1919 Manual use capitalized names and \"FIRST:\". The 1925 official snapshot (off1925) and 1954 Blue Book (bb1954) do not contain this version of § 216 at all — they carry the post-1916 amended text (Blind Asylum at an elector-chosen Pembina site; School of Forestry sited among McHenry/Ward/Bottineau/Rolette; added Dickinson normal school and second insane hospital), so they could not be used to cross-check this 1914 reading. OCR fixes applied to the marker (each confirmed against manual1919 and/or cl1913): \\\"per manently\\\"->\\\"permanently\\\", \\\"char itable\\\"->\\\"charitable\\\", \\\"Bath\\\\ngate\\\"->\\\"Bathgate\\\", stray period in \\\"at Lisbon. in\\\"->comma \\\"at Lisbon, in\\\", and the \\\"<sup>a</sup>\\\" markup -> \\\"a\\\". None of these are genuine period spellings.",
-   "status": "pending",
-   "pending_reason": "§216 institutions list: same-year amendments (XXI/XXII) restate the section non-cumulatively (XXI has Dickinson not Blind/Forestry; XXII has alt-hospital only). Needs integrated reconciliation."
+   "notes": "Full restatement of §216 designating the School for the Blind at Bathgate (Second) and School of Forestry at Bottineau (Fourth)."
   },
   {
    "number": "XVIII",
@@ -544,108 +543,24 @@
    "discrepancies": "Cross-publication divergence in § 179: the enacted session law and the 1925 snapshot read \"any purposes other than the operation of a railroad\" (plural \"purposes\"), while the 1919 Legislative Manual and the 1954 Blue Book read \"any purpose other than\" (singular). Transcribed the session-law plural reading. Note also that several supplied cross-check files carry NON-applicable versions of these sections: cl1913 and manual1907 predate this amendment (old § 176 with the gross-earnings/per-centum language); the 1954 Blue Book § 179 is a later-amended version adding electric light/heat/power language; and marker line 381 is a later (Article 20-of-amendments-as-amended) § 176. Only off1925 carries the matching 1914 text, used as the corroborating publication."
   },
   {
-   "number": "XXI",
+   "number": "XXI & XXII",
    "election_date": "1916-11-07",
    "effective_date": "1916-12-07",
    "type": "amend_section",
    "changes": [
     {
      "target": "N.D. Const. § 216",
-     "heading": "State normal school at Dickinson",
-     "text": "Section 216. The following named public institutions are hereby permanently located as hereinafter provided, each to have so much of the remaining grant of one hundred and seventy thousand (170,000) acres of land made by the United States for \"other educational and charitable institutions\" as is allotted by law, namely:\n\nFirst: A soldiers' home, when located or such other charitable institution as the legislative assembly may determine, at Lisbon, in the county of Ransom, with a grant of forty thousand (40,000) acres of land.\n\nSecond: A blind asylum, or such other institution as the legislative assembly may determine, at such place in the county of Pembina as the qualified electors of said county may determine at an election to be held as prescribed by the legislative assembly with a grant of thirty thousand (30,000) acres.\n\nThird: An industrial school and school for manual training or such other educational or charitable institution as the legislative assembly may provide, at the town of Ellendale, in the county of Dickey, with a grant of forty thousand (40,000) acres.\n\nFourth: A school of forestry, or such other institution as the legislative assembly may determine, at such place in one of the counties of McHenry, Ward, Bottineau or Rolette, as the electors of said counties may determine by an election for that purpose, to be held as provided by the legislative assembly.\n\nFifth: A scientific school or such other educational or charitable institution as the legislative assembly may prescribe, at the city of Wahpeton, county of Richland, with a grant of forty thousand (40,000) acres.\n\nSixth: A state normal school at the city of Minot, in the county of Ward.\n\nSeventh: (a) A state normal school at the city of Dickinson, in the county of Stark.\n\nProvided, That no other institution of a character similar to any one of those located by this article shall be established or maintained without a revision of this Constitution."
+     "heading": "State institutions (Dickinson normal school; state hospital for the insane)",
+     "text": "Section 216. The following named public institutions are hereby permanently located as hereinafter provided, each to have so much of the remaining grant of one hundred and seventy thousand (170,000) acres of land made by the United States for \"other educational and charitable institutions\" as is allotted by law, namely:\n\nFirst: A soldiers' home, when located, or such other charitable institution as the legislative assembly may determine, at Lisbon, in the county of Ransom, with a grant of forty thousand (40,000) acres of land.\n\nSecond: A blind asylum, or such other institution as the legislative assembly may determine, at such place in the county of Pembina as the qualified electors of said county may determine at an election to be held as prescribed by the legislative assembly with a grant of thirty thousand (30,000) acres.\n\nThird: An industrial school and school for manual training or such other educational or charitable institution as the legislative assembly may provide, at the town of Ellendale, in the county of Dickey, with a grant of forty thousand (40,000) acres.\n\nFourth: A school of forestry, or such other institution as the legislative assembly may determine, at such place in one of the counties of McHenry, Ward, Bottineau or Rolette; as the electors of said counties may determine by an election for that purpose, to be held as provided by the legislative assembly.\n\nFifth: A scientific school or such other educational or charitable institution as the legislative assembly may prescribe, at the city of Wahpeton, county of Richland, with a grant of forty thousand (40,000) acres.\n\nSixth: A state normal school at the city of Minot, in the county of Ward.\n\nSeventh: (a) A state normal school at the city of Dickinson, in the county of Stark. (b) A state hospital for the insane at such place within this state as shall be selected by the legislative assembly, provided, that no other institution of a character similar to any one of those located by this article shall be established or maintained without a revision of this Constitution."
     }
    ],
-   "authority": "Amendment ratified 1916-11-07",
-   "source_urls": [],
+   "authority": "Amendments XXI & XXII, adopted Nov. 7, 1916 (same ballot; both effective 1916-12-07)",
    "sources_verified": [
-    "/tmp/seg3_marker/seg3_src/seg3_src.md (primary; enacted session-law marker OCR, lines 123-153)",
-    "/tmp/off1925.txt (1925 official ndlegis.gov constitution, lines 6922-6948)",
-    "/tmp/bb1954_marker/bb1954_const/bb1954_const.md (1954 Blue Book, lines 862-876; secondary, reflects later amendments)"
+    "marker OCR of S.L. 1917 (Articles 21 & 22)",
+    "1954 Blue Book integrated §216 (confirms both Sevenths and elector-choice Fourth)"
    ],
    "confidence": "high",
-   "variants": [
-    {
-     "location": "one hundred and seventy thousand (170,000) acres",
-     "enacted_session_law": "one hundred and seventy thousand (170,000) acres (marker + 1925 official agree, with \"and\" and the parenthetical numeral)",
-     "other_publications": "1954 Blue Book reads \"one hundred seventy thousand acres\" — drops \"and\" and omits the (170,000) numeral (reflects later re-printing/amendments)"
-    },
-    {
-     "location": "as is allotted by law, namely:",
-     "enacted_session_law": "namely : (marker uses a space before the colon; sense identical)",
-     "other_publications": "1925 official and 1954 Blue Book print \"namely:\" with no space"
-    },
-    {
-     "location": "Sixth: A state normal school at the city of Minot, in the county of Ward.",
-     "enacted_session_law": "...at the city of Minot, in the county of Ward. (comma after Minot)",
-     "other_publications": "1954 Blue Book reads \"at the city of Minot in the county of Ward\" — no comma after Minot"
-    },
-    {
-     "location": "Second : A blind asylum, or such other institution",
-     "enacted_session_law": "A blind asylum, or such other institution as the legislative assembly may determine, at such place in the county of Pembina... (marker + 1925 official)",
-     "other_publications": "1954 Blue Book substitutes an entirely different Second clause (\"The blind asylum shall be known as the North Dakota school for the blind...\") reflecting a post-1916 amendment; not the enacted 1916 text"
-    },
-    {
-     "location": "First: A soldiers' home, when located or such other",
-     "enacted_session_law": "when located or such other charitable institution (no comma after \"located\"; marker + 1925 official)",
-     "other_publications": "1954 Blue Book reads \"when located, or such other\" — adds a comma after \"located\""
-    }
-   ],
-   "discrepancies": "cl1913 (1913 Compiled Laws) and manual1907 (1907 Legislative Manual) predate this 1916 amendment and contain no Dickinson normal school; not usable as cross-checks for the amended text. The 1925 official text and 1954 Blue Book both print a \\\"Seventh: (b) A state hospital for the insane...\\\" clause that does NOT belong to this Dickinson amendment — it was added by the companion second-state-hospital amendment (same 1916 election; marker line 159 et seq.). Accordingly the enacted Dickinson amendment's substantive contribution is the \\\"(a)\\\" clause only; the verbatim section text above re-states section 216 as the Dickinson resolution itself printed it (ending at the Provided clause, before any (b) clause).",
-   "status": "pending",
-   "pending_reason": "§216 institutions list: same-year amendments (XXI/XXII) restate the section non-cumulatively (XXI has Dickinson not Blind/Forestry; XXII has alt-hospital only). Needs integrated reconciliation."
-  },
-  {
-   "number": "XXII",
-   "election_date": "1916-11-07",
-   "effective_date": "1916-12-07",
-   "type": "amend_section",
-   "changes": [
-    {
-     "target": "N.D. Const. § 216",
-     "heading": "Second state hospital for the insane — alternate location selected by the legislature (§ 216)",
-     "text": "Section 216. The following named public institutions are hereby permanently located as hereinafter provided, each to have so much of the remaining grant of one hundred and seventy thousand (170,000) acres of land made by the United States for \"other educational and charitable institutions\" as is allotted by law, namely:\n\nFirst: A soldiers' home, when located, or such other charitable institution as the legislative assembly may determine, at Lisbon, in the county of Ransom, with a grant of forty thousand (40,000) acres of land.\n\nSecond: A blind asylum, or such other institution as the legislative assembly may determine, at such place in the county of Pembina as the qualified electors of said county may determine at an election to be held as prescribed by the legislative assembly with a grant of thirty thousand (30,000) acres.\n\nThird: An industrial school and school for manual training or such other educational or charitable institution as the legislative assembly may provide, at the town of Ellendale, in the county of Dickey, with a grant of forty thousand (40,000) acres.\n\nFourth: A school of forestry, or such other institution as the legislative assembly may determine, at such place in one of the counties of McHenry, Ward, Bottineau or Rolette; as the electors of said counties may determine by an election for that purpose, to be held as provided by the legislative assembly.\n\nFifth: A scientific school or such other educational or charitable institution as the legislative assembly may prescribe, at the city of Wahpeton, county of Richland, with a grant of forty thousand (40,000) acres.\n\nSixth: A state normal school at the city of Minot, in the county of Ward.\n\nSeventh: (b) A state hospital for the insane at such place within this state as shall be selected by the legislative assembly, provided, that no other institution of a character similar to any one of those located by this article shall be established or maintained without a revision of this Constitution."
-    }
-   ],
-   "authority": "Amendment ratified 1916-11-07",
-   "source_urls": [],
-   "sources_verified": [
-    "/tmp/seg3_marker/seg3_src/seg3_src.md (PRIMARY — 1917 Session Laws p.432 marker OCR; lines 155-181)",
-    "/tmp/manual1919.txt (1919 Legislative Manual — labels this section ARTICLE XXII; lines 10740-10810)",
-    "/tmp/off1925.txt (1925 official ndlegis.gov constitution snapshot, § 216; lines 6920-6960)",
-    "/tmp/bb1954_marker/bb1954_const/bb1954_const.md (1954 Blue Book, integrated § 216; line 876)",
-    "/tmp/cl1913.txt (1913 Compiled Laws — predates amendment; older form of § 216, not a wording cross-check)"
-   ],
-   "confidence": "high",
-   "variants": [
-    {
-     "location": "Bottineau or Rolette; as the electors",
-     "enacted_session_law": "Bottineau or Rolette; as the electors of said counties may determine (SEMICOLON after Rolette)",
-     "other_publications": "1925 official and 1919 Legislative Manual (Article XXII printing) use a COMMA: 'Bottineau or Rolette, as the electors'. A separate 1919 Manual integrated printing of the same subdivision reads 'Bottineau AND Rolette' (and for or)."
-    },
-    {
-     "location": "may determine at an election to be held",
-     "enacted_session_law": "qualified electors of said county may determine at an election (NO comma after 'determine')",
-     "other_publications": "1925 official agrees (no comma). 1919 Legislative Manual inserts a comma: 'may determine, at an election'."
-    },
-    {
-     "location": "prescribed by the legislative assembly with a grant of thirty thousand",
-     "enacted_session_law": "to be held as prescribed by the legislative assembly with a grant of thirty thousand (NO comma before 'with')",
-     "other_publications": "1919 Legislative Manual inserts a comma: 'legislative assembly, with a grant of thirty thousand'."
-    },
-    {
-     "location": "First: A soldiers' home, when located, or such other",
-     "enacted_session_law": "A soldiers' home, when located, or such other charitable institution (COMMA after 'located')",
-     "other_publications": "1925 official omits the second comma: 'when located or such other charitable institution'."
-    },
-    {
-     "location": "Seventh: (b) A state hospital for the insane",
-     "enacted_session_law": "Seventh: (b) A state hospital for the insane at such place within this state as shall be selected by the legislative assembly, provided, that no other institution ... without a revision of this Constitution.",
-     "other_publications": "1925 official and 1954 Blue Book detach the 'provided' clause and the geographic order differs in codified integration (e.g., 1954 prints 'Seventh: (a) ... Dickinson ... (b) A state hospital for the insane ...' as one combined subdivision). 'this Constitution' is capitalized in the session law; 1925 official/1954 Blue Book lowercase 'constitution' in some printings."
-    }
-   ],
-   "discrepancies": "No substantive disagreement; all checked publications agree on the operative text and on the amendment's defining provision (the alternate-location 'Seventh: (b)' second state hospital for the insane). Divergences are punctuation/capitalization only (recorded in variants). Note: this amendment re-enacts the WHOLE of § 216 (subdivisions First–Seventh) as it then stood, layering subdivision 'Seventh: (b)' onto the existing 'Seventh: (a)' Dickinson normal-school provision (Art. XXI, ratified 1914); only subdivision Seventh (b) is new in this amendment, but the enacted resolution restates the entire section, which is transcribed here verbatim. The CL 1913 Compiled Laws predates this amendment and shows the older eight-subdivision form of § 216, so it is not a cross-check for this wording. The 1907 Legislative Manual likewise predates the amendment.",
-   "status": "pending",
-   "pending_reason": "§216 institutions list: same-year amendments (XXI/XXII) restate the section non-cumulatively (XXI has Dickinson not Blind/Forestry; XXII has alt-hospital only). Needs integrated reconciliation."
+   "notes": "Two same-ballot full restatements merged. Per the 1954 Blue Book integrated text, the 1916 restatements SUPERSEDED XVII's 1914 Bathgate/Bottineau designations (Second/Fourth revert to elector-choice) and added Seventh (a) Dickinson [XXI] and (b) state hospital [XXII]."
   },
   {
    "number": "XXIII",
