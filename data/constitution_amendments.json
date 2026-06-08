@@ -3233,12 +3233,14 @@
     {
      "target": "N.D. Const. § 65",
      "heading": "POWERS AND DUTIES OF LIEUTENANT GOVERNOR",
-     "text": "No bill shall become a law: except by a vote of a majority of all the members-elect in the house of representatives, and a vote of the majority of the members-elect in the senate, however the lieutenant governor may vote as provided in section 77 in the event the senate is equally divided, nor unless, on its final passage, the vote be taken by yeas and nays, and the names of those voting be entered on the journal."
+     "text": "No bill shall become a law: except by a vote of a majority of all the members-elect in the house of representatives, and a vote of the majority of the members-elect in the senate, however the lieutenant governor may vote as provided in section 77 in the event the senate is equally divided, nor unless, on its final passage, the vote be taken by yeas and nays, and the names of those voting be entered on the journal.",
+     "action": "amend"
     },
     {
      "target": "N.D. Const. § 77",
      "heading": "POWERS AND DUTIES OF LIEUTENANT GOVERNOR",
-     "text": "The powers and duties of the lieutenant governor shall be to serve as president of the senate, and he may, when the senate is equally divided, vote on procedural matters, and on substantive matters if his vote would be decisive. Additional duties shall be prescribed by the governor. If, during the vacancy in the office of governor, the lieutenant governor shall be impeached, displaced, resign, or die, or from mental or physical disease, or otherwise become incapable of performing the duties of his office, the secretary of state shall act as governor until the vacancy shall be filled or the disability removed."
+     "text": "The powers and duties of the lieutenant governor shall be to serve as president of the senate, and he may, when the senate is equally divided, vote on procedural matters, and on substantive matters if his vote would be decisive. Additional duties shall be prescribed by the governor. If, during the vacancy in the office of governor, the lieutenant governor shall be impeached, displaced, resign, or die, or from mental or physical disease, or otherwise become incapable of performing the duties of his office, the secretary of state shall act as governor until the vacancy shall be filled or the disability removed.",
+     "action": "amend"
     }
    ],
    "authority": "S.C.R. No. 4075, ch. 610, 1977 Session Laws (ch. 692, Constitutional Amendments Approved); approved September 5, 1978 (46,442 to 29,960)",
@@ -3261,8 +3263,7 @@
      "other_publications": "Blue Books 1961 and 1973 show the PRIOR (unamended) text: \"The lieutenant governor shall be president of the senate, but shall have no vote unless they be equally divided. If, during a vacancy in the office of governor ...\" This is the pre-1978 version that the amendment replaced, not a divergent reading of the same enacted text."
     }
    ],
-   "status": "pending",
-   "pending_reason": "complex structural amendment (repeal / section range / amendment-article edit / institutions-list / judicial rewrite) — needs careful individual handling"
+   "notes": "Lieutenant Governor tie-breaking; amends §65 and §77 (clean CAA PDF source)."
   },
   {
    "number": "CII",
