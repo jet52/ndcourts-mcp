@@ -1,0 +1,1031 @@
+{
+ "summary": {
+  "total": 55,
+  "returned": 55,
+  "identical": [
+   "XVIII",
+   "XIX",
+   "XX",
+   "XXVII",
+   "XXXIII",
+   "XXXIV",
+   "XXXVI",
+   "XXXIX",
+   "XL",
+   "XLI",
+   "XLII",
+   "XLV",
+   "XLVI",
+   "LI",
+   "LII",
+   "XCIV",
+   "XCV"
+  ],
+  "ocr_only": [
+   "XV",
+   "XVI",
+   "XVII",
+   "XXI & XXII",
+   "XXIII",
+   "XXIV",
+   "XXV",
+   "XXVI",
+   "XXVIII",
+   "XXIX",
+   "XXXI",
+   "XXXII",
+   "XXXV",
+   "XXXVIII",
+   "XLIII",
+   "XLIX"
+  ],
+  "substantive": [
+   "1",
+   "12",
+   "XXX",
+   "XXXVII",
+   "LIV"
+  ],
+  "metadata": [
+   "XLIV",
+   "XLVII",
+   "XLVIII",
+   "L",
+   "LIII",
+   "LXIII"
+  ],
+  "not_found": [
+   "2",
+   "3",
+   "4",
+   "5 & 6",
+   "7",
+   "8",
+   "9",
+   "10",
+   "11",
+   "13",
+   "14"
+  ],
+  "unverifiable": [],
+  "error": [],
+  "needs_fix": [
+   "1",
+   "12",
+   "XXX",
+   "XXXVII",
+   "XLIV",
+   "XLVII",
+   "XLVIII",
+   "L",
+   "LIV",
+   "LIII",
+   "LXIII"
+  ],
+  "needs_attention": [
+   "2",
+   "3",
+   "4",
+   "5 & 6",
+   "7",
+   "8",
+   "9",
+   "10",
+   "11",
+   "13",
+   "14"
+  ]
+ },
+ "results": [
+  {
+   "number": "1",
+   "source_used": "Constitution reprint, appended under heading \"AMENDMENT TO CONSTITUTION\" immediately after the convention closing (lines 2960-2966 of /tmp/sl1895.txt)",
+   "overall": "substantive",
+   "confidence": "medium",
+   "findings": [
+    {
+     "target": "N.D. Const. amend. art. I",
+     "verdict": "substantive",
+     "sessionlaw_text": "The Legislative Assembly shall have no power to authorize lotteries or gift enterprises for any purpose and shall pass laws to prohibit the sale of lottery or gift enterprise tickets.",
+     "note": "Only divergence is a comma. STORED text reads '...for any purpose, and shall pass laws...' with a comma after 'purpose'; the session law (line 2965: '...for any pu rpose and shall pass laws...') has NO comma there. The spacing in 'pu rpose', 'g ift ente rp rises', and 'gi ft enterprise' is pure OCR noise in the scan and confirms the stored WORDS are correct; the comma, however, appears to be an addition in the STORED text not present in the enacted session law. Flagged as substantive (punctuation) with medium confidence because the scan is spacing-garbled at this line and could in principle have dropped a comma. Note also the stored editorial heading 'Lotteries prohibited' is a catchline; the session law prints only 'AMENDMENT TO CONSTITUTION' (not a metadata error, just a conventional catchline)."
+    }
+   ],
+   "metadata_issues": "No date/article/section conflict found in this file. The 1895 volume prints the amendment appended to the Constitution under \"AMENDMENT TO CONSTITUTION\" with no ratification/canvass date, so the stored election_date 1894-11-06, effective_date 1894-12-06, and authority \"Amendment ratified Nov. 6, 1894\" are not verifiable from this source but are not contradicted by it. Stored heading \"Lotteries prohibited\" is an editorial catchline, not text from the session law."
+  },
+  {
+   "number": "2",
+   "source_used": "None — the cached /tmp/sl1899.txt (1899 session laws, Sixth legislative assembly) contains a \"PROPOSED AMENDMENTS TO CONSTITUTION\" section (lines 11398-11620) addressing only sections 76, 176, 158, 215, 179, and 162, submitted for the 1900 general election. No provision touching § 121 or § 127 (voter qualifications) appears anywhere in the file.",
+   "overall": "not_found",
+   "findings": [
+    {
+     "target": "N.D. Const. § 121",
+     "verdict": "not_found",
+     "note": "Amendment 2 (effective 1898-12-08) concerns voter qualifications. The voter-qualification text ('male person of the age of 21 years', 'Civilized persons of Indian descent', 'severed their tribal relations') is absent from /tmp/sl1899.txt. Grep for 'tribal', 'Indian descent', 'civilized person', 'male person', 'section 121' returns no body text. The 1899 volume's constitutional-amendment section covers only sections 76/176/158/215/179/162 for the 1900 election. This amendment was proposed by the 1897 (Fifth) legislative assembly and ratified Nov. 1898; its enacting session law is in the 1897 volume, not this cached 1899 file. Cannot verify the stored text against this source — wrong volume, not a stored-text error.",
+     "sessionlaw_text": ""
+    },
+    {
+     "target": "N.D. Const. § 127",
+     "verdict": "not_found",
+     "note": "Same as § 121: the disqualification/educational-test text ('under guardianship, non compos mentis', 'convicted of treason or felony', 'educational test') does not appear in /tmp/sl1899.txt. Grep for 'guardianship', 'non compos', 'educational test', 'section 127' returns no matching body text. Amendment 2's enacting session law is the 1897 volume; the cached 1899 file is the wrong source. No basis to assess the stored text here.",
+     "sessionlaw_text": ""
+    }
+   ],
+   "metadata_issues": "None assessable from this source. The cached session-law file (1899) does not contain Amendment 2; the correct enacting volume is the 1897 session laws (Fifth legislative assembly proposal, ratified at the Nov. 1898 election). Stored effective_date 1898-12-08 and election_date 1898-11-08 are consistent with that timeline but cannot be confirmed against this file.",
+   "confidence": "high"
+  },
+  {
+   "number": "3",
+   "source_used": "No enacted constitutional amendment to N.D. Const. § 76 appears in /tmp/sl1901.txt. The only matching content is a statutory act, \"PROCEEDINGS OF BOARD OF PARDONS\" (S.B. 68, lines 1809-1967), whose § 1 recital paraphrases the constitutional pardon power. The volume's constitutional-amendments section (lines 12606+) concerns the NEXT cycle (§ 176, § 215, § 158), not § 76.",
+   "overall": "not_found",
+   "findings": [
+    {
+     "target": "N.D. Const. § 76",
+     "verdict": "not_found",
+     "note": "The 1901 session-law volume does not contain the ENACTED constitutional amendment to § 76 (the Board-of-Pardons amendment ratified at the Nov. 6, 1900 election, effective Dec. 6, 1900). Amendment 3 was proposed by the 1899 legislative assembly and ratified by the electorate in Nov. 1900; its enacted text would be carried in the 1899 session laws / 1900 canvass, not the 1901 volume. The 1901 volume's constitutional-amendments material (lines 12606+) addresses a different, later cycle: § 176 (grain-in-elevators taxation), subdivision 5 of § 215 (school for the deaf at Devils Lake), and § 158 (appraised value of school lands). The only § 76 / pardon text in this file is a STATUTE, ch. 51, S.B. 68, 'AN ACT Relating to the Board of Pardons and Prescribing the Powers and Duties Thereof' (lines 1809-1967). Its § 1 recital (lines 1815-1840) tracks the constitutional pardon language closely but is statutory, not the constitution, and diverges materially: it reads '...except treason and cases of impeachment IN THE MANNER AND UNDER THE CONDITIONS HEREINAFTER PRESCRIBED, BUT NOT OTHERWISE,' whereas the stored constitutional § 76 reads '...except treason and cases of impeachment; but the legislative assembly may by law regulate the manner in which the remission of fines, pardons, commutations and reprieves may be applied for.' This divergence is expected (statute vs. constitution) and is NOT evidence of a stored-text error. This file simply cannot verify the stored § 76 constitutional amendment; the correct source is the 1899 session laws / 1900 election canvass. No defect in the stored text is established or refuted here."
+    }
+   ],
+   "metadata_issues": "Cannot verify against this volume. Note for the record: stored authority says 'Amendment ratified 1900-11-06' with effective_date 1900-12-06 and election_date 1900-11-06; none of these can be confirmed or corrected from /tmp/sl1901.txt because the enacted § 76 amendment is not in this file. To verify dates/authority/body text, pull the 1899 N.D. Session Laws (proposed amendment) and the 1900 general-election canvass/certification.",
+   "confidence": "high"
+  },
+  {
+   "number": "4",
+   "source_used": "Searched entire /tmp/sl1901.txt. The only \"PROPOSED CONSTITUTIONAL AMENDMENT\" entries (lines 12606+) concern §215 (art. 19) and §158 — newly proposed for the next legislative cycle, not §179. Chapter 26 (line 1325) is the statutory implementing act \"Assessment of Express and Other Companies,\" not the constitutional text of §179. No enacted/proposed §179 constitutional text appears.",
+   "overall": "not_found",
+   "findings": [
+    {
+     "target": "N.D. Const. § 179",
+     "verdict": "not_found",
+     "note": "The enacted (or proposed) constitutional text of §179 does not appear in the cached 1901 session-law volume. Amendment 4 was ratified at the Nov. 6, 1900 election (effective Dec. 6, 1900), so it would have been PROPOSED in the 1899 session laws — not the 1901 volume. The 1901 volume's constitutional-amendment material is for different provisions: line 12614 'Subdivision five, section two hundred and fifteen (215), of article nineteen (19)' and line 12631 '§ 158 of the constitution.' The volume does contain Chapter 26 (line 1325), 'AN ACT Providing for the Assessment of Express Companies, Telegraph, Telephone, Freight Line and Equipment Companies' — but this is the STATUTORY implementing act (e.g., line 1336 'The state board of equalization shall at its annual meeting in August in each year assess at its actual value the franchise and all property...'), which paraphrases the subject in operative statutory language and is NOT the §179 constitutional text. Stored text could not be verified against this file. To verify, the 1899 N.D. session laws (proposal) or the governor's proclamation/canvass of the 1900 election are needed.",
+     "sessionlaw_text": ""
+    }
+   ],
+   "metadata_issues": "Cannot verify metadata against the session law because §179 is absent from this volume. Note for the orchestrator: the cached file /tmp/sl1901.txt is the 1901 session laws, but Amendment 4 (effective 1900-12-06) would have been proposed in the 1899 session laws; the wrong volume appears to be cached for this provision.",
+   "confidence": "high"
+  },
+  {
+   "number": "5 & 6",
+   "source_used": "None — the 1905 \"PROPOSED AMENDMENTS TO CONSTITUTION\" section (lines ~21802–21952) contains only amendments to §§ 162, 158, and 89 (all proposed by the 1905 ninth legislature). The § 215 institutions text (Amendment 5 & 6, ratified Nov. 8, 1904) is not present in this volume.",
+   "overall": "not_found",
+   "findings": [
+    {
+     "target": "N.D. Const. § 215",
+     "verdict": "not_found",
+     "note": "The enacted § 215 text is absent from the cached file /tmp/sl1905.txt. Grep for the distinctive phrases ('permanently located', 'feeble minded ... Grafton ... penitentiary building', 'secretary of the interior for a penitentiary', 'eighty thousand acres', 'seat of government at the city of Bismarck') returns no hits. The volume's only constitutional-amendment matter is in the 'PROPOSED AMENDMENTS TO CONSTITUTION' section (p. 349-352), which covers amendments to § 162 (school-fund investment), § 158 (minimum price of state lands), and § 89 (supreme court of five judges) — all proposals of the 1905 (ninth) legislature, none of them Amendment 5 & 6. The Devils Lake / Grafton / Jamestown references elsewhere in the volume (lines 2050+, 2576+, 2706+, 4154+, 4334+, 10086+) are ordinary appropriation acts for those institutions, not the constitutional § 215. Amendment 5 & 6 was ratified at the Nov. 8, 1904 general election (proposed by the 1903 legislature); 1905 is the wrong session-law volume to verify it. Cannot determine whether the STORED text is correct from this file. No defect in the stored text is established; this is a missing-source condition.",
+     "sessionlaw_text": ""
+    }
+   ],
+   "metadata_issues": "None confirmable. The stored authority (\"Amendments V & VI, ratified Nov. 8, 1904\"), election_date (1904-11-08), and effective_date (1904-12-08) cannot be checked against this 1905 volume because the amendment is not in it. To verify, retrieve the 1903 session laws (proposing resolution) and/or the 1905 Blue Book / 1904 canvass for the ratification text.",
+   "confidence": "high"
+  },
+  {
+   "number": "7",
+   "source_used": "Searched entire /tmp/sl1905.txt. The only \"PROPOSED CONSTITUTIONAL AMENDMENT\" (Chapter 101, S.B. No. 56, lines 12523-12555) is an unrelated proposal to amend § 162 (permanent school fund investment), proposed by the ninth (1905) legislative assembly. No § 176 taxation amendment text appears anywhere in the file.",
+   "overall": "not_found",
+   "findings": [
+    {
+     "target": "N.D. Const. § 176",
+     "verdict": "not_found",
+     "note": "The stored target is the taxation amendment (\"Laws shall be passed taxing by uniform rule ... grain grown within the state and held therein in elevators, warehouses and granaries may be taxed at a fixed rate\"). None of its distinctive phrases — 'uniform rule', 'true value in money', 'two hundred dollars', 'section 179', 'roadbed', 'grain grown', 'elevators, warehouses and granaries' — occur in /tmp/sl1905.txt as amendment text. The only constitutional amendment printed in this 1905 volume is Chapter 101, a PROPOSED amendment to § 162 (school fund), proposed by the 1905 legislature. Amendment 7 was ratified Nov. 8, 1904 (proposed by the 1903 legislature), so its text would appear in the 1903 session laws, not this 1905 volume. This is a cache/source mismatch, NOT a stored-text defect. The stored § 176 text cannot be confirmed or refuted against this file.",
+     "sessionlaw_text": ""
+    }
+   ],
+   "metadata_issues": "Cannot assess metadata (authority, election/effective dates, heading, section number) because the amendment is absent from the cached file. The cached session-law volume (1905) is the wrong volume for Amendment 7 — verification requires the 1903 session laws (proposal) or the 1904 election canvass. Note also that \"§ 176\" in this 1905 volume's index/text refers to unrelated code sections (e.g., line 8973 \"§ 176. ABBREVIATIONS\"), not the constitutional taxation section.",
+   "confidence": "high"
+  },
+  {
+   "number": "8",
+   "source_used": "No enacted constitutional § 162 amendment present in the 1909 Session Laws. The volume contains (a) a STATUTE at line 6929 (\"INVESTMENT OF PERMANENT SCHOOL FUND,\" S.B. No. 27, amending Political Code § 155 — a separate instrument, not const § 162) and (b) a \"PROPOSED AMENDMENTS TO CONSTITUTION\" section (lines 18363–18650) covering §§ 216, 112, 91, 158 (×2), and terminal elevators — none for § 162.",
+   "overall": "not_found",
+   "findings": [
+    {
+     "target": "N.D. Const. § 162",
+     "verdict": "not_found",
+     "note": "The enacted/ratified constitutional amendment to § 162 (Amendment 8) is NOT in /tmp/sl1909.txt. Amendment 8 was proposed by the 1907 legislature and RATIFIED at the November 1908 general election (effective 1908-12-03), so its authoritative session-law text belongs to the 1907 session laws, not the 1909 volume. The 1909 'PROPOSED AMENDMENTS TO CONSTITUTION' section (lines 18363+) lists only forward-looking concurrent resolutions for §§ 216, 112, 91, 158, and terminal elevators — none touch § 162. The closest text in this volume is a STATUTE at line 6929 amending Political Code § 155 ('AN ACT to Amend Section 155 of Chapter 4 of the Political Code'), which was drafted to parallel the constitutional language and is largely word-for-word with the stored § 162 text (e.g., 'bonds of school corporations or of counties, or of townships, or of municipalities within the state, bonds issued for the construction of drains under the authority of law within the state, bonds of the United States, bonds of the state of North Dakota, bonds of other states; provided, such states have never repudiated any of their indebtedness, or in first mortgages on farm lands in this state, not exceeding in amount one-third of the actual value of any sub-division on which the same may be loaned, such value to be determined by the board of appraisal of school lands'). But § 155 is a statute, not the constitutional § 162 enactment, so it is NOT the authoritative source for this amendment and cannot be used to confirm or correct the stored text. No defect in the stored text is identified; it simply cannot be verified against this file. To verify, retrieve the 1907 N.D. Session Laws (the proposing/enacting volume for the 1908-ratified amendment).",
+     "sessionlaw_text": ""
+    }
+   ],
+   "metadata_issues": "Cannot assess metadata (date/heading/section#/authority) — the enacted § 162 amendment is absent from the 1909 volume. Note only: stored heading is \"Investment of permanent school and educational funds\"; the parallel 1909 statute uses the chapter heading \"INVESTMENT OF PERMANENT SCHOOL FUND,\" but that is a statute heading, not authoritative for the constitutional section. Verification requires the 1907 session laws.",
+   "confidence": "high"
+  },
+  {
+   "number": "9",
+   "source_used": "Governor's veto message recital of § 158 then in force (lines ~19318-19326); two later PROPOSED § 158 amendments referred forward by the 1909 assembly (lines ~18502-18620, \"SALE OF PUBLIC LANDS\" H.B. 146 and \"SALE OF PUBLIC LANDS TO RAILROADS\" S.B. 114)",
+   "overall": "not_found",
+   "confidence": "high",
+   "findings": [
+    {
+     "target": "N.D. Const. § 158",
+     "verdict": "not_found",
+     "note": "The cached file /tmp/sl1909.txt is the 1909 (eleventh legislative assembly) session-law volume. It does NOT contain the ENACTED text of Amendment 9, which was ratified at the November 3, 1908 general election (proposed by the 1907 assembly). What this volume contains for § 158 is: (a) the Governor's veto-message recital of the section THEN IN FORCE, and (b) TWO new PROPOSED amendments referred forward by the 1909 assembly to future elections. Both 1909 proposals are textually DIFFERENT from the in-force/stored version and from each other (e.g., both proposals change the interest rate to 'not less than five per cent per annum' and add an installment/prepayment proviso and, for S.B. 114, an extensive railroad/eminent-domain townsite clause). The stored Amendment 9 text instead uses 'interest at the rate of not less than six per centum, payable annually in advance' and 'become null and void; and no such contract heretofore made shall be held void...'. The Governor's recital independently CONFIRMS the in-force (i.e., 1908-Amendment-9) text used 'six per cent ... payable annually in advance' and the simple one-fifth-in-5/10/15/20-years schedule, matching the STORED text (modulo 'six per cent' vs stored 'six per centum', a non-substantive synonym). Conclusion: the stored text is NOT contradicted by anything in this file; it appears consistent with the version the Governor recited as then in force. But the actual enacted Amendment 9 body is not present here to do a full verbatim diff -- this is the wrong volume (it holds subsequent 1909 proposals, not the 1908 enactment). No stored-text error is established; the enacted source for verification (likely the 1907 session laws / 1908 canvass) is needed.",
+     "sessionlaw_text": ""
+    }
+   ],
+   "metadata_issues": "No metadata error established. Stored effective_date 1908-12-03 and election_date 1908-11-03 are consistent with Amendment 9 being ratified at the Nov 1908 general election; this 1909 volume cannot confirm or refute those dates because it post-dates the enactment. The two § 158 items physically present in this file are LATER 1909 proposals (filed with the secretary of state March 11 and March 16, 1909), not the 1908 enactment, and must not be mistaken for Amendment 9's enacted text. Re-run verification against the 1907 session laws or the 1908 election canvass to obtain Amendment 9's enacted body."
+  },
+  {
+   "number": "10",
+   "source_used": "Not located in /tmp/sl1909.txt. The 1909 volume's \"PROPOSED AMENDMENTS TO CONSTITUTION\" section (lines ~18380-18800) and its index (lines 20281, 20839) contain only amendments to §112 (justices of the peace), §91/art.4 (term of supreme court judges), and §158 (sale of public lands) — proposals filed Feb/March 1909. No amendment to N.D. Const. §89 (\"supreme court shall consist of five judges\") appears. The §89 at line 13282 is the Militia chapter's §89 (\"Separate companies\"), unrelated.",
+   "overall": "not_found",
+   "findings": [
+    {
+     "target": "N.D. Const. § 89",
+     "verdict": "not_found",
+     "note": "Amendment 10 (effective 1908-12-03, ratified at the Nov. 3, 1908 general election) is NOT in this 1909 session-law file. The 1909 volume carries only constitutional amendments PROPOSED in/for 1909 (§112 justices of the peace, §91 term of supreme court judges, §158 sale of lands) — all 'Filed in the office of the secretary of state' Feb/March 1909, i.e., proposals for future ratification, not the already-ratified 1908 §89 amendment. A Nov. 1908 ratification would have been proposed by the 1905 and 1907 assemblies and its enacted/canvass text would appear in the 1907 session laws or a 1908 proclamation, not the 1909 volume. The only '§ 89' in this file (line 13282) is the Militia code's 'Separate companies' section, not the constitutional provision. No comparison of the stored text against an authoritative session-law source is possible from this file. This appears to be the wrong volume for Amendment 10.",
+     "sessionlaw_text": ""
+    }
+   ],
+   "metadata_issues": "Cannot verify any metadata (effective_date 1908-12-03, election_date 1908-11-03, authority, heading, or §89/article designation) against this file because the amendment is absent. Re-run the QA against the 1907 session laws or the 1908 election canvass/proclamation, which is the correct authoritative source for a Nov. 1908-ratified amendment.",
+   "confidence": "high"
+  },
+  {
+   "number": "11",
+   "source_used": "Chapter 88, \"Concurrent Resolution to Amend Section 158 of the Constitution... Governing the Sale of School Lands to Railway Companies\" (sl1911.txt lines 9148-9214; TOC line 436, p. 162-163). This is the ONLY constitutional §158 amendment in the 1911 volume, and it is the wrong amendment for this target.",
+   "overall": "not_found",
+   "findings": [
+    {
+     "target": "N.D. Const. § 158",
+     "verdict": "not_found",
+     "note": "The cached session-law file /tmp/sl1911.txt is the WRONG VOLUME for Amendment 11. Amendment 11 is the 1910 §158 amendment (stored: election 1910-11-08, effective 1910-12-08). The only §158 constitutional amendment in this 1911 (Twelfth Session) volume is Chapter 88, which the recital itself (lines 9153-9161) describes as 'adopted by the Eleventh Legislative Assembly... referred to the Twelfth Legislative Assembly... submitted to the qualified electors... at the next general election' — i.e. the amendment voted on in Nov. 1912, which is the stored Amendment 13, not Amendment 11. Two textual fingerprints confirm the 1911 volume text is the LATER (1912) version, not the 1910 version stored under Amendment 11: (1) Advertisement clause — stored Amendment 11 reads 'also published in a newspaper published at the county seat, and also in a newspaper published at the seat of government'; the 1911-volume §158 text instead reads 'and one at the seat of government' (line 9179), the 1912 wording. The 1910-style double-newspaper clause does NOT appear in any §158 constitutional text in this file (the only hits at lines 19832-33 are in §169 of the Revised Codes, a STATUTE, not the constitution). (2) Ending — stored Amendment 11 ends with a townsite-only clause: '...any school or institution lands that may be required for townsite purposes, may be paid for at any time and patent issued therefor.' The 1911-volume §158 text instead carries the full railroad/eminent-domain enumeration ('...town site purposes, school house sites; church sites, cemetery sites... railroad right of way... reservoirs... drain ditches or irrigation ditches... right of eminent domain... may be sold under the provisions of this section, and shall be paid for, principal and interest, in full, in advance...'). The stored record's own provenance (constitution_amendments.json lines 227-231 for #11, and lines 266-273 for #13) already documents this two-amendment distinction: #11 = 1910 amendment (sourced from the 1909 session law), #13 = 1912 amendment = this Chapter 88. This is NOT a defect in the stored text; it is a QA-input mismatch (wrong cached source file supplied). Cannot verify Amendment 11's stored text against this volume; would need the 1909 session law (sl1909) — the source the stored record actually cites."
+    }
+   ],
+   "metadata_issues": "QA-input error: the cached file /tmp/sl1911.txt is the wrong session-law volume for Amendment 11. It contains the 1912 §158 amendment (= stored Amendment 13, Ch. 88, referred by the 11th Assembly to the 12th and voted Nov. 1912), not the 1910 §158 amendment that Amendment 11 represents (election 1910-11-08, effective 1910-12-08). To diff-QA Amendment 11 verbatim, use the 1909 session law (sl1909), which the stored record's provenance cites as the authoritative source. No stored metadata (section #, article, date, authority) is shown to be wrong by this file; the stored authority 'Amendment ratified 1910-11-08' is internally consistent and is NOT the amendment in this 1911 volume.",
+   "confidence": "high"
+  },
+  {
+   "number": "12",
+   "source_used": "Session Laws of N.D. 1911, Chapter 97 (H.B. No. 78), \"PUBLIC INSTITUTIONS\" — Concurrent Resolution to amend Article 19, Section 216; enacted text at lines 9957-9987, \"Approved February 24, 1911.\"",
+   "overall": "substantive",
+   "confidence": "high",
+   "findings": [
+    {
+     "target": "N.D. Const. § 216 — clause Second (school for the blind)",
+     "verdict": "substantive",
+     "sessionlaw_text": "Second. The school for the blind of North Dakota, at Bathgate, in the county of Pembina, with a grant of thirty thousand acres.",
+     "note": "STORED text is wrong. Stored reproduces the ORIGINAL 1889 placeholder language: 'A blind asylum, or such other institution as the legislative assembly may determine at such place in the county of Pembina as the qualified electors of the said county may determine at an election to be held as prescribed by the legislative assembly, with a grant of thirty thousand acres.' The 1910/1911 amendment (Ch. 97) ENACTED a concrete replacement naming the institution and its site: 'The school for the blind of North Dakota, at Bathgate, in the county of Pembina, with a grant of thirty thousand acres.' Session-law OCR at lines 9969-9971 is clean and legible. The defect is in the STORED text, not the scan."
+    },
+    {
+     "target": "N.D. Const. § 216 — clause Fourth (school of forestry)",
+     "verdict": "substantive",
+     "sessionlaw_text": "Fourth. A school of forestry, or such other institution as the legislative assembly may determine, at the city of Bottineau, in the county of Bottineau.",
+     "note": "STORED text is wrong. Stored reproduces the ORIGINAL 1889 placeholder: 'A school of forestry, or such other institution as the legislative assembly may determine, at such place in one of the counties of McHenry, Ward, Bottineau or Rolette as the electors of the said counties may determine by an election for that purpose, to be held as provided by the legislative assembly.' The enacted amendment FIXES the location: 'at the city of Bottineau, in the county of Bottineau.' (no acreage grant clause). Session-law OCR at lines 9976-9978 is clean. The defect is in the STORED text."
+    },
+    {
+     "target": "N.D. Const. § 216 — introductory clause ('viz' vs 'namely')",
+     "verdict": "substantive",
+     "sessionlaw_text": "§ 216. The following named public institutions are hereby permanently located as hereinafter provided, each to have so much of the remaining grant of one hundred and seventy thousand acres of land made by the United States for \"other educational and charitable institutions,\" as is allotted by law, viz:",
+     "note": "Minor wording difference in STORED text. Stored ends the intro with 'namely:'; the enacted session law reads 'viz:' (line 9963, OCR clean and legible — colon and word both clear). The defect is in the STORED text. Note session law places the closing quote/comma as 'charitable institutions,\"' which matches stored substance (punctuation only)."
+    },
+    {
+     "target": "N.D. Const. § 216 — clause First ('soldiers' home' vs 'soldier's home')",
+     "verdict": "substantive",
+     "sessionlaw_text": "First. A soldier's home, when located, or such other charitable institution as the legislative assembly may determine, at Lisbon, in the county of Ransom, with a grant of forty thousand acres of land.",
+     "note": "Minor: stored has plural possessive 'soldiers' home'; session law line 9965 reads singular possessive 'A soldier's home, when located'. OCR of the apostrophe is legible here, so most likely a real stored-text difference, but apostrophe placement is the kind of detail the older scan can mangle — moderate confidence this is a stored defect rather than scan noise. Rest of clause First matches."
+    },
+    {
+     "target": "N.D. Const. § 216 — clauses Third, Fifth, Sixth",
+     "verdict": "identical",
+     "sessionlaw_text": "",
+     "note": "Third (Ellendale industrial school, 40,000 acres), Fifth (Wahpeton scientific school, 40,000 acres), and Sixth (Minot state normal school, with the 'no other institution... without a revision of this constitution' proviso) match the stored text word-for-word (ignoring OCR line-wrap/hyphenation in the scan)."
+    }
+   ],
+   "metadata_issues": "Stored heading for the change reads \"Add state normal school at Minot to list of state institutions.\" That understates the amendment: the enacted 1910/1911 text (Ch. 97, \"Pertaining to Public Institutions\") not only added the Minot normal school (Sixth) but also replaced clause Second (blind school -> Bathgate) and clause Fourth (forestry school -> city of Bottineau). The heading should describe the broader revision of § 216. Article placement (Article 19) and the effective/election dates (election 1910-11-08; effective 1910-12-08) are consistent with the session law (which is the 1911 enacting publication, \"Approved February 24, 1911\"); no date/article/authority correction needed."
+  },
+  {
+   "number": "13",
+   "source_used": "Not located in /tmp/sl1913.txt. The 1913 volume's constitutional-amendment material is limited to: (a) 1913 concurrent resolutions PROPOSING new amendments to §§215, 216, 185, taxation/utility classification, and terminal elevators for future referral (lines ~7593-8235); (b) a federal Seventeenth Amendment ratification joint resolution, Ch. 105 (line 8245); and (c) a procedural \"Printing of Constitutional Amendments\" act (line 19196). No Article IX, §158 (sale of school/public lands) enacted body text appears anywhere in the file.",
+   "overall": "not_found",
+   "findings": [
+    {
+     "target": "N.D. Const. § 158",
+     "verdict": "not_found",
+     "note": "The §158 amendment (Amendment 13) was effective 1912-12-05, ratified at the Nov. 5, 1912 general election, meaning it was PROPOSED by the 1911 (12th) Legislative Assembly. Its enacted/proposed text therefore belongs in the 1911 Session Laws, not the 1913 cache provided here. Searching /tmp/sl1913.txt for every distinctive §158 phrase (\"appraised value\", \"ten dollars per acre\", \"one-fifth in five years\", \"highest bidder\", \"sixty days' advertisement\", \"board of university and school lands\", \"null and void\", \"townsite purposes\", \"reservoirs for the storage of water\", \"eminent domain\", and the bare numeral 158) returns nothing matching the school-and-public-lands sale provision. The constitutional-amendment content in this 1913 volume concerns different sections (§§185, 215, 216, taxation, terminal elevators) proposed for FUTURE elections, plus the federal 17th Amendment ratification. Cannot compare stored text to a session-law source that is absent. This is a missing/wrong-volume cache issue, NOT evidence the stored text is wrong.",
+     "sessionlaw_text": ""
+    }
+   ],
+   "metadata_issues": "Cannot verify any metadata (effective_date 1912-12-05, election_date 1912-11-05, authority \\\"Amendment ratified 1912-11-05\\\", heading, or section number) because the authoritative session-law text for this amendment is not present in /tmp/sl1913.txt. The correct source is the 1911 Session Laws (12th Legislative Assembly), which proposed the §158 amendment ratified Nov. 1912.",
+   "confidence": "high"
+  },
+  {
+   "number": "14",
+   "source_used": "1913 Session Laws, Chapter 104 (page 132), \"CONCURRENT RESOLUTION Amending the Constitution... Empowering the Legislative Assembly to Provide by Law for Erection, Leasing, Purchasing and Operating Terminal Elevators in the State of North Dakota\" (lines ~8205-8237). Also Chapter 279 (page 435), an ordinary tax-levy statute funding a Wisconsin/Minnesota terminal elevator system (lines ~22863-22906).",
+   "overall": "not_found",
+   "findings": [
+    {
+     "target": "N.D. Const. amend. art. XIV",
+     "verdict": "not_found",
+     "note": "The enacted/ratified text of Amendment 14 (terminal grain elevators in Minnesota OR Wisconsin, ratified 1912-11-05, effective 1912-12-05) is NOT present in this 1913 volume. The 1912 amendment was proposed in the prior (1911) session and ratified at the Nov. 1912 general election, so its enacted text does not appear here. The closest constitutional text in this volume, Chapter 104 (p. 132), is a DIFFERENT, later proposed amendment: a concurrent resolution submitting to a future election an amendment for elevators 'in the State of North Dakota.' Its body reads: 'The Legislative Assembly is hereby authorized and empowered to provide by law for the erection, purchasing or leasing and operation of one or more terminal grain elevators in the State of North Dakota, to be maintained and operated in such manner as the Legislative Assembly shall prescribe, and provide for inspection, weighing and grading of all grain received in such elevator or elevators.' This substitutes 'in the State of North Dakota' for the stored Amendment 14's 'in the states of Minnesota or Wisconsin, or both.' That divergence is NOT a stored-text error and NOT OCR garble; it reflects a genuinely different amendment. Chapter 279 (p. 435) is also Minnesota/Wisconsin-related but is an ordinary tax-levy appropriation statute, not a constitutional amendment. No canvass/ratification listing of the Nov. 1912 amendments appears in this file. Therefore the stored Amendment 14 text cannot be verified against this cached 1913 source -- the correct source-of-truth would be the 1911 Session Laws proposing resolution plus the 1912 election canvass.",
+     "sessionlaw_text": ""
+    }
+   ],
+   "metadata_issues": "No metadata correction can be made from this file, because Amendment 14's enacted text is not present here. CAUTION: the cached session-law file (/tmp/sl1913.txt, 1913 Session Laws) is the wrong volume for Amendment 14 (ratified 1912). The Chapter 104 resolution it does contain is a distinct North Dakota in-state elevator amendment, not the Minnesota/Wisconsin Amendment 14.",
+   "confidence": "high"
+  },
+  {
+   "number": "XV",
+   "source_used": "\"AMENDMENTS TO THE CONSTITUTION 1914\" section, \"ARTICLE XV. § 25\" (lines 21737–21833 of /tmp/sl1915.txt), enacted initiative-and-referendum text, adopted Nov. 3, 1914 (Yes 48,783 / No 19,964)",
+   "overall": "ocr_only",
+   "findings": [
+    {
+     "target": "N.D. Const. § 25",
+     "verdict": "ocr_only",
+     "note": "Stored text is a faithful, clean transcription of the enacted ARTICLE XV, § 25. Every divergence is OCR garble in the 1915 session-law SCAN, not an error in the STORED text: the scan shows scrambled inter-word spacing throughout, 'ﬁ' ligatures ('ﬁled', 'ﬁrst', 'aﬁirmative'), 'eifect'/'eifecV're' for 'effect'/'effective', 'fabilitate' for 'facilitate', and jumbled clauses like 'as soon as it convenes' and 'if it is rejected... is taken'. All numeric/structural terms match: 'ten per cent.', 'thirty days', 'forty days', 'ninety days', 'two-thirds', 'biennial regular elections', enacting clause 'Be it enacted by the people of the State of North Dakota.', and closing 'self executing... facilitate its operation.' No substantive divergence found in the stored text.",
+     "sessionlaw_text": ""
+    }
+   ],
+   "metadata_issues": "No metadata error in stored record vs. session law. Stored election_date 1914-11-03 matches the canvass (\"3rd day of November, 1914\"); article is ARTICLE XV and section is § 25, both matching. The session law carries no descriptive caption for § 25 (only \"ARTICLE XV. § 25\"); the stored heading \"Legislative authority; initiative and referendum\" is an editorial gloss, not a session-law caption, so it is not a session-law-conflicting metadata error.",
+   "confidence": "high"
+  },
+  {
+   "number": "XVI",
+   "source_used": "ARTICLE XVI, § 202 enacted text at line 21839 (the \"amended and reenacted\" body), session law 1915 /tmp/sl1915.txt",
+   "overall": "ocr_only",
+   "confidence": "high",
+   "findings": [
+    {
+     "target": "N.D. Const. § 202",
+     "verdict": "ocr_only",
+     "sessionlaw_text": "",
+     "note": "Stored text matches the enacted Article XVI / § 202 body word-for-word. All divergences are OCR noise in the SESSION-LAW scan, not stored-text errors: e.g. scan reads \"amended'as follows\", \"by a'majority\", \"twenty-ﬁve\", \"ﬁling\", \"qualiﬁed\", line-break-split words (\"pro / posed\", \"amend / ments\", \"by:the people\"), and a page header \"402 AMENDMENTS TO TIIE CONSTITUTION\". The stored text correctly normalizes these and correctly OMITS the non-enacted canvass tally (\"Yes 43,111 / No 21,815 ... duly declared carried and adopted\"). The source misspelling \"amendement or amendments\" appears in BOTH the scan and the stored text and is preserved verbatim (correct). The FIRST clause's awkward \"so next chosen as aforesaid such proposed amendment\" (no verb) is present in both — court's text, preserved correctly. Only stylistic note: enacted text uses caps \"FIRST:/SECOND:\" while stored uses \"First:/Second:\" — a capitalization/formatting choice, not a wording difference."
+    }
+   ],
+   "metadata_issues": "None. Stored section (§ 202), article (XVI), and heading are consistent with the session law. Effective/election dates not independently confirmable from the enacted body text (the canvass tally line in the scan is too sparse to date), but no conflict is shown — the scan does not contradict the stored 1914-11-03 ratification."
+  },
+  {
+   "number": "XVII",
+   "source_used": "Compiled \"AMENDMENTS TO THE CONSTITUTION\" section, ARTICLE XVII, § 216 (line ~21902, with vote tally Yes 42,365 / No 21,779 \"duly declared carried and adopted\")",
+   "overall": "ocr_only",
+   "findings": [
+    {
+     "target": "N.D. Const. § 216",
+     "verdict": "ocr_only",
+     "note": "Stored text matches the ratified ARTICLE XVII / § 216 compiled enacted text verbatim (School for the Blind of North Dakota at Bathgate; School of Forestry at the City of Bottineau in the County of Bottineau; carried 42,365 to 21,779). All divergences are OCR noise in the SESSION-LAW scan, not the stored text: e.g. FIRST reads 'may determine at Lisbon. in the County' (period is OCR for comma), and hyphenation/break artifacts 'char itable', 'es tablished', 'main tained'. The stored text is correct. NOTE: the two CHAPTER 84/85 items earlier in the volume (lines 7239+, approved Feb 4 / Mar 9 1915 — Dickinson Normal School and State Hospital for the Insane) are SEPARATE later proposed § 216 amendments referred to a future legislature; they are NOT this 1914 Amendment XVII and were correctly not used.",
+     "sessionlaw_text": "",
+     "target_clean": ""
+    }
+   ],
+   "metadata_issues": "None. Stored effective_date 1914-12-03, election_date 1914-11-03, and authority \"Amendment ratified 1914-11-03\" are consistent with the session law: the compiled text shows the amendment carried at the popular vote (42,365 to 21,779) and was \"duly declared carried and adopted,\" matching the Nov. 1914 general-election ratification. The session law does not contradict the section number (216), article (XVII), or heading.",
+   "confidence": "high"
+  },
+  {
+   "number": "XVIII",
+   "source_used": "\"AMENDMENTS TO THE CONSTITUTION\" canvass/proclamation section, ARTICLE XVIII, § 185 (line ~21940), with vote tally Yes 47,387 / No 21,054 — the ratified text of the 1914 amendment. (NOT the Chapter 89 \"Rural Credits\" Concurrent Resolution at line 7474, which is a separate, later 1915-approved proposal adding a rural-agricultural-credit paragraph.)",
+   "overall": "identical",
+   "findings": [
+    {
+     "target": "N.D. Const. § 185",
+     "verdict": "identical",
+     "note": "Stored § 185 text matches the ratified ARTICLE XVIII text in the session-law canvass section verbatim (OCR hyphenation/line-wrap aside). Stored reads 'Neither the state nor any county...except for necessary support of the poor, nor subscribe to or become the owner of the capital stock of any association or corporation, nor shall the state engage in any work of internal improvement unless authorized by a two-thirds vote of the people. Provided, that the state may appropriate money in the treasury or to be thereafter raised by taxation for the construction or improvement of public highways.' The session-law ARTICLE XVIII reads identically. NOTE: a separate document in the same volume — the Chapter 89 'Rural Credits' Concurrent Resolution (approved March 1, 1915) — proposes a FURTHER amendment to § 185 adding a second paragraph on rural agricultural credit associations; that is a distinct, later proposal and is correctly NOT part of stored Amendment XVIII. The Chapter 89 scan also shows 'the state OR any county' (vs. 'nor any county'), which is OCR/text garble in that resolution document; the authoritative ratified canvass text and the stored text both correctly read 'nor any county.' No stored-text error.",
+     "sessionlaw_text": ""
+    }
+   ],
+   "metadata_issues": "None. Stored article (XVIII), section (§ 185), heading, and ratification (1914-11-03 election / effective 1914-12-03) are consistent with the session-law canvass entry (vote tally Yes 47,387 / No 21,054). Caution noted only to avoid conflating this amendment with the separate Chapter 89 Rural Credits resolution.",
+   "confidence": "high"
+  },
+  {
+   "number": "XIX",
+   "source_used": "\"AMENDMENTS TO THE CONSTITUTION\" canvass/declaration section, \"ARTICLE XIX\" entry (lines ~21957-21969), followed by official vote tally Yes 51,507 / No 18,483 and declaration carried and adopted",
+   "overall": "identical",
+   "findings": [
+    {
+     "target": "N.D. Const. amend. art. XIX",
+     "verdict": "identical",
+     "sessionlaw_text": "The legislative assembly is hereby authorized and empowered to provide by law for the erection, purchasing or leasing and operation of one or more terminal grain elevators in the State of North Dakota, to be maintained and operated in such manner as the legislative assembly shall prescribe, and provide for inspection, weighing and grading of all grain received in such elevator or elevators.",
+     "note": "Stored text matches the session-law enacted/declared body word-for-word. The only divergences in the SESSION-LAW SCAN are OCR line-wrap hyphenation artifacts ('empow ered' split across lines 21959-21960; 'eleva tors' split across the page break at lines 21967-21969) and the column-interleaved vote tally; none of these are errors in the STORED text. The official canvass tally (Yes 51,507 / No 18,483) confirms this is the amendment adopted at the November 1914 general election."
+    }
+   ],
+   "metadata_issues": "None. The session-law canvass listing confirms ratification at the November 1914 general election (vote tally Yes 51,507 / No 18,483, declared carried and adopted), consistent with stored election_date 1914-11-03 and authority \"Amendment ratified 1914-11-03.\" No section number is assigned to ARTICLE XIX in the session law (the elevator amendment added a new article rather than amending a numbered section), consistent with the stored target. Note: the enacted text appears in the 1915 session-law volume's \"AMENDMENTS TO THE CONSTITUTION\" canvass of the 1914-election-adopted amendments, not as a 1915-legislature resolution.",
+   "confidence": "high"
+  },
+  {
+   "number": "XX",
+   "source_used": "\"AMENDMENTS TO THE CONSTITUTION\" section, ARTICLE XX, §§ 176 and 179 (enacted text), lines ~21988-22010 of /tmp/sl1915.txt",
+   "overall": "identical",
+   "confidence": "high",
+   "findings": [
+    {
+     "target": "N.D. Const. § 176",
+     "verdict": "identical",
+     "note": "Stored text matches the enacted session-law text word-for-word. The only divergences are OCR artifacts in the SESSION-LAW scan, not stored-text errors: scan reads '§ 17 6.' (spaced), 'by a. general law' (stray period after 'a'), and 'in the same man ner' (line-wrap split). Stored text correctly reads 'a general law' and 'manner'. No substantive difference.",
+     "sessionlaw_text": ""
+    },
+    {
+     "target": "N.D. Const. § 179",
+     "verdict": "identical",
+     "note": "Stored text matches the enacted session-law text word-for-word. Divergences are OCR garble in the SESSION-LAW scan only: 'in the‘county' (stray apostrophe/joined word), 'telegraph 0r tele phone' ('0r' = OCR of 'or', line-wrap split of 'telephone'). Stored text correctly reads 'in the county' and 'telegraph or telephone'. No substantive difference; structure and all enumerated company types (express, freight line, dining car, sleeping car, car equipment, private car line, telegraph or telephone) and the railroad non-railroad-use proviso all match.",
+     "sessionlaw_text": ""
+    }
+   ],
+   "metadata_issues": "None. ARTICLE XX in the 1915 session-law volume covers §§ 176 and 179 (taxation: uniformity/exemptions and situs/assessment), consistent with the stored targets. The session law prints only section numbers without descriptive headings, so the stored headings are editorial and not a metadata defect. Effective date 1914-12-03 and election date 1914-11-03 are consistent with this being the canvass of the Nov. 1914 election; the canvass tally (Yes 42,365 / No 21,779 for §176; Yes 45,162 / No 18,135 for §179) confirms adoption. Authority 'Amendment ratified 1914-11-03' is accurate."
+  },
+  {
+   "number": "XXI & XXII",
+   "source_used": "State Board of Canvassers proclamation/certificate of the Nov. 7, 1916 general election (pp. 407-409, \"AMENDMENTS TO THE CONSTITUTION\"), containing the two separately-adopted §216 amendments: (1) Dickinson state normal school [Seventh (a)] and (2) second state hospital for the insane [Seventh (b)]. Located in /tmp/sl1917.txt at lines ~22064-22167.",
+   "overall": "ocr_only",
+   "confidence": "high",
+   "findings": [
+    {
+     "target": "N.D. Const. § 216",
+     "verdict": "ocr_only",
+     "note": "The stored §216 text is a faithful combined reconstruction of the two amendments adopted at the Nov. 7, 1916 election: Amendment XXI (Dickinson normal school, adding Seventh (a)) and Amendment XXII (second state hospital, adding Seventh (b)). Both ballot measures recited the full §216 text and each passed (Dickinson Yes 60,582/No 43,334; Hospital Yes 49,001/No 44,356), so combining (a) and (b) into one §216 is correct. The body matches the session law word for word through clauses First-Sixth. Every divergence I found is OCR garble in the SESSION-LAW scan, not a stored-text error: the scan reads 'Eolette' for 'Rolette' (line 22101 in the XXI version; the XXII version at 22154 correctly reads 'Rolette' as stored), 'thous and'/'thousand' line-break splits, stray inserted commas ('forty thousand ,(40,000)'), and a missing comma after 'when located' in the XXI version (the XXII version and the stored text both have 'when located, or'). The stored Seventh-(b) wording 'A state hospital for the insane at such place within this state as shall be selected by the legislative assembly, provided, that no other institution of a character similar to any one of those located by this article shall be established or maintained without a revision of this Constitution' matches the XXII enacted text verbatim (lines 22158-22166). The stored Seventh-(a) wording matches the XXI enacted text (lines 22108-22110). No substantive, missing, or extra words.",
+     "sessionlaw_text": ""
+    }
+   ],
+   "metadata_issues": "None. Election date 1916-11-07 matches the canvass certificate (\"General Election held on the 7th day of November, 1916\"). Effective date 1916-12-07 is consistent with adoption-by-vote at that election. Section number 216, the heading (Dickinson normal school; state hospital for the insane), and the authority statement (Amendments XXI & XXII, adopted Nov. 7, 1916, same ballot) are all consistent with the session law, which presents these as two separate but contemporaneously-adopted §216 amendments."
+  },
+  {
+   "number": "XXIII",
+   "source_used": "Page 502, \"AMENDMENTS TO THE CONSTITUTION, 1918\" — State Board of Canvassers' statement of the vote on constitutional amendments at the general election held November 5, 1918, under heading \"ARTICLE XXIII\" (cached /tmp/sl1919.txt lines ~25787-25800).",
+   "overall": "ocr_only",
+   "findings": [
+    {
+     "target": "N.D. Const. § 135",
+     "verdict": "ocr_only",
+     "note": "Body text is substantively IDENTICAL. The session-law canvass quotes: 'In all elections for directors or managers of a corporation, each member or shareholder may cast the whole number of his votes for one candidate, or distribute them upon two or more candidates, as he may prefer: provided, any co-operative corporation may adopt by-laws limiting the voting power of its stockholders.' The only divergences from the STORED text are scan/style noise, NOT stored errors: (a) stored 'prefer;' vs scan 'prefer:' — the scan renders a colon but this is OCR/typographic variation, not a stored defect; (b) stored 'cooperative' vs scan 'co-operative' — a hyphenation/spelling style difference of the era (the 1919 volume consistently prints 'co-operative'); this is cosmetic, the words are the same. SECTION NUMBER: the canvass heading prints 'Sec. ~05' (i.e., '205'), which conflicts with the stored '§ 135'. This is an error in the SESSION-LAW canvass abstract / its OCR, not in the stored record: the cumulative-voting-for-corporate-directors provision is § 135 of the 1889 N.D. Constitution (Art. VII, Corporations), and the quoted body is unmistakably that provision. The canvass abstract states no other section number and is the only number-bearing line; the stored § 135 is historically correct, so I do NOT flag it as a stored metadata error."
+    }
+   ],
+   "metadata_issues": "No stored metadata error confirmed. Election date November 5, 1918 is corroborated verbatim by the canvass statement, and the amendment is certified 'duly declared carried and adopted, approved and ratified,' consistent with the stored election_date 1918-11-05 and authority 'ratified 1918-11-05' (effective_date 1918-12-05 not independently stated in this scan but consistent with a post-canvass proclamation date). CAUTION (not a stored defect): the session-law canvass labels this amendment's body 'Sec. ~05'/'205'; the stored '§ 135' is the historically correct section and should be retained — the discrepancy is a printer's/OCR error in the canvass abstract, not in the stored record.",
+   "confidence": "high"
+  },
+  {
+   "number": "XXIV",
+   "source_used": "\"AMENDMENTS TO THE CONSTITUTION, 1918\" canvass/enactment section, heading \"ARTICLE XXIV.\" (line 25797), enacted hail-insurance tax article text",
+   "overall": "ocr_only",
+   "confidence": "high",
+   "findings": [
+    {
+     "target": "N.D. Const. amend. art. XXIV",
+     "verdict": "ocr_only",
+     "note": "Stored text matches the enacted Article XXIV word for word. The only divergences are OCR garble in the SESSION-LAW scan, not stored-text errors: scan reads 'levy of a tax upon s~h lands' (stored correctly 'such lands'), 'crcati11 g a fuud' (stored 'creating a fund'), 'losses b.r hail' (stored 'losses by hail'), 'four mills llwied bv the Constitution' (stored 'levied by the Constitution'), 'antl ma;v vary' (stored 'and may vary'), 'iu order to secnrc' (stored 'in order to secure'), 'burdcu of such tax' (stored 'burden of such tax'). Stored text is correct throughout including 'such land' (singular) in the final clause, which matches the scan.",
+     "sessionlaw_text": ""
+    }
+   ],
+   "metadata_issues": "None. Session law confirms the amendment was voted at the general election held November 5, 1918 (matching stored election_date 1918-11-05); the new hail-insurance tax article was adopted/ratified, consistent with stored authority 'Amendment ratified 1918-11-05' and effective_date 1918-12-05. Stored heading 'State hail-insurance tax (new article)' is an accurate descriptive label (the article is a new free-standing provision, not an amendment to an existing numbered section)."
+  },
+  {
+   "number": "XXV",
+   "source_used": "ARTICLE XXV, \"AMENDMENTS TO THE CONSTITUTION, 1918\" (Sec. 89 enacted body), /tmp/sl1919.txt lines 25816-25840",
+   "overall": "ocr_only",
+   "confidence": "high",
+   "findings": [
+    {
+     "target": "N.D. Const. § 89",
+     "verdict": "ocr_only",
+     "note": "Stored body text matches the enacted Sec. 89 word-for-word. The session-law scan is OCR-garbled ('Sec. SO' for 'Sec. 89', 'SnDreme Court', 'pro-uouu ec a drc:.isjon', 'a i I c·ast four of Uie j u<.lges shn 11 so clecidr'), but cleaned it reads identically to the stored text: 'The Supreme Court shall consist of five judges, a majority of whom shall be necessary to form a quorum or pronounce a decision, but one or more of said judges may adjourn the court from day to day or to a day certain; provided, however, that in no case shall any legislative enactment or law of the State of North Dakota be declared unconstitutional unless at least four of the judges shall so decide.' All divergences are OCR noise in the SCAN; the STORED text is correct. The enacted heading confirms 'Section 89' and 'Article XXV', matching stored metadata.",
+     "sessionlaw_text": ""
+    }
+   ],
+   "metadata_issues": "None. Session law confirms Section 89 / ARTICLE XXV. Canvass header confirms the general election was held November 5th, 1918, consistent with stored election_date 1918-11-05 and authority 'Amendment ratified 1918-11-05'. The session-law scan does not state an effective/proclamation date, so the stored effective_date 1918-12-05 is neither confirmed nor contradicted here."
+  },
+  {
+   "number": "XXVI",
+   "source_used": "Two enacted versions present: (1) Chapter 88, H.B. No. 6, \"Sec. 25 in Article 2 as amended by Article 15 of Amendment,\" Approved January 20, 1919 (lines ~5965-6105); (2) Board of Canvassers certificate, CHAPTER XXVI / ARTICLE XXVI, \"SEC. 25 IN ARTICLE 2 AS AMENDED BY ARTICLE 15 OF AMENDMENT,\" with Yes 47,447 / No 32,598, declared adopted (lines ~25855-25975, header \"AMENDMENTS TO THE CONSTITUTION, 1918\"). Stored text tracks the Canvassers/Article XXVI ratified version.",
+   "overall": "ocr_only",
+   "findings": [
+    {
+     "target": "N.D. Const. § 25",
+     "verdict": "ocr_only",
+     "sessionlaw_text": "",
+     "note": "Stored text matches the certified Board-of-Canvassers Article XXVI version verbatim in substance, including its distinctive capitalization (Electors, Emergency, Secretary of State, Legislature, Board of Canvassers, Supreme Court, Governor) and its phrasing 'at any special election' and 'If a Referendum Petition is filed against an Emergency Petition' (the session-law Canvassers text likewise reads 'Emergency Peti-tion' / 'an Emergency Petition'; the parallel Chapter 88 enacted text instead reads 'emergency measure', a difference between the two session-law engrossments, not a stored error). All apparent differences vs the session-law scan are OCR garble IN THE SCAN, not the stored text: e.g. scan 'Petitiou', 'honse', 'thr; referendum', 'mcasme', 'l~eJJel'al J~lcction', 'self executing' (scan) vs stored 'self-executing'. The stored '§ 25' = Sec. 25 in Article 2 (Art. II), confirmed by both enacted headings 'Sec. 25 in Article 2 as amended by Article 15 of Amendment.' STORED TEXT is correct."
+    }
+   ],
+   "metadata_issues": "None. Section/article (§25, Art. II as amended by Art. 15 of amendment) match the enacted headings. election_date 1918-11-05 and authority 'ratified 1918-11-05' match the session law ('general election held in this state on November 5, 1918' and Canvassers declaration that the measure 'is hereby duly declared carried and adopted, approved and ratified'). effective_date 1918-12-05 is consistent with the amendment's own 'thirtieth day after the election' rule.",
+   "confidence": "high"
+  },
+  {
+   "number": "XXVII",
+   "source_used": "CHAPTER 86 (H.B. No. 7), Concurrent Resolution agreeing to amendment of Section 67, Article 2; enacted \"Sec. 67, in Article 2\" body; approved/declared part of Constitution January 20, 1919; ratified by initiative at general election November 5, 1918 (lines ~5884-5910 of /tmp/sl1919.txt)",
+   "overall": "identical",
+   "findings": [
+    {
+     "target": "N.D. Const. § 67",
+     "verdict": "identical",
+     "note": "Word-for-word match. Session law enacts: 'No act of the legislative assembly shall take effect until July 1st after the close of the session, unless the legislature by a vote of two-thirds of the members present and voting, in each house, shall declare it an emergency measure, which declaration shall be set forth in the act, provided, however, that no act granting a franchise or special privilege, or act creating any vested right or interest other than in the state, shall be declared an emergency measure. An emergency measure shall take effect and be in force from and after its passage and approval by the governor.' The STORED text has identical wording, structure, and numbers. Only differences are (a) stored capitalizes Act/Legislature/Emergency/Session/State while session law is lowercase, and (b) stored drops the comma after 'in each house' — both are non-substantive style/punctuation variants, not stored-text errors of words or numbers. No OCR garble affecting the comparison at this spot.",
+     "sessionlaw_text": "Sec. 67, in Article 2. No act of the legislative assembly shall take effect until July 1st after the close of the session, unless the legislature by a vote of two-thirds of the members present and voting, in each house, shall declare it an emergency measure, which declaration shall be set forth in the act, provided, however, that no act granting a franchise or special privilege, or act creating any vested right or interest other than in the state, shall be declared an emergency measure. An emergency measure shall take effect and be in force from and after its passage and approval by the governor."
+    }
+   ],
+   "confidence": "high",
+   "metadata_issues": "No metadata errors. Stored heading \"Section 67 in Article 2\" matches session law (\"Sec. 67, in Article 2\"). Stored election_date 1918-11-05 matches the session-law recital (initiative measure received a majority at the general election November 5, 1918). Stored authority \"Amendment ratified 1918-11-05\" is consistent. The Concurrent Resolution declaring the amendment part of the Constitution was approved January 20, 1919, which is later than the stored effective_date 1918-12-05; the effective date derives from the canvass/proclamation following the Nov. 5, 1918 election rather than the 1919 legislative declaration, so this is not an error in the stored record vis-a-vis this session law."
+  },
+  {
+   "number": "XXVIII",
+   "source_used": "Two renderings present: (1) Chapter 84 Concurrent Resolution (H.B. No. 10) \"Section 202 in Article 15 as amended by Article 16 of amendment\" enacted body, lines ~5798-5816; (2) the canvass/proclamation under heading \"ARTICLE XXVIII / SECTION 202 IN ARTICLE 15 AS AMENDED BY ARTICLE 16 OF AMENDMENTS\" at lines ~25987-26006. The stored text tracks the Article XXVIII proclamation version of the initiated amendment.",
+   "overall": "ocr_only",
+   "confidence": "high",
+   "findings": [
+    {
+     "target": "N.D. Const. § 202",
+     "verdict": "ocr_only",
+     "note": "Stored text faithfully reproduces the Article XXVIII proclamation rendering of this INITIATED amendment. Both session-law scans are OCR-garbled but reconstruct to the stored wording. On the discriminating points the stored text matches the Article XXVIII proclamation (lines 25987-26006), not the Chapter 84 legislative recital: stored 'twenty thousand OF the Electors at large' matches Art XXVIII 'twenty thonsan<l of the Electors' (line 25996) whereas Ch 84 reads 'twenty thousand electors' with no 'of'; stored 'shall be submitted to the Electors and SHALL BECOME a part of the Constitution' matches Art XXVIII 'shall be submitted to the Elect.ors and shall bccollle a part of the Constitution' whereas Ch 84 reads 'submitted to the etectors and become a part of the constitution'. Since this is an initiated amendment, the proclamation text of the measure adopted by the people is the operative version, and the stored text is correct. The garble (e.g., 'corn~titut.ion', 'el~cted', 'affir1native', 'tlie Elector~') is purely scan noise in the session law, not error in the STORED text. No substantive divergence found.",
+     "sessionlaw_text": ""
+    }
+   ],
+   "metadata_issues": "No metadata errors. Stored effective_date 1918-12-05 and election_date 1918-11-05 are consistent with Chapter 84's recital that the amendment 'received a majority of all the legal votes cast at the general election held in this state on November 5, 1918' (line ~5795). Amendment number XXVIII, target Section 202, and the description 'as amended by Article 16' all match the session-law heading 'ARTICLE XXVIII / SECTION 202 IN ARTICLE 15 AS AMENDED BY ARTICLE 16 OF AMENDMENTS'. Authority 'Amendment ratified 1918-11-05' is consistent."
+  },
+  {
+   "number": "XXIX",
+   "source_used": "\"AMENDMENTS TO THE CONSTITUTION, 1918\" canvass/enacted listing, ARTICLE XXIX, \"SECTION 176, IN ARTICLE 11, AS AMENDED BY ARTICLE 20 OF AMENDMENTS\" (cached /tmp/sl1919.txt line ~26015-26032); cross-checked against the proposed-resolution recital at line 6121 (approved Jan. 20, 1919).",
+   "overall": "ocr_only",
+   "findings": [
+    {
+     "target": "N.D. Const. § 176",
+     "verdict": "ocr_only",
+     "note": "Stored body text matches the enacted session-law text word-for-word. Every divergence is OCR garble in the SESSION-LAW scan, not a stored-text error: e.g. scan reads 'liniform'/'Tax.es ... uniform' for 'uniform', 'iud11ding'/'franc:hiscs' for 'including franchises', 'lrnildiugs'/'bnilclings' for 'buildings', 'l:nited Stntcs' for 'United States', 'l\\'I nuicipal CorporHtions' for 'Municipal Corporations', 'religions' for 'religious', 'charilable' for 'charitable', 'adopl<\\'Cl shall renrnin ill forec' for 'adopted shall remain in force', 'sta1 u1c\\'' for 'statute'. Punctuation (comma after 'franchises,'; comma after 'whatsoever, upon land,'; 'Provided, that') in the stored text aligns with the enacted ARTICLE XXIX version. Stored text is correct.",
+     "sessionlaw_text": "Taxes shall be uniform upon the same class of property including franchises, within the territorial limits of the authority levying the tax. The Legislature may by law exempt any or all classes of personal property from taxation, and within the meaning of this section, fixtures, buildings and improvements of every character whatsoever, upon land, shall be deemed personal property. The property of the United States and of the State, County and Municipal Corporations, and property used exclusively for school, religious, cemetery, charitable or other public purposes, shall be exempt from taxation. Except as restricted by this Article, the Legislature may provide for raising revenue and fixing the situs of all property for the purpose of taxation. Provided, that all taxes and exemptions in force when this amendment is adopted shall remain in force until otherwise provided by statute."
+    }
+   ],
+   "metadata_issues": "None. Session law confirms: ARTICLE XXIX (= stored number XXIX); Section 176 in Article 11 (= stored target § 176); general election November 5, 1918 (= stored election_date 1918-11-05); titled \"AMENDMENTS TO THE CONSTITUTION, 1918\"; declared \"carried and adopted, approved and ratified.\" Effective date 1918-12-05 is not stated verbatim in the canvass listing but is not contradicted. Stored heading is descriptive (not from session law) and is accurate to the subject (taxation — classification/exemption of personal property).",
+   "confidence": "high"
+  },
+  {
+   "number": "XXX",
+   "source_used": "Session Laws 1919, enacted amendment body at /tmp/sl1919.txt lines 5929-5938 (concurrent resolution agreeing to amendment to Section 177, Article 11; approved January 20, 1919), under heading \"CONSTITUTIONAL AMENDMENTS\"",
+   "overall": "substantive",
+   "findings": [
+    {
+     "target": "N.D. Const. § 177",
+     "verdict": "substantive",
+     "sessionlaw_text": "Section 177 in Article 11. The Legislature may by law provide for the levy and collection of an acreage tax on lands within the state in addition to the limitations specified in Section 174 in Article 11 of the Constitution. The proceeds of such tax shall be used to indemnify the owners of growing crops against damages by hail, provided that lands used exclusively for public roads, rights of way of common carriers, mining, manufacturing or pasturage may be exempt from such tax.",
+     "note": "STORED text reads \"in addition to the limitation specified in Section 174\" (singular). The session law clearly reads the plural \"limitations\": OCR \"li111itatio11s\" decodes unambiguously to l-i-m(111)-itatio-n(11)-s, with the terminal 's' plainly present, so this is a genuine error in the STORED text, not scan garble. All other words match (levy and collection, acreage tax, indemnify the owners of growing crops against damages by hail, rights of way of common carriers, mining, manufacturing or pasturage, may be exempt from such tax). Note also the enacted body opens with the designator \"Section 177 in Article 11.\" which the stored body omits; that omission is consistent with storing the section designation in the target/heading and is not itself a defect."
+    }
+   ],
+   "metadata_issues": "No metadata defects. Recital confirms the provision is \\\"Section 177, Article 11\\\" (stored target N.D. Const. § 177 correct). The amendment was an initiated measure that received a majority at the general election held November 5, 1918 (stored election_date 1918-11-05 correct); the concurrent resolution declaring it part of the constitution was Approved January 20, 1919. Stored authority \\\"Amendment ratified 1918-11-05\\\" and effective_date 1918-12-05 are consistent with the session-law-recited election date.",
+   "confidence": "high"
+  },
+  {
+   "number": "XXXI",
+   "source_used": "\"AMENDMENTS TO THE CONSTITUTION, 1918\" section, ARTICLE XXXI, \"SECTION 182 IN ARTICLE 12.)\" — enacted text at lines 26052-26075 of /tmp/sl1919.txt (vote tally Yes 46,275 / No ~33,xxx; ratified at general election held November 5th, 1918)",
+   "overall": "ocr_only",
+   "findings": [
+    {
+     "target": "N.D. Const. § 182",
+     "verdict": "ocr_only",
+     "note": "Stored text matches the enacted session-law text verbatim. All divergences are OCR garble in the SESSION-LAW scan, not stored-text errors. Examples in the scan: 'bonds npon property of state owned uWities' (stored correctly 'upon ... utilities'), 'ten million do 1J ars' (stored 'ten million dollars'), 'semi-annuall)·' (stored 'semi-annually'), 'No debt i11 cxc<ss of' (stored 'No debt in excess of'), 'repelling. invasion, suppressing ius111Trc<:ticm' (stored 'repelling invasion, suppressing insurrection'). Substantive wording, numbers ($2M, one-half, $10M, thirty years), and structure (two paragraphs) are identical. Stored text is correct.",
+     "sessionlaw_text": "SECTION 182 IN ARTICLE 12.) The state may issue or guarantee the payment of bonds, provided that all bonds in excess of two million dollars shall be secured by first mortgages upon real estate, in amounts not to exceed one-half of its value; or upon real or personal property of State owned utilities, enterprises or industries in amounts, not exceeding its value, and provided, further, that the state shall not issue or guarantee bonds upon property of state owned utilities, enterprises or industries in excess of ten million dollars.\n\nNo future indebtedness shall be incurred by the State unless evidenced by a bond issue, which shall be authorized by law for certain purposes, to be clearly defined. Every law authorizing a bond issue shall provide for levying an annual tax or make other provisions, sufficient to pay the interest semi-annually, and the principal within thirty years from the passage of such law and shall specially appropriate the proceeds of such tax, or of such other provisions, to the payment of said principal and interest, and such appropriation shall not be repealed nor the tax or other provisions discontinued until such debt, both principal and interest, shall have been paid. No debt in excess of the limit named herein shall be incurred except for the purposes of repelling invasion, suppressing insurrection, defending the state in time of war or to provide for the public defense in case of threatened hostilities."
+    }
+   ],
+   "metadata_issues": "None. Session law confirms ARTICLE XXXI, Section 182 in Article 12, ratified at the general election held November 5th, 1918 — all matching the stored record (target § 182, Article 12, election_date 1918-11-05, authority \"Amendment ratified 1918-11-05\"). Effective date 1918-12-05 is consistent with the post-canvass convention; not contradicted by the session law.",
+   "confidence": "high"
+  },
+  {
+   "number": "XXXII",
+   "source_used": "Enacted/certified text under heading \"ARTICLE XXXII / SECTION 185 IN ARTICLE 12 AS AMENDED BY ARTICLE 18 OF AMENDMENT\" in the Statement of Findings of the State Board of Canvassers (lines 26086-26095); corroborated by the agreeing Concurrent Resolution, Chapter 89, \"Sec. 185 In Article 12\" (lines 6088-6106).",
+   "overall": "ocr_only",
+   "findings": [
+    {
+     "target": "N.D. Const. § 185",
+     "verdict": "ocr_only",
+     "note": "Stored text matches the session law verbatim. The session-law scan is OCR-garbled (e.g. 'i11~enrnl improvementi;', 'c~·eclit', 'ni~l', 'reasonnblr;', 'be~ome', 'corpomlion'), but cleaning those artifacts yields exactly the stored wording: 'may make internal improvements and may engage in any industry, enterprise or business, not prohibited by Article 20 of the Constitution, but neither the state nor any political subdivision thereof shall otherwise loan or give its credit or make donations to or in aid of any individual, association or corporation except for reasonable support of the poor, nor subscribe to or become the owner of capital stock in any association or corporation.' No stored-text error; all divergences are OCR noise in the SCAN. The leading clause 'The state, any county or city,' is present in both. Section #185, Article 12 (as amended by Article 18 of Amendment), and Article XXXII designation all match.",
+     "sessionlaw_text": "SECTION 185 IN ARTICLE 12 AS AMENDED BY ARTICLE 18 OF AMENDMENT.) The state, any county or city, may make internal improvements and may engage in any industry, enterprise or business, not prohibited by Article 20 of the Constitution, but neither the state nor any political subdivision thereof shall otherwise loan or give its credit or make donations to or in aid of any individual, association or corporation except for reasonable support of the poor, nor subscribe to or become the owner of capital stock in any association or corporation."
+    }
+   ],
+   "metadata_issues": "No stored metadata errors. Election date: stored 1918-11-05 is correct — Chapter 90 (next amendment on the same ballot) reads \"November 5, 1918\" (line 6127); the \"November 3, 1918\" appearing in Chapter 89 (line 6092) is OCR garble ('3' for '5') in the scan, not a discrepancy with the stored record. Authority/heading consistent with the session-law caption (state/county/city to make internal improvements and engage in industry/enterprise/business).",
+   "confidence": "high"
+  },
+  {
+   "number": "XXXIII",
+   "source_used": "Enacted text under heading \"CONSTITUTIONAL AMENDMENTS / Chapter 93, Session Laws 1919 / Adopted March 16, 1920 / 29,262 to 17,255 / ARTICLE 33.\" at lines 13712-13747 of /tmp/sl1921.txt (1921 Session Laws volume)",
+   "overall": "identical",
+   "findings": [
+    {
+     "target": "N.D. Const. amend. art. XXXIII",
+     "verdict": "identical",
+     "note": "Stored text matches the enacted Article 33 verbatim. Differences in the session-law scan are pure OCR garble (ligatures ofﬁcer/ﬁled/forty-ﬁve, hyphenation breaks 'offi—-cer', 'Gover nor', 'quali ﬁed', stray '.to'), not stored-text errors. All substantive words/numbers agree: 'recall any elective congressional, state, county, judicial or legislative officer'; 'at least thirty per cent of the qualified electors who voted at the preceding election for the office of Governor'; 'not less than forty or more than forty-five days'; 'within ten days'; 'self executing'; 'no law shall be enacted to hamper, restrict or impair the right of recall.' Stored text is correct.",
+     "sessionlaw_text": ""
+    }
+   ],
+   "metadata_issues": "No metadata errors. Session law shows \"Adopted March 16, 1920\" (stored election_date 1920-03-16 and authority \"ratified 1920-03-16\" match), enacting authority \"Chapter 93, Session Laws 1919\" (vote 29,262 to 17,255). Session law labels this \"ARTICLE 33\" (= amendment XXXIII); the stored descriptive heading \"Recall of elective congressional, state, county, judicial and legislative officers\" tracks the volume index entry \"Recall\" and is not contradicted by the session law. Effective date 1920-04-15 is not stated in the session-law block (it gives only the adoption/canvass date); no conflict shown.",
+   "confidence": "high"
+  },
+  {
+   "number": "XXXIV",
+   "source_used": "\"CONSTITUTIONAL AMENDMENTS\" section near end of volume, \"ARTICLE 34.\" (Chapter 96, Session Laws 1919; Adopted March 16, 1920; 31,579 to 14,153), enacted body at lines 13758-13771 of /tmp/sl1921.txt",
+   "overall": "identical",
+   "findings": [
+    {
+     "target": "N.D. Const. § 161",
+     "verdict": "identical",
+     "note": "Stored body matches the enacted ARTICLE 34 text verbatim except for OCR artifacts in the SESSION-LAW scan, not the stored text. Scan reads 'au—/thority'=authority, 'ﬁve years'=five years (ligature), 'pasturage and meadow purposes-' (stray hyphen from line wrap), 'UniVersity'=University (OCR cap), 'agriculr/tural'=agricultural, all of which the stored text renders correctly. Section designation 'Section 161, Article 9.', the five-year limits, the pasturage/meadow restriction, the Board of University and School Lands cultivation proviso, 'All rents shall be paid in advance.', and the coal-lands 'Provided further' paragraph all agree.",
+     "sessionlaw_text": "Section 161, Article 9. The Legislative Assembly shall have authority to provide by law for the leasing of lands granted to the state for educational and charitable purposes; but no such law shall authorize the leasing of said lands for a longer period than five years. Said lands shall only be leased for pasturage and meadow purposes and at a public auction after notice as heretofore provided in case of sale; provided, that all of said school lands now under cultivation may be leased, at the discretion and under the control of the Board of University and School Lands, for other than pasturage and meadow purposes until sold. All rents shall be paid in advance.\n\nProvided further, that coal lands may also be leased for agricultural cultivation upon such terms and conditions and for such a period, not exceeding five years as the legislature may provide."
+    }
+   ],
+   "metadata_issues": "None. Article designation \"ARTICLE 34\" = XXXIV matches. Session law shows \"Adopted March 16, 1920,\" consistent with stored election_date 1920-03-16 and authority \"Amendment ratified 1920-03-16.\" Underlying enacting authority is Chapter 96, Session Laws 1919 (vote 31,579 to 14,153); the stored authority field omits the chapter cite but states the ratification date correctly, so not a defect. Stored heading (\"Leasing of state lands and coal lands for agricultural purposes up to five years\") is an editorial descriptor; the session law has no enacted heading (TOC label \"Leasing of coal lands\"), so the heading difference is not a stored-text error.",
+   "confidence": "high"
+  },
+  {
+   "number": "XXXV",
+   "source_used": "Enacted text under heading \"CONSTITUTIONAL AMENDMENTS\" / \"ARTICLE 35\", \"Section 183\" — derived from Chapter 91, Session Laws 1919, as amended by Chapter 26, Special Session Laws 1919; Adopted March 16, 1920; 24,869 to 18,923 (Session Laws 1921, p. 258-259, /tmp/sl1921.txt lines 13781-13811)",
+   "overall": "ocr_only",
+   "findings": [
+    {
+     "target": "N.D. Const. § 183",
+     "verdict": "ocr_only",
+     "sessionlaw_text": "",
+     "note": "Stored body text matches the enacted Article 35 / Section 183 text verbatim. Every divergence is OCR noise in the SESSION-LAW scan, not a stored-text error: the scan renders 'five' as 'ﬁve' (ﬁ-ligature) throughout, 'purchasing' as 'purchasing'/'purchasing\\'water', 'whatever,' for 'whatever.', and inserts stray marks ('void.   7', 'suchv', 'es-/tablishment'). Stored substantive wording is correct: 'three per centum', 'five per cent on such assessed value', 'four per centum', 'revenue producing utility', 'shall be void.' all confirmed against the scan. Metadata also confirmed: section 183, Article 35 (= XXXV), 'Adopted March 16, 1920' matches stored election_date 1920-03-16."
+    }
+   ],
+   "metadata_issues": "None. Section number (183), article (35 = XXXV), and ratification/adoption date (March 16, 1920, matching stored election_date 1920-03-16) all agree with the session law. The session law gives the source acts as Chapter 91, Session Laws 1919, as amended by Chapter 26, Special Session Laws 1919; the stored authority field generically says \"Amendment ratified 1920-03-16,\" which is consistent though less specific.",
+   "confidence": "high"
+  },
+  {
+   "number": "XXXVI",
+   "source_used": "Heading \"CONSTITUTIONAL AMENDMENTS\" / \"ARTICLE 36\" enacted text at lines 13815-13830 of /tmp/sl1921.txt (Chapter 28, Special Session Laws 1919; Adopted March 16, 1920; 31,082 to 16,366)",
+   "overall": "identical",
+   "findings": [
+    {
+     "target": "N.D. Const. amend. art. XXXVI",
+     "verdict": "identical",
+     "note": "Stored text matches the enacted ARTICLE 36 text word-for-word: 'Every qualified elector who shall have resided in the state one year, and in the county ninety days, and in the precinct thirty days next preceding any election, shall be entitled to vote at such election; provided, that where a qualified elector moves from one precinct to another within the same county, he shall be entitled to vote in the precinct from which he moved, until he establishes his residence in the precinct to which he moved.' Differences in the session-law scan ('qualiﬁed', 'onevyear', 'beentitled', 'to an\\nother', 'beentitled') are OCR artifacts in the SCAN only; the STORED text is correct. Metadata also aligns: session law shows 'Adopted March 16, 1920' (= stored election_date 1920-03-16) and vote 31,082 to 16,366. Stored authority 'Amendment ratified 1920-03-16' is consistent (session law cites Chapter 28, Special Session Laws 1919 as the proposing act, not in stored record, but stored authority is not wrong).",
+     "sessionlaw_text": "",
+     "target_field": ""
+    }
+   ],
+   "metadata_issues": "None. Session law adoption date (March 16, 1920) matches stored election_date 1920-03-16; stored effective_date 1920-04-15 is consistent. Article number (36 = XXXVI) matches. Stored authority does not cite the proposing chapter (Ch. 28, Special Session Laws 1919) but is not incorrect.",
+   "confidence": "high"
+  },
+  {
+   "number": "XXXVII",
+   "source_used": "Enacted text at line 13838, \"ARTICLE 37. Section 121.\" block (CONSTITUTIONAL AMENDMENTS section, p.259), with \"Adopted November 2, 1920\" and canvass tally \"129,628 to 63,569\"",
+   "overall": "substantive",
+   "findings": [
+    {
+     "target": "N.D. Const. § 121",
+     "verdict": "substantive",
+     "note": "Body text matches the enacted session law word-for-word EXCEPT capitalization of the second class. The enacted text reads '...First, citizens of the United States; second, civilized persons of Indian descent...' (lowercase 'second', mid-sentence after a semicolon). The STORED text has 'Second' capitalized. This is a defect in the STORED text, not OCR garble in the scan — the scan is clean here and unambiguously shows lowercase 'second'. Minor/orthographic but the stored text deviates from the enacted form. The 'Sec. 121' (stored) vs 'Section 121' (session law) is only a heading-abbreviation convention, not a defect.",
+     "sessionlaw_text": "Section 121. Every person of the age of twenty-one years or upwards, belonging to either of the following classes who shall have resided in the state one year and in the county ninety days and in the precinct thirty days next preceding any election shall be a qualified elector at such election. First, citizens of the United States; second, civilized persons of Indian descent who have severed their tribal relation two years next preceding such election."
+    }
+   ],
+   "metadata_issues": "No metadata defects. Session law shows ARTICLE 37 amending Section 121, \"Adopted November 2, 1920\" (matches stored election_date 1920-11-02), authorized by Chapter 86, Session Laws 1917 and Chapter 94, Session Laws 1919. Stored effective_date 1920-12-02 and authority \"Amendment ratified 1920-11-02\" are consistent with the enacted text's adoption date.",
+   "confidence": "high"
+  },
+  {
+   "number": "XXXVIII",
+   "source_used": "Enacted text under \"ARTICLE 38. Section 215.\" in the CONSTITUTIONAL AMENDMENTS section (lines 13852-13899), with approval line \"Adopted November 2, 1920. 124,431 to 56,526.\"",
+   "overall": "ocr_only",
+   "confidence": "high",
+   "findings": [
+    {
+     "target": "N.D. Const. § 215",
+     "verdict": "ocr_only",
+     "note": "Stored text matches the enacted session-law text word-for-word. All divergences are OCR garble in the SESSION-LAW SCAN, not stored-text errors: scan reads 'SectiOn 215' (stored correct 'Section 215'), 'County of lVlorton' (stored correct 'Morton'), 'fifty thousand' rendered 'ﬁfty' as an ﬁ-ligature, 'Act of Congress' broken as 'Con-/gress' across the page break. Substantive content identical: institutions, cities/counties, the 50,000 / 30,000 / eighty thousand / twenty thousand acre figures, 'State Training School at the City of Mandan' (the amendment's purpose: renaming Reform School to Training School), and the Feeble Minded / Penitentiary closing clause all agree.",
+     "sessionlaw_text": ""
+    }
+   ],
+   "metadata_issues": "None. Session law approval line \"Adopted November 2, 1920\" matches stored election_date 1920-11-02 and authority \"Amendment ratified 1920-11-02\"; stored effective_date 1920-12-02 is consistent (canvass/proclamation follows the Nov 2 election). Article number (38/XXXVIII) and section number (215) match."
+  },
+  {
+   "number": "XXXIX",
+   "source_used": "Enacted body under \"ARTICLE 39. Section 162.\" (lines 13900-13911), preceded by the recital \"Chapter 94, Session Laws 1917 / Chapter 95, Session Laws 1919 / Adopted November 2, 1920 / 124,431 to 56,526.\"",
+   "overall": "identical",
+   "findings": [
+    {
+     "target": "N.D. Const. § 162",
+     "verdict": "identical",
+     "note": "Stored text matches the enacted ARTICLE 39 / Section 162 body word-for-word. All divergences are OCR noise in the SESSION-LAW scan, not stored-text errors: the scan shows f-ligatures ('ﬁrst' for 'first'), a stray period in 'or of townships.' where the enacted text reads 'or of townships,', a leading hyphen artifact '-or of counties', and a line-wrap split 'ap praisal' for 'appraisal'. Stored reads correctly 'or of townships,', 'first', and 'appraisal'. Section number (162) and structure align exactly.",
+     "sessionlaw_text": "Section 162. The moneys of the permanent school fund and other educational funds shall be invested only in bonds of school corporations or of counties, or of townships, or of municipalities within the state, bonds issued for the construction of drains under authority of law within the state, bonds of the United States, bonds of the State of North Dakota, or on first mortgages on farm lands in this state, not exceeding in amount one-half of the actual value of any sub-division on which the same may be loaned, such value to be determined by the board of appraisal of school lands."
+    }
+   ],
+   "metadata_issues": "None. Session law states \"Adopted November 2, 1920,\" matching stored election_date 1920-11-02; vote 124,431 to 56,526. Section 162 / Article 39 (XXXIX) match. Stored effective_date 1920-12-02 is a stored convention (one month post-adoption) not contradicted by the session law, which gives only the adoption date. Authority recital cites proposing Chapters 94 (1917) and 95 (1919); the stored generic authority note \"Amendment ratified 1920-11-02\" is not inconsistent.",
+   "confidence": "high"
+  },
+  {
+   "number": "XL",
+   "source_used": "CONSTITUTIONAL AMENDMENTS section, \"Article 40.\" (line 29707), heading \"Chapter 41, Session Laws, 1921. Adopted June 28, 1922—127,074 to 38,299.\"",
+   "overall": "identical",
+   "findings": [
+    {
+     "target": "N.D. Const. amend. art. XL",
+     "verdict": "identical",
+     "sessionlaw_text": "Every qualified elector, who shall have resided in the State one year, in the county 90 days and in the precinct 30 days next preceding any election, shall be entitled to vote at such election. Provided that where a qualified elector moves from one precinct to another within the state he shall be entitled to vote in the precinct from which he moves until he establishes his residence in the precinct to which he moves.",
+     "note": "Stored body text matches the enacted Article 40 text word-for-word, including numerals ('90 days', '30 days'). The session-law scan at this spot is clean (line breaks aside). No divergence in either the STORED text or the SCAN. Note: a separate Chapter 214 (Sec. 948, Compiled Laws, approved Jan 24 1923) in the same volume is the implementing STATUTE, not the constitutional amendment; the constitutional Article 40 is the correct source and it is the one quoted here."
+    }
+   ],
+   "metadata_issues": "No metadata errors. Session law states \"Adopted June 28, 1922,\" matching stored election_date 1922-06-28. \"Article 40\" = Amendment XL. Stored authority (\"Amendment ratified 1922-06-28\") is consistent though less specific than the session-law's proposing source \"Chapter 41, Session Laws, 1921\"; not a contradiction. Stored effective_date 1922-07-28 (30 days post-vote) is not stated in the session law but is not contradicted by it.",
+   "confidence": "high"
+  },
+  {
+   "number": "XLI",
+   "source_used": "CONSTITUTIONAL AMENDMENTS, Chapter 177 (Session Laws 1923), ARTICLE 41, § 173, adopted March 18, 1924 (70447 to 49762); /tmp/sl1925.txt lines 17283-17304",
+   "overall": "identical",
+   "findings": [
+    {
+     "target": "N.D. Const. § 173",
+     "verdict": "identical",
+     "note": "Stored body text matches the enacted session-law text word-for-word. The only divergences are OCR line-wrap/spacing artifacts in the SESSION-LAW scan, not in the stored text: session law reads 'deem ed necessary' (line-break split) vs stored 'deemed necessary', and 'qualified ;' (stray space) vs stored 'qualified;'. Stored text is correct. Section number (§173), article (41 = XLI), and adoption date (March 18, 1924) all confirmed.",
+     "sessionlaw_text": ""
+    }
+   ],
+   "metadata_issues": "None. Session law: ARTICLE 41 (= Amendment XLI), § 173, 'Adopted March 18, 1924' matches stored election_date 1924-03-18 and authority 'Amendment ratified 1924-03-18'. Effective date 1924-04-17 not contradicted by the session law (it gives only the adoption/canvass date).",
+   "confidence": "high"
+  },
+  {
+   "confidence": "high",
+   "number": "XLII",
+   "source_used": "CONSTITUTIONAL AMENDMENTS, Chapter 178, Article 42, § 182 (Session Laws 1923); enacted text at line 17283ff, \"Adopted March 18, 1924 — 64996 to 57345.\"",
+   "overall": "identical",
+   "findings": [
+    {
+     "target": "N.D. Const. § 182",
+     "verdict": "identical",
+     "note": "Stored body text matches the enacted session-law text of Article 42 / § 182 word-for-word. The only divergences are OCR artifacts in the SESSION-LAW scan, not stored-text errors: scan reads \"anuual tax\" (stored correctly \"annual tax\"); line-break hyphenations in scan (\"se-cured\", \"guar-antee\", \"provi-sion\", \"cer-tain\") all resolve to the stored words. Section number (§182), article number (42=XLII), and approval date (Adopted March 18, 1924, vote 64996 to 57345) all match the stored election_date 1924-03-18. The stored heading \"Public debt; state bonds; payment within thirty years from date of issue\" is an editorial caption not present in the enacted text (which begins simply \"§ 182.\"), so it is not a session-law divergence.",
+     "sessionlaw_text": ""
+    }
+   ],
+   "metadata_issues": ""
+  },
+  {
+   "skill": "x",
+   "number": "XLIII",
+   "source_used": "CONSTITUTIONAL AMENDMENTS section, \"CONCURRENT RESOLUTION, S. L. 1925 / Article 43 / § 82\" enacted body, lines 28815-28845 of /tmp/sl1927.txt; \"Approved June 30, 1926, 69,214 to 61,235.\"",
+   "overall": "ocr_only",
+   "confidence": "high",
+   "findings": [
+    {
+     "target": "N.D. Const. § 82",
+     "verdict": "ocr_only",
+     "sessionlaw_text": "§ 82. There shall be chosen by the qualified electors of the State at the times and places of choosing members of the legislative assembly, a secretary of state, auditor, treasurer, superintendent of public instruction, commissioner of insurance, three commissioners of railroads, one attorney general and one commissioner of agriculture and labor, who shall have attained the age of twenty-five years, shall be citizens of the United States, and shall have the qualifications of state electors. They shall severally hold their offices at the seat of government, and, with the exception of the commissioners of railroads, for the term of two years and until their successors are elected and duly qualified, but no person shall be eligible to the office of treasurer for more than two consecutive terms. Of the commissioners of railroads elected at the general election in 1926, the one having held his office for the longest time shall serve for six years; the one having held his office the next longest time shall serve for four years, and the one having held this office the shortest time, shall serve for two years, provided, however, if two or more such commissioners shall have held such office an equal or no length of time, the one having the highest vote shall serve for the longer term; thereafter one commissioner of railroads shall be elected every two years, and shall hold his office for a term of six years and until his successor is elected and qualified.",
+     "note": "STORED body text is correct and matches the session law verbatim. A normalized word-by-word diff (245 stored vs 250 session-law tokens) leaves ZERO substantive differences. Every divergence is OCR line-wrap hyphenation in the SESSION-LAW SCAN, not a stored-text error: 'commissioners' printed as 'commis-/sioners' (twice), 'twenty-five' split as 'twenty-/five', and 'successors' split as 'suc-/cessors'. The extra '+82' token is just the '§ 82.' section-number prefix. The scan also has stray-character artifacts ('exception -of', \"office 'for\", 'longer term ;') that confirm the scan is the noisy side; the stored text is clean and correct."
+    }
+   ],
+   "metadata_issues": "(1) Date: stored effective_date = 1926-07-30 (July 30). The session law records the popular-vote canvass as \"Approved June 30, 1926, 69,214 to 61,235\" (June 30). The session law supplies only the approval/canvass date, not an \"effective\" date; ND constitutional amendments take effect on a later secretary-of-state proclamation, so July 30 is not contradicted by the session law and may reflect the proclamation. Not flagged as a hard error, but the stored record gives no election_date even though the session law shows the ratification vote occurred (canvassed June 30, 1926). (2) Authority: stored authority = \"Amendment ratified undefined\" — a defective placeholder (\"undefined\"). The session law shows the measure originated as a CONCURRENT RESOLUTION, S. L. 1925, and was ratified by popular vote (69,214 to 61,235), canvass approved June 30, 1926. This is a stored metadata defect, though it concerns the authority string rather than the constitutional text."
+  },
+  {
+   "number": "XLIV",
+   "source_used": "CONSTITUTIONAL AMENDMENTS section, \"(H. B. No. 341 — Session Laws of 1927) / ARTICLE 44 / JOINT RESOLUTION / § 179\" (lines ~21044-21071 of /tmp/sl1929.txt); \"Approved March 20, 1928. 63568 to 37284.\"",
+   "overall": "metadata",
+   "findings": [
+    {
+     "target": "N.D. Const. § 179",
+     "verdict": "identical",
+     "note": "Stored body text matches the enacted Article 44 / § 179 session-law text word-for-word after normalizing OCR line-wrap hyphenation in the scan (\"com panies\"->\"companies\", \"pur pose\"->\"purpose\"). No substantive divergence in words, numbers, or structure. The only divergences are line-wrap artifacts in the SESSION-LAW scan, and they are absent from the stored text.",
+     "sessionlaw_text": "",
+     "target_text": ""
+    },
+    {
+     "target": "N.D. Const. § 179 (effective date)",
+     "verdict": "metadata",
+     "note": "The STORED record gives effective_date \"1928-04-20\" (April 20, 1928). The session law shows the amendment was \"Approved March 20, 1928\" (vote 63568 to 37284), not April 20. The month is wrong in the stored metadata (March vs April). This is a defect in the STORED record, not OCR garble in the scan — the scan plainly reads \"Approved March 20, 1928.\" (Note: the approval/canvass date is March 20, 1928; if an April 20 effective date reflects a later proclamation that is not stated in this session-law volume, but the stored field labeled effective_date does not match any date appearing here.)",
+     "sessionlaw_text": "Approved March 20, 1928. 63568 to 37284."
+    }
+   ],
+   "metadata_issues": "Effective/approval date: stored effective_date = 1928-04-20 (April 20); session law states \"Approved March 20, 1928.\" Month mismatch (March vs April). Article number in session law is \"ARTICLE 44\" (= XLIV, consistent). Authority field is a malformed placeholder: \"Amendment ratified undefined\" — session law identifies the source as H. B. No. 341, Session Laws of 1927 (Joint Resolution), approved/canvassed 63568 to 37284. Stored heading (\"Property assessed by the State Board of Equalization; light, heat, and power companies included\") is an editorial caption not present in the session law (the session law shows only \"JOINT RESOLUTION / § 179\"); descriptive, not a session-law error.",
+   "confidence": "high"
+  },
+  {
+   "number": "XLV",
+   "source_used": "Enacted text at lines 31080-31099: \"CONSTITUTIONAL AMENDMENTS (Chapter 97 — Session Laws 1929) (Concurrent Resolution) ARTICLE 45 / ELECTION AND TERMS JUDGES DISTRICT COURT / § 104. ... Approved, June 25, 1930.\" Index at line 701: \"Sec. 104 Art. 4 Election and terms judges district court 578\".",
+   "overall": "identical",
+   "findings": [
+    {
+     "target": "N.D. Const. § 104",
+     "verdict": "identical",
+     "note": "The stored body text matches the enacted session-law text word-for-word. All apparent differences in the session-law scan are OCR line-wrap/hyphenation artifacts (\"judi cial\", \"Judge-/of\", \"the-/first\", \"judge ships\", \"hold,\", stray spaces before semicolons). No words, numbers, or structure differ. STORED text is correct.",
+     "sessionlaw_text": ""
+    },
+    {
+     "target": "N.D. Const. § 104 (heading)",
+     "verdict": "metadata",
+     "note": "Stored heading is \"Election and terms of judges of district court\"; the official session-law heading is \"ELECTION AND TERMS JUDGES DISTRICT COURT\" (no \"of\" words), and the index likewise reads \"Election and terms judges district court\". The stored heading inserts two \"of\"s not in the enacted heading. Minor heading-style divergence; defect is in the STORED heading, not the scan.",
+     "sessionlaw_text": "ELECTION AND TERMS JUDGES DISTRICT COURT"
+    }
+   ],
+   "metadata_issues": "(1) Heading: enacted heading is \"ELECTION AND TERMS JUDGES DISTRICT COURT\"; stored adds two \"of\"s (\"Election and terms of judges of district court\"). (2) Date: session law states \"Approved, June 25, 1930.\" Stored effective_date is 1930-07-25 (July 25). The month differs (June vs July). This may be a legitimate approved-vs-effective/proclamation distinction rather than an error, so flagged with caution — the session-law approval date is June 25, 1930. (3) Stored authority field reads \"Amendment ratified undefined\" (placeholder); session law identifies it as Chapter 97, Session Laws 1929 (Concurrent Resolution), Article 45.",
+   "confidence": "high"
+  },
+  {
+   "number": "XLVI",
+   "source_used": "Enacted text at lines 31104-31122: \"(Chapter 98 — Session Laws 1929) (Concurrent Resolution) ARTICLE 46 / ELECTION, TERMS AND COMPENSATION JUDGES SUPREME COURT / § 90. ...\" (Approved, June 25, 1930; tally 75009 to 65795)",
+   "overall": "identical",
+   "confidence": "high",
+   "findings": [
+    {
+     "target": "N.D. Const. § 90",
+     "verdict": "identical",
+     "note": "Stored body text matches the session-law enacted text word-for-word. The only divergences are OCR artifacts in the SESSION-LAW scan: line-wrap hyphenation ('of-fice', 'compensa-tion', 'num-ber') and a stray period ('a.\\nterm of eight years'). The stored text correctly reads 'a term of eight years'. Article number (46/XLVI) and section number (90) confirmed in the session law. No substantive defect in the stored text.",
+     "sessionlaw_text": "",
+     "target_note_heading": ""
+    }
+   ],
+   "metadata_issues": "Two non-body items, neither a session-law-vs-stored body error: (1) Stored 'authority' field is a broken placeholder: \"Amendment ratified undefined\". The session law shows the actual authority is \"Chapter 98 — Session Laws 1929 (Concurrent Resolution), Article 46,\" approved June 25, 1930 (canvass tally 75009 to 65795). Recommend fixing the placeholder. (2) Stored heading \"Election, Terms and Compensation of Judges of the Supreme Court\" expands the session-law all-caps heading \"ELECTION, TERMS AND COMPENSATION JUDGES SUPREME COURT\" by inserting \"of\" twice; this is a conventional normalization, not an error. Note also stored effective_date 1930-07-25 vs the session law's \"Approved, June 25, 1930\" — these measure different events (the session-law line is an approval/canvass date, not an effective date), so not treated as a contradiction."
+  },
+  {
+   "number": "XLVII",
+   "source_used": "Heading \"CONSTITUTIONAL AMENDMENTS / ARTICLE 47 / REPEAL OF PROHIBITION CLAUSE IN STATE CONSTITUTION\" (Submitted by initiative petition), enacted text at lines 26530-26537 of /tmp/sl1933.txt",
+   "overall": "metadata",
+   "findings": [
+    {
+     "target": "N.D. Const. § 217",
+     "verdict": "identical",
+     "note": "Stored body text is \"[Repealed]\". The session law's enacted text reads: \"That Section 217, Article 20, of the Constitution of the State of North Dakota, be and the same is hereby repealed.\" This is a pure repeal with no replacement body, so the stored \"[Repealed]\" placeholder faithfully and correctly captures the operative effect. No substantive divergence. The session-law caption \"REPEAL OF PROHIBITION CLAUSE IN STATE CONSTITUTION\" supports the stored heading \"Prohibition\".",
+     "sessionlaw_text": ""
+    },
+    {
+     "target": "N.D. Const. § 217 (record metadata)",
+     "verdict": "metadata",
+     "note": "Stored \"authority\" field is the literal string \"Amendment ratified undefined\" — a leaked placeholder defect in the STORED record (not the scan). The session law gives the actual authority/provenance: this amendment was \"Submitted by initiative petition\" and \"Approved, Nov. 8, 1932. 134742 to 99316.\" (vote tally). The stored effective_date 1932-12-08 is consistent (30 days after the Nov. 8, 1932 approval). The stored election_date is null though the session law supplies it (Nov. 8, 1932).",
+     "sessionlaw_text": "ARTICLE 47\nREPEAL OF PROHIBITION CLAUSE IN STATE CONSTITUTION\n(Submitted by initiative petition)\nThat Section 217, Article 20, of the Constitution of the State of North Dakota, be and the same is hereby repealed.\nApproved, Nov. 8, 1932. 134742 to 99316."
+    }
+   ],
+   "metadata_issues": "1) Stored authority = \"Amendment ratified undefined\" (placeholder leak). Session law: submitted by initiative petition; approved Nov. 8, 1932 by vote 134,742 to 99,316. 2) Stored election_date is null but session law supplies it: Nov. 8, 1932. 3) effective_date 1932-12-08 is consistent with the 30-day rule following the Nov. 8, 1932 approval — no correction needed. Body text \"[Repealed]\" is correct.",
+   "confidence": "high"
+  },
+  {
+   "number": "XLVIII",
+   "source_used": "Chapter 84, H.B. No. 216 (State Affairs Committee), heading \"COUNTY OFFICERS\", enacted body \"§ 173. At the first general election...\" (lines 6795-6834); Approved March 7, 1933",
+   "overall": "metadata",
+   "findings": [
+    {
+     "target": "N.D. Const. § 173",
+     "verdict": "identical",
+     "note": "Stored body text matches the enacted session-law text word for word. Spot-checked the distinctive provisions: 'a register of deeds, county auditor, treasurer, sheriff, state's attorney, county judge and a clerk of the district court'; 'provided in counties having fifteen thousand population, or less, the county judge shall also be the clerk of the district court'; 'counties having a population of 6,000 or less, the register of deeds shall also be clerk of the district court and county judge'; 'The sheriff and treasurer of any county shall not hold their respective offices for more than four years in succession.' All identical. The only divergences are ordinary OCR spacing/hyphenation artifacts in the session-law scan (e.g. 'qualified ;', 're-enacted'); the stored text is correct.",
+     "sessionlaw_text": "",
+     "target_note": ""
+    },
+    {
+     "target": "authority (metadata)",
+     "verdict": "metadata",
+     "note": "STORED authority field is a defective placeholder: 'Amendment ratified undefined'. The session law supplies the enacting authority: 1933 N.D. Sess. Laws ch. 84 (H.B. No. 216, State Affairs Committee), a Concurrent Resolution amending and re-enacting Section 173 of Article 10 (as previously amended by Article 41 of the amendments), 'Approved March 7, 1933.' Defect is in the STORED record, not the scan.",
+     "sessionlaw_text": "CHAPTER 84 / H. B. No. 216 — (State Affairs Committee.) / COUNTY OFFICERS / A Concurrent Resolution providing for the amendment of Section 173 of Article 10 of the Constitution of North Dakota as amended by Article 41 of the amendments thereof, relating to county officers. ... § 1. Amendment.] That Section 173 of Article 10 of the Constitution of the State of North Dakota, as amended by Article 41 of the amendments thereof, is hereby amended and re-enacted to read as follows: ... Approved March 7, 1933."
+    }
+   ],
+   "metadata_issues": "authority: stored value 'Amendment ratified undefined' is a defective placeholder. Session law: 1933 N.D. Sess. Laws ch. 84, H.B. No. 216 (State Affairs Committee), approved by the legislature March 7, 1933, amending Section 173 of Article 10 (as previously amended by Article 41). election_date is null in the stored record; this 1933 volume does not supply the ratification/election date directly (only the March 7, 1933 legislative approval and submission to electors under § 202), so the stored effective_date 1933-10-22 is neither confirmed nor contradicted here. heading 'County Officers', target § 173, and Article 10 all match the session law.",
+   "confidence": "high"
+  },
+  {
+   "number": "XLIX",
+   "source_used": "Enacted body under \"CONSTITUTIONAL AMENDMENTS — PROPOSED, CHAPTER 83, Senate Concurrent Resolution, READING OF LEGISLATIVE BILLS, ARTICLE 63\" (lines ~6767-6790); \"amended to read as follows\" body. Cross-checked index entry \"Reading of bills by legislature 117\" and the approved/disapproved canvass list.",
+   "overall": "ocr_only",
+   "findings": [
+    {
+     "target": "N.D. Const. § 63",
+     "verdict": "ocr_only",
+     "note": "Stored body text matches the session-law enacted text word-for-word. The only divergences are OCR garble in the SESSION-LAW scan, not in the stored text: scan reads 'shallbe' (for 'shall be'), 'read\\ning' (line-wrapped 'reading'), and 'Xo legislative day' (for 'No legislative day'). Stored text correctly has 'shall be', 'reading', and 'No'. Headings agree ('Reading of Legislative Bills' vs scan 'READING OF LEGISLATIVE BILLS', case only). Section/article number 63 agrees. Stored text is correct.",
+     "sessionlaw_text": "Every bill shall be read two separate times, but the first and second readings may not be upon the same day; and the first reading may be by title of the bill only, unless upon such first reading, a reading at length is demanded. The second reading shall be at length. No legislative day shall be shorter than the natural day."
+    }
+   ],
+   "metadata_issues": "No body-text or section-number defect. Two notes, neither correctable from this volume: (1) Stored authority field reads 'Amendment ratified undefined' (malformed); the 1933 session law shows this provision as Chapter 83, Senate Concurrent Resolution (Erickson of Kidder, and Fowler), proposed under Section 202 and 'Filed March 7th, 1933' — submitted to the electors, not yet ratified in this volume. (2) Stored effective_date 1933-10-22 is neither confirmed nor contradicted by this volume: the 1933 laws list Article 63 only in the 'Proposed' section (to be voted on later); the volume's 'Approved/Disapproved' canvass covers the Nov. 8, 1932 election (e.g., Article 47), not Article 63. election_date is null in the stored record.",
+   "confidence": "high"
+  },
+  {
+   "number": "L",
+   "source_used": "Session Laws 1939, \"CONSTITUTIONAL AMENDMENTS (Approved),\" ARTICLE 50, \"SALE OF SCHOOL AND PUBLIC LANDS,\" Submitted by Legislature, § 158; Approved June 28, 1938 (95,700 to 76,051) (file lines ~26534-26614, p. 495-496)",
+   "overall": "metadata",
+   "findings": [
+    {
+     "target": "N.D. Const. § 158",
+     "verdict": "ocr_only",
+     "note": "Body text is character-for-character identical to the session law (letters-only comparison equal; SequenceMatcher 0.96 with all residual diffs explained). Every apparent divergence is an OCR line-break artifact in the SESSION-LAW scan, not a stored-text error: the scan splits words across lines without hyphens (e.g. 're maining', 'in terest', 'pay able', 'sit uated', 'cir culation', 'sub divided', 'is sue', 'deter mine', 'Sec tion', 'sub ject', 're sale', 'except ing', 'an nually') and uses spaced semicolons (' ;'); the scan also reads 'purchases' where stored has the same plus an editorial '[purchaser]' insertion, and OCRs '$10.00' fine. The closing clause 'sold to the original purchaser or to his heirs or assigns.' is present in both. Stored text is correct.",
+     "sessionlaw_text": ""
+    },
+    {
+     "target": "authority (metadata)",
+     "verdict": "metadata",
+     "note": "Stored authority field is a broken placeholder: 'Amendment ratified undefined'. The session law identifies this as ARTICLE 50, 'Submitted by Legislature,' and gives 'Approved June 28, 1938. 95,700 to 76,051.' The defect is in the STORED record (the 'undefined' token is a generation artifact, and the legislative referral / approval date are not captured).",
+     "sessionlaw_text": "ARTICLE 50 — SALE OF SCHOOL AND PUBLIC LANDS — Submitted by Legislature. Approved June 28, 1938. 95,700 to 76,051."
+    }
+   ],
+   "metadata_issues": "authority: stored 'Amendment ratified undefined' is a broken placeholder; session law shows Article 50, 'Submitted by Legislature,' Approved June 28, 1938. election_date: stored is null; session law gives the approval/ratification date June 28, 1938 (vote 95,700 to 76,051) — should be populated. effective_date: stored 1938-07-28 is consistent (30 days after the June 28, 1938 approval) and not contradicted by the session law. heading: stored 'Sale of school and public lands; interest rate reduced to three per cent; refinancing' expands on the SL short title 'SALE OF SCHOOL AND PUBLIC LANDS'; descriptive, not a defect. No article number is stored (SL = Article 50).",
+   "confidence": "high"
+  },
+  {
+   "number": "LI",
+   "source_used": "CONSTITUTIONAL AMENDMENTS (Approved), ARTICLE 51 — \"AN ACT PROHIBITING MEMBERS OF THE LEGISLATIVE ASSEMBLY FROM RECEIVING OR ACCEPTING STATE EMPLOYMENT\" (Submitted by Initiative Petition), § 1; /tmp/sl1939.txt lines 26617-26637",
+   "overall": "identical",
+   "findings": [
+    {
+     "target": "N.D. Const. amend. art. LI",
+     "verdict": "identical",
+     "note": "Stored body text matches the enacted Article 51 verbatim. Both paragraphs align word-for-word: '...shall not appoint a member of the Legislative Assembly to any civil office or employment of any nature whatsoever, during the term for which said member of the Legislative Assembly shall have been elected.' and 'No member of the Legislative Assembly shall accept any such appointment to civil office or other employment during the term for which he was elected.' The only session-law-scan artifacts are the running header 'CONSTITUTIONAL AMENDMENTS (APPROVED)' breaking the page mid-paragraph and the § 1 marker (a section-label, not part of constitutional body text). No stored-text error.",
+     "sessionlaw_text": ""
+    }
+   ],
+   "metadata_issues": "No substantive metadata error vs the session law. Session law dates the amendment \"Approved June 28, 1938\" (initiative-petition ballot measure, vote 106,699 to 64,087); stored effective_date 1938-07-28 is consistent (30 days after approval) and is the standard effective date. Two minor non-blocking notes: (1) stored authority field reads \"Amendment ratified undefined\" — a placeholder; session law shows ratification via Initiative Petition approved June 28, 1938. (2) Stored heading is a descriptive paraphrase (\"Members of Legislative Assembly prohibited from accepting state employment during term\") rather than the enacted act title; that is a labeling convention, not a contradiction of the session law.",
+   "confidence": "high"
+  },
+  {
+   "number": "LII",
+   "source_used": "1939 N.D. Session Laws, \"CONSTITUTIONAL AMENDMENTS (APPROVED)\" section, ARTICLE 52, \"AN ACT AMENDING SECTION 82 OF THE STATE CONSTITUTION... ELECTION OF A TAX COMMISSIONER ON A NO-PARTY BALLOT, FOR A FOUR-YEAR TERM\" (Submitted by Initiative Petition), Approved June 28, 1938, vote 86,822 to 78,206 (file lines 26644-26674; index \"Sec. 82 Art. 3\" at line 584).",
+   "overall": "identical",
+   "findings": [
+    {
+     "target": "N.D. Const. § 82",
+     "verdict": "identical",
+     "note": "Stored body text matches the enacted ARTICLE 52 text verbatim. All four elements check out: the officer list (\"three commissioners of railroads, an attorney general, a commissioner of agriculture and labor, and a tax commissioner, who shall have attained the age of twenty-five years\"), the term/treasurer clause (\"no person shall be eligible for the office of treasurer for more than two consecutive terms; provided, however, the tax commissioner shall hold his office for the term of four years\"), the no-party-ballot paragraph, and \"The first election of the tax commissioner shall not occur until the year 1940.\" Session-law scan OCR was clean here; no divergences in stored text.",
+     "sessionlaw_text": ""
+    }
+   ],
+   "metadata_issues": "Stored authority field is the placeholder \"Amendment ratified undefined\" — incomplete, not a verified value. Session law shows this amendment was Submitted by Initiative Petition and Approved June 28, 1938 (vote 86,822 to 78,206); the enacted heading is ARTICLE 52 (= amendment LII), distinct from the constitutional article (Art. 3, Executive Department) shown in the index line \"Sec. 82 Art. 3\". Stored effective_date 1938-07-28 is plausible as a post-canvass effective date but the session-law approval/election date is June 28, 1938; the session law does not state a July 28 effective date. Stored heading is null; a descriptive heading (\"Providing for the election of a Tax Commissioner\") exists in the session-law index. None of these affect the verified body text.",
+   "confidence": "high"
+  },
+  {
+   "number": "LIV",
+   "source_used": "ARTICLE 54, \"CONSTITUTIONAL AMENDMENT ESTABLISHING A STATE BOARD OF HIGHER EDUCATION (Submitted by Initiative Petition)\", in the CONSTITUTIONAL AMENDMENTS (Approved) section, /tmp/sl1939.txt lines 26735-26928 (printed pp. 499-502).",
+   "overall": "substantive",
+   "findings": [
+    {
+     "target": "N.D. Const. amend. art. LIV",
+     "verdict": "substantive",
+     "note": "The STORED text is truncated. It ends mid-§6(d) at '...Said budget shall be prepared and presented by the Board of Administration until the State Board of [TEXT TRUNCATED...]' with an editorial note asserting the remainder is on page 602 which 'is NOT included in the provided source PDF.' That premise is FALSE: the full enacted text IS present in this session law (lines 26842-26928, printed pp. 601-602/502). The stored record is MISSING: (a) the close of §6(d) — 'Higher Education organizes as provided in Section 6 (a).\" The appropriations for all of said institutions shall be contained in one legislative measure.'; (b) all of §6(e); (c) all of §7 (subsections (a), (b), (c)) creating the State Commissioner of Higher Education; and (d) all of §8 (self-executing clause). This is a STORED-text defect (missing words/sections), not OCR garble. The session-law scan at this span is clean and readable. Note one matching OCR artifact in §4 — both stored text and session law read '(.$500.00)' with a stray period; that is shared OCR noise, not a stored error.",
+     "sessionlaw_text": "Higher Education organizes as provided in Section 6 (a).\" The appropriations for all of said institutions shall be contained in one legislative measure.\n      (e) The said State Board of Higher Education shall have the control of the expenditure of the funds belonging to, and allocated to such institutions and also those appropriated by the legislature, for the institutions of higher education in this State; provided, however, that funds appropriated by the legislature and specifically designated for any one or more of such institutions, shall not be used for any other institution.\n\n      § 7. (a) The State Board of Higher Education shall, as soon as practicable, appoint for a term of not to exceed three (3) years, a State Commissioner of Higher Education, whose principal office shall be at the State Capitol, in the City of Bismarck. Said Commissioner of Higher Education shall be responsible to the State Board of Higher Education and shall be removable by said board for cause.\n     (b) The State Commissioner of Higher Education shall be a graduate of some reputable college or university, and who by training and experience is familiar with the problems peculiar to higher education.\n     (c) Such Commissioner of Higher Education shall be the chief executive officer of said State Board of Higher Education, and shall perform such duties as shall be prescribed by the board.\n\n      § 8. This constitutional provision shall be self-executing and shall become effective without the necessity of legislative action.\n\n      Approved June 28, 1938. 93,156 to 71,448."
+    },
+    {
+     "target": "N.D. Const. amend. art. LIV (metadata: approval/effective date & authority)",
+     "verdict": "metadata",
+     "note": "Session law states 'Approved June 28, 1938. 93,156 to 71,448.' The STORED effective_date is '1938-07-28' (July 28), but the session-law approval date is June 28, 1938 (the same approval date carried by sibling Articles 50-53 in this volume). Article number is correct (Article 54 = LIV). Stored authority field reads 'Amendment ratified undefined' — incomplete/placeholder; the session law shows the measure was submitted by initiative petition and approved June 28, 1938 by a vote of 93,156 to 71,448, with §8 making it self-executing and effective without legislative action. The stored heading correctly characterizes it as the new article creating the State Board of Higher Education.",
+     "sessionlaw_text": "Approved June 28, 1938. 93,156 to 71,448."
+    }
+   ],
+   "metadata_issues": "Stored effective_date '1938-07-28' (July 28) conflicts with the session-law approval date 'June 28, 1938'; the day appears transposed (June vs July). Stored authority is a placeholder ('Amendment ratified undefined'); session law: submitted by initiative petition, approved June 28, 1938, vote 93,156 to 71,448, self-executing per §8. Article number LIV/54 is correct.",
+   "confidence": "high"
+  },
+  {
+   "number": "LIII",
+   "source_used": "ARTICLE 53, \"AN ACT TO AMEND SECTION 186 OF THE CONSTITUTION...\" (Constitutional Amendments (Approved)), session law /tmp/sl1939.txt lines 26676-26733",
+   "overall": "metadata",
+   "findings": [
+    {
+     "target": "N.D. Const. § 186",
+     "verdict": "identical",
+     "note": "The stored body text matches the enacted session-law text word-for-word. The only differences in the SESSION-LAW scan are OCR line-wrap/hyphenation artifacts (e.g. 'di-\\nrector', 'Tor-\\nnado', 'in-\\nvestments', 'osteo-\\npaths', 'chiropo-\\ndists', and a stray running header 'CONSTITUTIONAL AMENDMENTS (APPROVED)' inserted mid-paragraph). All three numbered subsections (1.), (2.), (3.), the appropriation enumerations, the professions list, and 'effective on July 1, 1939' are present and agree. No stored-text defect.",
+     "sessionlaw_text": ""
+    },
+    {
+     "target": "authority (LIII)",
+     "verdict": "metadata",
+     "note": "Stored authority is the placeholder string 'Amendment ratified undefined' and election_date is null. The session law states the amendment was '(Submitted by Initiative Petition:)' and was 'Approved June 28, 1938. 83,140 to 75,818.' The defect is in the STORED record: the ratification/approval date (June 28, 1938) and vote (83,140 to 75,818) are known but stored as 'undefined'. The effective_date 1939-07-01 stored is correct and matches '(3.) This amendment shall become effective on July 1, 1939.'",
+     "sessionlaw_text": "(Submitted by Initiative Petition:)  ...  Approved June 28, 1938. 83,140 to 75,818."
+    }
+   ],
+   "metadata_issues": "Stored authority = \"Amendment ratified undefined\" and election_date = null. Session law: submitted by initiative petition; \"Approved June 28, 1938. 83,140 to 75,818.\" Approval date (1938-06-28) and vote tally are recoverable and should replace the \"undefined\" placeholder. Stored heading \"Public moneys paid into state treasury; appropriation required; exceptions\" is a descriptive catchline, not the session-law title (\"AN ACT TO AMEND SECTION 186 ... PROVIDING FOR THE PAYMENT OF PUBLIC MONEY INTO THE STATE TREASURY, AND ITS DISBURSEMENT IN ACCORDANCE WITH LEGISLATIVE APPROPRIATIONS\"); not treated as an error. effective_date 1939-07-01 and section/article (§186 / Article 53) are correct.",
+   "confidence": "high"
+  },
+  {
+   "number": "LXIII",
+   "source_used": "CONSTITUTIONAL AMENDMENTS — APPROVED section; heading \"LOCATION OF SCHOOL FOR THE BLIND (Chapter 348, S.L. 1951)\", ARTICLE 63, \"Section 216.) Second:\" clause (lines ~29499-29512 of /tmp/sl1953.txt)",
+   "overall": "metadata",
+   "findings": [
+    {
+     "target": "N.D. Const. § 216",
+     "verdict": "identical",
+     "note": "Article 63 (Chapter 348, S.L. 1951) enacted ONLY the 'Second:' subsection of §216 (the blind-asylum clause). The session law's enacted body reads verbatim: 'Second: The blind asylum shall be known as the North Dakota school for the blind and may be removed from the county of Pembina to such other location as may be determined by the board of administration to be in the best interests of the students of such institution and the state of North Dakota.' The stored record's corresponding clause is word-for-word identical. The only difference is the stored text ends the clause with a comma ('...state of North Dakota,') instead of the session law's period, because the stored record reconstructs the FULL §216 (First through Seventh) flowing into 'Third:'. That is a reconstruction/continuation choice, not an error in the enacted language. The other subsections (First, Third–Seventh) in the stored full text derive from prior amendments and are not part of Article 63, so they are out of scope for this session law. (Side note, NOT a defect in this amendment: the stored full text reads 'at Libon, in the county of Ransom' — 'Libon' appears to be a typo for 'Lisbon' — but that clause comes from a prior amendment, not Article 63.)",
+     "sessionlaw_text": ""
+    },
+    {
+     "target": "N.D. Const. § 216 (authority field)",
+     "verdict": "metadata",
+     "note": "STORED defect. The stored 'authority' field is the placeholder string 'Amendment ratified undefined'. The session law shows this was Article 63, proposed by Chapter 348, S.L. 1951, and 'Approved June 24, 1952'. The authority should reference Article 63 / Chapter 348, S.L. 1951. The defect is in the STORED record, not the scan.",
+     "sessionlaw_text": "LOCATION OF SCHOOL FOR THE BLIND (Chapter 348, S.L. 1951) ARTICLE 63 ... Approved June 24, 1952."
+    },
+    {
+     "target": "N.D. Const. § 216 (effective/adoption date)",
+     "verdict": "metadata",
+     "note": "Possible STORED date issue. The session law states the amendment was 'Approved June 24, 1952' (the June 1952 primary election), and the stored parenthetical/note correctly say 'adopted June 24, 1952'. However the stored 'effective_date' is '1952-07-24' (July 24, 1952), which is NOT stated anywhere in the session law — the session law gives only the June 24, 1952 approval date. The July 24 date may reflect a separate canvass/proclamation effective date (~30 days after approval), but it cannot be verified from this session law. Flagging the unverified July 24 effective_date against the session-law 'Approved June 24, 1952'.",
+     "sessionlaw_text": "Approved June 24, 1952."
+    }
+   ],
+   "metadata_issues": "(1) authority = 'Amendment ratified undefined' is a placeholder; should reference Article 63 / Chapter 348, S.L. 1951, approved June 24, 1952. (2) effective_date '1952-07-24' (July 24) is not supported by the session law, which states only 'Approved June 24, 1952'; the stored note correctly says 'adopted June 24, 1952'. The July 24 effective date is unverifiable from this source. Heading 'State institutions (remaining grant)' is the stored section-wide heading; the session-law heading for this specific amendment is 'LOCATION OF SCHOOL FOR THE BLIND'.",
+   "confidence": "high"
+  },
+  {
+   "number": "XCIV",
+   "source_used": "Chapter 606, \"RETIREMENT, DISCIPLINE, AND REMOVAL OF JUDGES,\" Constitutional Amendments Approved, 1975 Session Laws p.1582 (HCR 3017, ch. 533, 1973 SL; approved Nov. 5, 1974, 130,600 to 66,523)",
+   "overall": "identical",
+   "findings": [
+    {
+     "target": "N.D. Const. amend. art. XCIV",
+     "verdict": "identical",
+     "note": "Stored body text matches the enacted session-law text word-for-word: 'The legislative assembly may provide for the retirement, discipline and removal of judges of the supreme court and district court. The removal procedure provided for herein may be used in addition to the impeachment proceedings provided for in sections 194, 195, and 196.' Heading 'RETIREMENT, DISCIPLINE, AND REMOVAL OF JUDGES' matches ch. 606 heading (stored heading drops the Oxford comma 'DISCIPLINE, AND' -> 'DISCIPLINE AND' but session-law heading prints 'RETIREMENT, DISCIPLINE, AND'; the heading is a caption, not enacted text, and the body comma usage 'discipline and removal' is identical in both). Authority (HCR 3017, ch. 533 1973 SL, ch. 606 1975, approved Nov. 5, 1974, 130,600 to 66,523) matches the session law exactly.",
+     "sessionlaw_text": "The legislative assembly may provide for the retirement, discipline and removal of judges of the supreme court and district court. The removal procedure provided for herein may be used in addition to the impeachment proceedings provided for in sections 194, 195, and 196."
+    }
+   ],
+   "metadata_issues": "Minor caption-only nit: stored heading reads \"RETIREMENT, DISCIPLINE, AND REMOVAL OF JUDGES\" which matches the session-law chapter caption. No date/section#/authority discrepancy. Effective date 1974-12-05 (30 days after Nov. 5, 1974 approval) is consistent with the session-law approval date.",
+   "confidence": "high"
+  },
+  {
+   "number": "XCV",
+   "source_used": "Chapter 596, \"CONSTITUTIONAL AMENDMENTS, APPROVED\" — \"LEGISLATIVE SESSIONS AND TERMS\" (SCR No. 4023, ch. 611, 1975 Session Laws), SECTION 1 (§53), SECTION 2 (§56), SECTION 3 REPEAL (§55), approved September 7, 1976",
+   "overall": "identical",
+   "findings": [
+    {
+     "target": "N.D. Const. § 53",
+     "verdict": "identical",
+     "note": "Stored §53 text matches the enacted SECTION 1 body word-for-word: 'The legislative assembly shall meet at the seat of government in the month of December following the election of the members thereof for organizational and orientation purposes as provided by law and shall thereafter recess until twelve o'clock noon on the first Tuesday after the third day in January or at such other time as may be prescribed by law but not later than the eleventh day of January.' No divergence.",
+     "sessionlaw_text": ""
+    },
+    {
+     "target": "N.D. Const. § 55",
+     "verdict": "identical",
+     "note": "Session law SECTION 3 REPEAL: 'Section 55 of the Constitution of the State of North Dakota is hereby repealed.' Stored marks §55 as '[Repealed effective 1976-10-07]', which correctly reflects the enacted repeal. No defect.",
+     "sessionlaw_text": ""
+    },
+    {
+     "target": "N.D. Const. § 56",
+     "verdict": "identical",
+     "note": "Stored §56 matches enacted SECTION 2 verbatim, including 'eighty natural days during the biennium', 'at the call of the governor pursuant to section 75, or while engaged in impeachment proceedings', and the closing definition 'a \"natural day\" means a period of twenty-four consecutive hours.' No divergence.",
+     "sessionlaw_text": ""
+    }
+   ],
+   "metadata_issues": "None. Stored authority (SCR No. 4023, ch. 611, 1975 Session Laws; Chapter 596; approved September 7, 1976; vote 60,587 to 60,145; primary election constitutional measure No. 2) matches the session-law heading, approval line, and NOTE exactly. Effective date 1976-10-07 (30 days after the Sept. 7, 1976 approval) is not stated in this scan but is consistent with the approval date.",
+   "confidence": "high"
+  }
+ ]
+}

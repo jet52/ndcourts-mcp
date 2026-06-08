@@ -2428,3 +2428,42 @@ start>end.
 **Provenance upgrade:** these 38 records' authoritative basis is now documented as clean session-law
 text, not dirty Blue Book OCR. Pre-1956 Blue-Book/marker-OCR amendments and the 45 marker-OCR set
 remain for a later round (diff-QA).
+
+## Batch: const-history-revalidation-round2-2026-06-08 (55 re-validated; LIV fix + 13 authority backfills)
+
+Applied 2026-06-08. Workflow `const-revalidate-round2` diff-QA'd the 55 remaining pre-1956
+amendments against cached session-law text. Verdicts archived in
+`data/const_revalidation_round2_2026-06-08.json`; fixes in
+`scripts/fix_revalidation_round2_2026-06-08.py`.
+
+**33/55 confirmed clean** (17 identical + 16 OCR-only where the divergence was noise in the
+session-law SCAN, not the stored text).
+
+**Applied (survived scrutiny):**
+- **LIV (art LIV):** restored the truncated tail of the enacted text (§6(d)-(e), §7, §8) from
+  sl1939. The stored "[TEXT TRUNCATED ... NOT in source]" note was FALSE — the text is in the
+  session law. (art LIV is the Board-of-Higher-Ed article the structural backlog depends on.)
+- **Authority backfill, 13 records (XLIII-LXIII):** replaced the leaked placeholder
+  `"Amendment ratified undefined"` with real session-law provenance (Article #, submitted-by,
+  chapter/SL, approval date + vote tally); backfilled `election_date` where the session law
+  states it. Zero "undefined"-authority records remain.
+
+**Deliberately NOT changed (agent over-flagging caught on review):**
+- **No effective_date changes.** The agents' six "date mismatch" flags compared the session-law
+  APPROVAL date to the stored EFFECTIVE date; the dataset convention is effective = approval + 30
+  days (e.g. amdt #2: election 1898-11-08 -> effective 1898-12-08), so the stored dates are correct.
+- **#12 (§216) NOT changed — false positive.** The agent flagged a "lost rename" by matching a
+  LATER §216 amendment in the wrong volume (sl1911, "Approved Feb 24 1911"). The real
+  1909-proposed/1910-ratified text (sl1909) MATCHES the stored placeholder language
+  ("A blind asylum ... in the county of Pembina"; forestry "at such place in one of the counties
+  of McHenry, Ward, Bottineau or Rolette"; "namely"; "soldiers'"). Stored text is correct; applying
+  the "fix" would have corrupted #12 with a different amendment's text.
+
+**Deferred to the volume-corrected re-run (the 11 not_found + early-era body flags):** the early
+amendments (1898-1912) print in the PROPOSING volume sl(E-1), not the sl(E+1) the workflow used
+(the convention flipped ~1914-1918). So 11 came back not_found (volume miss, not data errors), and
+the early-era body flags #1 (art I comma) and XXX (§177 "limitation(s)") / XXXVII (§121 "Second")
+are unverified against the correct volume -> all fold into action 4.
+
+DB rebuild: provisions 243, adds 22, amends 109, repeals 47, future_skipped 1, pending_skipped 3,
+unresolved 0.

@@ -1388,14 +1388,15 @@
           "text": "There shall be chosen by the qualified electors of the State at the times and places of choosing members of the legislative assembly, a secretary of state, auditor, treasurer, superintendent of public instruction, commissioner of insurance, three commissioners of railroads, one attorney general and one commissioner of agriculture and labor, who shall have attained the age of twenty-five years, shall be citizens of the United States, and shall have the qualifications of state electors. They shall severally hold their offices at the seat of government, and, with the exception of the commissioners of railroads, for the term of two years and until their successors are elected and duly qualified, but no person shall be eligible to the office of treasurer for more than two consecutive terms. Of the commissioners of railroads elected at the general election in 1926, the one having held his office for the longest time shall serve for six years; the one having held his office the next longest time shall serve for four years, and the one having held this office the shortest time, shall serve for two years, provided, however, if two or more such commissioners shall have held such office an equal or no length of time, the one having the highest vote shall serve for the longer term; thereafter one commissioner of railroads shall be elected every two years, and shall hold his office for a term of six years and until his successor is elected and qualified."
         }
       ],
-      "authority": "Amendment ratified undefined",
+      "authority": "Article 43; Concurrent Resolution, 1925 Session Laws; approved June 30, 1926, 69,214 to 61,235.",
       "source_urls": [],
       "sources_verified": [
         "/tmp/seg4a_marker/seg4a_src/seg4a_src.md (PRIMARY — enacted session law, S.L. 1925 Concurrent Resolution, Article 43, Approved June 30, 1926, 69,214 to 61,235)",
         "/tmp/cl1913.txt (pre-amendment § 82, confirms opening clauses)",
         "/tmp/manual1919.txt (pre-amendment § 82, confirms opening clauses)",
         "/tmp/manual1907.txt (pre-amendment § 82, confirms opening clauses)",
-        "/tmp/bb1954_marker/bb1954_const/bb1954_const.md (later re-amended § 82 — tax/public-service-commissioner version; confirms this railroad-staggering text was superseded)"
+        "/tmp/bb1954_marker/bb1954_const/bb1954_const.md (later re-amended § 82 — tax/public-service-commissioner version; confirms this railroad-staggering text was superseded)",
+        "Re-validated 2026-06-08 vs clean session-law text (round-2 workflow); authority backfilled from the enacted session law."
       ],
       "confidence": "high",
       "variants": [
@@ -1409,7 +1410,8 @@
           "enacted_session_law": "shall serve for the longer term ; thereafter (space before semicolon, per session-law printing)",
           "other_publications": "No other publication carries this clause (it is unique to this amendment). The space-before-semicolon is a session-law typesetting artifact; normalized to standard \"term; thereafter\" spacing in the transcribed text. Flagged as a judgment call."
         }
-      ]
+      ],
+      "election_date": "1926-06-30"
     },
     {
       "number": "XLIV",
@@ -1422,12 +1424,13 @@
           "text": "All taxable property except as hereinafter in this section provided, shall be assessed in the county, city, township, village or district in which it is situated, in the manner prescribed by law. The property, including franchises of all railroads operated in this state, and of all express companies, freight line companies, dining car companies, sleeping car companies, car equipment companies, or private car line companies, telegraph or telephone companies, the property of any person, firm or corporation used for the purpose of furnishing electric light, heat or power, or in distributing the same for public use, and the property of any other corporation, firm or individual now or hereafter operating in this state, and used directly or indirectly in the carrying of persons, property or messages, shall be assessed by the State Board of Equalization in a manner prescribed by such state board or commission as may be provided by law. But should any railroad allow any portion of its railway to be used for any purpose other than the operation of a railroad thereon, such portion of its railway, while so used shall be assessed in a manner provided for the assessment of other real property."
         }
       ],
-      "authority": "Amendment ratified undefined",
+      "authority": "Article 44; House Bill No. 341 (Joint Resolution), 1927 Session Laws; approved March 20, 1928, 63,568 to 37,284.",
       "source_urls": [],
       "sources_verified": [
         "/tmp/seg4a_marker/seg4a_src/seg4a_src.md (primary session-law marker OCR; H. B. No. 341, Session Laws of 1927, Article 44, Joint Resolution; Approved March 20, 1928)",
         "/tmp/bb1954_marker/bb1954_const/bb1954_const.md line 616 (1954 Blue Book integrated constitution; substantive-wording match)",
-        "/tmp/off1925.txt lines 5498-5530 (1925 official snapshot; pre-amendment form + explanatory note confirming amendment effect)"
+        "/tmp/off1925.txt lines 5498-5530 (1925 official snapshot; pre-amendment form + explanatory note confirming amendment effect)",
+        "Re-validated 2026-06-08 vs clean session-law text (round-2 workflow); authority backfilled from the enacted session law."
       ],
       "confidence": "high",
       "variants": [
@@ -1441,7 +1444,8 @@
           "enacted_session_law": "no comma after 'so used' (\"while so used shall be assessed\")",
           "other_publications": "1954 Blue Book matches (no comma). 1925 snapshot likewise has no comma in the corresponding clause."
         }
-      ]
+      ],
+      "election_date": "1928-03-20"
     },
     {
       "number": "XLV",
@@ -1454,14 +1458,15 @@
           "text": "The State shall be divided into not less than six judicial districts, in each of which there shall be elected at general elections by the electors thereof one or more judges of the District Court therein as may be provided by law. The term of office of a Judge of the District Court hereafter elected shall be six years from the first Monday in January succeeding his election and he shall hold his office until his successor is duly qualified. At the general election in 1932 there shall be elected as many judges as there are judgeships to be filled in each Judicial District; the candidate receiving the highest number of votes shall be elected to a term of six years, the candidate receiving the next highest number of votes shall be elected to a term of four years, and in case three judges are to be elected, the candidate receiving the next highest number of votes shall be elected to a term of two years, and thereafter each judge shall be elected to a term of six years."
         }
       ],
-      "authority": "Amendment ratified undefined",
+      "authority": "Article 45; Chapter 97, 1929 Session Laws (Concurrent Resolution); approved June 25, 1930.",
       "source_urls": [],
       "sources_verified": [
         "/tmp/seg4a_marker/seg4a_src/seg4a_src.md (line 157, primary/enacted session law, Chapter 97 Session Laws 1929, Article 45)",
         "/tmp/bb1954_marker/bb1954_const/bb1954_const.md (line 365, amended version, confirms wording)",
         "/tmp/off1925.txt (line 3500, PRE-amendment old version, confirms amendment changed terms 4yr->6yr)",
         "/tmp/cl1913.txt (line 10860, PRE-amendment old version)",
-        "/tmp/manual1919.txt (line 8635, PRE-amendment old version)"
+        "/tmp/manual1919.txt (line 8635, PRE-amendment old version)",
+        "Re-validated 2026-06-08 vs clean session-law text (round-2 workflow); authority backfilled from the enacted session law."
       ],
       "confidence": "high",
       "variants": [
@@ -1475,7 +1480,8 @@
           "enacted_session_law": "Session-law/marker text typesets a space before the semicolon ('Judicial District ;').",
           "other_publications": "1954 Blue Book has no space before the semicolon ('judicial district;'). Treated as a typesetting/spacing artifact and normalized to standard 'District;' in the transcribed text."
         }
-      ]
+      ],
+      "election_date": "1930-06-25"
     },
     {
       "number": "XLVI",
@@ -1488,11 +1494,12 @@
           "text": "The judges of the Supreme Court shall be elected by the qualified electors of the State at general elections. The term of office shall be ten years and the judges shall hold their offices until their successors are duly qualified and shall receive such compensation for their services as may be prescribed by law. Provided that this section shall not be applicable to the terms of office of judges of the Supreme Court elected prior to the general election of the year 1934, at which election three Supreme Court Judges shall be chosen; and the candidate at said election receiving the highest number of votes shall be elected for a term of ten years, the candidate receiving the next highest number of votes shall be elected for a term of eight years and the candidate receiving the next highest number of votes shall be elected for a term of six years."
         }
       ],
-      "authority": "Amendment ratified undefined",
+      "authority": "Article 46; Chapter 98, 1929 Session Laws (Concurrent Resolution); approved June 25, 1930.",
       "source_urls": [],
       "sources_verified": [
         "/tmp/seg4a_marker/seg4a_src/seg4a_src.md (primary session-law marker OCR, lines 161-169)",
-        "/tmp/bb1954_marker/bb1954_const/bb1954_const.md (1954 Blue Book, line 329, confirms wording)"
+        "/tmp/bb1954_marker/bb1954_const/bb1954_const.md (1954 Blue Book, line 329, confirms wording)",
+        "Re-validated 2026-06-08 vs clean session-law text (round-2 workflow); authority backfilled from the enacted session law."
       ],
       "confidence": "high",
       "variants": [
@@ -1501,7 +1508,8 @@
           "enacted_session_law": "chosen ; and the candidate (space before semicolon, as printed in the session law)",
           "other_publications": "The 1954 Blue Book prints 'chosen ; and' likewise with a space before the semicolon. I have normalized the spacing to 'chosen; and' in the transcribed text per modern convention; the spaced semicolon is an artifact of the period's typesetting/OCR rather than a substantive variant. Flagged for human review."
         }
-      ]
+      ],
+      "election_date": "1930-06-25"
     },
     {
       "number": "XLVII",
@@ -1515,16 +1523,18 @@
           "text": "[Repealed]"
         }
       ],
-      "authority": "Amendment ratified undefined",
+      "authority": "Article 47; submitted by initiative petition; approved November 8, 1932, 134,742 to 99,316.",
       "sources_verified": [
         "/tmp/seg4a_marker/seg4a_src/seg4a_src.md (lines 246-252: ARTICLE 47, REPEAL OF PROHIBITION CLAUSE IN STATE CONSTITUTION; Approved Nov. 8, 1932; 134742 to 99316)",
         "/tmp/bb1954_marker/bb1954_const/bb1954_const.md (line 888: repeal note confirming Article 47, Nov. 8, 1932; line 886: original Section 217 text)",
         "/tmp/off1925.txt (line 6977: original Section 217 prohibition text)",
-        "/tmp/manual1907.txt (line 6810: original Sec. 217 text)"
+        "/tmp/manual1907.txt (line 6810: original Sec. 217 text)",
+        "Re-validated 2026-06-08 vs clean session-law text (round-2 workflow); authority backfilled from the enacted session law."
       ],
       "confidence": "high",
       "variants": [],
-      "notes": "Repeals §217 (Article XX, Prohibition), effective 1932-12-08."
+      "notes": "Repeals §217 (Article XX, Prohibition), effective 1932-12-08.",
+      "election_date": "1932-11-08"
     },
     {
       "number": "XLVIII",
@@ -1537,11 +1547,12 @@
           "text": "At the first general election held after the adoption of this amendment, and every two years thereafter, there shall be elected in each organized county in the state, a register of deeds, county auditor, treasurer, sheriff, state's attorney, county judge and a clerk of the district court, who shall be electors in the county in which they are elected and who shall hold their office until their successors are elected and qualified; provided in counties having fifteen thousand population, or less, the county judge shall also be the clerk of the district court. Provided further that counties having a population of 6,000 or less, the register of deeds shall also be clerk of the district court and county judge. The legislative assembly shall provide by law for such other county, township and district officers as may be deemed necessary, and shall prescribe the duties and compensation of all county, township and district officers. The sheriff and treasurer of any county shall not hold their respective offices for more than four years in succession."
         }
       ],
-      "authority": "Amendment ratified undefined",
+      "authority": "Chapter 84 (House Bill No. 216, State Affairs Committee), 1933 Session Laws; Concurrent Resolution amending Section 173 of Article 10.",
       "source_urls": [],
       "sources_verified": [
         "/tmp/seg4a_marker/seg4a_src/seg4a_src.md (session law, line 336, ARTICLE 48, approved Sept. 22, 1933)",
-        "/tmp/bb1954_marker/bb1954_const/bb1954_const.md (1954 Blue Book, Section 173 — reflects later 1940 Art. 55 re-amendment)"
+        "/tmp/bb1954_marker/bb1954_const/bb1954_const.md (1954 Blue Book, Section 173 — reflects later 1940 Art. 55 re-amendment)",
+        "Re-validated 2026-06-08 vs clean session-law text (round-2 workflow); authority backfilled from the enacted session law."
       ],
       "confidence": "high",
       "variants": [
@@ -1573,7 +1584,7 @@
           "text": "§ 63. Every bill shall be read two separate times, but the first and second readings may not be upon the same day; and the first reading may be by title of the bill only, unless upon such first reading, a reading at length is demanded. The second reading shall be at length. No legislative day shall be shorter than the natural day."
         }
       ],
-      "authority": "Amendment ratified undefined",
+      "authority": "Chapter 83 (Senate Concurrent Resolution), 1933 Session Laws.",
       "source_urls": [],
       "sources_verified": [
         "/tmp/seg4a_marker/seg4a_src/seg4a_src.md (line 344, primary marker OCR of session law)",
@@ -1581,7 +1592,8 @@
         "/tmp/bb1954_marker/bb1954_const/bb1954_const.md (line 213, 1954 Blue Book — post-amendment text, agrees on wording)",
         "/tmp/cl1913.txt (line 10291 — PRE-amendment 'three several times', confirms § 63 is what was amended)",
         "/tmp/off1925.txt (line 2411 — PRE-amendment text)",
-        "/tmp/manual1907.txt (lines 4965, 8810 — PRE-amendment text)"
+        "/tmp/manual1907.txt (lines 4965, 8810 — PRE-amendment text)",
+        "Re-validated 2026-06-08 vs clean session-law text (round-2 workflow); authority backfilled from the enacted session law."
       ],
       "confidence": "high",
       "variants": [
@@ -1603,7 +1615,7 @@
           "text": "No land shall be sold for less than the appraised value and in no case be sold for less than ten dollars ($10.00) per acre. The purchaser shall pay one-fifth of the price in cash, and the remaining four-fifths as follows: One-fifth in five years, one-fifth on or before the expiration of ten years, one-fifth on or before the expiration of fifteen years, and one-fifth on or before the expiration of twenty years, with interest at the rate of not less than three per cent per annum, payable annually; provided that when payments are made before due they shall be made at an interest paying date. All sales shall be held at the county seat of the county in which the land to be sold is situated, and shall be at public auction and to the highest bidder, after sixty days advertisement of the same in a newspaper of general circulation in the vicinity of the land to be sold, and one at the seat of government. Such lands as shall not have been specially subdivided shall be offered in tracts of one quarter section, and those subdivided in the smallest subdivisions. All lands designated for sale and not sold within two years after appraisal shall be reappraised before they are sold. No grant or patent for such lands shall issue until payment is made for the same; provided that the land contracted to be sold by the State shall be subject to taxation from the date of contract. In case the taxes assessed against any of said lands for any year remain unpaid until the first Monday in October of the following year, then thereupon the contract of sale for such land shall, if the Board of University and School Lands so determine, become null and void. Any lands under the provision of Section 158 of the Constitution of the State of North Dakota that have heretofore been sold, may be paid for, except as to interest as provided; provided further, that any school or institutional lands that may be required for townsite purposes, school house sites, church sites, cemetery sites, sites for other educational or charitable institutions, public parks, fair grounds, public highways, railroad right of way or for other railroad uses and purposes, reservoirs for the storage of water for irrigation, drain ditches, and lands that may be required for any of the purposes over which the right of eminent domain may be exercised under the Constitution and the laws of the State of North Dakota, may be sold under the provisions of this act, and shall be paid for, principal and interest, in full in advance at the time of the sale, or at any time thereafter, and patent issued therefor, when principal and interest are paid. Any of the said lands, including lands held in trust for any purpose, may, with the approval of the Board of University and School Lands, be exchanged for lands of the United States, as the Legislature may provide, and the lands so acquired shall be subject to the trust, if any, to which the lands exchanged therefor were subject, and the State shall reserve all mineral and water and water power rights in lands so transferred by the State. Provided, further, that, when land has been sold on contract as hereinbefore provided, and the purchases or his heirs or assigns, has been unable, at least in part by reason of successive crop failures, to pay for the land purchased within twenty years after the date of purchase and such contract is in default and subject to cancellation, the Board of University and School Lands, may, if so requested by such purchaser or his heirs, or assigns, after declaring such contract terminated, resell the land described in such contract to such purchaser, or his heirs or assigns for the amount of the unpaid principal of the original purchase price plus the amount of unpaid accrued interest, but in no case shall the resale price be more than the original sale price, such contract of resale to be upon the same terms as said original contract excepting that the contract of resale may provide that the purchaser may pay the first one-fifth of the resale price in five equal successive annual installments, the first installment to be paid at the time of execution of the resale contract, and that such resale contract shall bear interest at the rate of three per cent per annum payable annually; and provided further, that this Section shall be deemed self-executing insofar as provision is made herein for resale of lands sold to the original purchaser or to his heirs or assigns."
         }
       ],
-      "authority": "Amendment ratified undefined",
+      "authority": "Article 50; submitted by Legislature; approved June 28, 1938, 95,700 to 76,051.",
       "source_urls": [],
       "sources_verified": [
         "/tmp/seg4a_marker/seg4a_src/seg4a_src.md (primary; ARTICLE 50, lines 376-384)",
@@ -1611,10 +1623,12 @@
         "/tmp/off1925.txt (pre-1938 §158, does not match)",
         "/tmp/manual1919.txt (pre-1938 §158, does not match)",
         "/tmp/manual1907.txt (no match)",
-        "/tmp/bb1954_marker/bb1954_const/bb1954_const.md (post-amendment superseding §158, line 518)"
+        "/tmp/bb1954_marker/bb1954_const/bb1954_const.md (post-amendment superseding §158, line 518)",
+        "Re-validated 2026-06-08 vs clean session-law text (round-2 workflow); authority backfilled from the enacted session law."
       ],
       "confidence": "medium",
-      "variants": []
+      "variants": [],
+      "election_date": "1938-06-28"
     },
     {
       "number": "LI",
@@ -1627,7 +1641,7 @@
           "text": "The Governor or any officer of this State, or any manager or executive head, or other person employed either directly or indirectly in any department, bureau, commission, institution, or industry of this State, or any member of any State board shall not appoint a member of the Legislative Assembly to any civil office or employment of any nature whatsoever, during the term for which said member of the Legislative Assembly shall have been elected.\n\nNo member of the Legislative Assembly shall accept any such appointment to civil office or other employment during the term for which he was elected."
         }
       ],
-      "authority": "Amendment ratified undefined",
+      "authority": "Article 51; submitted by initiative petition; approved June 28, 1938, 106,699 to 64,087.",
       "source_urls": [],
       "sources_verified": [
         "/tmp/seg4a_marker/seg4a_src/seg4a_src.md (lines 386-398, Article 51 / Amendment LI, session-law marker OCR — PRIMARY)",
@@ -1635,10 +1649,12 @@
         "/tmp/off1925.txt (predates amendment; no occurrence)",
         "/tmp/manual1919.txt (predates amendment; no occurrence)",
         "/tmp/manual1907.txt (predates amendment; no occurrence)",
-        "/tmp/bb1954_marker/bb1954_const/bb1954_const.md (no legible occurrence of Article 51)"
+        "/tmp/bb1954_marker/bb1954_const/bb1954_const.md (no legible occurrence of Article 51)",
+        "Re-validated 2026-06-08 vs clean session-law text (round-2 workflow); authority backfilled from the enacted session law."
       ],
       "confidence": "medium",
-      "variants": []
+      "variants": [],
+      "election_date": "1938-06-28"
     },
     {
       "number": "LII",
@@ -1651,11 +1667,14 @@
           "text": "§ 82. There shall be chosen by the qualified electors of the State at the times and places of choosing members of the Legislative Assembly, a secretary, auditor, treasurer, superintendent of public instruction, commissioner of insurance, three commissioners of railroads, an attorney general, a commissioner of agriculture and labor, and a tax commissioner, who shall have attained the age of twenty-five years and shall have the qualifications of state electors. They shall severally hold their offices at the seat of government for the term of two years and until their successors are elected and duly qualified; but no person shall be eligible for the office of treasurer for more than two consecutive terms; provided, however, the tax commissioner shall hold his office for the term of four years and until his successor is elected and duly qualified.\n\nThe tax commissioner shall be elected on a no-party ballot and he shall be nominated and elected in the manner now provided for the nomination and election of the superintendent of public instruction.\n\nThe first election of the tax commissioner shall not occur until the year 1940."
         }
       ],
-      "authority": "Amendment ratified undefined",
+      "authority": "Article 52; submitted by initiative petition; approved June 28, 1938, 86,822 to 78,206.",
       "source_urls": [],
-      "sources_verified": [],
+      "sources_verified": [
+        "Re-validated 2026-06-08 vs clean session-law text (round-2 workflow); authority backfilled from the enacted session law."
+      ],
       "confidence": "high",
-      "variants": []
+      "variants": [],
+      "election_date": "1938-06-28"
     },
     {
       "number": "LIV",
@@ -1665,10 +1684,10 @@
         {
           "target": "N.D. Const. amend. art. LIV",
           "heading": "Article LIV — State Board of Higher Education (new article creating the Board to replace the Board of Administration)",
-          "text": "§ 1. A board of higher education, to be officially known as the State Board of Higher Education, is hereby created for the control and administration of the following state educational institutions, to-wit:\n(1) The State University and School of Mines, at Grand Forks, with their substations.\n(2) The State Agricultural College and Experiment Station, at Fargo, with their substations.\n(3) The School of Science, at Wahpeton.\n(4) The State Normal Schools and Teachers Colleges, at Valley City, Mayville, Minot and Dickinson.\n(5) The Normal and Industrial School, at Ellendale.\n(6) The School of Forestry, at Bottineau.\n(7) And such other State institutions of higher education as may hereafter be established.\n\n§ 2. (a) The State Board of Higher Education shall consist of seven (7) members, all of whom shall be qualified electors and taxpayers of the State, and who shall have resided in this State for not less than five (5) years immediately preceding their appointment, to be appointed by the Governor, by and with the consent of the Senate, from a list of names selected as hereinafter provided. There shall not be on said board more than one (1) alumnus or former student of any one of the institutions under the jurisdiction of said State Board of Higher Education at any one time. No person employed by any institution under the control of the board shall serve as a member of said board, nor shall any employee of any such institution be eligible for membership on the State Board of Higher Education for a period of two (2) years following the termination of his employment.\nOn or before the 1st day of February, 1939, the Governor shall nominate from a list of three names for each position, selected by the unanimous action of the President of the North Dakota Educational Association, the Chief Justice of the Supreme Court, and the Superintendent of Public Instruction, and, with the consent of a majority of the members-elect of the Senate, shall appoint from such list as such State Board of Higher Education seven (7) members, whose terms shall commence on the 1st day of July, 1939, one of which terms shall expire on the 30th day of June, 1940, and one on the 30th day of June in each of the years 1941, 1942, 1943, 1944, 1945, and 1946. The term of office of members appointed to fill vacancies at the expiration of said terms shall be for seven (7) years, and in the case of vacancies otherwise arising, appointments shall be made only for the balance of the term of the members whose places are to be filled.\n(b) In the event any nomination made by the Governor is not consented to and confirmed by the Senate as hereinbefore provided, the Governor shall again nominate a candidate for such office, selected from a new list, prepared in the manner hereinbefore provided, which nomination shall be submitted to the Senate for confirmation, and said proceedings shall be continued until such appointments have been confirmed by the Senate, or the session of the legislature shall have adjourned.\n(c) When any term expires or a vacancy occurs when the legislature is not in session, the Governor may appoint from a list selected as hereinbefore provided, a member who shall serve until the opening of the next session of the legislature, at which time his appointment shall be certified to the Senate for confirmation, as above provided ; and if the appointment be not confirmed by the thirtieth legislative day of such session, his office shall be deemed vacant and the Governor shall nominate from a list selected as hereinbefore provided, another candidate for such office and the same proceedings shall be followed as are above set forth ; provided further, that when the legislature shall be in session at any time within six (6) months prior to the date of the expiration of the term of any member, the Governor shall nominate his successor from a list selected as above set forth, within the first thirty (30) days of such session, and upon confirmation by the Senate such successor shall take office at the expiration of the term of the incumbent. No person who has been nominated and whose nomination the Senate has failed to confirm, shall be eligible for an interim appointment.\n\n§ 3. The members of the State Board of Higher Education may only be removed by impeachment for the offenses and in the manner and according to the procedure provided for the removal of the Governor by impeachment proceedings.\n\n§ 4. The appointive members of the State Board of Higher Education shall receive seven dollars ($7.00) per day and their necessary expenses for travel while attending meetings, or in the performances of such special duties as the board may direct ; provided, however, no member shall receive a total compensation, exclusive of expenses, to exceed five hundred dollars (.$500.00) in any calendar year ; and no member shall receive total expense money in excess of five hundred dollars ($500.00) in any calendar year.\n\n§ 5. The legislature shall provide adequate funds for the proper carrying out of the functions and duties of the State Board of Higher Education.\n\n§ 6. (a) The State Board of Higher Education shall hold its first meeting at the office of the State Board of Administration at Bismarck, on the 6th day of July, 1939, and shall organize and elect one of its members as president of such board for a term of one year. It shall also at said meeting, or as soon thereafter as may be practicable, elect a competent person as secretary, who shall reside during his term of office in the City of Bismarck, North Dakota. Said secretary shall hold office at the will of the board. As soon as said board is established and organized, it shall assume all the powers and perform all the duties now conferred by law upon the Board of Administration in connection with the several institutions hereinbefore mentioned, and the said Board of Administration shall immediately upon the organization of said State Board of Higher Education, surrender and transfer to said State Board of Higher Education all duties, rights, and powers granted to it under the existing laws of this State concerning the institutions hereinbefore mentioned, together with all property, deeds, records, reports, and appurtenances of every kind belonging or appertaining to said institutions.\n(b) The said State Board of Higher Education shall have full authority over the institutions under its control with the right, among its other powers, to prescribe, limit, or modify the courses offered at the several institutions. In furtherance of its powers, the State Board of Higher Education shall have the power to delegate to its employees details of the administration of the institutions under its control. The said State Board of Higher Education shall have full authority to organize or re-organize within constitutional and statutory limitations, the work of each institution under its control, and do each and everything necessary and proper for the efficient and economic administration of said State educational institutions.\n(c) Said board shall prescribe for all of said institutions standard systems of accounts and records and shall biennially, and within six (6) months immediately preceding the regular session of the legislature, make a report to the Governor, covering in detail the operations of the educational institutions under its control.\n(d) It shall be the duty of the heads of the several State institutions hereinbefore mentioned, to submit the budget requests for the biennial appropriations for said institutions to said State Board of Higher Education; and said State Board of Higher Education shall consider said budgets and shall revise the same as in its judgment shall be for the best interests of the educational system of the State; and thereafter the State Board of Higher Education shall prepare and present to the State Budget Board and to the legislature a single unified budget covering the needs of all the institutions under its control. \"Said budget shall be prepared and presented by the Board of Administration until the State Board of [TEXT TRUNCATED — session-law segment ends here at the bottom of page 601; remainder of § 6(d), the close of § 6, any further sections, and the approval/vote-count line are on page 602, which is NOT included in the provided source PDF and appears in no other supplied publication]"
+          "text": "§ 1. A board of higher education, to be officially known as the State Board of Higher Education, is hereby created for the control and administration of the following state educational institutions, to-wit:\n(1) The State University and School of Mines, at Grand Forks, with their substations.\n(2) The State Agricultural College and Experiment Station, at Fargo, with their substations.\n(3) The School of Science, at Wahpeton.\n(4) The State Normal Schools and Teachers Colleges, at Valley City, Mayville, Minot and Dickinson.\n(5) The Normal and Industrial School, at Ellendale.\n(6) The School of Forestry, at Bottineau.\n(7) And such other State institutions of higher education as may hereafter be established.\n\n§ 2. (a) The State Board of Higher Education shall consist of seven (7) members, all of whom shall be qualified electors and taxpayers of the State, and who shall have resided in this State for not less than five (5) years immediately preceding their appointment, to be appointed by the Governor, by and with the consent of the Senate, from a list of names selected as hereinafter provided. There shall not be on said board more than one (1) alumnus or former student of any one of the institutions under the jurisdiction of said State Board of Higher Education at any one time. No person employed by any institution under the control of the board shall serve as a member of said board, nor shall any employee of any such institution be eligible for membership on the State Board of Higher Education for a period of two (2) years following the termination of his employment.\nOn or before the 1st day of February, 1939, the Governor shall nominate from a list of three names for each position, selected by the unanimous action of the President of the North Dakota Educational Association, the Chief Justice of the Supreme Court, and the Superintendent of Public Instruction, and, with the consent of a majority of the members-elect of the Senate, shall appoint from such list as such State Board of Higher Education seven (7) members, whose terms shall commence on the 1st day of July, 1939, one of which terms shall expire on the 30th day of June, 1940, and one on the 30th day of June in each of the years 1941, 1942, 1943, 1944, 1945, and 1946. The term of office of members appointed to fill vacancies at the expiration of said terms shall be for seven (7) years, and in the case of vacancies otherwise arising, appointments shall be made only for the balance of the term of the members whose places are to be filled.\n(b) In the event any nomination made by the Governor is not consented to and confirmed by the Senate as hereinbefore provided, the Governor shall again nominate a candidate for such office, selected from a new list, prepared in the manner hereinbefore provided, which nomination shall be submitted to the Senate for confirmation, and said proceedings shall be continued until such appointments have been confirmed by the Senate, or the session of the legislature shall have adjourned.\n(c) When any term expires or a vacancy occurs when the legislature is not in session, the Governor may appoint from a list selected as hereinbefore provided, a member who shall serve until the opening of the next session of the legislature, at which time his appointment shall be certified to the Senate for confirmation, as above provided ; and if the appointment be not confirmed by the thirtieth legislative day of such session, his office shall be deemed vacant and the Governor shall nominate from a list selected as hereinbefore provided, another candidate for such office and the same proceedings shall be followed as are above set forth ; provided further, that when the legislature shall be in session at any time within six (6) months prior to the date of the expiration of the term of any member, the Governor shall nominate his successor from a list selected as above set forth, within the first thirty (30) days of such session, and upon confirmation by the Senate such successor shall take office at the expiration of the term of the incumbent. No person who has been nominated and whose nomination the Senate has failed to confirm, shall be eligible for an interim appointment.\n\n§ 3. The members of the State Board of Higher Education may only be removed by impeachment for the offenses and in the manner and according to the procedure provided for the removal of the Governor by impeachment proceedings.\n\n§ 4. The appointive members of the State Board of Higher Education shall receive seven dollars ($7.00) per day and their necessary expenses for travel while attending meetings, or in the performances of such special duties as the board may direct ; provided, however, no member shall receive a total compensation, exclusive of expenses, to exceed five hundred dollars (.$500.00) in any calendar year ; and no member shall receive total expense money in excess of five hundred dollars ($500.00) in any calendar year.\n\n§ 5. The legislature shall provide adequate funds for the proper carrying out of the functions and duties of the State Board of Higher Education.\n\n§ 6. (a) The State Board of Higher Education shall hold its first meeting at the office of the State Board of Administration at Bismarck, on the 6th day of July, 1939, and shall organize and elect one of its members as president of such board for a term of one year. It shall also at said meeting, or as soon thereafter as may be practicable, elect a competent person as secretary, who shall reside during his term of office in the City of Bismarck, North Dakota. Said secretary shall hold office at the will of the board. As soon as said board is established and organized, it shall assume all the powers and perform all the duties now conferred by law upon the Board of Administration in connection with the several institutions hereinbefore mentioned, and the said Board of Administration shall immediately upon the organization of said State Board of Higher Education, surrender and transfer to said State Board of Higher Education all duties, rights, and powers granted to it under the existing laws of this State concerning the institutions hereinbefore mentioned, together with all property, deeds, records, reports, and appurtenances of every kind belonging or appertaining to said institutions.\n(b) The said State Board of Higher Education shall have full authority over the institutions under its control with the right, among its other powers, to prescribe, limit, or modify the courses offered at the several institutions. In furtherance of its powers, the State Board of Higher Education shall have the power to delegate to its employees details of the administration of the institutions under its control. The said State Board of Higher Education shall have full authority to organize or re-organize within constitutional and statutory limitations, the work of each institution under its control, and do each and everything necessary and proper for the efficient and economic administration of said State educational institutions.\n(c) Said board shall prescribe for all of said institutions standard systems of accounts and records and shall biennially, and within six (6) months immediately preceding the regular session of the legislature, make a report to the Governor, covering in detail the operations of the educational institutions under its control.\n(d) It shall be the duty of the heads of the several State institutions hereinbefore mentioned, to submit the budget requests for the biennial appropriations for said institutions to said State Board of Higher Education; and said State Board of Higher Education shall consider said budgets and shall revise the same as in its judgment shall be for the best interests of the educational system of the State; and thereafter the State Board of Higher Education shall prepare and present to the State Budget Board and to the legislature a single unified budget covering the needs of all the institutions under its control. \"Said budget shall be prepared and presented by the Board of Administration until the State Board of Higher Education organizes as provided in Section 6 (a).\" The appropriations for all of said institutions shall be contained in one legislative measure.\n\n(e) The said State Board of Higher Education shall have the control of the expenditure of the funds belonging to, and allocated to such institutions and also those appropriated by the legislature, for the institutions of higher education in this State; provided, however, that funds appropriated by the legislature and specifically designated for any one or more of such institutions, shall not be used for any other institution.\n\n§ 7. (a) The State Board of Higher Education shall, as soon as practicable, appoint for a term of not to exceed three (3) years, a State Commissioner of Higher Education, whose principal office shall be at the State Capitol, in the City of Bismarck. Said Commissioner of Higher Education shall be responsible to the State Board of Higher Education and shall be removable by said board for cause.\n(b) The State Commissioner of Higher Education shall be a graduate of some reputable college or university, and who by training and experience is familiar with the problems peculiar to higher education.\n(c) Such Commissioner of Higher Education shall be the chief executive officer of said State Board of Higher Education, and shall perform such duties as shall be prescribed by the board.\n\n§ 8. This constitutional provision shall be self-executing and shall become effective without the necessity of legislative action."
         }
       ],
-      "authority": "Amendment ratified undefined",
+      "authority": "Article 54; submitted by initiative petition; approved June 28, 1938, 93,156 to 71,448.",
       "source_urls": [],
       "sources_verified": [
         "/tmp/seg4a_marker/seg4a_src/seg4a_src.md (marker OCR of session-law pages 600-601)",
@@ -1677,7 +1696,8 @@
         "/tmp/off1925.txt (predates amendment; absent)",
         "/tmp/manual1919.txt (predates amendment; absent)",
         "/tmp/manual1907.txt (predates amendment; absent)",
-        "/tmp/bb1954_marker/bb1954_const/bb1954_const.md (article not present)"
+        "/tmp/bb1954_marker/bb1954_const/bb1954_const.md (article not present)",
+        "Re-validated 2026-06-08 vs clean session-law text (round-2 workflow); authority backfilled from the enacted session law."
       ],
       "confidence": "medium",
       "variants": [
@@ -1686,7 +1706,8 @@
           "enacted_session_law": "(.$500.00) — first occurrence in § 4 reads \"(.$500.00)\" with a stray leading period before the dollar sign; the second occurrence reads \"($500.00)\" without the stray period",
           "other_publications": "No other supplied publication contains this article, so no cross-publication comparison is possible. Both the marker OCR and an independent pdftotext rendering of the same PDF page agree on the stray-period form, so it is the printer's text and is preserved verbatim, not OCR garble."
         }
-      ]
+      ],
+      "election_date": "1938-06-28"
     },
     {
       "number": "LIII",
@@ -1699,7 +1720,7 @@
           "text": "(1.) All public moneys, from whatever source derived, shall be paid over monthly by the public official, employee, agent, director, manager, board, bureau, or institution of the State receiving the same, to the State Treasurer, and deposited by him to the credit of the State, and shall be paid out and disbursed only pursuant to appropriation first made by the Legislature; provided, however, that there is hereby appropriated the necessary funds required in the financial transactions of the Bank of North Dakota, and required for the payment of losses, duly approved, payable from the State Hail Insurance Fund, State Bonding Fund, and State Fire and Tornado Fund, and required for the payment of compensation to injured employees or death claims, duly approved, payable from the Workmen's Compensation Fund, and required for authorized investments made by the Board of University and School Lands, and required for the financial operations of the State Mill and Elevator Association, and required for the payment of interest and principal of bonds and other fixed obligations of the State, and required for payments required by law to be paid to beneficiaries of the Teachers' Insurance and Retirement Fund, and required for refunds made under the provisions of the Retail Sales Tax Act, and the State Income Tax Law, and the State Gasoline Tax Law, and the Estate and Succession Tax Law, and the income of any State institution derived from permanent trust funds, and the funds allocated under the law to the State Highway Department and the various counties for the construction, reconstruction, and maintenance of public roads.\n\nThis constitutional amendment shall not be construed to apply to fees and moneys received in connection with the licensing and organization of physicians and surgeons, pharmacists, dentists, osteopaths, optometrists, embalmers, barbers, lawyers, veterinarians, nurses, chiropractors, accountants, architects, hairdressers, chiropodists, and other similarly organized, licensed trades and professions; and this constitutional amendment shall not be construed to amend or repeal existing laws or acts amendatory thereof concerning such fees and moneys.\n\n(2.) No bills, claims, accounts, or demands against the State or any county or other political subdivision shall be audited, allowed, or paid until a full itemized statement in writing shall be filed with the officer or officers whose duty it may be to audit the same, and then only upon warrant drawn upon the Treasurer of such funds by the proper officer or officers.\n\n(3.) This amendment shall become effective on July 1, 1939."
         }
       ],
-      "authority": "Amendment ratified undefined",
+      "authority": "Article 53; submitted by initiative petition; approved June 28, 1938, 83,140 to 75,818.",
       "source_urls": [],
       "sources_verified": [
         "/tmp/seg4a_marker/seg4a_src/seg4a_src.md (Article 53, session-law marker OCR - PRIMARY)",
@@ -1707,7 +1728,8 @@
         "/tmp/off1925.txt (predates amendment - no corresponding text)",
         "/tmp/manual1919.txt (predates - n/a)",
         "/tmp/cl1913.txt (predates - n/a)",
-        "/tmp/manual1907.txt (predates - n/a)"
+        "/tmp/manual1907.txt (predates - n/a)",
+        "Re-validated 2026-06-08 vs clean session-law text (round-2 workflow); authority backfilled from the enacted session law."
       ],
       "confidence": "high",
       "variants": [
@@ -1721,7 +1743,8 @@
           "enacted_session_law": "§ 186",
           "other_publications": "1954 Blue Book numbers this provision 'Section 180' (a later codification renumbering of the same provision), with the note '(As amended by Article 53, amendments to constitution, adopted June 28, 1938.)'."
         }
-      ]
+      ],
+      "election_date": "1938-06-28"
     },
     {
       "number": "LVII",
@@ -1925,7 +1948,7 @@
           "text": "Section 216. The following named public institutions are hereby permanently located as hereinafter provided, each to have so much of the remaining grant of one hundred seventy thousand acres of land made by the United States for \"other educational and charitable institutions\" as is allotted by law, namely: First: A soldiers' home, when located, or such other charitable institution as the legislative assembly may determine, at Libon, in the county of Ransom, with a grant of forty thousand acres of land. Second: The blind asylum shall be known as the North Dakota school for the blind and may be removed from the county of Pembina to such other location as may be determined by the board of administration to be in the best interests of the students of such institution and the state of North Dakota, Third: An industrial school and school for manual training or such other educational or charitable institution as the legislative assembly may provide at the town of Ellendale, in the county of Dickey, with a grant of forty thousand acres. Fourth: A school of forestry, or such other institution as the legislative assembly may determine, at such place in one of the counties of McHenry, Ward, Bottineau or Rolette, as the electors of said counties may determine by an election for that purpose, to be held as provided by the legislative assembly. Fifth: A scientific school or such other educational or charitable institution as the legislative assembly may prescribe, at the city of Wahpeton, county of Richland, with a grant of forty thousand acres. Sixth: A state normal school at the city of Minot in the county of Ward. Seventh: (a) A state normal school at the city of Dickinson, in the county of Stark. (b) A state hospital for the insane at such place within this state as shall be selected by the legislative assembly, provided, that no other institution of a character similar to any one of those located by this article shall be established or maintained without a revision of this constitution. (As amended by Article 63, amendments to constitution, adopted June 24, 1952.) Note: Amended by Article 12, Amendments, adopted November 8, 1910; Article 17, Amendments, adopted November 3, 1914; Articles 21 and 22, Amendments, adopted November 7, 1916; and Article 63, Amendments, adopted June 24, 1952."
         }
       ],
-      "authority": "Amendment ratified undefined",
+      "authority": "Article 63; Chapter 348, 1951 Session Laws; approved June 24, 1952, 108,469 to 61,006.",
       "source_urls": [],
       "sources_verified": [
         "/tmp/seg4a_marker/seg4a_src/seg4a_src.md (PRIMARY session-law file — searched; does NOT contain Article 63 / §216 / blind / Bathgate; covers only 1925-1939 amendments)",
@@ -1933,7 +1956,8 @@
         "/tmp/off1925.txt (1925 official snapshot — pre-amendment §216, line 6922)",
         "/tmp/cl1913.txt (1913 Compiled Laws — pre-amendment §216, line 13045; plus the at-Bathgate proposal at line 13335)",
         "/tmp/manual1919.txt (1919 Legislative Manual — pre-1952 §216 with \"at Bathgate\" Second clause, line 10655)",
-        "/tmp/manual1907.txt (searched — no Article 63 / 1952 content)"
+        "/tmp/manual1907.txt (searched — no Article 63 / 1952 content)",
+        "Re-validated 2026-06-08 vs clean session-law text (round-2 workflow); authority backfilled from the enacted session law."
       ],
       "confidence": "medium",
       "variants": [
@@ -1953,7 +1977,8 @@
           "other_publications": "1954 Blue Book OCR garbles this as \"Libon\"; 1925 official, 1913 Compiled Laws, and 1919 Manual all read \"Lisbon\". Treated as OCR error, not a genuine variant. (Unchanged-by-Article-63 clause.)"
         }
       ],
-      "notes": "§216 anchored on the 1954 Blue Book integrated text (authoritative as of 1952, incl. School-for-the-Blind removal). NOTE: the 1914-1916 §216 intermediates (XVII/XXI/XXII) remain deferred — their session-law restatements are fragmented; §216 between 1910 and 1952 shows the 1910 version (known gap)."
+      "notes": "§216 anchored on the 1954 Blue Book integrated text (authoritative as of 1952, incl. School-for-the-Blind removal). NOTE: the 1914-1916 §216 intermediates (XVII/XXI/XXII) remain deferred — their session-law restatements are fragmented; §216 between 1910 and 1952 shows the 1910 version (known gap).",
+      "election_date": "1952-06-24"
     },
     {
       "number": "LXIV",

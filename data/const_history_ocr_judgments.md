@@ -55,3 +55,14 @@ corrections recovered from session law: LXXIV §215 (missing institution rename)
 2 "OCR-only" flags (LXXXVIII, XCIX) were OCR noise in the session-law *scan*, not the stored
 text — no change. Metadata/date fixes (LXXIX, XCIII, C, CIV, CV, CVII) do not affect body text.
 Verdicts archived in `data/const_bluebook_revalidation_2026-06-08.json`.
+
+---
+
+## Batch (2026-06-08): round-2 re-validation of 55 pre-1956 amendments
+
+33/55 clean. Applied: LIV art-LIV truncated-tail restoration (sl1939); authority backfill for
+13 records (XLIII-LXIII). KEY LESSON: agent OCR-diff over multiply-amended early sections can
+match the WRONG amendment in the WRONG volume -> verify the volume (sl(E-1) proposing vs sl(E+1)
+approved) before trusting an early-era "substantive" flag. #12 §216 was such a false positive
+(stored text confirmed correct vs sl1909). Effective_dates follow the approval+30-day convention
+and were left unchanged. Verdicts: `data/const_revalidation_round2_2026-06-08.json`.
