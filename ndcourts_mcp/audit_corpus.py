@@ -209,12 +209,28 @@ def check_pinpoint_range(conn: sqlite3.Connection, tsv_dir: Path, tag: str) -> A
     )
 
 
+# Opinions whose marker "defects" are verbatim quotations of ANOTHER
+# document's numbered paragraphs (per-item verified against the court PDF /
+# archive HTML) — the court's own text, not extraction loss. Do not flag.
+_KNOWN_QUOTED_DOC_MARKERS = {
+    17357,  # Helbling, 2019 ND 27 — quotes the divorce settlement agreement's
+            # ¶15/¶21/¶33; opinion itself is ¶1-21 complete (verified 2026-06-10)
+    12605,  # Wodrich, 1998 ND 9 — out-of-order ¶38/39/45 are a block quote;
+            # matches the archive HTML (verified 2026-06-09)
+    20124,  # Anne Carlsen Center — court PDF prints embedded quoted order with
+            # its own ¶ numbering (verified 2026-06-09)
+    20408,  # Simpson — same embedded-quoted-order class (verified 2026-06-09)
+}
+
+
 def check_para_continuity(conn: sqlite3.Connection, tsv_dir: Path, tag: str) -> AuditResult:
     """Flag opinions whose [¶N] sequence has gaps, restarts, or a bad start.
 
     A gap means a body paragraph went missing (extraction drop or source
     defect). Non-monotonic markers are usually a block quote of another
     modern opinion's markers — real but lower-signal; gaps are the find.
+    Per-item-verified quoted-document cases are baselined in
+    _KNOWN_QUOTED_DOC_MARKERS.
     """
     rows: list[tuple] = []
     n_checked = 0
@@ -223,6 +239,8 @@ def check_para_continuity(conn: sqlite3.Connection, tsv_dir: Path, tag: str) -> 
         "WHERE text_content LIKE '%[¶%'"
     )
     for oid, name, date, text in cur:
+        if oid in _KNOWN_QUOTED_DOC_MARKERS:
+            continue
         nums = [int(m) for m in _MARKER_RE.findall(text)]
         if not nums:
             continue

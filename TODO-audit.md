@@ -97,8 +97,12 @@ Text integrity:
     audited: 5,014 ¶s compared, **70 flips fixed PDF-print-verified**
     (`digit-flips-pdfverified-2026-06-09`; crops in `triage/flipverify/`;
     2 PDF text-layer ToUnicode rejections; 2 court typos preserved+baselined).
-    `para_continuity` 1,086→525. Remaining: 74 PDF-lacks-marker rows
-    (per-item) + 14 opinions with no PDF.
+    `para_continuity` 1,086→521. Remaining: 74 PDF-lacks-marker rows
+    (per-item) + 14 opinions with no PDF. **Helbling 17357 RESOLVED 2026-06-10
+    as a false positive** — the "missing ¶22–32" are the divorce settlement
+    agreement's own numbered paragraphs quoted verbatim (opinion is ¶1–21
+    complete); baselined with Wodrich/Carlsen/Simpson in
+    `audit_corpus._KNOWN_QUOTED_DOC_MARKERS`.
   - **106 NO_MARKER_TEXT**: 5 fixed by PDF-opener matching
     (`para-marker-restore-2026-06-09`); the rest defeat exact matching via
     OCR drift/footnote structure — needs fuzzy alignment; ALSO includes an
