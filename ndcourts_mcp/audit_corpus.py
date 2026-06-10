@@ -274,6 +274,8 @@ _KNOWN_COURT_PAIRS = {
     (16446, "2004 ND 87", "679 N.W.2d 257"),   # "Jaste v. Gailfus, 2004 ND 87" (Jaste is 2004 ND 94)
     (14127, "2004 ND 46", "674 N.W.2d 402"),   # Muhammed parallel is 675 N.W.2d 402
     (16894, "2006 ND 98", "716 N.W.2d 535"),   # Pace parallel is 713 N.W.2d 535
+    (16184, "2013 ND 137", "835 N.W.2d 836"),  # Hoffman parallel is 834 N.W.2d 636; print verified 2026-06-09
+    (16917, "2011 ND 64", "795 N.W.2d 194"),   # Johnson v. Hovland parallel is 795 N.W.2d 294; print verified 2026-06-09
 }
 
 
