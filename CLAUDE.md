@@ -2,6 +2,8 @@
 
 MCP server providing access to North Dakota Supreme Court opinions (1889–present).
 
+**See `TOOLS.md`** for an index of all CLI tools/utilities grouped by purpose (ingest, Westlaw cross-check, dedup/merge, quality/validation, citation graph, corrections) and common workflows.
+
 ## Architecture
 
 - **SQLite + FTS5** for full-text and metadata search
