@@ -15,8 +15,9 @@ input-data/
 .remember/
 *.docx
 worklists/
-opinions.db.zip
-opinions.db.zip.sha256
+# corpus DB release artifacts (shipped via GitHub releases, not the repo)
+*.db.zip
+*.db.zip.sha256
 
 # Editor / IDE
 .vscode/
