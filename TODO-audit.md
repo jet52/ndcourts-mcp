@@ -89,12 +89,16 @@ Text integrity:
   (`triage/para-gap-classified-2026-06-09.tsv`): 341 CORRUPT_TOKEN → **287
   markers fixed** (`para-marker-ocr-variants-2026-06-09`). GAPs 1,206→1,056.
   **Remaining queues (measured):**
-  - **TEXT_MISSING, 722 opinions w/ PDFs** (`text-missing-measured-2026-06-09.tsv`):
-    **488 signature-only** (missing ¶ is the justices' signature block —
-    splice `[¶N] <names>` verbatim from PDF, mechanical batch) + **226 with
-    substantive missing ¶s** (paragraph splice or pdfminer re-extract; these
-    are also prime digit-flip carriers) + 74 PDF-lacks-marker (per-item);
-    14 opinions have no PDF.
+  - **TEXT_MISSING — WORKED 2026-06-10** (`text-missing-measured-2026-06-09.tsv`):
+    **473 signature-only spliced** (`sig-splice-2026-06-09`; 15 stale) +
+    **219 substantive spliced** (`substantive-missing-2026-06-09`; 7 held —
+    5 stale, Wodrich 12605 known-correct, **Helbling 17357 page-rotated PDF
+    missing ¶22–32, queued per-item**). Digit-flip exposure for the cohort
+    audited: 5,014 ¶s compared, **70 flips fixed PDF-print-verified**
+    (`digit-flips-pdfverified-2026-06-09`; crops in `triage/flipverify/`;
+    2 PDF text-layer ToUnicode rejections; 2 court typos preserved+baselined).
+    `para_continuity` 1,086→525. Remaining: 74 PDF-lacks-marker rows
+    (per-item) + 14 opinions with no PDF.
   - **106 NO_MARKER_TEXT**: 5 fixed by PDF-opener matching
     (`para-marker-restore-2026-06-09`); the rest defeat exact matching via
     OCR drift/footnote structure — needs fuzzy alignment; ALSO includes an
@@ -201,11 +205,17 @@ Process integrity:
   **Check #6 still owed for pre-1997** — the sweep keys on [¶N]/## Opinion;
   markerless old texts need shingle self-similarity. (Also note 20124/20408:
   embedded quoted orders with own ¶ numbering are a legitimate NONMONO class.)
-- [ ] **Digit-flip exposure beyond citations:** the same OCR pass corrupted
+- [~] **Digit-flip exposure beyond citations:** the same OCR pass corrupted
   digits generally — dates, dollar amounts, statute numbers in the affected
-  analyzer-era texts have no parallel-pair witness. Estimate exposure (the 260
-  fixed opinions are known carriers) and consider pdfminer re-extract for the
-  worst (cross-checking ¶-marker completeness per the marker-candidate lesson).
+  analyzer-era texts have no parallel-pair witness. **METHOD PROVEN + 226-opinion
+  cohort DONE 2026-06-10** (`digit-flips-pdfverified-2026-06-09`): per-¶ DB-vs-PDF
+  digit-sequence compare → context-matched single-digit candidates → render the
+  printed glyphs and read each (PDF text layer alone is NOT sufficient — 2 of 72
+  candidates were text-layer ToUnicode errors with correct DB text). 70 fixed in
+  51 opinions. **Remaining: scale the compare to the rest of the analyzer era**
+  (~7K markdown-source opinions; tools `triage/digit_compare_2026-06-09.py` +
+  `digit_flip_candidates_2026-06-09.py` + `render_flip_crops_2026-06-09.py`
+  generalize directly — only the worklist source changes).
 
 ### Build order
 
