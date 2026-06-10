@@ -2,6 +2,12 @@
 
 Changes applied to the opinions database after import from CourtListener and ndcourts.gov sources. All corrections are recorded in the `changelog` SQLite table and can be reverted with `python -m ndcourts_mcp.cleanup revert <batch>`.
 
+## Batches `dedup-ramstad-12824-2026-06-10` + `marker-style-dotted-2026-06-10` — check #6 run corpus-wide; the dotted-marker blind spot
+
+Ran the **shingle self-similarity detector** (audit check #6 proper — the body-duplication scan the marker-keyed stored-twice sweep couldn't extend to markerless texts) over all 19,793 opinions. Result: **pre-1997 is clean**; 2 flags, both modern. *Statoil* 16959 (0.564) is legitimate — consolidated-case party/lease lists genuinely repeat. ***Ramstad* 12824 (0.37) was a real markerless stored-twice**: CL OCR copy + analyzer copy, undetected because the analyzer copy's markers use a **dotted style `[¶ 1.]`** that no marker regex in the pipeline matches — the opinion was invisible to para_continuity entirely. Dropped the CL copy (rehearing-keyword scan clean), normalized markers to the PDF's `[¶N]` style; result ¶1–38 contiguous, exactly matching the PDF.
+
+The dotted style swept corpus-wide: **6 more carriers, all from the same early-1999 ingest run** (1999 ND 24–35). All normalized to the PDF style (`marker-style-dotted-2026-06-10`); 12825 additionally had its ¶10–11 missing (signature block + Meschke-retirement note) — spliced verbatim from the PDF, now ¶1–12 contiguous. para_continuity 521→**520**; invariants 23/2/0.
+
 ## Batch `print-anomalies-registry-2026-06-10` — durable registry of typos in the COURT'S print + citation-graph overrides
 
 New shipped table **`print_anomalies`** (35 rows: 25 in-corpus citation typos + 10 out-of-corpus citation/date typos), recording every print-verified instance where the **authoritative document itself** contains an apparent error. Policy (ruled 2026-06-10): (1) `text_content` stays **verbatim to the print** — typos preserved; (2) the **citation graph resolves to the intended case** — `cite_extract.apply_print_anomaly_overrides` runs on every `cited_by` rebuild, deleting mis-resolved edges (e.g. *Paulson* printed "1998 ND 7" had been crediting *Lohstreter*; *Smestad* printed "2001 ND 91" crediting *McDowell*) and ensuring the intended edge exists; (3) each row carries a **follow-up note**: West sometimes publishes corrections and the court submits corrected pages, so our slip-PDF text could miss a court-approved correction — not assumed, but flagged for review against West advance sheets / bound volumes.
