@@ -318,7 +318,13 @@ _KNOWN_COURT_PAIRS = {
     (16816, "2014 ND 102", "346 N.W.2d 724"),  # Datz is 846 N.W.2d 724
     (14391, "1997 ND 223", "575 N.W.2d 635"),  # Harmon is 1997 ND 233
     (13208, "1998 ND 89", "578 N.W.2d 129"),   # Gibson; printed parallel belongs to Moch (578 N.W.2d 129)
+    (15948, "1999 ND 181", "599 N.W.3d 323"),  # Svedberg; print genuinely reads N.W.3d (impossible series, glyph-verified)
 }
+# NOTE: every entry above (and in _KNOWN_COURT_PINCITES) is also registered in
+# opinions.db's `print_anomalies` table — the authoritative, shipped registry of
+# verified typos in the court's print, with intended readings, graph overrides
+# (cite_extract.apply_print_anomaly_overrides), and West-corrected-page
+# follow-up notes. Keep the two in sync when adding entries.
 
 
 def check_parallel_pair(conn: sqlite3.Connection, tsv_dir: Path, tag: str) -> AuditResult:

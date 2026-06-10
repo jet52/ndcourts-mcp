@@ -148,3 +148,25 @@ All six steps executed; see CHANGELOG-data.md for batch detail.
 
 Migration tools retained for revert/audit: `migrate_reporter_taxonomy.py`,
 `recompute_is_primary.py`.
+
+## Contract 3 — `print_anomalies` (ratified 2026-06-10)
+
+Registry of verified typos in the COURT'S authoritative print (slip PDF).
+One row per anomaly: `opinion_id` (the opinion whose print errs), `kind`
+(citation|date|other), `printed_text` (verbatim, preserved in text_content),
+`printed_cite` (normalized cite string, set when the typo affects graph
+resolution), `intended_text` / `intended_opinion_id` (the apparent intended
+reading and in-corpus target), `basis`, `verified`, `followup`, `batch`.
+
+Three-part policy:
+1. `text_content` is verbatim to the print — typos preserved, never "fixed."
+2. The citation graph resolves to the INTENDED case:
+   `cite_extract.apply_print_anomaly_overrides` runs on every cited_by
+   rebuild (deletes mis-resolved edges for `printed_cite`, inserts the
+   intended edge). Durable across full re-extracts.
+3. `followup` flags the West-corrected-page possibility: West publishes
+   corrections and the court submits corrected pages, so the slip-PDF text
+   may miss an approved correction. Not assumed — flagged for review.
+
+Audit baselines `_KNOWN_COURT_PAIRS` / `_KNOWN_COURT_PINCITES` in
+`audit_corpus.py` must stay in sync with this table.

@@ -274,6 +274,35 @@ def _store_results(
     return counts
 
 
+def apply_print_anomaly_overrides(conn: sqlite3.Connection) -> int:
+    """Re-point cited_by edges for citations the COURT's print typo'd.
+
+    The text is verbatim to the authoritative print (typos preserved), but the
+    citation graph should reflect the intended case — `print_anomalies` records
+    each verified instance (printed reading, intended reading, evidence, and a
+    follow-up note re: possible West/court corrected pages). Runs after every
+    cited_by rebuild so the overrides are durable across re-extracts."""
+    try:
+        rows = conn.execute(
+            "SELECT opinion_id, printed_cite, intended_opinion_id FROM print_anomalies "
+            "WHERE intended_opinion_id IS NOT NULL AND printed_cite IS NOT NULL"
+        ).fetchall()
+    except sqlite3.OperationalError:
+        return 0  # table not present in this DB
+    n = 0
+    for citing_oid, printed, intended in rows:
+        conn.execute(
+            "DELETE FROM cited_by WHERE citing_opinion_id=? AND citation=? "
+            "AND cited_opinion_id != ?",
+            (citing_oid, printed, intended))
+        conn.execute(
+            "INSERT OR IGNORE INTO cited_by (cited_opinion_id, citing_opinion_id, citation) "
+            "VALUES (?, ?, ?)",
+            (intended, citing_oid, printed))
+        n += 1
+    return n
+
+
 def rebuild_cited_by(
     conn: sqlite3.Connection,
     citation_lookup: dict[str, list[int]],
@@ -324,6 +353,10 @@ def rebuild_cited_by(
             unresolved.append((opinion_id, normalized, row["antecedent_name"],
                                "|".join(str(o) for o in candidates)))
 
+    overridden = apply_print_anomaly_overrides(conn)
+    if overridden:
+        print(f"  {overridden} print-anomaly cite overrides applied (cites typo'd in the "
+              "court's print resolve to the intended case; see print_anomalies)")
     conn.commit()
 
     if triage_path is not None and unresolved:
