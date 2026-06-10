@@ -1,0 +1,60 @@
+citing_oid	citing_src	cite	cited_oid	cited_row_name	pin	max	class	parallel_cite	parallel_oid	parallel_name
+16232	ND	2012 ND 128	18865	Matter of Wedmore	64	2	MISMATCH	818 N.W.2d 660	15864	Haugland v. City of Bismarck
+15752	ND	2010 ND 10	15330	State v. Thompson	88	34	SAME	777 N.W.2d 617	15330	State v. Thompson
+16372	ND	2008 ND 198	18666	Matter of Hanson	52	3	MISMATCH	672 N.W.2d 445	13915	VND, LLC v. Leevers
+13766	ND	1999 ND 89	12889	Schlossman & Gunkelman, Inc. v. Robert T	87	39	SAME	593 N.W.2d 374	12889	Schlossman & Gunkelman, Inc. v. Robert T
+13438	ND	1997 ND 112	12448	State v. Eldred	83	37	SAME	564 N.W.2d 283	12448	State v. Eldred
+15151	ND	2007 ND 146	14812	State v. Tibor	81	36	SAME	738 N.W.2d 492	14812	State v. Tibor
+15865	ND	2012 ND 128	18865	Matter of Wedmore	40	2	MISMATCH	818 N.W.2d 660	15864	Haugland v. City of Bismarck
+16253	ND	2009 ND 205	15306	Hartleib v. Simes	82	48	SAME	776 N.W.2d 217	15306	Hartleib v. Simes
+15760	ND	2008 ND 44	18678	State v. Tibor (Consolidated w/ 20070190	28	2	MISMATCH	658 N.W.2d 741	13758	Koehler v. County of Grand Forks, et al.
+13864	ND	2000 ND 118	18345	Nelson, et al. v. Nelson	31	5	MISMATCH	611 N.W.2d 191	13172	Schiff v. Schiff
+16385	ND	2007 ND 182	18611	Estate of Truax	25	3	MISMATCH	737 N.W.2d 647	14805	State v. Muhle   (Cross-reference w/2006
+16365	ND	2018 ND 196	17242	State v. Corona	31	11	MISMATCH	838 N.W.2d 488	16135	Danuser v. IDA Marketing Corp., et al.
+16264	ND	2018 ND 155	19255	State v. Cullett	22	2	MISMATCH	836 N.W.2d 405	16102	State v. Nickel (consolidated w/20120418
+16510	ND	2018 ND 106	17160	Interest of R.C. (CONFIDENTIAL)	19	2	MISMATCH	831 N.W.2d 731	16053	Kartes v. Kartes
+16337	ND	2008 ND 14	14896	Wold v. Wold	40	23	MISMATCH	656 N.W.2d 691	13728	Rittenour, et al. v. Gibson
+16333	ND	2012 ND 168	15913	Matter of S.E. (Confidential)	34	17	MISMATCH	820 N.W.2d 318	15906	Schulte v. Kramer (cross-ref. 20050222)
+16463	ND	2018 ND 148	17205	RAD Development-Main Street, LLC v. Leun	18	2	MISMATCH	836 N.W.2d 598	16107	Datz v. Dosch (cross-reference w/ 201201
+16778	ND	2018 ND 150	17202	Oien v. State	15	2	MISMATCH	836 N.W.2d 427	16104	Estate of Cashmore (cross reference with
+17024	ND	1999 ND 186	18321	Sand v. Sand	13	2	MISMATCH	599 N.W.2d 858	12982	State v. Freed
+16660	ND	2018 ND 106	17160	Interest of R.C. (CONFIDENTIAL)	13	2	MISMATCH	831 N.W.2d 731	16053	Kartes v. Kartes
+16473	ND	2018 ND 252	17314	State v. Hebert	13	2	MISMATCH	841 N.W.2d 676	16186	State v. Nguyen
+16362	ND	2009 ND 63	18726	State v. Mitchell	12	2	MISMATCH	764 N.W.2d 170	15172	Interest of B.F.    (CONFIDENTIAL)
+13256	ND	1997 ND 86	18279	Hintz v. Hintz	11	2	MISMATCH	559 N.W.2d 846	12371	Heim v. Nodak Mutual Insurance Company
+16741	ND	2014 ND 96	19050	State v. Simmons	11	3	MISMATCH	846 N.W.2d 314	16268	State v. Kuruc (consolidated w/ 20130337
+16446	ND	2004 ND 87	14007	Reciprocal Discipline of Chinquist	18	10	PARALLEL_AMBIG	679 N.W.2d 257		
+14384	ND	2008 ND 195	18664	Kucera v. Kucera	11	3	NO_PARALLEL	672 N.W.2d 648		
+13310	ND	1998 ND 208	18297	Esther Buffalo v. Warren Buffalo, Sr.	10	2	MISMATCH	586 N.W.2d 490	12780	Schmitz v. Schmitz
+16469	ND	2018 ND 252	17314	State v. Hebert	9	2	MISMATCH	841 N.W.2d 676	16186	State v. Nguyen
+16394	ND	2013 ND 87	18991	Gray v. State	9	2	MISMATCH	827 N.W.2d 528	16001	Hanisch v. Kroshus
+16045	ND	2011 ND 83	15656	A.R. Audit Services, Inc. v. Ulledahl	9	2	MISMATCH	793 N.W.2d 799	15576	Sorenson v. Felton
+15463	ND	2008 ND 151	15026	Disciplinary Board v. Fisher	15	8	MISMATCH	669 N.W.2d 478	13869	Interest of Z.C.B.  (CONFIDENTIAL)
+16986	ND	2017 ND 46	19224	State v. Borden	9	3	MISMATCH	890 N.W.2d 841	16869	Environmental Driven Solutions v. Dunn C
+16877	ND	2008 ND 102	18645	Suelzle v. ND Dept. of Transportation	9	3	MISMATCH	663 N.W.2d 650	13823	Damron v. State
+15611	ND	2007 ND 187	18613	State v. Gandesbery	9	3	MISMATCH	737 N.W.2d 390	14801	City of Fargo v. Malme, et al.
+16759	ND	2016 ND 177	19155	Hickey v. State	7	2	MISMATCH	865 N.W.2d 816	16529	State v. Gates (consol. w/ 20150036) (cr
+16039	ND	2009 ND 128	18690	Fehl-Haber v. State    (Cross Ref w/2006	7	2	MISMATCH	767 N.W.2d 852	15222	State v. Maki
+15964	ND	2009 ND 128	18690	Fehl-Haber v. State    (Cross Ref w/2006	7	2	MISMATCH	767 N.W.2d 852	15222	State v. Maki
+15417	ND	2009 ND 187	18701	Ernst v. State	8	3	MISMATCH	770 N.W.2d 290	15255	Department of Labor v. Matrix Properties
+17071	ND	2016 ND 122	19147	McCluskey v. McCluskey	5	2	NO_PARALLEL	863 N.W.2d 621		
+16659	ND	2016 ND 183	16787	State v. Kordonowy	8	5	MISMATCH	865 N.W.2d 836	16532	Dockter, et al. v. Burleigh County Board
+16602	ND	2012 ND 108	18857	Gress v. State (cross-reference w/201100	8	5	MISMATCH	816 N.W.2d 799	15845	State v. Parizek
+16306	ND	2004 ND 198	14123	Rott v. Connecticut General Life Ins. Co	9	6	MISMATCH	687 N.W.2d 725	14116	State v. Murchison
+16291	ND	2014 ND 18	16218	State v. Cook	12	9	MISMATCH	841 N.W.2d 767	16198	Schwalk v. Schwalk, et al.
+15946	ND	2000 ND 111	13166	Dickie v. Farmers Union Oil Company of L	18	15	SAME	611 N.W.2d 168	13166	Dickie v. Farmers Union Oil Company of L
+12590	ND	1997 ND 68	18276	Vicki J. Klamm and Sharyl R. Lindell, tr	5	2	MISMATCH	561 N.W.2d 642	12410	Estate of Zimmerman
+16473	ND	2011 ND 242	15762	State v. Mittleider (Consolidated w/2011	15	13	NO_PARALLEL	809 N.W.2d 803		
+16439	ND	2003 ND 80	18473	Weninger v. Grzeskowiak	6	4	MISMATCH	657 N.W.2d 245	13739	State v. Anderson
+16413	ND	2018 ND 48	19316	Rebenitsch v. Rebenitsch	18	16	MISMATCH	828 N.W.2d 510	16010	Hoverson v. Hoverson
+16265	ND	2018 ND 46	19314	State v. Groce	14	12	MISMATCH	828 N.W.2d 775	16016	Hayden, et al. v. Medcenter One, Inc., e
+15949	ND	2008 ND 174	15051	State v. Crabtree	27	25	MISMATCH	670 N.W.2d 876	13899	McDowell v. McDowell                    
+15744	ND	1998 ND 187	12772	Almont Lumber & Equipment Co. v. Dirk	20	18	MISMATCH	581 N.W.2d 468	12719	State of North Dakota v. David Allen Moe
+20315	ND	2011 ND 242	15762	State v. Mittleider (Consolidated w/2011	14	13	SAME	809 N.W.2d 303	15762	State v. Mittleider (Consolidated w/2011
+16741	ND	2011 ND 242	15762	State v. Mittleider (Consolidated w/2011	14	13	SAME	809 N.W.2d 303	15762	State v. Mittleider (Consolidated w/2011
+16697	ND	2011 ND 242	15762	State v. Mittleider (Consolidated w/2011	14	13	SAME	809 N.W.2d 303	15762	State v. Mittleider (Consolidated w/2011
+16408	ND	2011 ND 242	15762	State v. Mittleider (Consolidated w/2011	14	13	SAME	809 N.W.2d 303	15762	State v. Mittleider (Consolidated w/2011
+16362	ND	2009 ND 48	15162	Hoff v. Krebs, et al.	16	15	NO_PARALLEL	768 N.W.2d 783		
+16186	ND	2011 ND 242	15762	State v. Mittleider (Consolidated w/2011	14	13	SAME	809 N.W.2d 303	15762	State v. Mittleider (Consolidated w/2011
+14206	ND	1998 ND 85	12677	Campbell Farms, Faulkner Farms, and Empi	23	22	MISMATCH	575 N.W.2d 211	12625	Kyle Kenneth Bell v. State of North Dako
+13175	ND	1999 ND 187	13018	Renault v. ND Workers Comp. Bureau	27	26	NO_PARALLEL	697 N.W.2d 644		
